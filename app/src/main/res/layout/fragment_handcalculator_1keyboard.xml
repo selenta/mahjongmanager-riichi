@@ -6,7 +6,7 @@
     android:layout_height="fill_parent"
     android:scrollIndicators="right"
     android:id="@+id/fragment_hanfucalculator"
-    tools:context=".HanFuCalculatorFragment"
+    tools:context=".simplefragments.HanFuCalculatorFragment"
     android:nestedScrollingEnabled="false">
 
     <TextView

@@ -1,4 +1,4 @@
-package com.mahjongmanager.riichi;
+package com.mahjongmanager.riichi.simplefragments;
 
 import android.graphics.Typeface;
 import android.os.Bundle;
@@ -14,6 +14,9 @@ import android.widget.Spinner;
 import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
+
+import com.mahjongmanager.riichi.CSVFile;
+import com.mahjongmanager.riichi.R;
 
 import java.io.IOException;
 import java.io.InputStream;

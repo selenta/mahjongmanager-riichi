@@ -1,4 +1,4 @@
-package com.mahjongmanager.riichi;
+package com.mahjongmanager.riichi.handcalculator;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -8,6 +8,12 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
+
+import com.mahjongmanager.riichi.Hand;
+import com.mahjongmanager.riichi.MainActivity;
+import com.mahjongmanager.riichi.R;
+import com.mahjongmanager.riichi.ScoreCalculator;
+import com.mahjongmanager.riichi.Tile;
 
 import java.util.ArrayList;
 

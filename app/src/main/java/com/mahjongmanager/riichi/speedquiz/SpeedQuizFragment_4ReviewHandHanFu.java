@@ -1,4 +1,4 @@
-package com.mahjongmanager.riichi;
+package com.mahjongmanager.riichi.speedquiz;
 
 import android.annotation.SuppressLint;
 import android.os.Bundle;
@@ -11,6 +11,11 @@ import android.view.ViewGroup.LayoutParams;
 import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
+
+import com.mahjongmanager.riichi.Hand;
+import com.mahjongmanager.riichi.MainActivity;
+import com.mahjongmanager.riichi.R;
+import com.mahjongmanager.riichi.ScoreCalculator;
 
 import java.util.Arrays;
 

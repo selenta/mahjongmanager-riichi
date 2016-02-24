@@ -4,8 +4,20 @@ import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.View;
+
+import com.mahjongmanager.riichi.handcalculator.HandCalculatorFragment_1Keyboard;
+import com.mahjongmanager.riichi.handcalculator.HandCalculatorFragment_2WinningTile;
+import com.mahjongmanager.riichi.handcalculator.HandCalculatorFragment_3OtherInfo;
+import com.mahjongmanager.riichi.handcalculator.HandCalculatorFragment_4ScoreScreen;
+import com.mahjongmanager.riichi.simplefragments.HanFuCalculatorFragment;
+import com.mahjongmanager.riichi.simplefragments.MainMenuFragment;
+import com.mahjongmanager.riichi.simplefragments.ScoreTableFragment;
+import com.mahjongmanager.riichi.simplefragments.YakuListFragment;
+import com.mahjongmanager.riichi.speedquiz.SpeedQuizFragment_1Start;
+import com.mahjongmanager.riichi.speedquiz.SpeedQuizFragment_2ScoreHand;
+import com.mahjongmanager.riichi.speedquiz.SpeedQuizFragment_3ScoreScreen;
+import com.mahjongmanager.riichi.speedquiz.SpeedQuizFragment_4ReviewHandHanFu;
 
 import java.util.ArrayList;
 import java.util.List;

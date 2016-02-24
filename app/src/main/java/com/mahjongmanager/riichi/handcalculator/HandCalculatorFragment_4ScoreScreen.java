@@ -1,4 +1,4 @@
-package com.mahjongmanager.riichi;
+package com.mahjongmanager.riichi.handcalculator;
 
 import android.annotation.SuppressLint;
 import android.os.Bundle;
@@ -11,6 +11,12 @@ import android.view.ViewGroup.LayoutParams;
 import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
+
+import com.mahjongmanager.riichi.Hand;
+import com.mahjongmanager.riichi.MainActivity;
+import com.mahjongmanager.riichi.R;
+import com.mahjongmanager.riichi.ScoreCalculator;
+import com.mahjongmanager.riichi.Tile;
 
 public class HandCalculatorFragment_4ScoreScreen extends Fragment {
 
@@ -56,7 +62,7 @@ public class HandCalculatorFragment_4ScoreScreen extends Fragment {
         }
 
 
-        String result = sc.scoreHanFu(sh.han, sh.fu, sh.playerWind==Tile.Wind.EAST, sh.tsumo);
+        String result = sc.scoreHanFu(sh.han, sh.fu, sh.playerWind== Tile.Wind.EAST, sh.tsumo);
         scoreValue.setText(result);
 
         //Do this second, so that we can make it a little more pretty
