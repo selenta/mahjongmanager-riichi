@@ -835,6 +835,7 @@ public class ScoreCalculator {
     }
     private void checkChanKan(Hand h){}
 
+    // Standard Yaku
     private void checkPinfu(Hand h){
         //If no winning tile has been set, it's ok to still to count this as pinfu
         if( fuFromMelds(h)!=0 || fuFromPair(h)!=0 || fuFromWait(h)!=0 ){

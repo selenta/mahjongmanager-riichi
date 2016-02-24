@@ -37,11 +37,11 @@ public class YakuListFragment extends Fragment {
     TableLayout yakuByAverageHanTable;
     TableLayout yakuCombinatoricsTable;
 
-    static final String YAKU_LIST_BY_PATTERN = "Yaku List by Pattern";
-    static final String YAKU_LIST_BY_HAN = "Yaku List by Han";
-    static final String YAKU_BY_FREQUENCY_LABEL = "Yaku by Frequency";
-    static final String YAKU_BY_AVERAGE_HAN = "Yaku by Average Han";
-    static final String YAKU_COMBINATORICS = "Yaku Combinatorics";
+    static final String YAKU_LIST_BY_PATTERN = "Yaku Guide sorted by Pattern";
+    static final String YAKU_LIST_BY_HAN = "Yaku Guide sorted by Han";
+    static final String YAKU_BY_FREQUENCY_LABEL = "Han sorted by Frequency";
+    static final String YAKU_BY_AVERAGE_HAN = "Han sorted by Avg. Hand Size";
+    static final String YAKU_COMBINATORICS = "Yaku Combinatorics (math)";
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {

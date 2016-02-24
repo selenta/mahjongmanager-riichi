@@ -53,6 +53,17 @@
                     android:layout_marginRight="10dp"
                     android:textSize="18dp" />
 
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="?android:attr/textAppearanceSmall"
+                    android:text="Same information as the &quot;Yaku Guide sorted by Han&quot; options, except that it is organized by the pattern that describes how to build the hand."
+                    android:id="@+id/textView46"
+                    android:textAlignment="center"
+                    android:textStyle="italic"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginRight="20dp" />
+
             </LinearLayout>
 
             <LinearLayout
@@ -65,7 +76,7 @@
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
                     android:textAppearance="?android:attr/textAppearanceLarge"
-                    android:text="Descriptions and examples of all Yaku. Sorted and grouped by Han."
+                    android:text="Descriptions and examples of all Yaku."
                     android:id="@+id/textView40"
                     android:textAlignment="center"
                     android:layout_gravity="center"
@@ -73,6 +84,17 @@
                     android:layout_marginLeft="10dp"
                     android:layout_marginRight="10dp"
                     android:textSize="18dp" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="?android:attr/textAppearanceSmall"
+                    android:text="Same information as the &quot;Yaku Guide sorted by Pattern&quot; options, except sorted by Han."
+                    android:id="@+id/textView45"
+                    android:textAlignment="center"
+                    android:textStyle="italic"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginRight="20dp" />
 
             </LinearLayout>
 
@@ -86,7 +108,7 @@
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
                     android:textAppearance="?android:attr/textAppearanceLarge"
-                    android:text="The percentage of winning hands that involve each Yaku. Data is based on real games played on Tenhou.net"
+                    android:text="The percentage of winning hands that involve each Han."
                     android:id="@+id/textView166"
                     android:textAlignment="center"
                     android:layout_marginTop="15dp"
@@ -108,6 +130,17 @@
                     android:id="@+id/yakuFrequencyTable">
 
                 </TableLayout>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="?android:attr/textAppearanceSmall"
+                    android:text="Data is based on real Hanchan games played with red 5s on Tenhou.net"
+                    android:id="@+id/textView42"
+                    android:textAlignment="center"
+                    android:textStyle="italic"
+                    android:layout_marginLeft="40dp"
+                    android:layout_marginRight="40dp" />
             </LinearLayout>
 
             <LinearLayout
@@ -120,8 +153,21 @@
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
                     android:textAppearance="?android:attr/textAppearanceLarge"
-                    android:text="The average number of han in a winning hand that involve each Yaku. Data is based on real games played on Tenhou.net"
+                    android:text="The average number of han in a winning hand that involve each Han (sorted with most frequent Han at top)."
                     android:id="@+id/textView39"
+                    android:textAlignment="center"
+                    android:layout_gravity="center"
+                    android:layout_marginTop="15dp"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp"
+                    android:textSize="18dp" />
+
+                <TextView
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="?android:attr/textAppearanceLarge"
+                    android:text="Example: A value of 3.95 for Riichi means &quot;An average winning hand that includes Riichi will have 2.95 Han from other sources.&quot;"
+                    android:id="@+id/textView44"
                     android:textAlignment="center"
                     android:layout_gravity="center"
                     android:layout_marginTop="15dp"
@@ -141,6 +187,17 @@
                     android:layout_marginRight="15dp"
                     android:layout_marginBottom="15dp"
                     android:id="@+id/yakuByAverageHanTable" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="?android:attr/textAppearanceSmall"
+                    android:text="Data is based on real Hanchan games played with red 5s on Tenhou.net"
+                    android:id="@+id/textView43"
+                    android:textAlignment="center"
+                    android:textStyle="italic"
+                    android:layout_marginLeft="40dp"
+                    android:layout_marginRight="40dp" />
             </LinearLayout>
 
             <LinearLayout
@@ -153,7 +210,7 @@
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
                     android:textAppearance="?android:attr/textAppearanceLarge"
-                    android:text="The possible number of combinations that can result in each Yaku. This is should NOT be used to determine which Yaku are easier/harder to build, but may be interesting nonetheless."
+                    android:text="The possible number of tile combinations that can result in each Yaku."
                     android:id="@+id/textView18"
                     android:textAlignment="center"
                     android:layout_gravity="center"
@@ -161,6 +218,16 @@
                     android:layout_marginLeft="10dp"
                     android:layout_marginRight="10dp"
                     android:textSize="18dp" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="?android:attr/textAppearanceSmall"
+                    android:text="This is should NOT be used to determine which Yaku are easier/harder to build, as it ignores crucial information such as calling, the value of the yaku, and playing defensively; but may be interesting to see nonetheless."
+                    android:id="@+id/textView47"
+                    android:textColor="#ff0000"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginRight="20dp" />
 
                 <TableLayout
                     android:layout_width="match_parent"

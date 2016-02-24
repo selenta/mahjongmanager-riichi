@@ -97,6 +97,13 @@
         <Button
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
+            android:text="Glossary"
+            android:id="@+id/button11"
+            android:enabled="false" />
+
+        <Button
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
             android:text="Options (v0.7)"
             android:id="@+id/button5"
             android:layout_gravity="center_horizontal"
