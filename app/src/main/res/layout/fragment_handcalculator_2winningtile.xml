@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:scrollIndicators="right"
+    android:id="@+id/step2Container"
+    tools:context=".HanFuCalculatorFragment"
+    android:nestedScrollingEnabled="false"
+    android:gravity="center_horizontal">
+
+    <TextView
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="Hand Calculator"
+        android:id="@+id/textView4"
+        android:textSize="44dp"
+        android:textStyle="italic"
+        android:textAlignment="center" />
+
+    <TextView
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="Step 2: Select the winning tile"
+        android:id="@+id/subTitle"
+        android:textSize="24dp"
+        android:textAlignment="center" />
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:layout_marginLeft="15dp">
+
+        <RadioGroup
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:layout_gravity="top|center_horizontal"
+            android:id="@+id/winningTileOptions"
+            android:layout_marginLeft="15dp"
+            android:gravity="center_vertical"
+            android:layout_marginBottom="50dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:text="Winning Tile"
+                android:id="@+id/textView11" />
+
+        </RadioGroup>
+
+        <RadioGroup
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:id="@+id/selfDrawOptions"
+            android:layout_marginLeft="15dp"
+            android:gravity="center_vertical"
+            android:layout_marginBottom="50dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:text="Self Draw"
+                android:id="@+id/textView12" />
+
+            <RadioButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Yes"
+                android:id="@+id/radioButton5"
+                android:layout_marginLeft="15dp"
+                android:textSize="18dp"
+                android:checked="true" />
+
+            <RadioButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="No"
+                android:id="@+id/radioButton6"
+                android:layout_marginLeft="15dp"
+                android:textSize="18dp"
+                android:checked="true" />
+
+        </RadioGroup>
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@android:color/darker_gray"/>
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Cancel"
+            android:id="@+id/backToMainMenuButton"
+            android:layout_gravity="center"
+            android:paddingEnd="30dp"
+            android:paddingStart="30dp"
+            android:onClick="backToMainMenu"
+            android:layout_marginLeft="15dp" />
+
+        <View
+            android:layout_width="fill_parent"
+            android:layout_height="2dp"
+            android:layout_weight="1" />
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Next"
+            android:id="@+id/nextButton"
+            android:layout_gravity="center_vertical|right"
+            android:paddingEnd="30dp"
+            android:paddingStart="30dp"
+            android:layout_marginRight="15dp"
+            android:enabled="false" />
+    </LinearLayout>
+
+
+</LinearLayout>

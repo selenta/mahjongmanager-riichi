@@ -1,0 +1,116 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:id="@+id/fragment_mainmenu"
+    tools:context=".MainMenuFragment"
+    android:orientation="vertical">
+
+    <TextView
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="Main Menu"
+        android:id="@+id/textView8"
+        android:textSize="44dp"
+        android:textStyle="italic"
+        android:textAlignment="center" />
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:paddingLeft="45dp"
+        android:paddingRight="45dp">
+
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="League Tracker (v2.0)"
+            android:id="@+id/button"
+            android:layout_gravity="center_horizontal"
+            android:maxWidth="800dp"
+            android:singleLine="true"
+            android:enabled="false" />
+
+        <Button
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:text="Game Score Tracker (v1.5)"
+            android:id="@+id/button2"
+            android:layout_gravity="center_horizontal"
+            android:enabled="false" />
+
+        <Button
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:text="Speed Quiz"
+            android:id="@+id/button4"
+            android:layout_gravity="center_horizontal"
+            android:enabled="true"
+            android:onClick="goToSpeedQuizStart" />
+
+        <Button
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:text="Hand Calculator"
+            android:id="@+id/button6"
+            android:layout_gravity="center_horizontal"
+            android:enabled="true"
+            android:onClick="gotoHandCalculator"/>
+
+        <Button
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:text="Han/Fu Calculator"
+            android:id="@+id/button3"
+            android:layout_gravity="center_horizontal"
+            android:enabled="true"
+            android:onClick="goToHanFuCalculator" />
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:measureWithLargestChild="true">
+
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Score Table"
+                android:id="@+id/ScoreTableButton"
+                android:layout_gravity="center_horizontal"
+                android:layout_weight="1"
+                android:onClick="goToScoreTable" />
+
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Yaku List"
+                android:id="@+id/button7"
+                android:enabled="true"
+                android:layout_weight="1"
+                android:onClick="goToYakuList" />
+        </LinearLayout>
+
+        <Button
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:text="Options (v0.7)"
+            android:id="@+id/button5"
+            android:layout_gravity="center_horizontal"
+            android:enabled="false" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="fill_parent"
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:text="v0.6"
+            android:id="@+id/textView"
+            android:layout_gravity="center_horizontal"
+            android:longClickable="true" />
+
+    </LinearLayout>
+
+</LinearLayout>

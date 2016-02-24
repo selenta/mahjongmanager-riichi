@@ -1,0 +1,1 @@
+# mahjongmanager-riichi
