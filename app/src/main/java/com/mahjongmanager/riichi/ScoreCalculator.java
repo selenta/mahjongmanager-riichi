@@ -512,7 +512,7 @@ public class ScoreCalculator {
                 }
             }
         }
-        if( !isOpen ){
+        if( !isOpen && h.getWinningTile().calledFrom!=Tile.CalledFrom.NONE ){
             h.fuList.put("Menzen-Kafu", 10);
             closedFu += 10;
         }
@@ -595,6 +595,9 @@ public class ScoreCalculator {
     public Integer scoreBasePoints( Integer han, Integer fu ){
         Integer roundedFu = (fu==25) ? 25 : (int) Math.ceil(fu/10.0)*10;
         Double value = roundedFu * Math.pow(2,2+han);
+        if( han>4 ){
+            return getBasePointsForLargeHand(han, value.intValue());
+        }
         return value.intValue();
     }
     public String scoreHanFu( Integer han, Integer fu, Boolean dealer, Boolean tsumo ){
@@ -616,25 +619,7 @@ public class ScoreCalculator {
             }
         }
 
-        if( han==5 ){
-            value = 2000;
-        } else if( han==6 || han==7 ){
-            value = 3000;
-        } else if( han==8 || han==9 || han==10 ){
-            value = 4000;
-        } else if( han==11 || han==12 ){
-            value = 6000;
-        } else if( han>=13 && han<26 ){
-            value = 8000;
-        } else if( han>=26 && han<39 ){
-            value = 16000;
-        } else if( han>=39 && han<52 ){
-            value = 24000;
-        } else if( han>=52 && han<65 ){
-            value = 32000;
-        } else if( han>=65 ){
-            value = 40000;
-        }
+        value = getBasePointsForLargeHand(han, value);
 
         if( !tsumo && !dealer ){
             value = 4*value;                // Child Ron
@@ -651,6 +636,28 @@ public class ScoreCalculator {
         int roundedV = ((value + 99) / 100 ) * 100;
         int roundedCV = ((childValue + 99) / 100 ) * 100;
         return roundedCV==0 ? String.valueOf(roundedV) : String.valueOf(roundedCV) + '/' + String.valueOf(roundedV);
+    }
+    private int getBasePointsForLargeHand(int han, int base){
+        if( han==5 ){
+            return 2000;
+        } else if( han==6 || han==7 ){
+            return 3000;
+        } else if( han==8 || han==9 || han==10 ){
+            return 4000;
+        } else if( han==11 || han==12 ){
+            return 6000;
+        } else if( han>=13 && han<26 ){
+            return 8000;
+        } else if( han>=26 && han<39 ){
+            return 16000;
+        } else if( han>=39 && han<52 ){
+            return 24000;
+        } else if( han>=52 && han<65 ){
+            return 32000;
+        } else if( han>=65 ){
+            return 40000;
+        }
+        return base;
     }
 
 
