@@ -1,5 +1,7 @@
 package com.mahjongmanager.riichi.speedquiz;
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -19,12 +21,14 @@ import java.util.List;
 
 public class SpeedQuizFragment_3ScoreScreen extends Fragment implements View.OnClickListener {
     private TextView correctScoreLabel;
+    private TextView newHighScore;
     private TextView incorrectScoreLabel;
 
     private LinearLayout incorrectButtonContainer;
 
     List<Hand> completeList = new ArrayList<>();
     private int correctGuesses   = 0;
+    private int highScore        = 0;
     private int incorrectGuesses = 0;
     private List<Hand> handsToReview = new ArrayList<>();
 
@@ -32,15 +36,21 @@ public class SpeedQuizFragment_3ScoreScreen extends Fragment implements View.OnC
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View myInflatedView = inflater.inflate(R.layout.fragment_speedquiz_3scorescreen, container, false);
 
-        correctScoreLabel = (TextView) myInflatedView.findViewById(R.id.correctScore);
+        correctScoreLabel   = (TextView) myInflatedView.findViewById(R.id.correctScore);
+        newHighScore        = (TextView) myInflatedView.findViewById(R.id.newHighScoreNotice);
         incorrectScoreLabel = (TextView) myInflatedView.findViewById(R.id.incorrectScore);
-
         incorrectButtonContainer = (LinearLayout) myInflatedView.findViewById(R.id.incorrectHandButtonContainer);
 
+        loadHighScore();
         scoreGuesses();
         updateUI();
 
         return myInflatedView;
+    }
+
+    private void loadHighScore(){
+        SharedPreferences sharedPref = getActivity().getPreferences(Context.MODE_PRIVATE);
+        highScore = sharedPref.getInt("SpeedQuizHighScore", 0);
     }
 
     private void scoreGuesses(){
@@ -49,18 +59,34 @@ public class SpeedQuizFragment_3ScoreScreen extends Fragment implements View.OnC
 
         for(int i=0; i<completeList.size(); i++){
             ScoreCalculator sc = new ScoreCalculator(completeList.get(i));
-            int hanGuess = guessList.get(i)[0];
-            int fuGuess = guessList.get(i)[1];
-            if( hanGuess==sc.validatedHand.han
-                    && (sc.scoreBasePoints(sc.validatedHand.han,sc.validatedHand.fu)>2000
-                        || fuGuess==sc.validatedHand.fu) ){
+            if( judgeGuess(guessList.get(i), sc) ){
                 correctGuesses++;
             } else {
                 incorrectGuesses++;
                 handsToReview.add(completeList.get(i));
             }
         }
+        checkNewHighScore();
+        createButtonsForIncorrectHands();
+    }
+    private boolean judgeGuess( int[] guess, ScoreCalculator sc ){
+        int hanGuess = guess[0];
+        int fuGuess = guess[1];
+        boolean isManganOrMore = sc.scoreBasePoints(sc.validatedHand.han, sc.validatedHand.fu) >= 2000;
+        Integer roundedFu = (sc.validatedHand.fu==25) ? 25 : (int) Math.ceil(sc.validatedHand.fu/10.0)*10;
 
+        return hanGuess==sc.validatedHand.han && ( isManganOrMore || fuGuess==roundedFu);
+    }
+    private void checkNewHighScore(){
+        if( correctGuesses>highScore ){
+            newHighScore.setVisibility(View.VISIBLE);
+            SharedPreferences settings = getActivity().getPreferences(Context.MODE_PRIVATE);
+            SharedPreferences.Editor editor = settings.edit();
+            editor.putInt("SpeedQuizHighScore", correctGuesses);
+            editor.apply();
+        }
+    }
+    private void createButtonsForIncorrectHands(){
         for( Hand h : handsToReview ){
             //add a button to incorrectButtonContainer
             Button newButt = new Button(getContext());
