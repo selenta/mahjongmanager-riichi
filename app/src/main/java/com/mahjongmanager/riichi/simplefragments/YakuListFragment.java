@@ -88,7 +88,7 @@ public class YakuListFragment extends Fragment {
         viewOptions.add(YAKU_LIST_BY_HAN);
         viewOptions.add(YAKU_BY_FREQUENCY_LABEL);
         viewOptions.add(YAKU_BY_AVERAGE_HAN);
-        viewOptions.add(YAKU_COMBINATORICS);
+//        viewOptions.add(YAKU_COMBINATORICS);
 
         ArrayAdapter<String> dataAdapter = new ArrayAdapter<>
                 (getActivity(), R.layout.spinner_item_large, R.id.spinneritem, viewOptions);

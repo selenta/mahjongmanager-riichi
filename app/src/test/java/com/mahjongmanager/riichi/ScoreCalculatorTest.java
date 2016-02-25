@@ -165,7 +165,7 @@ public class ScoreCalculatorTest {
         ScoreCalculator sc = new ScoreCalculator(h);
         Hand validatedHand = sc.validatedHand;
 
-        Assert.assertSame(13, validatedHand.han);
+        Assert.assertSame(26, validatedHand.han);
     }
 
     @Test
