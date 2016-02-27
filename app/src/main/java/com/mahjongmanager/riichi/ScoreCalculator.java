@@ -68,7 +68,7 @@ public class ScoreCalculator {
         } else if( unsortedHand.set1.size()+unsortedHand.set2.size()
                   +unsortedHand.set3.size()+unsortedHand.set4.size()
                   +unsortedHand.unsortedTiles.size() != unsortedHand.tiles.size() ){
-            Log.wtf("InvalidHandState", "tiles list size does not match the number of tiles used in sets/unsortedTiles");
+            Log.wtf("InvalidHandState", "tiles list size does not match the number of tiles used in sets/unsortedTiles: \n" + unsortedHand.toStringVerbose());
             return;
         }
 
@@ -498,7 +498,7 @@ public class ScoreCalculator {
         }
 
         // (6) Set fu for open pinfu
-        //      TODO Handle open pinfu here? or overwrite later?
+        //      TODO Handle open pinfu here?
 
         h.fu = fu;
     }
@@ -512,7 +512,7 @@ public class ScoreCalculator {
                 }
             }
         }
-        if( !isOpen && h.getWinningTile().calledFrom!=Tile.CalledFrom.NONE ){
+        if( !isOpen && h.getWinningTile()!=null && h.getWinningTile().calledFrom!=Tile.CalledFrom.NONE ){
             h.fuList.put("Menzen-Kafu", 10);
             closedFu += 10;
         }
@@ -1165,13 +1165,11 @@ public class ScoreCalculator {
         if( winds.size()==0 ){
             h.shousuushii = true;
         }
-
     }    // Four triplets of winds
     private void checkTsuuiisou(Hand h){
         if( countSuits(h.tiles)==0 && !h.chiiToitsu ){
             h.tsuuiisou = true;
         }
-
     }     // All honors
     private void checkDaichisei(Hand h){
         Set<Tile> tz = findDuplicateTiles(h.tiles);
