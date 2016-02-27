@@ -12,6 +12,7 @@ import com.mahjongmanager.riichi.handcalculator.HandCalculatorFragment_3OtherInf
 import com.mahjongmanager.riichi.handcalculator.HandCalculatorFragment_4ScoreScreen;
 import com.mahjongmanager.riichi.simplefragments.HanFuCalculatorFragment;
 import com.mahjongmanager.riichi.simplefragments.MainMenuFragment;
+import com.mahjongmanager.riichi.simplefragments.OptionsFragment;
 import com.mahjongmanager.riichi.simplefragments.ScoreTableFragment;
 import com.mahjongmanager.riichi.simplefragments.YakuListFragment;
 import com.mahjongmanager.riichi.speedquiz.SpeedQuizFragment_1Start;
@@ -174,6 +175,15 @@ public class MainActivity extends AppCompatActivity {
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
 
         transaction.replace(R.id.fragment_container, new YakuListFragment());
+        //transaction.addToBackStack("MainMenu");
+
+        transaction.commit();
+    }
+
+    public void goToOptions(View view){
+        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+
+        transaction.replace(R.id.fragment_container, new OptionsFragment());
         //transaction.addToBackStack("MainMenu");
 
         transaction.commit();

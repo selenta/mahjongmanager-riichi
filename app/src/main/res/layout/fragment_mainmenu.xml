@@ -104,16 +104,17 @@
         <Button
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:text="Options (v0.7)"
+            android:text="Options"
             android:id="@+id/button5"
             android:layout_gravity="center_horizontal"
-            android:enabled="false" />
+            android:enabled="true"
+            android:onClick="goToOptions" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="fill_parent"
             android:textAppearance="?android:attr/textAppearanceSmall"
-            android:text="v0.6"
+            android:text="v0.65"
             android:id="@+id/textView"
             android:layout_gravity="center_horizontal"
             android:longClickable="true" />
