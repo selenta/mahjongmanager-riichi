@@ -17,10 +17,6 @@ public class OptionsFragment extends Fragment implements View.OnClickListener {
     CheckBox kanDora;
     CheckBox limitUraDora;
     CheckBox goldenDora;
-    CheckBox openTanyao;
-    CheckBox openPinfu;
-    CheckBox nagashiMangan;
-    CheckBox openRiichi;
     CheckBox westRound;
     CheckBox kanDoraImmediately;
     CheckBox agariYame;
@@ -28,6 +24,19 @@ public class OptionsFragment extends Fragment implements View.OnClickListener {
     CheckBox riichiWhenLowOnPoints;
     CheckBox atamaHaneRon;
     CheckBox kanCanChangeWait;
+    CheckBox doubleYakuman;
+
+    CheckBox openTanyao;
+    CheckBox openPinfu;
+    CheckBox openRiichi;
+    CheckBox nagashiMangan;
+    CheckBox sanrenkou;
+    CheckBox suurenkou;
+    CheckBox daisharin;
+    CheckBox shiisanpuuta;
+    CheckBox shiisuupuuta;
+    CheckBox parenchan;
+
     CheckBox abortive4Winds;
     CheckBox abortive4Riichi;
     CheckBox abortiveKyushukyuhai;
@@ -49,10 +58,6 @@ public class OptionsFragment extends Fragment implements View.OnClickListener {
     String KAN_DORA       = "KanDora";
     String LIMIT_URA_DORA = "LimitUraDora";
     String GOLDEN_DORA    = "GoldenDora";
-    String OPEN_TANYAO    = "OpenTanyao";
-    String OPEN_PINFU     = "OpenPinfu";
-    String NAGASHI_MANGAN = "NagashiMangan";
-    String OPEN_RIICHI    = "OpenRiichi";
     String WEST_ROUND     = "WestRound";
     String KAN_DORA_IMMEDIATELY      = "KanDoraImmediately";
     String AGARI_YAME                = "AgariYame";
@@ -60,6 +65,19 @@ public class OptionsFragment extends Fragment implements View.OnClickListener {
     String RIICHI_WHEN_LOW_ON_POINTS = "RiichiWhenLowOnPoints";
     String ATAMA_HANE_RON        = "AtamaHaneRon";
     String KAN_CAN_CHANGE_WAIT   = "KanCanChangeWait";
+    String DOUBLE_YAKUMAN        = "DoubleYakuman";
+
+    String OPEN_TANYAO    = "OpenTanyao";
+    String OPEN_PINFU     = "OpenPinfu";
+    String OPEN_RIICHI    = "OpenRiichi";
+    String NAGASHI_MANGAN = "NagashiMangan";
+    String SANRENKOU      = "Sanrenkou";
+    String SUURENKOU      = "Suurenkou";
+    String DAISHARIN      = "Daisharin";
+    String SHIISANPUUTA   = "Shiisanpuuta";
+    String SHIISUUPUUTA   = "Shiisuupuuta";
+    String PARENCHAN      = "Parenchan";
+
     String ABORTIVE_4_WINDS      = "Abortive4Winds";
     String ABORTIVE_4_RIICHI     = "Abortive4Riichi";
     String ABORTIVE_KYUSHUKYUHAI = "AbortiveKyushukyuhai";
@@ -94,10 +112,6 @@ public class OptionsFragment extends Fragment implements View.OnClickListener {
         setCheckedStatus(kanDora, KAN_DORA, true);
         setCheckedStatus(limitUraDora, LIMIT_URA_DORA, false);
         setCheckedStatus(goldenDora, GOLDEN_DORA, false);
-        setCheckedStatus(openTanyao, OPEN_TANYAO, true);
-        setCheckedStatus(openPinfu, OPEN_PINFU, false);
-        setCheckedStatus(nagashiMangan, NAGASHI_MANGAN, true);
-        setCheckedStatus(openRiichi, OPEN_RIICHI, false);
         setCheckedStatus(westRound, WEST_ROUND, true);
         setCheckedStatus(kanDoraImmediately, KAN_DORA_IMMEDIATELY, false);
         setCheckedStatus(agariYame, AGARI_YAME, true);
@@ -105,6 +119,19 @@ public class OptionsFragment extends Fragment implements View.OnClickListener {
         setCheckedStatus(riichiWhenLowOnPoints, RIICHI_WHEN_LOW_ON_POINTS, false);
         setCheckedStatus(atamaHaneRon, ATAMA_HANE_RON, false);
         setCheckedStatus(kanCanChangeWait, KAN_CAN_CHANGE_WAIT, false);
+        setCheckedStatus(doubleYakuman, DOUBLE_YAKUMAN, true);
+
+        setCheckedStatus(openTanyao, OPEN_TANYAO, true);
+        setCheckedStatus(openPinfu, OPEN_PINFU, false);
+        setCheckedStatus(openRiichi, OPEN_RIICHI, false);
+        setCheckedStatus(nagashiMangan, NAGASHI_MANGAN, true);
+        setCheckedStatus(sanrenkou, SANRENKOU, true);
+        setCheckedStatus(suurenkou, SUURENKOU, false);
+        setCheckedStatus(daisharin, DAISHARIN, false);
+        setCheckedStatus(shiisanpuuta, SHIISANPUUTA, false);
+        setCheckedStatus(shiisuupuuta, SHIISUUPUUTA, false);
+        setCheckedStatus(parenchan, PARENCHAN, true);
+
         setCheckedStatus(abortive4Winds, ABORTIVE_4_WINDS, true);
         setCheckedStatus(abortive4Riichi, ABORTIVE_4_RIICHI, true);
         setCheckedStatus(abortiveKyushukyuhai, ABORTIVE_KYUSHUKYUHAI, true);
@@ -151,18 +178,6 @@ public class OptionsFragment extends Fragment implements View.OnClickListener {
             case R.id.goldenDora:
                 savePreferenceCheckBox(goldenDora, GOLDEN_DORA);
                 break;
-            case R.id.openTanyao:
-                savePreferenceCheckBox(openTanyao, OPEN_TANYAO);
-                break;
-            case R.id.openPinfu:
-                savePreferenceCheckBox(openPinfu, OPEN_PINFU);
-                break;
-            case R.id.nagashiMangan:
-                savePreferenceCheckBox(nagashiMangan, NAGASHI_MANGAN);
-                break;
-            case R.id.openRiichi:
-                savePreferenceCheckBox(openRiichi, OPEN_RIICHI);
-                break;
             case R.id.westRound:
                 savePreferenceCheckBox(westRound, WEST_ROUND);
                 break;
@@ -183,6 +198,39 @@ public class OptionsFragment extends Fragment implements View.OnClickListener {
                 break;
             case R.id.kanCanChangeWait:
                 savePreferenceCheckBox(kanCanChangeWait, KAN_CAN_CHANGE_WAIT);
+                break;
+            case R.id.doubleYakuman:
+                savePreferenceCheckBox(doubleYakuman, DOUBLE_YAKUMAN);
+                break;
+            case R.id.openTanyao:
+                savePreferenceCheckBox(openTanyao, OPEN_TANYAO);
+                break;
+            case R.id.openPinfu:
+                savePreferenceCheckBox(openPinfu, OPEN_PINFU);
+                break;
+            case R.id.openRiichi:
+                savePreferenceCheckBox(openRiichi, OPEN_RIICHI);
+                break;
+            case R.id.nagashiMangan:
+                savePreferenceCheckBox(nagashiMangan, NAGASHI_MANGAN);
+                break;
+            case R.id.sanrenkou:
+                savePreferenceCheckBox(sanrenkou, SANRENKOU);
+                break;
+            case R.id.suurenkou:
+                savePreferenceCheckBox(suurenkou, SUURENKOU);
+                break;
+            case R.id.daisharin:
+                savePreferenceCheckBox(daisharin, DAISHARIN);
+                break;
+            case R.id.shiisanpuuta:
+                savePreferenceCheckBox(shiisanpuuta, SHIISANPUUTA);
+                break;
+            case R.id.shiisuupuuta:
+                savePreferenceCheckBox(shiisuupuuta, SHIISUUPUUTA);
+                break;
+            case R.id.parenchan:
+                savePreferenceCheckBox(parenchan, PARENCHAN);
                 break;
             case R.id.abortive4Winds:
                 savePreferenceCheckBox(abortive4Winds, ABORTIVE_4_WINDS);
@@ -214,14 +262,6 @@ public class OptionsFragment extends Fragment implements View.OnClickListener {
         limitUraDora.setOnClickListener(this);
         goldenDora = (CheckBox) myInflatedView.findViewById(R.id.goldenDora);
         goldenDora.setOnClickListener(this);
-        openTanyao = (CheckBox) myInflatedView.findViewById(R.id.openTanyao);
-        openTanyao.setOnClickListener(this);
-        openPinfu = (CheckBox) myInflatedView.findViewById(R.id.openPinfu);
-        openPinfu.setOnClickListener(this);
-        nagashiMangan = (CheckBox) myInflatedView.findViewById(R.id.nagashiMangan);
-        nagashiMangan.setOnClickListener(this);
-        openRiichi = (CheckBox) myInflatedView.findViewById(R.id.openRiichi);
-        openRiichi.setOnClickListener(this);
         westRound = (CheckBox) myInflatedView.findViewById(R.id.westRound);
         westRound.setOnClickListener(this);
         kanDoraImmediately = (CheckBox) myInflatedView.findViewById(R.id.kanDoraImmediately);
@@ -236,6 +276,30 @@ public class OptionsFragment extends Fragment implements View.OnClickListener {
         atamaHaneRon.setOnClickListener(this);
         kanCanChangeWait = (CheckBox) myInflatedView.findViewById(R.id.kanCanChangeWait);
         kanCanChangeWait.setOnClickListener(this);
+        doubleYakuman = (CheckBox) myInflatedView.findViewById(R.id.doubleYakuman);
+        doubleYakuman.setOnClickListener(this);
+
+        openTanyao = (CheckBox) myInflatedView.findViewById(R.id.openTanyao);
+        openTanyao.setOnClickListener(this);
+        openPinfu = (CheckBox) myInflatedView.findViewById(R.id.openPinfu);
+        openPinfu.setOnClickListener(this);
+        openRiichi = (CheckBox) myInflatedView.findViewById(R.id.openRiichi);
+        openRiichi.setOnClickListener(this);
+        nagashiMangan = (CheckBox) myInflatedView.findViewById(R.id.nagashiMangan);
+        nagashiMangan.setOnClickListener(this);
+        sanrenkou = (CheckBox) myInflatedView.findViewById(R.id.sanrenkou);
+        sanrenkou.setOnClickListener(this);
+        suurenkou = (CheckBox) myInflatedView.findViewById(R.id.suurenkou);
+        suurenkou.setOnClickListener(this);
+        daisharin = (CheckBox) myInflatedView.findViewById(R.id.daisharin);
+        daisharin.setOnClickListener(this);
+        shiisanpuuta = (CheckBox) myInflatedView.findViewById(R.id.shiisanpuuta);
+        shiisanpuuta.setOnClickListener(this);
+        shiisuupuuta = (CheckBox) myInflatedView.findViewById(R.id.shiisuupuuta);
+        shiisuupuuta.setOnClickListener(this);
+        parenchan = (CheckBox) myInflatedView.findViewById(R.id.parenchan);
+        parenchan.setOnClickListener(this);
+
         abortive4Winds = (CheckBox) myInflatedView.findViewById(R.id.abortive4Winds);
         abortive4Winds.setOnClickListener(this);
         abortive4Riichi = (CheckBox) myInflatedView.findViewById(R.id.abortive4Riichi);
