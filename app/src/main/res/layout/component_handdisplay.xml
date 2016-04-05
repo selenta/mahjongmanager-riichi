@@ -1,9 +1,29 @@
 <?xml version="1.0" encoding="utf-8"?>
 <merge xmlns:android="http://schemas.android.com/apk/res/android">
     <LinearLayout
-        android:orientation="horizontal"
+        android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:id="@+id/tileList"
-        android:padding="20dp" />
+        android:paddingLeft="20dp"
+        android:paddingRight="20dp"
+        android:paddingTop="10dp"
+        android:paddingBottom="10dp">
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/tileList"
+            android:padding="5dp"
+            android:layout_weight="1" />
+        <TextView
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:text="[...]"
+            android:id="@+id/tileText"
+            android:textAlignment="center"
+            android:layout_weight="1"
+            android:textSize="14dp"
+            android:textStyle="bold" />
+    </LinearLayout>
 </merge>

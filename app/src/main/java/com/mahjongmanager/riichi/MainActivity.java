@@ -26,12 +26,11 @@ import java.util.List;
 public class MainActivity extends AppCompatActivity {
     public Hand currentHand = new Hand(new ArrayList<Tile>());
 
-    public List<Hand> scoredHands = new ArrayList<>();
-    public List<int[]> hanFuGuesses = new ArrayList<>();
-    public int currentHanGuess = 0;
-    public int currentFuGuess  = 0;
-
-    public CountDownTimer speedQuizTimer;
+    private List<Hand> scoredHands = new ArrayList<>();
+    private List<int[]> hanFuGuesses = new ArrayList<>();
+    private int currentHanGuess = 0;
+    private int currentFuGuess  = 0;
+    private CountDownTimer speedQuizTimer;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,7 +54,14 @@ public class MainActivity extends AppCompatActivity {
             transaction.commit();
         }
     }
+    ////////////////////////////////////////////
+    /////////////    General     ///////////////
+    ////////////////////////////////////////////
 
+
+    ///////////////////////////////////////////////////
+    /////////////    Navigating UIs     ///////////////
+    ///////////////////////////////////////////////////
     public void goToHanFuCalculator(View view){
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
 
@@ -202,6 +208,10 @@ public class MainActivity extends AppCompatActivity {
         transaction.commit();
     }
 
+
+    /////////////////////////////////////////////////////////
+    /////////    Cross-Fragment Communication     ///////////
+    /////////////////////////////////////////////////////////
     public Hand getCurrentHand(){ return currentHand; }
     public void setCurrentHand(Hand h){ currentHand = h; }
     public int getCurrentHanGuess(){ return currentHanGuess; }
@@ -213,4 +223,15 @@ public class MainActivity extends AppCompatActivity {
     public List<int[]> getHanFuGuesses(){ return hanFuGuesses; }
 
     public CountDownTimer getSpeedQuizTimer(){ return speedQuizTimer; }
+
+    //////////////////////////////////////////
+    /////////////    Utils     ///////////////
+    //////////////////////////////////////////
+    private Utils _utils;
+    public Utils getUtils(){
+        if(_utils==null){
+            _utils = new Utils(this);
+        }
+        return _utils;
+    }
 }
