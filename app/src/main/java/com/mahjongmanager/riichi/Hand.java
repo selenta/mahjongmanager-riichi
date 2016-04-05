@@ -575,7 +575,7 @@ public class Hand {
         });
     }
     public String toString(){
-        return tiles.toString();
+        return (tiles.isEmpty()) ? "[...]" : tiles.toString();
 //        return printAllSets();
     }
     public String toStringVerbose(){
