@@ -36,10 +36,10 @@
         android:text="You guessed: Z Han XX Fu"
         android:id="@+id/playerGuessReminder" />
 
-    <Space
-        android:layout_width="fill_parent"
-        android:layout_height="60dp"
-        android:id="@+id/tileDisplayGoesHere" />
+    <com.mahjongmanager.riichi.HandDisplay
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
+        android:id="@+id/handDisplay" />
 
     <TextView
         android:layout_width="wrap_content"

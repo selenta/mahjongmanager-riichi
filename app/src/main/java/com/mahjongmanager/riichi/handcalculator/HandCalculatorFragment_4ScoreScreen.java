@@ -1,6 +1,5 @@
 package com.mahjongmanager.riichi.handcalculator;
 
-import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.util.Log;
@@ -13,6 +12,7 @@ import android.widget.TableRow;
 import android.widget.TextView;
 
 import com.mahjongmanager.riichi.Hand;
+import com.mahjongmanager.riichi.HandDisplay;
 import com.mahjongmanager.riichi.MainActivity;
 import com.mahjongmanager.riichi.R;
 import com.mahjongmanager.riichi.ScoreCalculator;
@@ -21,6 +21,8 @@ import com.mahjongmanager.riichi.Tile;
 public class HandCalculatorFragment_4ScoreScreen extends Fragment {
 
     private Hand actHand;
+
+    private HandDisplay handDisplay;
 
     private TableLayout hanTable;
     private TableLayout fuTable;
@@ -38,6 +40,7 @@ public class HandCalculatorFragment_4ScoreScreen extends Fragment {
         Log.i("actHand", "actHand: " + actHand.toString());
 
         registerControls(myInflatedView);
+        handDisplay.setHand(actHand);
 
         displayScores();
 
@@ -120,6 +123,8 @@ public class HandCalculatorFragment_4ScoreScreen extends Fragment {
     }
 
     private void registerControls(View myInflatedView){
+        handDisplay = (HandDisplay) myInflatedView.findViewById(R.id.handDisplay);
+
         hanTable      = (TableLayout) myInflatedView.findViewById(R.id.hanTable);
         fuTable       = (TableLayout) myInflatedView.findViewById(R.id.fuTable);
         hanTotalLabel = (TextView) myInflatedView.findViewById(R.id.hanTotalLabel);

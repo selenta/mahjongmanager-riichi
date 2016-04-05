@@ -10,6 +10,7 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import com.mahjongmanager.riichi.Hand;
+import com.mahjongmanager.riichi.HandDisplay;
 import com.mahjongmanager.riichi.MainActivity;
 import com.mahjongmanager.riichi.R;
 import com.mahjongmanager.riichi.ScoreCalculator;
@@ -40,8 +41,8 @@ public class HandCalculatorFragment_1Keyboard extends Fragment implements View.O
 
     private Button clearHandButton;
 
+    private HandDisplay handDisplay;
     private TextView errorMessage;
-    private TextView displayedHandLabel;
     private Button nextButton;
 
     @Override
@@ -107,7 +108,7 @@ public class HandCalculatorFragment_1Keyboard extends Fragment implements View.O
             case R.id.clearHandButton:
                 fragHand = new Hand(new ArrayList<Tile>());
                 checkNextEnablement();
-                displayedHandLabel.setText(fragHand.toString());
+                handDisplay.setHand(fragHand);
                 errorMessage.setText("");
                 break;
         }
@@ -150,7 +151,8 @@ public class HandCalculatorFragment_1Keyboard extends Fragment implements View.O
         }
         Tile t = new Tile(val, currentSuit.toString());
         fragHand.addTile(t);
-        displayedHandLabel.setText(fragHand.toString());
+
+        handDisplay.setHand(fragHand);
     }
 
     private void checkNextEnablement(){
@@ -246,8 +248,9 @@ public class HandCalculatorFragment_1Keyboard extends Fragment implements View.O
     }
 
     private void registerButtons(View myInflatedView){
+        handDisplay = (HandDisplay) myInflatedView.findViewById(R.id.handDisplay);
+
         errorMessage = (TextView) myInflatedView.findViewById(R.id.errorMessageLabel);
-        displayedHandLabel = (TextView) myInflatedView.findViewById(R.id.displayedHand);
 
         nextButton = (Button) myInflatedView.findViewById(R.id.nextButton);
 

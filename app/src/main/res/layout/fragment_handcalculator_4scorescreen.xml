@@ -21,10 +21,10 @@
         android:textAlignment="center" />
 
 
-    <Space
-        android:layout_width="fill_parent"
-        android:layout_height="80dp"
-        android:id="@+id/tileDisplayGoesHere" />
+    <com.mahjongmanager.riichi.HandDisplay
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
+        android:id="@+id/handDisplay" />
 
     <ScrollView
         android:layout_width="wrap_content"

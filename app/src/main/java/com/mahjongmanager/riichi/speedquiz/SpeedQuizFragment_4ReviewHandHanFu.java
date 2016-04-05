@@ -13,6 +13,7 @@ import android.widget.TableRow;
 import android.widget.TextView;
 
 import com.mahjongmanager.riichi.Hand;
+import com.mahjongmanager.riichi.HandDisplay;
 import com.mahjongmanager.riichi.MainActivity;
 import com.mahjongmanager.riichi.R;
 import com.mahjongmanager.riichi.ScoreCalculator;
@@ -23,6 +24,8 @@ public class SpeedQuizFragment_4ReviewHandHanFu extends Fragment {
 
     private Hand actHand;
     private Integer actHandIdx;
+
+    private HandDisplay handDisplay;
 
     private TableLayout hanTable;
     private TableLayout fuTable;
@@ -44,6 +47,7 @@ public class SpeedQuizFragment_4ReviewHandHanFu extends Fragment {
         Log.i("actHandIdx", "actHandIdx: " + actHandIdx.toString());
 
         registerControls(myInflatedView);
+        handDisplay.setHand(actHand);
 
         displayScores();
 
@@ -130,6 +134,8 @@ public class SpeedQuizFragment_4ReviewHandHanFu extends Fragment {
     }
 
     private void registerControls(View myInflatedView){
+        handDisplay = (HandDisplay) myInflatedView.findViewById(R.id.handDisplay);
+
         hanTable      = (TableLayout) myInflatedView.findViewById(R.id.hanTable);
         fuTable       = (TableLayout) myInflatedView.findViewById(R.id.fuTable);
         hanTotalLabel = (TextView) myInflatedView.findViewById(R.id.hanTotalLabel);

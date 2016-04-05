@@ -47,22 +47,8 @@
 
         <com.mahjongmanager.riichi.HandDisplay
             android:layout_width="match_parent"
-            android:layout_height="40dp" />
-
-        <LinearLayout
-            android:orientation="horizontal"
-            android:layout_width="match_parent"
-            android:layout_height="40dp"
-            android:layout_gravity="center">
-            <TextView
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:textAppearance="?android:attr/textAppearanceSmall"
-                android:text="[...]"
-                android:id="@+id/displayedHand"
-                android:layout_gravity="center"
-                android:textAlignment="center" />
-        </LinearLayout>
+            android:layout_height="100dp"
+            android:id="@+id/handDisplay" />
 
         <TextView
             android:layout_width="fill_parent"

@@ -9,6 +9,7 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import com.mahjongmanager.riichi.Hand;
+import com.mahjongmanager.riichi.HandDisplay;
 import com.mahjongmanager.riichi.HandGenerator;
 import com.mahjongmanager.riichi.MainActivity;
 import com.mahjongmanager.riichi.R;
@@ -35,7 +36,7 @@ public class SpeedQuizFragment_2ScoreHand extends Fragment implements View.OnCli
     private Button increaseFuButton;
     private Button decreaseFuButton;
 
-    private TextView displayedHandLabel;
+    private HandDisplay handDisplay;
     private TextView prevailingWindLabel;
     private TextView playerWindLabel;
     private TextView selfDrawLabel;
@@ -87,7 +88,7 @@ public class SpeedQuizFragment_2ScoreHand extends Fragment implements View.OnCli
         fu = 30;
         ((MainActivity)getActivity()).setCurrentFuGuess(fu);
 
-        displayedHandLabel.setText(fragHand.printAllSets());
+        handDisplay.setHand(fragHand);
 
         prevailingWindLabel.setText(fragHand.getString(fragHand.prevailingWind));
         playerWindLabel.setText(fragHand.getString(fragHand.playerWind));
@@ -167,6 +168,8 @@ public class SpeedQuizFragment_2ScoreHand extends Fragment implements View.OnCli
     }
 
     private void assignComponents(View myInflatedView){
+        handDisplay = (HandDisplay) myInflatedView.findViewById(R.id.handDisplay);
+
         secondCounter = (TextView) myInflatedView.findViewById(R.id.secondCounter);
 
         hanLabel = (TextView) myInflatedView.findViewById(R.id.hanValue);
@@ -181,7 +184,6 @@ public class SpeedQuizFragment_2ScoreHand extends Fragment implements View.OnCli
         decreaseFuButton = (Button) myInflatedView.findViewById(R.id.decreaseFuButton);
         decreaseFuButton.setOnClickListener(this);
 
-        displayedHandLabel = (TextView) myInflatedView.findViewById(R.id.displayedHand);
         prevailingWindLabel = (TextView) myInflatedView.findViewById(R.id.prevailingWindLabel);
         playerWindLabel = (TextView) myInflatedView.findViewById(R.id.playerWindLabel);
         selfDrawLabel = (TextView) myInflatedView.findViewById(R.id.selfDrawLabel);
@@ -190,7 +192,7 @@ public class SpeedQuizFragment_2ScoreHand extends Fragment implements View.OnCli
     }
 
     private void sampleHand(View myInflatedView){
-        if (((MainActivity)getActivity()).scoredHands.size()<10) {
+        if (((MainActivity)getActivity()).getScoredHands().size()<10) {
             Hand h = new Hand(new ArrayList<Tile>());
 
             while( h.han==0 ){
