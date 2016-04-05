@@ -407,19 +407,19 @@ public class Tile {
                 break;
             case HONOR:
                 switch (value){
-                    case "EAST":
+                    case "East":
                         return R.drawable.ton;
-                    case "SOUTH":
+                    case "South":
                         return R.drawable.nan;
-                    case "WEST":
+                    case "West":
                         return R.drawable.shaa;
-                    case "NORTH":
+                    case "North":
                         return R.drawable.pei;
-                    case "WHITE":
+                    case "White":
                         return R.drawable.haku;
-                    case "GREEN":
+                    case "Green":
                         return R.drawable.hatsu;
-                    case "RED":
+                    case "Red":
                         return R.drawable.chun;
                 }
                 break;
