@@ -47,7 +47,7 @@ public class ScoreCalculator {
      * this step and be set as the scoredHand immediately.
      */
     private void processUnsortedHand(){
-        if( unsortedHand==null || scoredHand!=null || unsortedHand.tiles.size()<14 || unsortedHand.tiles.size()>18 ){
+        if( unsortedHand==null || unsortedHand.tiles.size()<14 || unsortedHand.tiles.size()>18 ){
             return;
         }
 
@@ -762,7 +762,7 @@ public class ScoreCalculator {
         return count;
     }
 
-    // Unusually structed hands (must be handled seperately
+    // Unusually structed hands (must be handled seperately)
     private void checkChiitoitsu(Hand h){
         Set<Tile> tz = findDuplicateTiles(h.tiles);
         if(tz.size()==7 && findDuplicateTiles(tz).size()==0 ) {
