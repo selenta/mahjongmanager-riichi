@@ -79,26 +79,7 @@ public class HandDisplay extends LinearLayout {
     }
 
     private void simpleAddTile(Tile t){
-//        int r = 2;
-
-//
-//        float[] outerR = new float[] {r, r, r, r, r, r, r, r};
-//        Shape tileOutline = new RoundRectShape(outerR, null, null);
-//        tileOutline.resize((float)width, (float)height);
-//
-//        Drawable tileImage = getContext().getDrawable(t.getImageInt());
-//
-//        Drawable[] layers = new Drawable[2];
-//        layers[0] =   //getResources().getDrawable(R.drawable.t, this);
-//        layers[1] = tileImage;
-//
-//        //TODO Display the god damn tile you piece of shit code, just make it work...
-//        LayerDrawable layerDrawable = new LayerDrawable(layers);
-//
-//        tileList.setImageDrawable(layerDrawable);
-//
-
-        ImageView view = ((MainActivity)context).getUtils().getTileView(t);
+        TextView view = ((MainActivity)context).getUtils().getTileView(t);
         tileList.addView(view);
     }
 
