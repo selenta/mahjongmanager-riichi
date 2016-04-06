@@ -27,6 +27,8 @@ public class HandCalculatorFragment_2WinningTile extends Fragment implements Vie
 
     private Button nextButton;
 
+    //TODO Prevent user from selecting tile involved in Kan as winning tile
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View myInflatedView = inflater.inflate(R.layout.fragment_handcalculator_2winningtile, container, false);
