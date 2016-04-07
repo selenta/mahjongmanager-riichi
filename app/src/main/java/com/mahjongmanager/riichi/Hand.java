@@ -96,27 +96,14 @@ public class Hand {
         sort(unsortedTiles);
     }
     public Hand( Hand oldHand ){
-        for( Tile t : oldHand.tiles ){
-            tiles.add( new Tile(t) );
-        }
-        for( Tile t : oldHand.unsortedTiles ){
-            unsortedTiles.add( new Tile(t) );
-        }
-        for( Tile t : oldHand.pair ){
-            pair.add( new Tile(t) );
-        }
-        for( Tile t : oldHand.set1 ){
-            set1.add( new Tile(t) );
-        }
-        for( Tile t : oldHand.set2 ){
-            set2.add( new Tile(t) );
-        }
-        for( Tile t : oldHand.set3 ){
-            set3.add( new Tile(t) );
-        }
-        for( Tile t : oldHand.set4 ){
-            set4.add( new Tile(t) );
-        }
+        tiles.addAll(oldHand.tiles);
+        unsortedTiles.addAll(oldHand.unsortedTiles);
+        pair.addAll(oldHand.pair);
+        set1.addAll(oldHand.set1);
+        set2.addAll(oldHand.set2);
+        set3.addAll(oldHand.set3);
+        set4.addAll(oldHand.set4);
+
         han = oldHand.han;
         fu  = oldHand.fu;
 
