@@ -6,6 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.mahjongmanager.riichi.Hand;
@@ -40,7 +41,7 @@ public class SpeedQuizFragment_2ScoreHand extends Fragment implements View.OnCli
     private TextView prevailingWindLabel;
     private TextView playerWindLabel;
     private TextView selfDrawLabel;
-    private TextView winningTileLabel;
+    private LinearLayout winningTileContainer;
     private TextView otherYakuLabel;
 
     @Override
@@ -88,12 +89,15 @@ public class SpeedQuizFragment_2ScoreHand extends Fragment implements View.OnCli
         fu = 30;
         ((MainActivity)getActivity()).setCurrentFuGuess(fu);
 
+        handDisplay.setIncludeWinningTile(false);
         handDisplay.setHand(fragHand);
 
         prevailingWindLabel.setText(fragHand.getString(fragHand.prevailingWind));
         playerWindLabel.setText(fragHand.getString(fragHand.playerWind));
         selfDrawLabel.setText((fragHand.selfDrawWinningTile)?"Yes":"No");
-        winningTileLabel.setText(fragHand.getWinningTile().toString());
+
+        TextView winningTileImage = ((MainActivity)getContext()).getUtils().getTileView(fragHand.getWinningTile());
+        winningTileContainer.addView(winningTileImage);
 
         String oys = "Other Yaku: ";
         if( fragHand.nagashiMangan ){
@@ -187,7 +191,7 @@ public class SpeedQuizFragment_2ScoreHand extends Fragment implements View.OnCli
         prevailingWindLabel = (TextView) myInflatedView.findViewById(R.id.prevailingWindLabel);
         playerWindLabel = (TextView) myInflatedView.findViewById(R.id.playerWindLabel);
         selfDrawLabel = (TextView) myInflatedView.findViewById(R.id.selfDrawLabel);
-        winningTileLabel = (TextView) myInflatedView.findViewById(R.id.winningTileLabel);
+        winningTileContainer = (LinearLayout) myInflatedView.findViewById(R.id.winnintTileContainer);
         otherYakuLabel = (TextView) myInflatedView.findViewById(R.id.otherYaku);
     }
 

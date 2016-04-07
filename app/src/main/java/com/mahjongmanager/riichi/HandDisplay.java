@@ -3,9 +3,12 @@ package com.mahjongmanager.riichi;
 import android.content.Context;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.Space;
 import android.widget.TextView;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class HandDisplay extends LinearLayout {
     Context context;
@@ -14,7 +17,7 @@ public class HandDisplay extends LinearLayout {
     private TextView tileText;
 
     private Hand hand;
-    private Boolean simpleDisplay = true;
+    private Boolean includeWinningTile = true;
 
     /////////////////////////////////////////
     ///////////   Constructors   ////////////
@@ -42,12 +45,15 @@ public class HandDisplay extends LinearLayout {
         if(context==null){
             return;
         }
-        displayHand();
     }
 
     ///////////////////////////////////////////
     /////////////     Main     ////////////////
     ///////////////////////////////////////////
+    public void setIncludeWinningTile(boolean bool){
+        includeWinningTile = bool;
+    }
+
     public void setHand(Hand h){
         hand = h;
         displayHand();
@@ -57,33 +63,66 @@ public class HandDisplay extends LinearLayout {
         if( hand==null ){
             return;
         }
-        if( !hand.validateCompleteState() ){
-            simpleDisplay = true;
+        if( !hand.validateCompleteState() || hasAbnormalStructure(hand) ){
             tileText.setText(hand.toString());
             displaySimpleHand();
         } else {
-            simpleDisplay = false;
             tileText.setText(hand.printAllSets());
             displayComplexHand();
-
-            //TODO Temporary. Remove once I have a better way to display complex hands
-            displaySimpleHand();
         }
     }
 
     private void displaySimpleHand(){
         tileList.removeAllViews();
-        for( Tile t : hand.tiles ){
-            simpleAddTile(t);
+        addTiles(hand.tiles);
+    }
+
+    private void displayComplexHand(){
+        Tile winningTile = hand.getWinningTile();
+
+        addTiles(withoutTile(hand.set1, winningTile));
+        addSpacer();
+        addTiles(withoutTile(hand.set2, winningTile));
+        addSpacer();
+        addTiles(withoutTile(hand.set3, winningTile));
+        addSpacer();
+        addTiles(withoutTile(hand.set4, winningTile));
+        addSpacer();
+        addTiles(withoutTile(hand.pair, winningTile));
+        if( includeWinningTile ){
+            addSpacer();
+            addTile(winningTile);
         }
     }
 
-    private void simpleAddTile(Tile t){
+    private List<Tile> withoutTile(List<Tile> tiles, Tile tile){
+        List<Tile> tempList = new ArrayList<>();
+        tempList.addAll(tiles);
+        tempList.remove(tile);
+        return tempList;
+    }
+
+    private void addTiles(List<Tile> tiles){
+        for( Tile t : tiles ){
+            addTile(t);
+        }
+    }
+
+    private void addTile(Tile t){
         TextView view = ((MainActivity)context).getUtils().getTileView(t);
         tileList.addView(view);
     }
 
-    private void displayComplexHand(){
+    private void addSpacer(){
+        Space spacer = new Space(getContext());
+        spacer.setMinimumWidth(15);
+        tileList.addView(spacer);
+    }
 
+    private boolean hasAbnormalStructure(Hand h){
+        if( hand.kokushiMusou || hand.kokushiMusou13wait || hand.chiiToitsu ){
+            return true;
+        }
+        return false;
     }
 }
