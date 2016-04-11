@@ -119,7 +119,7 @@
             android:textSize="16dp" />
 
         <LinearLayout
-            android:id="@+id/winnintTileContainer"
+            android:id="@+id/speedQuizWinningTile"
             android:orientation="horizontal" />
 
         <TextView

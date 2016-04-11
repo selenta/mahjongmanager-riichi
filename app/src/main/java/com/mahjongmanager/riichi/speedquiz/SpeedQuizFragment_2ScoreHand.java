@@ -41,7 +41,7 @@ public class SpeedQuizFragment_2ScoreHand extends Fragment implements View.OnCli
     private TextView prevailingWindLabel;
     private TextView playerWindLabel;
     private TextView selfDrawLabel;
-    private LinearLayout winningTileContainer;
+    private LinearLayout speedQuizWinningTile;
     private TextView otherYakuLabel;
 
     @Override
@@ -97,7 +97,7 @@ public class SpeedQuizFragment_2ScoreHand extends Fragment implements View.OnCli
         selfDrawLabel.setText((fragHand.selfDrawWinningTile)?"Yes":"No");
 
         TextView winningTileImage = ((MainActivity)getContext()).getUtils().getTileView(fragHand.getWinningTile());
-        winningTileContainer.addView(winningTileImage);
+        speedQuizWinningTile.addView(winningTileImage);
 
         String oys = "Other Yaku: ";
         if( fragHand.nagashiMangan ){
@@ -191,7 +191,7 @@ public class SpeedQuizFragment_2ScoreHand extends Fragment implements View.OnCli
         prevailingWindLabel = (TextView) myInflatedView.findViewById(R.id.prevailingWindLabel);
         playerWindLabel = (TextView) myInflatedView.findViewById(R.id.playerWindLabel);
         selfDrawLabel = (TextView) myInflatedView.findViewById(R.id.selfDrawLabel);
-        winningTileContainer = (LinearLayout) myInflatedView.findViewById(R.id.winnintTileContainer);
+        speedQuizWinningTile = (LinearLayout) myInflatedView.findViewById(R.id.speedQuizWinningTile);
         otherYakuLabel = (TextView) myInflatedView.findViewById(R.id.otherYaku);
     }
 
