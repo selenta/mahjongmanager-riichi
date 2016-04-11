@@ -16,9 +16,30 @@
                 android:orientation="horizontal"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:id="@+id/tileList"
                 android:padding="5dp"
-                android:layout_weight="1" />
+                android:layout_weight="1" >
+
+                <LinearLayout
+                    android:orientation="horizontal"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:id="@+id/closedTilesContainer">
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:orientation="horizontal"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:id="@+id/openTilesContainer"
+                    android:layout_gravity="left|bottom"></LinearLayout>
+
+                <LinearLayout
+                    android:orientation="horizontal"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:id="@+id/winningTileContainer"></LinearLayout>
+            </LinearLayout>
         </HorizontalScrollView>
 
         <TextView

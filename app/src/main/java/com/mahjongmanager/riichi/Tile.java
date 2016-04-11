@@ -24,6 +24,7 @@ public class Tile {
     public Integer sortId;
 
     public Boolean red = false;
+    public Boolean faceDown = false;
 
     public Integer number;
     public Dragon dragon;
@@ -34,7 +35,7 @@ public class Tile {
 
     public Boolean winningTile;
 
-    public Tile(String valueString, String suitString ){
+    public Tile( String valueString, String suitString ){
         suit = Suit.valueOf(suitString.toUpperCase());
 
         //check for dragon
@@ -326,6 +327,10 @@ public class Tile {
     }
 
     public Integer getImageInt(){
+        if( faceDown ){
+            return R.drawable.back;
+        }
+
         switch (suit){
             case MANZU:
                 switch (number){

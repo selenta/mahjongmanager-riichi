@@ -258,13 +258,14 @@ public class Hand {
     }
 
 
-    //TODO verify hand consistency, including:
+    // Verify hand consistency, including:
     //TODO can't be haitei without selfDrawWinningTile
     //TODO can't be houtei with Tsumo or selfDrawWinningTile
     //TODO consider other inherently contradictory yaku conditions
     //TODO Chiitoitsu/kokushi/nagashi don't work with most things
     //TODO Can't have Chan Kan if it isn't the winning tile and only copy of tile in hand or if SelfDrawWinningTile is false
     //TODO Can't have Rinshan unless there is at least one Kan, winning tile is not part of kan, and selfDrawWinningTile is true
+    //TODO WinningTile can't be part of a set of 4
     public boolean validateCompleteState(){
         if( unsortedTiles.size()!=0 ){
             Log.e("validateCompleteState", "unsortedTiles is not empty: "+unsortedTiles.toString());
@@ -330,88 +331,12 @@ public class Hand {
             }
 
             //ALl tiles in each set match states
-            if( !validateSet(pair)
-                || !validateSet(set1)
-                || !validateSet(set2)
-                || !validateSet(set3)
-                || !validateSet(set4) ){
+            if( !Utils.validateSet(pair)
+                || !Utils.validateSet(set1)
+                || !Utils.validateSet(set2)
+                || !Utils.validateSet(set3)
+                || !Utils.validateSet(set4) ){
                 return false;
-            }
-        }
-
-        return true;
-    }
-    private boolean validateSet( List<Tile> s ){
-        // calledFrom status is consistent with revealedStatus
-        Tile calledTile = null;
-        for( Tile t : s ){
-            if( calledTile==null && t.calledFrom!=Tile.CalledFrom.NONE ){
-                calledTile = t;
-            } else if( calledTile!=null && t.calledFrom!=Tile.CalledFrom.NONE ){
-                Log.e("validateSet", "More than one tile with a calledFrom status: "+calledTile.toString()+" + "+t.toString());
-                return false;
-            }
-        }
-        Tile.RevealedState otherTileRevealedState = null;
-        for( Tile t : s ){
-            if( otherTileRevealedState==null && t!=calledTile ){
-                otherTileRevealedState = t.revealedState;
-            } else if( otherTileRevealedState!=t.revealedState && t!=calledTile ){
-                Log.e("validateSet", "(Non-called)Tiles do not match revealed states: " + otherTileRevealedState.toString() + " - " + t.revealedState.toString());
-                return false;
-            }
-        }
-        if( otherTileRevealedState==null ){
-            Log.e("validateSet", "Tiles revealedState is not set... this should not be possible");
-            return false;
-        }
-
-        if( calledTile!=null ){
-            switch (calledTile.revealedState){
-                case NONE:
-                    if( s.size()==4 ){
-                        Log.e("validateSet", "Called tile can't be part of 4 set and be closed: "+calledTile.toString()+" - "+calledTile.revealedState.toString()+" - "+printAllSets());
-                        return false;
-                    } else if( !calledTile.winningTile ){
-                        Log.e("validateSet", "Called tile can't be in a revealed state of NONE unless it is a winning tile: "+calledTile.toString()+" - "+calledTile.revealedState.toString()+" - "+printAllSets());
-                        return false;
-                    }
-                    break;
-                case CHI:
-                    if( calledTile.calledFrom!=Tile.CalledFrom.LEFT ){
-                        Log.e("validateSet", "Called tile is part of a run and wasn't called from left player: "+calledTile.toString()+" - "+calledTile.revealedState.toString()+" - "+calledTile.calledFrom.toString());
-                        return false;
-                    }
-                case PON:
-                    if( s.size()!=3 ){
-                        Log.e("validateSet", "Called Chii/Pon must be a set of size 3: "+calledTile.toString()+" - "+calledTile.revealedState.toString()+" - "+s.toString());
-                        return false;
-                    }
-                    break;
-                case CLOSEDKAN:
-                    Log.e("validateSet", "A called tile cannot be part of a closed kan: "+calledTile.toString()+" - "+calledTile.revealedState.toString());
-                    return false;
-                case OPENKAN:
-                    if( s.size()!=4 ){
-                        Log.e("validateSet", "Called OpenKan must be a set of size 4: "+calledTile.toString()+" - "+calledTile.revealedState.toString()+" - "+s.toString());
-                        return false;
-                    }
-                    break;
-                case ADDEDKAN:
-                    if( otherTileRevealedState!=Tile.RevealedState.PON ){
-                        Log.e("validateSet", "Called tile is AddedKan, the rest of the meld is not of status PON: "+otherTileRevealedState.toString());
-                        return false;
-                    }
-                    break;
-            }
-        } else {
-            switch (otherTileRevealedState){
-                case CHI:
-                case PON:
-                case OPENKAN:
-                case ADDEDKAN:
-                    Log.e("validateSet", "Cannot have a revealed Pon/Chii/OpenKan/AddedKan without a called tile: "+otherTileRevealedState.toString());
-                    return false;
             }
         }
 
@@ -542,6 +467,10 @@ public class Hand {
     }
     public boolean hasPlayerWindSet(){
         return countTile(new Tile(playerWind.toString(), "HONOR"))>=3;
+    }
+    // TODO this seems like it should be used more, or shouldn't exist, not sure which
+    public boolean hasAbnormalStructure(){
+        return kokushiMusou || kokushiMusou13wait || chiiToitsu || nagashiMangan;
     }
 
     public void sort(){
