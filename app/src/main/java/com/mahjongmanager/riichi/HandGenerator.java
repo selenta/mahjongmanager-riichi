@@ -178,12 +178,19 @@ public class HandGenerator {
         Tile founder = meld.get(0);
         meld.add(new Tile(founder));
         meld.add(new Tile(founder));
+
+        // TODO add more variety for called sets
     }
     private void expandKan(List<Tile> meld){
         Tile founder = meld.get(0);
         meld.add(new Tile(founder));
         meld.add(new Tile(founder));
         meld.add(new Tile(founder));
+
+        // TODO add more variety for called sets
+        for( Tile t : meld ){
+            t.revealedState=Tile.RevealedState.CLOSEDKAN;
+        }
     }
     private void expandChii(List<Tile> meld){
         Tile founder = meld.get(0);
@@ -198,6 +205,8 @@ public class HandGenerator {
             meld.add(new Tile(founder.number-1, founder.suit.toString()));
             meld.add(new Tile(founder.number+1, founder.suit.toString()));
         }
+
+        // TODO add more variety for called sets
     }
 
 
