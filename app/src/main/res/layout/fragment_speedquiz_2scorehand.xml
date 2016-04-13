@@ -3,9 +3,7 @@
     android:orientation="vertical"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
-    android:scrollIndicators="right"
-    android:id="@+id/fragment_speedquiz_2scorehand"
-    android:nestedScrollingEnabled="false">
+    android:id="@+id/fragment_speedquiz_2scorehand">
 
     <LinearLayout
         android:orientation="horizontal"
@@ -25,9 +23,9 @@
             android:layout_height="wrap_content"
             android:textAppearance="?android:attr/textAppearanceLarge"
             android:id="@+id/secondCounter"
-            android:textSize="38dp"
+            android:textSize="38sp"
             android:textStyle="italic"
-            android:textAlignment="center" />
+            android:layout_gravity="center" />
 
         <TextView
             android:layout_width="wrap_content"
@@ -57,10 +55,9 @@
             android:textAppearance="?android:attr/textAppearanceMedium"
             android:text="Prevailing Wind: "
             android:id="@+id/textView27"
-            android:textAlignment="textEnd"
-            android:layout_columnWeight="1"
             android:textStyle="italic"
-            android:textSize="16dp" />
+            android:textSize="16sp"
+            android:layout_gravity="right" />
 
         <TextView
             android:layout_width="match_parent"
@@ -69,7 +66,7 @@
             android:text="South"
             android:id="@+id/prevailingWindLabel"
             android:textStyle="bold"
-            android:textSize="16dp" />
+            android:textSize="16sp" />
 
         <TextView
             android:layout_width="match_parent"
@@ -77,10 +74,9 @@
             android:textAppearance="?android:attr/textAppearanceMedium"
             android:text="Player Wind: "
             android:id="@+id/textView29"
-            android:textAlignment="textEnd"
-            android:layout_columnWeight="1"
             android:textStyle="italic"
-            android:textSize="16dp" />
+            android:textSize="16sp"
+            android:layout_gravity="right" />
 
         <TextView
             android:layout_width="match_parent"
@@ -89,13 +85,13 @@
             android:text="North"
             android:id="@+id/playerWindLabel"
             android:textStyle="bold"
-            android:textSize="16dp" />
+            android:textSize="16sp" />
 
     </GridLayout>
 
     <com.mahjongmanager.riichi.HandDisplay
         android:layout_width="match_parent"
-        android:layout_height="60dp"
+        android:layout_height="80dp"
         android:id="@+id/handDisplay" />
 
     <GridLayout
@@ -104,8 +100,7 @@
         android:columnCount="2"
         android:rowCount="2"
         android:useDefaultMargins="false"
-        android:layout_gravity="center_horizontal"
-        android:layout_marginBottom="20dp">
+        android:layout_gravity="center_horizontal">
 
         <TextView
             android:layout_width="match_parent"
@@ -113,10 +108,9 @@
             android:textAppearance="?android:attr/textAppearanceMedium"
             android:text="Winning Tile: "
             android:id="@+id/textView23"
-            android:textAlignment="textEnd"
-            android:layout_columnWeight="1"
             android:textStyle="italic"
-            android:textSize="16dp" />
+            android:textSize="16sp"
+            android:layout_gravity="fill_horizontal|right" />
 
         <LinearLayout
             android:id="@+id/speedQuizWinningTile"
@@ -128,10 +122,9 @@
             android:textAppearance="?android:attr/textAppearanceMedium"
             android:text="Self Draw: "
             android:id="@+id/textView38"
-            android:textAlignment="textEnd"
-            android:layout_columnWeight="1"
             android:textStyle="italic"
-            android:textSize="16dp" />
+            android:textSize="16sp"
+            android:layout_gravity="right" />
 
         <TextView
             android:layout_width="match_parent"
@@ -140,128 +133,109 @@
             android:text="No"
             android:id="@+id/selfDrawLabel"
             android:textStyle="bold"
-            android:textSize="16dp" />
+            android:textSize="16sp" />
     </GridLayout>
 
     <TextView
         android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="0dp"
         android:textAppearance="?android:attr/textAppearanceMedium"
         android:text="Other Yaku:"
         android:id="@+id/otherYaku"
-        android:textSize="22dp"
+        android:textSize="22sp"
         android:layout_weight="1"
         android:layout_marginLeft="15dp"
-        android:layout_marginRight="15dp" />
+        android:layout_marginRight="15dp"
+        android:layout_marginTop="10dp" />
 
     <View
         android:layout_width="match_parent"
         android:layout_height="1dp"
         android:background="@android:color/darker_gray"/>
 
-    <TableLayout
-        android:layout_width="fill_parent"
+    <GridLayout
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:stretchColumns="*"
-        android:layout_gravity="center"
-        android:layout_margin="5dp">
+        android:columnCount="2"
+        android:layout_gravity="center_horizontal"
+        android:paddingTop="5dp">
 
-        <TableRow
-            android:layout_width="match_parent"
-            android:layout_height="match_parent" >
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:text="Han"
+            android:id="@+id/textView25"
+            android:textSize="24sp"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginLeft="60dp"
+            android:layout_marginRight="60dp" />
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textAppearance="?android:attr/textAppearanceLarge"
-                android:text="Han"
-                android:id="@+id/textView25"
-                android:textAlignment="center"
-                android:textSize="35dp" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:text="Fu"
+            android:id="@+id/textView26"
+            android:textSize="24sp"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginLeft="60dp"
+            android:layout_marginRight="60dp" />
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textAppearance="?android:attr/textAppearanceLarge"
-                android:text="Fu"
-                android:id="@+id/textView26"
-                android:textAlignment="center"
-                android:textSize="35dp" />
-        </TableRow>
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="    ▲    "
+            android:id="@+id/increaseHanButton"
+            android:onClick="increaseHan"
+            android:textSize="30sp"
+            android:layout_gravity="center_horizontal" />
 
-        <TableRow
-            android:layout_width="match_parent"
-            android:layout_height="match_parent" >
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="    ▲    "
+            android:id="@+id/increaseFuButton"
+            android:onClick="increaseFu"
+            android:textSize="30sp"
+            android:layout_gravity="center_horizontal" />
 
-            <Button
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="▲"
-                android:id="@+id/increaseHanButton"
-                android:onClick="increaseHan"
-                android:layout_marginLeft="25dp"
-                android:layout_marginRight="25dp"
-                android:textSize="30dp" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:id="@+id/hanValue"
+            android:textSize="32sp"
+            android:layout_gravity="center_horizontal"
+            android:text="X" />
 
-            <Button
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="▲"
-                android:id="@+id/increaseFuButton"
-                android:onClick="increaseFu"
-                android:layout_marginLeft="25dp"
-                android:layout_marginRight="25dp"
-                android:textSize="30dp" />
-        </TableRow>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:id="@+id/fuValue"
+            android:textSize="32sp"
+            android:layout_gravity="center_horizontal"
+            android:text="Y" />
 
-        <TableRow
-            android:layout_width="match_parent"
-            android:layout_height="match_parent" >
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="    ▼    "
+            android:id="@+id/decreaseHanButton"
+            android:onClick="decreaseHan"
+            android:textSize="30sp"
+            android:layout_gravity="center_horizontal" />
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textAppearance="?android:attr/textAppearanceLarge"
-                android:id="@+id/hanValue"
-                android:textAlignment="center"
-                android:textSize="35dp" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textAppearance="?android:attr/textAppearanceLarge"
-                android:id="@+id/fuValue"
-                android:textAlignment="center"
-                android:textSize="35dp" />
-        </TableRow>
-
-        <TableRow
-            android:layout_width="match_parent"
-            android:layout_height="match_parent" >
-
-            <Button
-                style="?android:attr/buttonStyleSmall"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="▼"
-                android:id="@+id/decreaseHanButton"
-                android:onClick="decreaseHan"
-                android:layout_marginLeft="25dp"
-                android:layout_marginRight="25dp"
-                android:textSize="30dp" />
-
-            <Button
-                style="?android:attr/buttonStyleSmall"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="▼"
-                android:id="@+id/decreaseFuButton"
-                android:onClick="decreaseFu"
-                android:layout_marginLeft="25dp"
-                android:layout_marginRight="25dp"
-                android:textSize="30dp" />
-        </TableRow>
-    </TableLayout>
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="    ▼    "
+            android:id="@+id/decreaseFuButton"
+            android:onClick="decreaseFu"
+            android:textSize="30sp"
+            android:layout_gravity="center_horizontal" />
+    </GridLayout>
 
     <View
         android:layout_width="match_parent"

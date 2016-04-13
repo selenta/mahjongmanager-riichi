@@ -9,7 +9,7 @@
 
     <ScrollView
         android:layout_width="fill_parent"
-        android:layout_height="fill_parent"
+        android:layout_height="0dp"
         android:id="@+id/scrollView"
         android:scrollIndicators="right"
         android:nestedScrollingEnabled="true"
@@ -24,13 +24,12 @@
             android:nestedScrollingEnabled="true" >
 
             <TextView
-                android:layout_width="fill_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textAppearance="?android:attr/textAppearanceLarge"
                 android:text="Dealer Tsumo"
                 android:id="@+id/textView166"
-                android:textAlignment="center"
-                android:layout_gravity="center"
+                android:layout_gravity="center_horizontal"
                 android:layout_marginTop="15dp" />
 
             <TableLayout
@@ -39,7 +38,6 @@
                 android:measureWithLargestChild="false"
                 android:shrinkColumns="*"
                 android:stretchColumns="*"
-                android:textAlignment="viewEnd"
                 android:background="@drawable/border"
                 android:layout_marginLeft="15dp"
                 android:layout_marginRight="15dp"
@@ -49,7 +47,6 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:measureWithLargestChild="false"
-                    android:textAlignment="inherit"
                     android:background="#eeeeee" >
 
                     <TextView
@@ -57,7 +54,7 @@
                         android:layout_height="wrap_content"
                         android:textAppearance="?android:attr/textAppearanceMedium"
                         android:id="@+id/textView167"
-                        android:textAlignment="center" />
+                        android:layout_gravity="center_horizontal" />
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -66,7 +63,7 @@
                         android:text="1 Han"
                         android:id="@+id/textView168"
                         android:textStyle="bold"
-                        android:textAlignment="center" />
+                        android:layout_gravity="center_horizontal" />
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -75,7 +72,7 @@
                         android:text="2 Han"
                         android:id="@+id/textView169"
                         android:textStyle="bold"
-                        android:textAlignment="center" />
+                        android:layout_gravity="center_horizontal" />
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -84,7 +81,7 @@
                         android:text="3 Han"
                         android:id="@+id/textView170"
                         android:textStyle="bold"
-                        android:textAlignment="center" />
+                        android:layout_gravity="center_horizontal" />
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -93,14 +90,13 @@
                         android:text="4 Han"
                         android:id="@+id/textView171"
                         android:textStyle="bold"
-                        android:textAlignment="center" />
+                        android:layout_gravity="center_horizontal" />
                 </TableRow>
 
                 <TableRow
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:measureWithLargestChild="false"
-                    android:textAlignment="inherit" >
+                    android:measureWithLargestChild="false">
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -109,14 +105,14 @@
                         android:id="@+id/textView172"
                         android:text="20"
                         android:textStyle="bold"
-                        android:textAlignment="center" />
+                        android:layout_gravity="center_horizontal" />
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:textAppearance="?android:attr/textAppearanceSmall"
                         android:id="@+id/textView173"
-                        android:textAlignment="center" />
+                        android:layout_gravity="center_horizontal" />
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -124,7 +120,7 @@
                         android:textAppearance="?android:attr/textAppearanceSmall"
                         android:text="700"
                         android:id="@+id/textView174"
-                        android:textAlignment="center" />
+                        android:layout_gravity="center_horizontal" />
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -132,7 +128,7 @@
                         android:textAppearance="?android:attr/textAppearanceSmall"
                         android:text="1300"
                         android:id="@+id/textView175"
-                        android:textAlignment="center" />
+                        android:layout_gravity="center_horizontal" />
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -140,13 +136,12 @@
                         android:textAppearance="?android:attr/textAppearanceSmall"
                         android:text="2600"
                         android:id="@+id/textView176"
-                        android:textAlignment="center" />
+                        android:layout_gravity="center_horizontal" />
                 </TableRow>
 
                 <TableRow
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:textAlignment="inherit"
                     android:background="#eeeeee" >
 
                     <TextView
@@ -156,21 +151,21 @@
                         android:id="@+id/textView177"
                         android:text="25"
                         android:textStyle="bold"
-                        android:textAlignment="center" />
+                        android:layout_gravity="center_horizontal" />
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:textAppearance="?android:attr/textAppearanceSmall"
                         android:id="@+id/textView178"
-                        android:textAlignment="center" />
+                        android:layout_gravity="center_horizontal" />
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:textAppearance="?android:attr/textAppearanceSmall"
                         android:id="@+id/textView179"
-                        android:textAlignment="center" />
+                        android:layout_gravity="center_horizontal" />
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -178,7 +173,7 @@
                         android:textAppearance="?android:attr/textAppearanceSmall"
                         android:text="1600"
                         android:id="@+id/textView180"
-                        android:textAlignment="center" />
+                        android:layout_gravity="center_horizontal" />
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -186,13 +181,12 @@
                         android:textAppearance="?android:attr/textAppearanceSmall"
                         android:text="3200"
                         android:id="@+id/textView181"
-                        android:textAlignment="center" />
+                        android:layout_gravity="center_horizontal" />
                 </TableRow>
 
                 <TableRow
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:textAlignment="inherit" >
+                    android:layout_height="match_parent">
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -201,7 +195,7 @@
                         android:id="@+id/textView182"
                         android:text="30"
                         android:textStyle="bold"
-                        android:textAlignment="center" />
+                        android:layout_gravity="center_horizontal" />
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -209,7 +203,7 @@
                         android:textAppearance="?android:attr/textAppearanceSmall"
                         android:text="500"
                         android:id="@+id/textView183"
-                        android:textAlignment="center" />
+                        android:layout_gravity="center_horizontal" />
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -217,7 +211,7 @@
                         android:textAppearance="?android:attr/textAppearanceSmall"
                         android:text="1000"
                         android:id="@+id/textView184"
-                        android:textAlignment="center" />
+                        android:layout_gravity="center_horizontal" />
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -225,7 +219,7 @@
                         android:textAppearance="?android:attr/textAppearanceSmall"
                         android:text="2000"
                         android:id="@+id/textView185"
-                        android:textAlignment="center" />
+                        android:layout_gravity="center_horizontal" />
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -233,13 +227,12 @@
                         android:textAppearance="?android:attr/textAppearanceSmall"
                         android:text="3900"
                         android:id="@+id/textView186"
-                        android:textAlignment="center" />
+                        android:layout_gravity="center_horizontal" />
                 </TableRow>
 
                 <TableRow
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:textAlignment="inherit"
                     android:background="#eeeeee" >
 
                     <TextView
@@ -249,7 +242,7 @@
                         android:id="@+id/textView187"
                         android:text="40"
                         android:textStyle="bold"
-                        android:textAlignment="center" />
+                        android:layout_gravity="center_horizontal" />
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -257,7 +250,7 @@
                         android:textAppearance="?android:attr/textAppearanceSmall"
                         android:text="700"
                         android:id="@+id/textView188"
-                        android:textAlignment="center" />
+                        android:layout_gravity="center_horizontal" />
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -265,7 +258,7 @@
                         android:textAppearance="?android:attr/textAppearanceSmall"
                         android:text="1300"
                         android:id="@+id/textView189"
-                        android:textAlignment="center" />
+                        android:layout_gravity="center_horizontal" />
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -273,7 +266,7 @@
                         android:textAppearance="?android:attr/textAppearanceSmall"
                         android:text="2600"
                         android:id="@+id/textView190"
-                        android:textAlignment="center" />
+                        android:layout_gravity="center_horizontal" />
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -281,13 +274,12 @@
                         android:textAppearance="?android:attr/textAppearanceSmall"
                         android:text="4000"
                         android:id="@+id/textView191"
-                        android:textAlignment="center" />
+                        android:layout_gravity="center_horizontal" />
                 </TableRow>
 
                 <TableRow
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:textAlignment="inherit" >
+                    android:layout_height="match_parent">
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -296,7 +288,7 @@
                         android:id="@+id/textView192"
                         android:text="50"
                         android:textStyle="bold"
-                        android:textAlignment="center" />
+                        android:layout_gravity="center_horizontal" />
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -304,7 +296,7 @@
                         android:textAppearance="?android:attr/textAppearanceSmall"
                         android:text="800"
                         android:id="@+id/textView193"
-                        android:textAlignment="center" />
+                        android:layout_gravity="center_horizontal" />
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -312,7 +304,7 @@
                         android:textAppearance="?android:attr/textAppearanceSmall"
                         android:text="1600"
                         android:id="@+id/textView194"
-                        android:textAlignment="center" />
+                        android:layout_gravity="center_horizontal" />
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -320,7 +312,7 @@
                         android:textAppearance="?android:attr/textAppearanceSmall"
                         android:text="3200"
                         android:id="@+id/textView195"
-                        android:textAlignment="center" />
+                        android:layout_gravity="center_horizontal" />
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -328,13 +320,12 @@
                         android:textAppearance="?android:attr/textAppearanceSmall"
                         android:text="4000"
                         android:id="@+id/textView196"
-                        android:textAlignment="center" />
+                        android:layout_gravity="center_horizontal" />
                 </TableRow>
 
                 <TableRow
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:textAlignment="inherit"
                     android:background="#eeeeee" >
 
                     <TextView
@@ -344,7 +335,7 @@
                         android:id="@+id/textView197"
                         android:text="60"
                         android:textStyle="bold"
-                        android:textAlignment="center" />
+                        android:layout_gravity="center_horizontal" />
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -352,7 +343,7 @@
                         android:textAppearance="?android:attr/textAppearanceSmall"
                         android:text="1000"
                         android:id="@+id/textView198"
-                        android:textAlignment="center" />
+                        android:layout_gravity="center_horizontal" />
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -360,7 +351,7 @@
                         android:textAppearance="?android:attr/textAppearanceSmall"
                         android:text="2000"
                         android:id="@+id/textView199"
-                        android:textAlignment="center" />
+                        android:layout_gravity="center_horizontal" />
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -368,7 +359,7 @@
                         android:textAppearance="?android:attr/textAppearanceSmall"
                         android:text="3900"
                         android:id="@+id/textView200"
-                        android:textAlignment="center" />
+                        android:layout_gravity="center_horizontal" />
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -376,13 +367,12 @@
                         android:textAppearance="?android:attr/textAppearanceSmall"
                         android:text="4000"
                         android:id="@+id/textView201"
-                        android:textAlignment="center" />
+                        android:layout_gravity="center_horizontal" />
                 </TableRow>
 
                 <TableRow
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:textAlignment="inherit" >
+                    android:layout_height="match_parent">
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -391,7 +381,7 @@
                         android:id="@+id/textView202"
                         android:text="70"
                         android:textStyle="bold"
-                        android:textAlignment="center" />
+                        android:layout_gravity="center_horizontal" />
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -399,7 +389,7 @@
                         android:textAppearance="?android:attr/textAppearanceSmall"
                         android:text="1200"
                         android:id="@+id/textView203"
-                        android:textAlignment="center" />
+                        android:layout_gravity="center_horizontal" />
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -407,7 +397,7 @@
                         android:textAppearance="?android:attr/textAppearanceSmall"
                         android:text="2300"
                         android:id="@+id/textView204"
-                        android:textAlignment="center" />
+                        android:layout_gravity="center_horizontal" />
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -415,7 +405,7 @@
                         android:textAppearance="?android:attr/textAppearanceSmall"
                         android:text="4000"
                         android:id="@+id/textView205"
-                        android:textAlignment="center" />
+                        android:layout_gravity="center_horizontal" />
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -423,18 +413,17 @@
                         android:textAppearance="?android:attr/textAppearanceSmall"
                         android:text="4000"
                         android:id="@+id/textView206"
-                        android:textAlignment="center" />
+                        android:layout_gravity="center_horizontal" />
                 </TableRow>
             </TableLayout>
 
             <TextView
-                android:layout_width="fill_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textAppearance="?android:attr/textAppearanceLarge"
                 android:text="Dealer Ron"
                 android:id="@+id/textView207"
-                android:textAlignment="center"
-                android:layout_gravity="center"
+                android:layout_gravity="center_horizontal"
                 android:layout_marginTop="15dp" />
 
             <TableLayout
@@ -443,7 +432,6 @@
                 android:measureWithLargestChild="false"
                 android:shrinkColumns="*"
                 android:stretchColumns="*"
-                android:textAlignment="viewEnd"
                 android:background="@drawable/border"
                 android:layout_marginLeft="15dp"
                 android:layout_marginRight="15dp"
@@ -453,7 +441,6 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:measureWithLargestChild="false"
-                    android:textAlignment="inherit"
                     android:background="#eeeeee" >
 
                     <TextView
@@ -461,7 +448,7 @@
                         android:layout_height="wrap_content"
                         android:textAppearance="?android:attr/textAppearanceMedium"
                         android:id="@+id/textView208"
-                        android:textAlignment="center" />
+                        android:layout_gravity="center_horizontal" />
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -470,7 +457,7 @@
                         android:text="1 Han"
                         android:id="@+id/textView209"
                         android:textStyle="bold"
-                        android:textAlignment="center" />
+                        android:layout_gravity="center_horizontal" />
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -479,7 +466,7 @@
                         android:text="2 Han"
                         android:id="@+id/textView210"
                         android:textStyle="bold"
-                        android:textAlignment="center" />
+                        android:layout_gravity="center_horizontal" />
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -488,7 +475,7 @@
                         android:text="3 Han"
                         android:id="@+id/textView211"
                         android:textStyle="bold"
-                        android:textAlignment="center" />
+                        android:layout_gravity="center_horizontal" />
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -497,14 +484,13 @@
                         android:text="4 Han"
                         android:id="@+id/textView212"
                         android:textStyle="bold"
-                        android:textAlignment="center" />
+                        android:layout_gravity="center_horizontal" />
                 </TableRow>
 
                 <TableRow
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:measureWithLargestChild="false"
-                    android:textAlignment="inherit" >
+                    android:measureWithLargestChild="false">
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -513,41 +499,40 @@
                         android:id="@+id/textView213"
                         android:text="20"
                         android:textStyle="bold"
-                        android:textAlignment="center" />
+                        android:layout_gravity="center_horizontal" />
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:textAppearance="?android:attr/textAppearanceSmall"
                         android:id="@+id/textView214"
-                        android:textAlignment="center" />
+                        android:layout_gravity="center_horizontal" />
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:textAppearance="?android:attr/textAppearanceSmall"
                         android:id="@+id/textView215"
-                        android:textAlignment="center" />
+                        android:layout_gravity="center_horizontal" />
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:textAppearance="?android:attr/textAppearanceSmall"
                         android:id="@+id/textView216"
-                        android:textAlignment="center" />
+                        android:layout_gravity="center_horizontal" />
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:textAppearance="?android:attr/textAppearanceSmall"
                         android:id="@+id/textView217"
-                        android:textAlignment="center" />
+                        android:layout_gravity="center_horizontal" />
                 </TableRow>
 
                 <TableRow
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:textAlignment="inherit"
                     android:background="#eeeeee" >
 
                     <TextView
@@ -557,22 +542,22 @@
                         android:id="@+id/textView218"
                         android:text="25"
                         android:textStyle="bold"
-                        android:textAlignment="center" />
+                        android:layout_gravity="center_horizontal" />
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:textAppearance="?android:attr/textAppearanceSmall"
                         android:id="@+id/textView219"
-                        android:textAlignment="center" />
+                        android:layout_gravity="center_horizontal" />
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:textAppearance="?android:attr/textAppearanceSmall"
                         android:id="@+id/textView220"
-                        android:textAlignment="center"
-                        android:text="2400" />
+                        android:text="2400"
+                        android:layout_gravity="center_horizontal" />
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -580,7 +565,7 @@
                         android:textAppearance="?android:attr/textAppearanceSmall"
                         android:text="4800"
                         android:id="@+id/textView221"
-                        android:textAlignment="center" />
+                        android:layout_gravity="center_horizontal" />
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -588,13 +573,12 @@
                         android:textAppearance="?android:attr/textAppearanceSmall"
                         android:text="9600"
                         android:id="@+id/textView222"
-                        android:textAlignment="center" />
+                        android:layout_gravity="center_horizontal" />
                 </TableRow>
 
                 <TableRow
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:textAlignment="inherit" >
+                    android:layout_height="match_parent">
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -603,7 +587,7 @@
                         android:id="@+id/textView223"
                         android:text="30"
                         android:textStyle="bold"
-                        android:textAlignment="center" />
+                        android:layout_gravity="center_horizontal" />
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -611,7 +595,7 @@
                         android:textAppearance="?android:attr/textAppearanceSmall"
                         android:text="1500"
                         android:id="@+id/textView224"
-                        android:textAlignment="center" />
+                        android:layout_gravity="center_horizontal" />
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -619,7 +603,7 @@
                         android:textAppearance="?android:attr/textAppearanceSmall"
                         android:text="2900"
                         android:id="@+id/textView225"
-                        android:textAlignment="center" />
+                        android:layout_gravity="center_horizontal" />
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -627,7 +611,7 @@
                         android:textAppearance="?android:attr/textAppearanceSmall"
                         android:text="5800"
                         android:id="@+id/textView226"
-                        android:textAlignment="center" />
+                        android:layout_gravity="center_horizontal" />
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -635,13 +619,12 @@
                         android:textAppearance="?android:attr/textAppearanceSmall"
                         android:text="11600"
                         android:id="@+id/textView227"
-                        android:textAlignment="center" />
+                        android:layout_gravity="center_horizontal" />
                 </TableRow>
 
                 <TableRow
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:textAlignment="inherit"
                     android:background="#eeeeee" >
 
                     <TextView
@@ -651,7 +634,7 @@
                         android:id="@+id/textView228"
                         android:text="40"
                         android:textStyle="bold"
-                        android:textAlignment="center" />
+                        android:layout_gravity="center_horizontal" />
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -659,7 +642,7 @@
                         android:textAppearance="?android:attr/textAppearanceSmall"
                         android:text="2000"
                         android:id="@+id/textView229"
-                        android:textAlignment="center" />
+                        android:layout_gravity="center_horizontal" />
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -667,7 +650,7 @@
                         android:textAppearance="?android:attr/textAppearanceSmall"
                         android:text="3900"
                         android:id="@+id/textView230"
-                        android:textAlignment="center" />
+                        android:layout_gravity="center_horizontal" />
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -675,7 +658,7 @@
                         android:textAppearance="?android:attr/textAppearanceSmall"
                         android:text="7700"
                         android:id="@+id/textView231"
-                        android:textAlignment="center" />
+                        android:layout_gravity="center_horizontal" />
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -683,13 +666,12 @@
                         android:textAppearance="?android:attr/textAppearanceSmall"
                         android:text="12000"
                         android:id="@+id/textView232"
-                        android:textAlignment="center" />
+                        android:layout_gravity="center_horizontal" />
                 </TableRow>
 
                 <TableRow
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:textAlignment="inherit" >
+                    android:layout_height="match_parent">
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -698,7 +680,7 @@
                         android:id="@+id/textView233"
                         android:text="50"
                         android:textStyle="bold"
-                        android:textAlignment="center" />
+                        android:layout_gravity="center_horizontal" />
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -706,7 +688,7 @@
                         android:textAppearance="?android:attr/textAppearanceSmall"
                         android:text="2400"
                         android:id="@+id/textView234"
-                        android:textAlignment="center" />
+                        android:layout_gravity="center_horizontal" />
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -714,7 +696,7 @@
                         android:textAppearance="?android:attr/textAppearanceSmall"
                         android:text="4800"
                         android:id="@+id/textView235"
-                        android:textAlignment="center" />
+                        android:layout_gravity="center_horizontal" />
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -722,7 +704,7 @@
                         android:textAppearance="?android:attr/textAppearanceSmall"
                         android:text="9600"
                         android:id="@+id/textView236"
-                        android:textAlignment="center" />
+                        android:layout_gravity="center_horizontal" />
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -730,13 +712,12 @@
                         android:textAppearance="?android:attr/textAppearanceSmall"
                         android:text="12000"
                         android:id="@+id/textView237"
-                        android:textAlignment="center" />
+                        android:layout_gravity="center_horizontal" />
                 </TableRow>
 
                 <TableRow
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:textAlignment="inherit"
                     android:background="#eeeeee" >
 
                     <TextView
@@ -746,7 +727,7 @@
                         android:id="@+id/textView238"
                         android:text="60"
                         android:textStyle="bold"
-                        android:textAlignment="center" />
+                        android:layout_gravity="center_horizontal" />
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -754,7 +735,7 @@
                         android:textAppearance="?android:attr/textAppearanceSmall"
                         android:text="2900"
                         android:id="@+id/textView239"
-                        android:textAlignment="center" />
+                        android:layout_gravity="center_horizontal" />
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -762,7 +743,7 @@
                         android:textAppearance="?android:attr/textAppearanceSmall"
                         android:text="5800"
                         android:id="@+id/textView240"
-                        android:textAlignment="center" />
+                        android:layout_gravity="center_horizontal" />
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -770,7 +751,7 @@
                         android:textAppearance="?android:attr/textAppearanceSmall"
                         android:text="11600"
                         android:id="@+id/textView241"
-                        android:textAlignment="center" />
+                        android:layout_gravity="center_horizontal" />
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -778,13 +759,12 @@
                         android:textAppearance="?android:attr/textAppearanceSmall"
                         android:text="12000"
                         android:id="@+id/textView242"
-                        android:textAlignment="center" />
+                        android:layout_gravity="center_horizontal" />
                 </TableRow>
 
                 <TableRow
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:textAlignment="inherit" >
+                    android:layout_height="match_parent">
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -793,7 +773,7 @@
                         android:id="@+id/textView243"
                         android:text="70"
                         android:textStyle="bold"
-                        android:textAlignment="center" />
+                        android:layout_gravity="center_horizontal" />
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -801,7 +781,7 @@
                         android:textAppearance="?android:attr/textAppearanceSmall"
                         android:text="3400"
                         android:id="@+id/textView244"
-                        android:textAlignment="center" />
+                        android:layout_gravity="center_horizontal" />
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -809,7 +789,7 @@
                         android:textAppearance="?android:attr/textAppearanceSmall"
                         android:text="6800"
                         android:id="@+id/textView245"
-                        android:textAlignment="center" />
+                        android:layout_gravity="center_horizontal" />
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -817,7 +797,7 @@
                         android:textAppearance="?android:attr/textAppearanceSmall"
                         android:text="12000"
                         android:id="@+id/textView246"
-                        android:textAlignment="center" />
+                        android:layout_gravity="center_horizontal" />
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -825,18 +805,17 @@
                         android:textAppearance="?android:attr/textAppearanceSmall"
                         android:text="12000"
                         android:id="@+id/textView247"
-                        android:textAlignment="center" />
+                        android:layout_gravity="center_horizontal" />
                 </TableRow>
             </TableLayout>
 
             <TextView
-                android:layout_width="fill_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textAppearance="?android:attr/textAppearanceLarge"
                 android:text="Child Tsumo"
                 android:id="@+id/textView248"
-                android:textAlignment="center"
-                android:layout_gravity="center"
+                android:layout_gravity="center_horizontal"
                 android:layout_marginTop="15dp" />
 
             <TableLayout
@@ -845,7 +824,6 @@
                 android:measureWithLargestChild="false"
                 android:shrinkColumns="*"
                 android:stretchColumns="*"
-                android:textAlignment="viewEnd"
                 android:background="@drawable/border"
                 android:layout_marginLeft="15dp"
                 android:layout_marginRight="15dp"
@@ -855,7 +833,6 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:measureWithLargestChild="false"
-                    android:textAlignment="inherit"
                     android:background="#eeeeee" >
 
                     <TextView
@@ -863,7 +840,7 @@
                         android:layout_height="wrap_content"
                         android:textAppearance="?android:attr/textAppearanceMedium"
                         android:id="@+id/textView249"
-                        android:textAlignment="center" />
+                        android:layout_gravity="center_horizontal" />
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -872,7 +849,7 @@
                         android:text="1 Han"
                         android:id="@+id/textView250"
                         android:textStyle="bold"
-                        android:textAlignment="center" />
+                        android:layout_gravity="center_horizontal" />
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -881,7 +858,7 @@
                         android:text="2 Han"
                         android:id="@+id/textView251"
                         android:textStyle="bold"
-                        android:textAlignment="center" />
+                        android:layout_gravity="center_horizontal" />
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -890,7 +867,7 @@
                         android:text="3 Han"
                         android:id="@+id/textView252"
                         android:textStyle="bold"
-                        android:textAlignment="center" />
+                        android:layout_gravity="center_horizontal" />
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -899,14 +876,13 @@
                         android:text="4 Han"
                         android:id="@+id/textView253"
                         android:textStyle="bold"
-                        android:textAlignment="center" />
+                        android:layout_gravity="center_horizontal" />
                 </TableRow>
 
                 <TableRow
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:measureWithLargestChild="false"
-                    android:textAlignment="inherit" >
+                    android:measureWithLargestChild="false">
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -915,14 +891,14 @@
                         android:id="@+id/textView254"
                         android:text="20"
                         android:textStyle="bold"
-                        android:textAlignment="center" />
+                        android:layout_gravity="center_horizontal" />
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:textAppearance="?android:attr/textAppearanceSmall"
                         android:id="@+id/textView255"
-                        android:textAlignment="center" />
+                        android:layout_gravity="center_horizontal" />
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -930,7 +906,7 @@
                         android:textAppearance="?android:attr/textAppearanceSmall"
                         android:text="400/700"
                         android:id="@+id/textView256"
-                        android:textAlignment="center" />
+                        android:layout_gravity="center_horizontal" />
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -938,7 +914,7 @@
                         android:textAppearance="?android:attr/textAppearanceSmall"
                         android:text="700/1300"
                         android:id="@+id/textView257"
-                        android:textAlignment="center" />
+                        android:layout_gravity="center_horizontal" />
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -946,13 +922,12 @@
                         android:textAppearance="?android:attr/textAppearanceSmall"
                         android:text="1300/2600"
                         android:id="@+id/textView258"
-                        android:textAlignment="center" />
+                        android:layout_gravity="center_horizontal" />
                 </TableRow>
 
                 <TableRow
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:textAlignment="inherit"
                     android:background="#eeeeee" >
 
                     <TextView
@@ -962,21 +937,21 @@
                         android:id="@+id/textView259"
                         android:text="25"
                         android:textStyle="bold"
-                        android:textAlignment="center" />
+                        android:layout_gravity="center_horizontal" />
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:textAppearance="?android:attr/textAppearanceSmall"
                         android:id="@+id/textView260"
-                        android:textAlignment="center" />
+                        android:layout_gravity="center_horizontal" />
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:textAppearance="?android:attr/textAppearanceSmall"
                         android:id="@+id/textView261"
-                        android:textAlignment="center" />
+                        android:layout_gravity="center_horizontal" />
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -984,7 +959,7 @@
                         android:textAppearance="?android:attr/textAppearanceSmall"
                         android:text="800/1600"
                         android:id="@+id/textView262"
-                        android:textAlignment="center" />
+                        android:layout_gravity="center_horizontal" />
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -992,13 +967,12 @@
                         android:textAppearance="?android:attr/textAppearanceSmall"
                         android:text="1600/3200"
                         android:id="@+id/textView263"
-                        android:textAlignment="center" />
+                        android:layout_gravity="center_horizontal" />
                 </TableRow>
 
                 <TableRow
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:textAlignment="inherit" >
+                    android:layout_height="match_parent">
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -1007,7 +981,7 @@
                         android:id="@+id/textView264"
                         android:text="30"
                         android:textStyle="bold"
-                        android:textAlignment="center" />
+                        android:layout_gravity="center_horizontal" />
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -1015,7 +989,7 @@
                         android:textAppearance="?android:attr/textAppearanceSmall"
                         android:text="300/500"
                         android:id="@+id/textView265"
-                        android:textAlignment="center" />
+                        android:layout_gravity="center_horizontal" />
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -1023,7 +997,7 @@
                         android:textAppearance="?android:attr/textAppearanceSmall"
                         android:text="500/1000"
                         android:id="@+id/textView266"
-                        android:textAlignment="center" />
+                        android:layout_gravity="center_horizontal" />
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -1031,7 +1005,7 @@
                         android:textAppearance="?android:attr/textAppearanceSmall"
                         android:text="1000/2000"
                         android:id="@+id/textView267"
-                        android:textAlignment="center" />
+                        android:layout_gravity="center_horizontal" />
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -1039,13 +1013,12 @@
                         android:textAppearance="?android:attr/textAppearanceSmall"
                         android:text="2000/3900"
                         android:id="@+id/textView268"
-                        android:textAlignment="center" />
+                        android:layout_gravity="center_horizontal" />
                 </TableRow>
 
                 <TableRow
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:textAlignment="inherit"
                     android:background="#eeeeee" >
 
                     <TextView
@@ -1055,7 +1028,7 @@
                         android:id="@+id/textView269"
                         android:text="40"
                         android:textStyle="bold"
-                        android:textAlignment="center" />
+                        android:layout_gravity="center_horizontal" />
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -1063,7 +1036,7 @@
                         android:textAppearance="?android:attr/textAppearanceSmall"
                         android:text="400/700"
                         android:id="@+id/textView270"
-                        android:textAlignment="center" />
+                        android:layout_gravity="center_horizontal" />
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -1071,7 +1044,7 @@
                         android:textAppearance="?android:attr/textAppearanceSmall"
                         android:text="700/1300"
                         android:id="@+id/textView271"
-                        android:textAlignment="center" />
+                        android:layout_gravity="center_horizontal" />
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -1079,7 +1052,7 @@
                         android:textAppearance="?android:attr/textAppearanceSmall"
                         android:text="1300/2600"
                         android:id="@+id/textView272"
-                        android:textAlignment="center" />
+                        android:layout_gravity="center_horizontal" />
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -1087,13 +1060,12 @@
                         android:textAppearance="?android:attr/textAppearanceSmall"
                         android:text="2000/4000"
                         android:id="@+id/textView273"
-                        android:textAlignment="center" />
+                        android:layout_gravity="center_horizontal" />
                 </TableRow>
 
                 <TableRow
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:textAlignment="inherit" >
+                    android:layout_height="match_parent">
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -1102,7 +1074,7 @@
                         android:id="@+id/textView274"
                         android:text="50"
                         android:textStyle="bold"
-                        android:textAlignment="center" />
+                        android:layout_gravity="center_horizontal" />
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -1110,7 +1082,7 @@
                         android:textAppearance="?android:attr/textAppearanceSmall"
                         android:text="400/800"
                         android:id="@+id/textView275"
-                        android:textAlignment="center" />
+                        android:layout_gravity="center_horizontal" />
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -1118,7 +1090,7 @@
                         android:textAppearance="?android:attr/textAppearanceSmall"
                         android:text="800/1600"
                         android:id="@+id/textView276"
-                        android:textAlignment="center" />
+                        android:layout_gravity="center_horizontal" />
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -1126,7 +1098,7 @@
                         android:textAppearance="?android:attr/textAppearanceSmall"
                         android:text="1600/3200"
                         android:id="@+id/textView277"
-                        android:textAlignment="center" />
+                        android:layout_gravity="center_horizontal" />
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -1134,13 +1106,12 @@
                         android:textAppearance="?android:attr/textAppearanceSmall"
                         android:text="2000/4000"
                         android:id="@+id/textView278"
-                        android:textAlignment="center" />
+                        android:layout_gravity="center_horizontal" />
                 </TableRow>
 
                 <TableRow
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:textAlignment="inherit"
                     android:background="#eeeeee" >
 
                     <TextView
@@ -1150,7 +1121,7 @@
                         android:id="@+id/textView279"
                         android:text="60"
                         android:textStyle="bold"
-                        android:textAlignment="center" />
+                        android:layout_gravity="center_horizontal" />
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -1158,7 +1129,7 @@
                         android:textAppearance="?android:attr/textAppearanceSmall"
                         android:text="500/1000"
                         android:id="@+id/textView280"
-                        android:textAlignment="center" />
+                        android:layout_gravity="center_horizontal" />
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -1166,7 +1137,7 @@
                         android:textAppearance="?android:attr/textAppearanceSmall"
                         android:text="1000/2000"
                         android:id="@+id/textView281"
-                        android:textAlignment="center" />
+                        android:layout_gravity="center_horizontal" />
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -1174,7 +1145,7 @@
                         android:textAppearance="?android:attr/textAppearanceSmall"
                         android:text="2000/3900"
                         android:id="@+id/textView282"
-                        android:textAlignment="center" />
+                        android:layout_gravity="center_horizontal" />
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -1182,13 +1153,12 @@
                         android:textAppearance="?android:attr/textAppearanceSmall"
                         android:text="2000/4000"
                         android:id="@+id/textView283"
-                        android:textAlignment="center" />
+                        android:layout_gravity="center_horizontal" />
                 </TableRow>
 
                 <TableRow
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:textAlignment="inherit" >
+                    android:layout_height="match_parent">
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -1197,7 +1167,7 @@
                         android:id="@+id/textView284"
                         android:text="70"
                         android:textStyle="bold"
-                        android:textAlignment="center" />
+                        android:layout_gravity="center_horizontal" />
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -1205,7 +1175,7 @@
                         android:textAppearance="?android:attr/textAppearanceSmall"
                         android:text="600/1200"
                         android:id="@+id/textView285"
-                        android:textAlignment="center" />
+                        android:layout_gravity="center_horizontal" />
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -1213,7 +1183,7 @@
                         android:textAppearance="?android:attr/textAppearanceSmall"
                         android:text="1200/2300"
                         android:id="@+id/textView286"
-                        android:textAlignment="center" />
+                        android:layout_gravity="center_horizontal" />
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -1221,7 +1191,7 @@
                         android:textAppearance="?android:attr/textAppearanceSmall"
                         android:text="2000/4000"
                         android:id="@+id/textView287"
-                        android:textAlignment="center" />
+                        android:layout_gravity="center_horizontal" />
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -1229,18 +1199,17 @@
                         android:textAppearance="?android:attr/textAppearanceSmall"
                         android:text="2000/4000"
                         android:id="@+id/textView288"
-                        android:textAlignment="center" />
+                        android:layout_gravity="center_horizontal" />
                 </TableRow>
             </TableLayout>
 
             <TextView
-                android:layout_width="fill_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textAppearance="?android:attr/textAppearanceLarge"
                 android:text="Child Ron"
                 android:id="@+id/textView289"
-                android:textAlignment="center"
-                android:layout_gravity="center"
+                android:layout_gravity="center_horizontal"
                 android:layout_marginTop="15dp" />
 
             <TableLayout
@@ -1249,7 +1218,6 @@
                 android:measureWithLargestChild="false"
                 android:shrinkColumns="*"
                 android:stretchColumns="*"
-                android:textAlignment="viewEnd"
                 android:background="@drawable/border"
                 android:layout_marginLeft="15dp"
                 android:layout_marginRight="15dp"
@@ -1259,7 +1227,6 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:measureWithLargestChild="false"
-                    android:textAlignment="inherit"
                     android:background="#eeeeee" >
 
                     <TextView
@@ -1267,7 +1234,7 @@
                         android:layout_height="wrap_content"
                         android:textAppearance="?android:attr/textAppearanceMedium"
                         android:id="@+id/textView290"
-                        android:textAlignment="center" />
+                        android:layout_gravity="center_horizontal" />
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -1276,7 +1243,7 @@
                         android:text="1 Han"
                         android:id="@+id/textView291"
                         android:textStyle="bold"
-                        android:textAlignment="center" />
+                        android:layout_gravity="center_horizontal" />
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -1285,7 +1252,7 @@
                         android:text="2 Han"
                         android:id="@+id/textView292"
                         android:textStyle="bold"
-                        android:textAlignment="center" />
+                        android:layout_gravity="center_horizontal" />
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -1294,7 +1261,7 @@
                         android:text="3 Han"
                         android:id="@+id/textView293"
                         android:textStyle="bold"
-                        android:textAlignment="center" />
+                        android:layout_gravity="center_horizontal" />
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -1303,14 +1270,13 @@
                         android:text="4 Han"
                         android:id="@+id/textView294"
                         android:textStyle="bold"
-                        android:textAlignment="center" />
+                        android:layout_gravity="center_horizontal" />
                 </TableRow>
 
                 <TableRow
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:measureWithLargestChild="false"
-                    android:textAlignment="inherit" >
+                    android:measureWithLargestChild="false">
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -1319,41 +1285,40 @@
                         android:id="@+id/textView295"
                         android:text="20"
                         android:textStyle="bold"
-                        android:textAlignment="center" />
+                        android:layout_gravity="center_horizontal" />
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:textAppearance="?android:attr/textAppearanceSmall"
                         android:id="@+id/textView296"
-                        android:textAlignment="center" />
+                        android:layout_gravity="center_horizontal" />
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:textAppearance="?android:attr/textAppearanceSmall"
                         android:id="@+id/textView297"
-                        android:textAlignment="center" />
+                        android:layout_gravity="center_horizontal" />
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:textAppearance="?android:attr/textAppearanceSmall"
                         android:id="@+id/textView298"
-                        android:textAlignment="center" />
+                        android:layout_gravity="center_horizontal" />
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:textAppearance="?android:attr/textAppearanceSmall"
                         android:id="@+id/textView299"
-                        android:textAlignment="center" />
+                        android:layout_gravity="center_horizontal" />
                 </TableRow>
 
                 <TableRow
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:textAlignment="inherit"
                     android:background="#eeeeee" >
 
                     <TextView
@@ -1363,22 +1328,22 @@
                         android:id="@+id/textView300"
                         android:text="25"
                         android:textStyle="bold"
-                        android:textAlignment="center" />
+                        android:layout_gravity="center_horizontal" />
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:textAppearance="?android:attr/textAppearanceSmall"
                         android:id="@+id/textView301"
-                        android:textAlignment="center" />
+                        android:layout_gravity="center_horizontal" />
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:textAppearance="?android:attr/textAppearanceSmall"
                         android:id="@+id/textView302"
-                        android:textAlignment="center"
-                        android:text="1600" />
+                        android:text="1600"
+                        android:layout_gravity="center_horizontal" />
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -1386,7 +1351,7 @@
                         android:textAppearance="?android:attr/textAppearanceSmall"
                         android:text="3200"
                         android:id="@+id/textView303"
-                        android:textAlignment="center" />
+                        android:layout_gravity="center_horizontal" />
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -1394,13 +1359,12 @@
                         android:textAppearance="?android:attr/textAppearanceSmall"
                         android:text="6400"
                         android:id="@+id/textView304"
-                        android:textAlignment="center" />
+                        android:layout_gravity="center_horizontal" />
                 </TableRow>
 
                 <TableRow
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:textAlignment="inherit" >
+                    android:layout_height="match_parent">
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -1409,7 +1373,7 @@
                         android:id="@+id/textView305"
                         android:text="30"
                         android:textStyle="bold"
-                        android:textAlignment="center" />
+                        android:layout_gravity="center_horizontal" />
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -1417,8 +1381,8 @@
                         android:textAppearance="?android:attr/textAppearanceSmall"
                         android:text="1000"
                         android:id="@+id/textView306"
-                        android:textAlignment="center"
-                        android:singleLine="true" />
+                        android:singleLine="true"
+                        android:layout_gravity="center_horizontal" />
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -1426,7 +1390,7 @@
                         android:textAppearance="?android:attr/textAppearanceSmall"
                         android:text="2000"
                         android:id="@+id/textView307"
-                        android:textAlignment="center" />
+                        android:layout_gravity="center_horizontal" />
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -1434,7 +1398,7 @@
                         android:textAppearance="?android:attr/textAppearanceSmall"
                         android:text="3900"
                         android:id="@+id/textView308"
-                        android:textAlignment="center" />
+                        android:layout_gravity="center_horizontal" />
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -1442,13 +1406,12 @@
                         android:textAppearance="?android:attr/textAppearanceSmall"
                         android:text="7700"
                         android:id="@+id/textView309"
-                        android:textAlignment="center" />
+                        android:layout_gravity="center_horizontal" />
                 </TableRow>
 
                 <TableRow
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:textAlignment="inherit"
                     android:background="#eeeeee" >
 
                     <TextView
@@ -1458,7 +1421,7 @@
                         android:id="@+id/textView310"
                         android:text="40"
                         android:textStyle="bold"
-                        android:textAlignment="center" />
+                        android:layout_gravity="center_horizontal" />
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -1466,7 +1429,7 @@
                         android:textAppearance="?android:attr/textAppearanceSmall"
                         android:text="1300"
                         android:id="@+id/textView311"
-                        android:textAlignment="center" />
+                        android:layout_gravity="center_horizontal" />
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -1474,7 +1437,7 @@
                         android:textAppearance="?android:attr/textAppearanceSmall"
                         android:text="2600"
                         android:id="@+id/textView312"
-                        android:textAlignment="center" />
+                        android:layout_gravity="center_horizontal" />
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -1482,7 +1445,7 @@
                         android:textAppearance="?android:attr/textAppearanceSmall"
                         android:text="5200"
                         android:id="@+id/textView313"
-                        android:textAlignment="center" />
+                        android:layout_gravity="center_horizontal" />
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -1490,13 +1453,12 @@
                         android:textAppearance="?android:attr/textAppearanceSmall"
                         android:text="8000"
                         android:id="@+id/textView314"
-                        android:textAlignment="center" />
+                        android:layout_gravity="center_horizontal" />
                 </TableRow>
 
                 <TableRow
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:textAlignment="inherit" >
+                    android:layout_height="match_parent">
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -1505,7 +1467,7 @@
                         android:id="@+id/textView315"
                         android:text="50"
                         android:textStyle="bold"
-                        android:textAlignment="center" />
+                        android:layout_gravity="center_horizontal" />
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -1513,7 +1475,7 @@
                         android:textAppearance="?android:attr/textAppearanceSmall"
                         android:text="1600"
                         android:id="@+id/textView316"
-                        android:textAlignment="center" />
+                        android:layout_gravity="center_horizontal" />
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -1521,7 +1483,7 @@
                         android:textAppearance="?android:attr/textAppearanceSmall"
                         android:text="3200"
                         android:id="@+id/textView317"
-                        android:textAlignment="center" />
+                        android:layout_gravity="center_horizontal" />
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -1529,7 +1491,7 @@
                         android:textAppearance="?android:attr/textAppearanceSmall"
                         android:text="6400"
                         android:id="@+id/textView318"
-                        android:textAlignment="center" />
+                        android:layout_gravity="center_horizontal" />
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -1537,13 +1499,12 @@
                         android:textAppearance="?android:attr/textAppearanceSmall"
                         android:text="8000"
                         android:id="@+id/textView319"
-                        android:textAlignment="center" />
+                        android:layout_gravity="center_horizontal" />
                 </TableRow>
 
                 <TableRow
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:textAlignment="inherit"
                     android:background="#eeeeee" >
 
                     <TextView
@@ -1553,7 +1514,7 @@
                         android:id="@+id/textView320"
                         android:text="60"
                         android:textStyle="bold"
-                        android:textAlignment="center" />
+                        android:layout_gravity="center_horizontal" />
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -1561,7 +1522,7 @@
                         android:textAppearance="?android:attr/textAppearanceSmall"
                         android:text="2000"
                         android:id="@+id/textView321"
-                        android:textAlignment="center" />
+                        android:layout_gravity="center_horizontal" />
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -1569,7 +1530,7 @@
                         android:textAppearance="?android:attr/textAppearanceSmall"
                         android:text="3900"
                         android:id="@+id/textView322"
-                        android:textAlignment="center" />
+                        android:layout_gravity="center_horizontal" />
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -1577,7 +1538,7 @@
                         android:textAppearance="?android:attr/textAppearanceSmall"
                         android:text="7700"
                         android:id="@+id/textView323"
-                        android:textAlignment="center" />
+                        android:layout_gravity="center_horizontal" />
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -1585,13 +1546,12 @@
                         android:textAppearance="?android:attr/textAppearanceSmall"
                         android:text="8000"
                         android:id="@+id/textView324"
-                        android:textAlignment="center" />
+                        android:layout_gravity="center_horizontal" />
                 </TableRow>
 
                 <TableRow
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:textAlignment="inherit" >
+                    android:layout_height="match_parent">
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -1600,7 +1560,7 @@
                         android:id="@+id/textView325"
                         android:text="70"
                         android:textStyle="bold"
-                        android:textAlignment="center" />
+                        android:layout_gravity="center_horizontal" />
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -1608,7 +1568,7 @@
                         android:textAppearance="?android:attr/textAppearanceSmall"
                         android:text="2300"
                         android:id="@+id/textView326"
-                        android:textAlignment="center" />
+                        android:layout_gravity="center_horizontal" />
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -1616,7 +1576,7 @@
                         android:textAppearance="?android:attr/textAppearanceSmall"
                         android:text="4500"
                         android:id="@+id/textView327"
-                        android:textAlignment="center" />
+                        android:layout_gravity="center_horizontal" />
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -1624,7 +1584,7 @@
                         android:textAppearance="?android:attr/textAppearanceSmall"
                         android:text="8000"
                         android:id="@+id/textView328"
-                        android:textAlignment="center" />
+                        android:layout_gravity="center_horizontal" />
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -1632,7 +1592,7 @@
                         android:textAppearance="?android:attr/textAppearanceSmall"
                         android:text="8000"
                         android:id="@+id/textView329"
-                        android:textAlignment="center" />
+                        android:layout_gravity="center_horizontal" />
                 </TableRow>
             </TableLayout>
         </LinearLayout>

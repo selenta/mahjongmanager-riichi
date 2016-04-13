@@ -8,36 +8,36 @@
     android:nestedScrollingEnabled="false">
 
     <TextView
-        android:layout_width="fill_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceLarge"
         android:text="Speed Quiz"
         android:id="@+id/textView19"
-        android:textSize="44dp"
+        android:textSize="44sp"
         android:textStyle="italic"
-        android:textAlignment="center" />
+        android:layout_gravity="center_horizontal" />
 
     <TextView
         android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="0dp"
         android:textAppearance="?android:attr/textAppearanceMedium"
         android:text="You will have 90 seconds to score each hand and click next. (Max 10 hands)"
         android:id="@+id/textView20"
-        android:textSize="24dp"
+        android:textSize="24sp"
         android:textAlignment="center"
         android:layout_weight="1"
         android:layout_marginLeft="15dp"
         android:layout_marginRight="15dp" />
 
     <TextView
-        android:layout_width="fill_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceMedium"
         android:text="Scoring Method: Han/Fu"
         android:id="@+id/textView21"
-        android:textSize="21dp"
-        android:textAlignment="center"
-        android:textStyle="italic" />
+        android:textSize="21sp"
+        android:textStyle="italic"
+        android:layout_gravity="center_horizontal" />
 
     <Button
         android:layout_width="wrap_content"
@@ -48,27 +48,27 @@
         android:paddingEnd="20dp"
         android:paddingStart="20dp"
         android:onClick="speedQuizHanFu"
-        android:textSize="40dp" />
+        android:textSize="40sp" />
 
     <TextView
-        android:layout_width="fill_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceMedium"
         android:text="Current Record: 0"
         android:id="@+id/speedQuizHighScore"
-        android:textAlignment="center"
-        android:layout_marginBottom="35dp" />
+        android:layout_marginBottom="35dp"
+        android:layout_gravity="center_horizontal" />
 
     <TextView
-        android:layout_width="fill_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceMedium"
         android:text="Scoring Method: Hand Value"
         android:id="@+id/textView22"
-        android:textSize="21dp"
-        android:textAlignment="center"
+        android:textSize="21sp"
         android:textStyle="italic"
-        android:enabled="false" />
+        android:enabled="false"
+        android:layout_gravity="center_horizontal" />
 
     <Button
         android:layout_width="wrap_content"
@@ -79,18 +79,18 @@
         android:paddingEnd="20dp"
         android:paddingStart="20dp"
         android:onClick="startSpeedQuizValue"
-        android:textSize="40dp"
+        android:textSize="40sp"
         android:enabled="false" />
 
     <TextView
-        android:layout_width="fill_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceMedium"
         android:text="Current Record: 0"
         android:id="@+id/textView24"
-        android:textAlignment="center"
         android:layout_marginBottom="35dp"
-        android:enabled="false" />
+        android:enabled="false"
+        android:layout_gravity="center_horizontal" />
 
     <View
         android:layout_width="match_parent"

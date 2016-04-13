@@ -8,14 +8,15 @@
     android:nestedScrollingEnabled="false">
 
     <TextView
-        android:layout_width="fill_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceLarge"
         android:text="Speed Quiz"
         android:id="@+id/textView28"
-        android:textSize="44dp"
+        android:textSize="44sp"
         android:textStyle="italic"
-        android:textAlignment="center" />
+        android:textAlignment="center"
+        android:layout_gravity="center_horizontal" />
 
     <TableLayout
         android:layout_width="match_parent"
@@ -34,8 +35,8 @@
                 android:textAppearance="?android:attr/textAppearanceLarge"
                 android:text="Correct: "
                 android:id="@+id/textView32"
-                android:textAlignment="viewEnd"
-                android:layout_marginRight="15dp" />
+                android:layout_marginRight="15dp"
+                android:layout_gravity="right" />
 
             <TextView
                 android:layout_width="wrap_content"
@@ -52,11 +53,11 @@
             android:textAppearance="?android:attr/textAppearanceMedium"
             android:text="New high score!"
             android:id="@+id/newHighScoreNotice"
-            android:textAlignment="center"
             android:layout_marginBottom="10dp"
             android:textStyle="italic"
             android:layout_marginTop="10dp"
-            android:visibility="gone" />
+            android:visibility="gone"
+            android:layout_gravity="center_horizontal" />
 
         <TableRow
             android:layout_width="match_parent"
@@ -69,8 +70,8 @@
                 android:textAppearance="?android:attr/textAppearanceLarge"
                 android:text="Incorrect: "
                 android:id="@+id/textView35"
-                android:textAlignment="viewEnd"
-                android:layout_marginRight="15dp" />
+                android:layout_marginRight="15dp"
+                android:layout_gravity="right" />
 
             <TextView
                 android:layout_width="wrap_content"
@@ -89,24 +90,24 @@
 
     <ScrollView
         android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="0dp"
         android:id="@+id/scrollView3"
         android:layout_weight="1" >
 
         <LinearLayout
             android:orientation="vertical"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:id="@+id/incorrectHandButtonContainer">
 
             <TextView
-                android:layout_width="fill_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textAppearance="?android:attr/textAppearanceMedium"
                 android:text="Review Incorrect Hands:"
                 android:id="@+id/textView34"
-                android:textAlignment="center"
-                android:layout_margin="15dp" />
+                android:layout_margin="15dp"
+                android:layout_gravity="center_horizontal" />
         </LinearLayout>
     </ScrollView>
 

@@ -10,14 +10,14 @@
     android:nestedScrollingEnabled="false">
 
     <TextView
-        android:layout_width="fill_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceLarge"
         android:text="Han/Fu Calculator"
         android:id="@+id/textView5"
-        android:textSize="44dp"
+        android:textSize="44sp"
         android:textStyle="italic"
-        android:textAlignment="center" />
+        android:layout_gravity="center_horizontal" />
 
     <CheckBox
         android:layout_width="wrap_content"
@@ -25,7 +25,7 @@
         android:text="Dealer"
         android:id="@+id/dealerCheckbox"
         android:layout_gravity="center"
-        android:textSize="28dp"
+        android:textSize="28sp"
         android:layout_marginTop="10dp"
         android:layout_marginBottom="10dp"
         android:clickable="true"
@@ -37,114 +37,94 @@
         android:text="Tsumo"
         android:id="@+id/tsumoCheckbox"
         android:layout_gravity="center"
-        android:textSize="28dp"
+        android:textSize="28sp"
         android:layout_marginBottom="10dp"
         android:clickable="true"
         android:onClick="tsumoCheckboxClick" />
 
-    <TableLayout
-        android:layout_width="fill_parent"
+    <GridLayout
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:stretchColumns="*"
-        android:layout_gravity="center"
-        android:padding="15dp">
+        android:columnCount="2"
+        android:layout_gravity="center_horizontal"
+        android:paddingTop="5dp" >
 
-        <TableRow
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:text="Han"
+            android:id="@+id/textView33"
+            android:textSize="24sp"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginLeft="60dp"
+            android:layout_marginRight="60dp" />
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textAppearance="?android:attr/textAppearanceLarge"
-                android:text="Han"
-                android:id="@+id/textView2"
-                android:textAlignment="center"
-                android:textSize="35dp" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:text="Fu"
+            android:id="@+id/textView92"
+            android:textSize="24sp"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginLeft="60dp"
+            android:layout_marginRight="60dp" />
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textAppearance="?android:attr/textAppearanceLarge"
-                android:text="Fu"
-                android:id="@+id/textView3"
-                android:textAlignment="center"
-                android:textSize="35dp" />
-        </TableRow>
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="    ▲    "
+            android:id="@+id/increaseHanButton"
+            android:onClick="increaseHan"
+            android:textSize="30sp"
+            android:layout_gravity="center_horizontal" />
 
-        <TableRow
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="    ▲    "
+            android:id="@+id/increaseFuButton"
+            android:onClick="increaseFu"
+            android:textSize="30sp"
+            android:layout_gravity="center_horizontal" />
 
-            <Button
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="▲"
-                android:id="@+id/increaseHanButton"
-                android:onClick="increaseHan"
-                android:layout_marginLeft="25dp"
-                android:layout_marginRight="25dp"
-                android:textSize="30dp" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:id="@+id/hanValue"
+            android:textSize="32sp"
+            android:layout_gravity="center_horizontal"
+            android:text="X" />
 
-            <Button
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="▲"
-                android:id="@+id/increaseFuButton"
-                android:onClick="increaseFu"
-                android:layout_marginLeft="25dp"
-                android:layout_marginRight="25dp"
-                android:textSize="30dp" />
-        </TableRow>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:id="@+id/fuValue"
+            android:textSize="32sp"
+            android:layout_gravity="center_horizontal"
+            android:text="Y" />
 
-        <TableRow
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="    ▼    "
+            android:id="@+id/decreaseHanButton"
+            android:onClick="decreaseHan"
+            android:textSize="30sp"
+            android:layout_gravity="center_horizontal" />
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textAppearance="?android:attr/textAppearanceLarge"
-                android:id="@+id/hanValue"
-                android:textAlignment="center"
-                android:textSize="35dp" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textAppearance="?android:attr/textAppearanceLarge"
-                android:id="@+id/fuValue"
-                android:textAlignment="center"
-                android:textSize="35dp" />
-        </TableRow>
-
-        <TableRow
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
-
-            <Button
-                style="?android:attr/buttonStyleSmall"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="▼"
-                android:id="@+id/decreaseHanButton"
-                android:onClick="decreaseHan"
-                android:layout_marginLeft="25dp"
-                android:layout_marginRight="25dp"
-                android:textSize="30dp" />
-
-            <Button
-                style="?android:attr/buttonStyleSmall"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="▼"
-                android:id="@+id/decreaseFuButton"
-                android:onClick="decreaseFu"
-                android:layout_marginLeft="25dp"
-                android:layout_marginRight="25dp"
-                android:textSize="30dp" />
-        </TableRow>
-    </TableLayout>
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="    ▼    "
+            android:id="@+id/decreaseFuButton"
+            android:onClick="decreaseFu"
+            android:textSize="30sp"
+            android:layout_gravity="center_horizontal" />
+    </GridLayout>
 
     <View
         android:layout_width="match_parent"
@@ -152,24 +132,24 @@
         android:background="@android:color/darker_gray"/>
 
     <TextView
-        android:layout_width="fill_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceLarge"
         android:text="Score"
         android:id="@+id/scoreLabel"
-        android:textSize="28dp"
-        android:textAlignment="center"
-        android:textStyle="italic" />
+        android:textSize="28sp"
+        android:textStyle="italic"
+        android:layout_gravity="center_horizontal" />
 
     <TextView
-        android:layout_width="fill_parent"
-        android:layout_height="fill_parent"
+        android:layout_width="wrap_content"
+        android:layout_height="0dp"
         android:textAppearance="?android:attr/textAppearanceLarge"
         android:id="@+id/scoreValue"
         android:layout_weight="1"
-        android:textSize="56dp"
-        android:textAlignment="center"
-        android:text="---" />
+        android:textSize="56sp"
+        android:text="---"
+        android:layout_gravity="center_horizontal" />
 
 
     <View

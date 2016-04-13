@@ -11,23 +11,21 @@
     android:gravity="center_horizontal">
 
     <TextView
-        android:layout_width="fill_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceLarge"
         android:text="Hand Calculator"
         android:id="@+id/textView4"
-        android:textSize="44dp"
-        android:textStyle="italic"
-        android:textAlignment="center" />
+        android:textSize="44sp"
+        android:textStyle="italic" />
 
     <TextView
-        android:layout_width="fill_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceMedium"
         android:text="Step 2: Select the winning tile"
         android:id="@+id/subTitle"
-        android:textSize="24dp"
-        android:textAlignment="center" />
+        android:textSize="24sp" />
 
     <ScrollView
         android:layout_width="match_parent"
@@ -39,8 +37,7 @@
         <LinearLayout
             android:orientation="horizontal"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
+            android:layout_height="wrap_content"
             android:layout_marginLeft="15dp">
 
             <RadioGroup
@@ -84,7 +81,7 @@
                     android:text="Yes"
                     android:id="@+id/radioButton5"
                     android:layout_marginLeft="15dp"
-                    android:textSize="18dp"
+                    android:textSize="18sp"
                     android:checked="true" />
 
                 <RadioButton
@@ -93,7 +90,7 @@
                     android:text="No"
                     android:id="@+id/radioButton6"
                     android:layout_marginLeft="15dp"
-                    android:textSize="18dp"
+                    android:textSize="18sp"
                     android:checked="true" />
 
             </RadioGroup>
@@ -122,7 +119,7 @@
             android:layout_marginLeft="15dp" />
 
         <View
-            android:layout_width="fill_parent"
+            android:layout_width="0dp"
             android:layout_height="2dp"
             android:layout_weight="1" />
 
