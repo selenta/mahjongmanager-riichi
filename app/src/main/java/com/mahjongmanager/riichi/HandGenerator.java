@@ -160,7 +160,7 @@ public class HandGenerator {
         allTiles.addAll(meld3);
         allTiles.addAll(meld4);
 
-        randomWinningTile(allTiles);
+        randomWinningTile();
 
         return new Hand(allTiles);
     }
@@ -260,8 +260,23 @@ public class HandGenerator {
     }
 
     //modify hand
-    private void randomWinningTile( List<Tile> list ){
-        Tile wTile = list.get(new Random().nextInt(list.size()));
+    private void randomWinningTile(){
+        List<Tile> candidates = new ArrayList<>();
+        candidates.addAll(pair);
+        if( meld1.size()==3 ){
+            candidates.addAll(meld1);
+        }
+        if( meld2.size()==3 ){
+            candidates.addAll(meld2);
+        }
+        if( meld3.size()==3 ){
+            candidates.addAll(meld3);
+        }
+        if( meld4.size()==3 ){
+            candidates.addAll(meld4);
+        }
+
+        Tile wTile = candidates.get(new Random().nextInt(candidates.size()));
 
         wTile.winningTile = true;
 

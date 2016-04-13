@@ -159,13 +159,17 @@ public class HandDisplay extends LinearLayout {
         }
     }
     private void addClosedSet(List<Tile> set) {
-        addSpacer(closedTilesContainer);
+        if( closedTilesContainer.getChildCount()!=0 ){
+            addSpacer(closedTilesContainer, 8);
+        }
         for( Tile t : set ){
             addTileClosed(t);
         }
     }
     private void addPairComplex(List<Tile> pair){
-        addSpacer(closedTilesContainer);
+        if( closedTilesContainer.getChildCount()!=0 ){
+            addSpacer(closedTilesContainer, 8);
+        }
         for( Tile t : pair ){
             addTileClosed(t);
         }
@@ -180,7 +184,11 @@ public class HandDisplay extends LinearLayout {
         addAddedKan(tiles);     // ... I guess these are all the same thing if in a valid state
     }
     private void addAddedKan(List<Tile> tiles) {
-        addSpacer(openTilesContainer);
+        if( openTilesContainer.getChildCount()==0 ){
+            addSpacer(openTilesContainer, 25);
+        } else {
+            addSpacer(openTilesContainer, 8);
+        }
 
         Tile calledTile = Utils.getCalledTile(tiles);
         Tile addedTile = Utils.getAddedTile(tiles);
@@ -216,7 +224,11 @@ public class HandDisplay extends LinearLayout {
         }
     }
     private void addClosedKan(List<Tile> tiles) {
-        addSpacer(openTilesContainer);
+        if( openTilesContainer.getChildCount()==0 ){
+            addSpacer(openTilesContainer, 25);
+        } else {
+            addSpacer(openTilesContainer, 8);
+        }
 
         Tile redFiveTile = null;
         for(Tile t : tiles){
@@ -243,11 +255,16 @@ public class HandDisplay extends LinearLayout {
     }
     private void addTileOpen(Tile t){
         TextView view = getUtils().getTileView(t);
+
+        LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
+        lp.setMargins(0, 20, 0, 0);
+        view.setLayoutParams(lp);
+
         openTilesContainer.addView(view);
     }
     private void addTileCalled(Tile calledTile, Tile addedTile){}   // TODO
     private void addTileWinningTile(){
-        addSpacer(winningTileContainer);
+        addSpacer(winningTileContainer, 25);
 
         Tile winningTile = hand.getWinningTile();
         TextView view = getUtils().getTileView(winningTile);
@@ -258,9 +275,9 @@ public class HandDisplay extends LinearLayout {
      * To visually separate sets/pair, a spacer really helps
      * @param view Add a spacer to the end of this view, in preparation to add a new set
      */
-    private void addSpacer(LinearLayout view){
+    private void addSpacer(LinearLayout view, int width){
         Space spacer = new Space(getContext());
-        spacer.setMinimumWidth(15);
+        spacer.setMinimumWidth(width);
         view.addView(spacer);
     }
 

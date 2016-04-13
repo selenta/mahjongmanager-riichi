@@ -20,6 +20,16 @@ public class Utils {
         activity = ma;
     }
 
+    ////////////////////////////////////////////////////////////////
+    //////////////////          Main              //////////////////
+    ////////////////////////////////////////////////////////////////
+
+    private int tileWidth = 50;
+    private Double tileRatio = 1.26;    //TODO is this actually correct? According to which tile set?
+    private int tileHeight = (int) ((double)tileWidth*tileRatio);
+    private int tilePadding = 8;
+    private int tileCornerRadius = 8;
+
     public enum SetState {
         INVALID, CLOSEDSET, OPENCHII, OPENPON, OPENKAN, ADDEDKAN, CLOSEDKAN
     }
@@ -28,20 +38,20 @@ public class Utils {
         if( activity==null ){
             //This should never happen
             return null;
+        } else if( t.faceDown ){
+            return getTileFaceDown(t);
         }
-        int width = 50;
-        Double tileRatio = 1.26;    //TODO is this actually correct? According to which tile set?
-        int height = (int) ((double)width*tileRatio);
 
-
-        int r = 5;
-        float[] outerR = new float[] {r, r, r, r, r, r, r, r};
-        Shape tileOutline = new RoundRectShape(outerR, new RectF(2,2,2,2), null);
-        tileOutline.resize((float)width, (float)height);
+        float[] outerR = new float[8];
+        for(int i=0; i<8; i++ ){
+            outerR[i] = tileCornerRadius;
+        }
+        Shape tileOutline = new RoundRectShape(outerR, new RectF(3,3,3,3), null);
+        tileOutline.resize((float)tileWidth, (float)tileHeight);
         ShapeDrawable drawableShape = new ShapeDrawable(tileOutline);
 
         Bitmap origBmap = BitmapFactory.decodeResource(activity.getResources(), t.getImageInt());
-        Bitmap resizedBmap = Bitmap.createScaledBitmap(origBmap, width, height, false);
+        Bitmap resizedBmap = Bitmap.createScaledBitmap(origBmap, tileWidth, tileHeight, false);
         Drawable dBmap = new BitmapDrawable(activity.getResources(), resizedBmap);
 
 
@@ -49,10 +59,24 @@ public class Utils {
         layers[0] = drawableShape;
         layers[1] = dBmap;
         LayerDrawable layerDrawable = new LayerDrawable(layers);
-        if( !t.faceDown ){      // TODO what is going on here? why does this make border disappear?
-            int tilePadding = 8;
-            layerDrawable.setLayerInset(1, tilePadding,tilePadding,tilePadding,tilePadding);
-        }
+        layerDrawable.setLayerInset(1, tilePadding,tilePadding,tilePadding,tilePadding);
+
+        TextView view = new TextView(activity);
+        view.setBackground(layerDrawable);
+
+        return view;
+    }
+    private TextView getTileFaceDown(Tile t){
+        int faceDownWidth = tileWidth + 2*tilePadding;
+        int faceDownHeight = tileHeight + 2*tilePadding;
+
+        Bitmap origBmap = BitmapFactory.decodeResource(activity.getResources(), t.getImageInt());
+        Bitmap resizedBmap = Bitmap.createScaledBitmap(origBmap, faceDownWidth, faceDownHeight, false);
+        Drawable dBmap = new BitmapDrawable(activity.getResources(), resizedBmap);
+
+        Drawable[] layers = new Drawable[1];
+        layers[0] = dBmap;
+        LayerDrawable layerDrawable = new LayerDrawable(layers);
 
         TextView view = new TextView(activity);
         view.setBackground(layerDrawable);
