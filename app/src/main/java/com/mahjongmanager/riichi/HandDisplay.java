@@ -2,6 +2,7 @@ package com.mahjongmanager.riichi;
 
 import android.content.Context;
 import android.util.AttributeSet;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.widget.LinearLayout;
 import android.widget.Space;
@@ -16,7 +17,6 @@ public class HandDisplay extends LinearLayout {
     private LinearLayout closedTilesContainer;
     private LinearLayout openTilesContainer;
     private LinearLayout winningTileContainer;
-    private TextView tileText;
 
     private Hand hand;
     private Boolean includeWinningTile = true;
@@ -40,7 +40,6 @@ public class HandDisplay extends LinearLayout {
         LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         inflater.inflate(R.layout.component_handdisplay, this);
 
-        tileText = (TextView) findViewById(R.id.tileText);
         closedTilesContainer = (LinearLayout) findViewById(R.id.closedTilesContainer);
         openTilesContainer   = (LinearLayout) findViewById(R.id.openTilesContainer);
         winningTileContainer = (LinearLayout) findViewById(R.id.winningTileContainer);
@@ -69,10 +68,8 @@ public class HandDisplay extends LinearLayout {
         }
         // Only display complex hand if the hand is a valid winning hand of normal structure
         if( hand.hasAbnormalStructure() || !hand.validateCompleteState() ){
-            tileText.setText(hand.toString());
             displaySimpleHand();
         } else {
-            tileText.setText(hand.printAllSets());
             displayComplexHand();
         }
     }
@@ -255,14 +252,25 @@ public class HandDisplay extends LinearLayout {
     }
     private void addTileOpen(Tile t){
         TextView view = getUtils().getTileView(t);
-
-        LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
-        lp.setMargins(0, 20, 0, 0);
-        view.setLayoutParams(lp);
+        view.setGravity(Gravity.BOTTOM);
 
         openTilesContainer.addView(view);
     }
-    private void addTileCalled(Tile calledTile, Tile addedTile){}   // TODO
+    private void addTileCalled(Tile calledTile, Tile addedTile){
+        LinearLayout container = new LinearLayout(context);
+        container.setOrientation(VERTICAL);
+        container.setLayoutParams(new LinearLayout.LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT));
+        container.setGravity(Gravity.BOTTOM);
+
+        if( addedTile!=null ){
+            TextView aTile = getUtils().getTileViewRotated(addedTile);
+            container.addView(aTile);
+        }
+        TextView cTile = getUtils().getTileViewRotated(calledTile);
+        container.addView(cTile);
+
+        openTilesContainer.addView(container);
+    }
     private void addTileWinningTile(){
         addSpacer(winningTileContainer, 25);
 

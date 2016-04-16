@@ -3,53 +3,46 @@
     <LinearLayout
         android:orientation="vertical"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:padding="10dp">
+        android:layout_height="fill_parent"
+        android:padding="5dp"
+        android:gravity="center_horizontal"
+        android:minHeight="80dp">
 
         <HorizontalScrollView
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
+            android:layout_width="wrap_content"
+            android:layout_height="fill_parent"
             android:id="@+id/horizontalScrollView"
-            android:layout_weight="1">
+            android:fillViewport="true"
+            android:focusable="false">
 
             <LinearLayout
                 android:orientation="horizontal"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:padding="5dp">
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:gravity="bottom"
+                android:paddingBottom="10dp">
 
                 <LinearLayout
                     android:orientation="horizontal"
                     android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:id="@+id/closedTilesContainer">
-
-                </LinearLayout>
+                    android:layout_height="wrap_content"
+                    android:id="@+id/closedTilesContainer"
+                    android:paddingBottom="10dp" />
 
                 <LinearLayout
                     android:orientation="horizontal"
                     android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
+                    android:layout_height="wrap_content"
                     android:id="@+id/openTilesContainer"
-                    android:layout_gravity="left|bottom"></LinearLayout>
+                    android:gravity="left|bottom" />
 
                 <LinearLayout
                     android:orientation="horizontal"
                     android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:id="@+id/winningTileContainer"></LinearLayout>
+                    android:layout_height="wrap_content"
+                    android:id="@+id/winningTileContainer"
+                    android:paddingBottom="10dp" />
             </LinearLayout>
         </HorizontalScrollView>
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textAppearance="?android:attr/textAppearanceMedium"
-            android:text="[...]"
-            android:id="@+id/tileText"
-            android:textSize="10sp"
-            android:textStyle="bold"
-            android:visibility="gone"
-            android:layout_gravity="center_horizontal" />
     </LinearLayout>
 </merge>
