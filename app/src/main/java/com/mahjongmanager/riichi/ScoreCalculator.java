@@ -65,8 +65,8 @@ public class ScoreCalculator {
             //TODO scrub hand, so it can be rescored? or directly assign it to validated? (scrub is definitely cleaner)
             scoredHand = unsortedHand;
             validatedHand = unsortedHand;
-        } else if( unsortedHand.set1.size()+unsortedHand.set2.size()
-                  +unsortedHand.set3.size()+unsortedHand.set4.size()
+        } else if( unsortedHand.meld1.size()+unsortedHand.meld1.size()
+                  +unsortedHand.meld1.size()+unsortedHand.meld1.size()
                   +unsortedHand.unsortedTiles.size() != unsortedHand.tiles.size() ){
             Log.wtf("InvalidHandState", "tiles list size does not match the number of tiles used in sets/unsortedTiles: \n" + unsortedHand.toStringVerbose());
             return;
@@ -83,7 +83,7 @@ public class ScoreCalculator {
                 Tile pairTile1 = sortingHand.popUnsortedTile(dupeTile.value, dupeTile.suit, Tile.RevealedState.NONE);
                 Tile pairTile2 = sortingHand.popUnsortedTile(dupeTile.value, dupeTile.suit, Tile.RevealedState.NONE);
                 if( pairTile1!=null && pairTile2!=null ){
-                    sortingHand.pair.addAll(Arrays.asList(pairTile1,pairTile2));
+                    sortingHand.pair.setTiles(Arrays.asList(pairTile1,pairTile2));
                     sortingHands.add(sortingHand);
                 }
             }
@@ -525,8 +525,8 @@ public class ScoreCalculator {
     }
     private int fuFromPair(Hand h){
         int pairFu = 0;
-        if( h.pair.get(0).dragon!=null ){
-            switch (h.pair.get(0).dragon){
+        if( h.pair.tiles.get(0).dragon!=null ){
+            switch (h.pair.tiles.get(0).dragon){
                 case WHITE:
                     h.fuList.put( "White Dragon Pair", 2);
                     break;
@@ -538,11 +538,11 @@ public class ScoreCalculator {
                     break;
             }
             pairFu += 2;
-        } else if( h.pair.get(0).wind==h.prevailingWind ){
+        } else if( h.pair.tiles.get(0).wind==h.prevailingWind ){
             h.fuList.put( "Prevailing Wind", 2);
             pairFu += 2;
         }
-        if( h.pair.get(0).wind==h.playerWind ){
+        if( h.pair.tiles.get(0).wind==h.playerWind ){
             h.fuList.put( "Seat Wind", 2);
             pairFu += 2;        // Double counting here for pairs of winds not allowed in all rulesets
         }
@@ -550,44 +550,44 @@ public class ScoreCalculator {
     }
     private int fuFromMelds(Hand h){
         int allMeldsFu = 0;
-        allMeldsFu += fuFromMeld( h, h.set1, "Meld 1" );
-        allMeldsFu += fuFromMeld( h, h.set2, "Meld 2" );
-        allMeldsFu += fuFromMeld( h, h.set3, "Meld 3" );
-        allMeldsFu += fuFromMeld( h, h.set4, "Meld 4" );
+        allMeldsFu += fuFromMeld( h, h.meld1, "Meld 1" );
+        allMeldsFu += fuFromMeld( h, h.meld2, "Meld 2" );
+        allMeldsFu += fuFromMeld( h, h.meld3, "Meld 3" );
+        allMeldsFu += fuFromMeld( h, h.meld4, "Meld 4" );
         return allMeldsFu;
     }
-    private int fuFromMeld( Hand h, List<Tile> meld, String label ){
+    private int fuFromMeld( Hand h, Meld meld, String label ){
         Integer meldFu = 0;
-        if( !isChii(meld) ){
+        if( !meld.isChii() ){
             meldFu += 2;
-            meldFu = (!isSetOpenOrWinningTile(meld))        ? meldFu*2 : meldFu;
-            meldFu = (containsHonorsOrTerminalsOnly(meld))  ? meldFu*2 : meldFu;
-            meldFu = (isKan(meld))                          ? meldFu*4 : meldFu;
+            meldFu = (!meld.isOpenOrWinningTile())                      ? meldFu*2 : meldFu;
+            meldFu = (Utils.containsHonorsOrTerminalsOnly(meld.tiles))  ? meldFu*2 : meldFu;
+            meldFu = (meld.isKan())                                     ? meldFu*4 : meldFu;
             h.fuList.put( label, meldFu);
         }
         return meldFu;
     }
     private int fuFromWait(Hand h){
         int waitFu = 0;
-        List<Tile> winningMeld = new ArrayList<>();
-        winningMeld = (containsWinningTile(h.pair)) ? h.pair : winningMeld;
-        winningMeld = (containsWinningTile(h.set1)) ? h.set1 : winningMeld;
-        winningMeld = (containsWinningTile(h.set2)) ? h.set2 : winningMeld;
-        winningMeld = (containsWinningTile(h.set3)) ? h.set3 : winningMeld;
-        winningMeld = (containsWinningTile(h.set4)) ? h.set4 : winningMeld;
-        if( isPair(winningMeld) ){
+        Meld winningMeld = new Meld();
+        winningMeld = (Utils.containsWinningTile(h.pair.tiles)) ? h.pair : winningMeld;
+        winningMeld = (Utils.containsWinningTile(h.meld1.tiles)) ? h.meld1 : winningMeld;
+        winningMeld = (Utils.containsWinningTile(h.meld2.tiles)) ? h.meld2 : winningMeld;
+        winningMeld = (Utils.containsWinningTile(h.meld3.tiles)) ? h.meld3 : winningMeld;
+        winningMeld = (Utils.containsWinningTile(h.meld4.tiles)) ? h.meld4 : winningMeld;
+        if( winningMeld.isPair() ){
             h.fuList.put( "Pair Wait", 2);
             waitFu += 2;
-        } else if( isChii(winningMeld) ){
-            if( winningMeld.get(2).winningTile && winningMeld.get(0).number==1 && winningMeld.get(1).number==2 && winningMeld.get(2).number==3 ){
+        } else if( winningMeld.isChii() ){
+            if( winningMeld.tiles.get(2).winningTile && winningMeld.tiles.get(0).number==1 && winningMeld.tiles.get(1).number==2 && winningMeld.tiles.get(2).number==3 ){
                 // Wait on a 3 for a 1-2-3 meld
                 h.fuList.put( "Single-sided Wait", 2);
                 waitFu += 2;
-            } else if( winningMeld.get(0).winningTile && winningMeld.get(0).number==7 && winningMeld.get(1).number==8 && winningMeld.get(2).number==9 ){
+            } else if( winningMeld.tiles.get(0).winningTile && winningMeld.tiles.get(0).number==7 && winningMeld.tiles.get(1).number==8 && winningMeld.tiles.get(2).number==9 ){
                 // Wait on a 7 for a 7-8-9 meld
                 h.fuList.put( "Single-sided Wait", 2);
                 waitFu += 2;
-            } else if( winningMeld.get(1).winningTile ){
+            } else if( winningMeld.tiles.get(1).winningTile ){
                 // Wait on an inside tile for a chii
                 h.fuList.put( "Inside Wait", 2);
                 waitFu += 2;
@@ -670,85 +670,6 @@ public class ScoreCalculator {
     /////////////////          Internal methods           /////////////////
     ///////////////////////////////////////////////////////////////////////
     // Convenience methods
-    private boolean isPair( List<Tile> set ){
-        return set.size()==2 && set.get(0).value.equals(set.get(1).value);
-    }
-    private boolean isChii( List<Tile> set ){
-        return set.size()==3 && !set.get(0).value.equals(set.get(1).value);
-    }
-    private boolean isPon( List<Tile> set ){
-        return set.size()==3 && set.get(0).value.equals(set.get(1).value);
-    }
-    private boolean isKan( List<Tile> set ){
-        return set.size()==4 && set.get(0).value.equals(set.get(1).value);
-    }
-    private boolean isSetOpen( List<Tile> s ){
-        for( Tile t : s ){
-            if( t.revealedState!=Tile.RevealedState.NONE
-                    && t.revealedState!=Tile.RevealedState.CLOSEDKAN ){
-                return true;
-            }
-        }
-        return false;
-    }
-    private boolean isSetOpenOrWinningTile( List<Tile> s ){
-        for( Tile t : s ){
-            if( (t.revealedState!=Tile.RevealedState.NONE && t.revealedState!=Tile.RevealedState.CLOSEDKAN)
-                    || t.calledFrom!=Tile.CalledFrom.NONE ){
-                return true;
-            }
-        }
-        return false;
-    }
-
-    private boolean containsHonorsOrTerminals( List<Tile> s ){
-        for( Tile t : s ){
-            if( t.dragon!=null || t.wind!=null || t.number==1 || t.number==9 ){
-                return true;
-            }
-        }
-        return false;
-    }
-    private boolean containsHonorsOrTerminalsOnly( List<Tile> s ){
-        for( Tile t : s ){
-            if( t.number!=null && t.number>1 && t.number<9 ){
-                return false;
-            }
-        }
-        return true;
-    }
-    private boolean containsHonors( List<Tile> s ){
-        for( Tile t : s ){
-            if( t.dragon!=null || t.wind!=null ){
-                return true;
-            }
-        }
-        return false;
-    }
-    private boolean containsTerminals( List<Tile> s ){
-        for( Tile t : s ){
-            if( !t.suit.toString().equals("HONOR") && (t.number==1||t.number==9) ){
-                return true;
-            }
-        }
-        return false;
-    }
-    private boolean containsSimples( List<Tile> s ){
-        for( Tile t : s ){
-            if( t.number!=null && t.number>1 && t.number<9 ){
-                return true;
-            }
-        }
-        return false;
-    }
-    private boolean containsWinningTile( List<Tile> s ){
-        for( Tile t : s ){
-            if( t.winningTile ){
-                return true;
-            }
-        }
-        return false;
-    }
     private int countSuits( List<Tile> s ){
         HashSet<String> noDupSet = new HashSet<>();
         for( Tile t : s ){
@@ -787,7 +708,7 @@ public class ScoreCalculator {
         }
     }
     private void checkKokushiMusou(Hand h){
-        if( !containsHonorsOrTerminalsOnly(h.tiles) ){
+        if( !Utils.containsHonorsOrTerminalsOnly(h.tiles) ){
             return;
         }
 
@@ -857,34 +778,34 @@ public class ScoreCalculator {
         h.pinfu = true;
     }
     private void checkIipeikou(Hand h){
-        if(        h.set1.toString().equals(h.set2.toString()) ){
+        if(        h.meld1.toString().equals(h.meld2.toString()) ){
             h.iipeikou = true;
-        } else if( h.set1.toString().equals(h.set3.toString()) ){
+        } else if( h.meld1.toString().equals(h.meld3.toString()) ){
             h.iipeikou = true;
-        } else if( h.set1.toString().equals(h.set4.toString()) ){
+        } else if( h.meld1.toString().equals(h.meld4.toString()) ){
             h.iipeikou = true;
-        } else if( h.set2.toString().equals(h.set3.toString()) ){
+        } else if( h.meld2.toString().equals(h.meld3.toString()) ){
             h.iipeikou = true;
-        } else if( h.set2.toString().equals(h.set4.toString()) ){
+        } else if( h.meld2.toString().equals(h.meld4.toString()) ){
             h.iipeikou = true;
-        } else if( h.set3.toString().equals(h.set4.toString()) ){
+        } else if( h.meld3.toString().equals(h.meld4.toString()) ){
             h.iipeikou = true;
         }
     }
     private void checkSanshokuDoujun(Hand h){
         //Get 3+ chiis
         List<Tile> leadTiles = new ArrayList<>();
-        if( isChii(h.set1) && h.set1.get(0).suit!=Tile.Suit.HONOR ){
-            leadTiles.add(h.set1.get(0));
+        if( h.meld1.isChii() && h.meld1.getSuit()!=Tile.Suit.HONOR ){
+            leadTiles.add(h.meld1.tiles.get(0));
         }
-        if( isChii(h.set2) && h.set2.get(0).suit!=Tile.Suit.HONOR ){
-            leadTiles.add(h.set2.get(0));
+        if( h.meld2.isChii() && h.meld2.getSuit()!=Tile.Suit.HONOR ){
+            leadTiles.add(h.meld2.tiles.get(0));
         }
-        if( isChii(h.set3) && h.set3.get(0).suit!=Tile.Suit.HONOR ){
-            leadTiles.add(h.set3.get(0));
+        if( h.meld3.isChii() && h.meld3.getSuit()!=Tile.Suit.HONOR ){
+            leadTiles.add(h.meld3.tiles.get(0));
         }
-        if( isChii(h.set4) && h.set4.get(0).suit!=Tile.Suit.HONOR ){
-            leadTiles.add(h.set4.get(0));
+        if( h.meld4.isChii() && h.meld4.getSuit()!=Tile.Suit.HONOR ){
+            leadTiles.add(h.meld4.tiles.get(0));
         }
         if( leadTiles.size()<3 ){
             return;
@@ -922,7 +843,12 @@ public class ScoreCalculator {
         final Set<String> duplicateSuits = new HashSet<>();
         final Set<String> tempSet = new HashSet<>();
         final Set<String> tempSet2 = new HashSet<>();
-        for (Tile dupTile : Arrays.asList(h.set1.get(0), h.set2.get(0), h.set3.get(0), h.set4.get(0)) ){
+        List<Tile> leadingTiles = new ArrayList<>();
+        leadingTiles.add( h.meld1.tiles.get(0) );
+        leadingTiles.add( h.meld2.tiles.get(0) );
+        leadingTiles.add( h.meld3.tiles.get(0) );
+        leadingTiles.add( h.meld4.tiles.get(0) );
+        for (Tile dupTile : leadingTiles ){
             if (!tempSet.add(dupTile.suit.toString())) {
                 if (!tempSet2.add(dupTile.suit.toString())) {
                     duplicateSuits.add(dupTile.suit.toString());
@@ -931,53 +857,53 @@ public class ScoreCalculator {
         }
 
         //check for a 1-2-3, 4-5-6, and 7-8-9 chii in the dominant suit
-        Boolean firstSet = false;
-        Boolean secondSet = false;
-        Boolean thirdSet = false;
-        for( List<Tile> set : Arrays.asList(h.set1, h.set2, h.set3, h.set4) ){
-            if( isChii(set) && duplicateSuits.contains(set.get(0).suit.toString()) && set.get(0).number==1 ){
-                firstSet = true;
-            } else if( isChii(set) && duplicateSuits.contains(set.get(0).suit.toString()) && set.get(0).number==4 ){
-                secondSet = true;
-            } else if( isChii(set) && duplicateSuits.contains(set.get(0).suit.toString()) && set.get(0).number==7 ){
-                thirdSet = true;
+        Boolean firstMeld = false;
+        Boolean secondMeld = false;
+        Boolean thirdMeld = false;
+        for( Meld m : Arrays.asList(h.meld1, h.meld2, h.meld3, h.meld4) ){
+            if( m.isChii() && duplicateSuits.contains(m.tiles.get(0).suit.toString()) && m.tiles.get(0).number==1 ){
+                firstMeld = true;
+            } else if( m.isChii() && duplicateSuits.contains(m.tiles.get(0).suit.toString()) && m.tiles.get(0).number==4 ){
+                secondMeld = true;
+            } else if( m.isChii() && duplicateSuits.contains(m.tiles.get(0).suit.toString()) && m.tiles.get(0).number==7 ){
+                thirdMeld = true;
             }
         }
 
         //if all three sets exist, we have an ittsuu
-        if( firstSet && secondSet && thirdSet ){
+        if( firstMeld && secondMeld && thirdMeld ){
             h.ittsuu = true;
         }
     }
     private void checkRyanpeikou(Hand h){
-        if(        h.set1.toString().equals(h.set2.toString()) && h.set3.toString().equals(h.set4.toString()) ){
+        if(        h.meld1.toString().equals(h.meld2.toString()) && h.meld3.toString().equals(h.meld4.toString()) ){
             h.ryanpeikou = true;
             h.iipeikou = false;
-        } else if( h.set1.toString().equals(h.set3.toString()) && h.set2.toString().equals(h.set4.toString()) ){
+        } else if( h.meld1.toString().equals(h.meld3.toString()) && h.meld2.toString().equals(h.meld4.toString()) ){
             h.ryanpeikou = true;
             h.iipeikou = false;
-        } else if( h.set1.toString().equals(h.set4.toString()) && h.set2.toString().equals(h.set3.toString()) ){
+        } else if( h.meld1.toString().equals(h.meld4.toString()) && h.meld2.toString().equals(h.meld3.toString()) ){
             h.ryanpeikou = true;
             h.iipeikou = false;
         }
     }
     private void checkToitoi(Hand h){
-        if( !isChii(h.set1) && !isChii(h.set2) && !isChii(h.set3) && !isChii(h.set4) ){
+        if( !h.meld1.isChii() && !h.meld2.isChii() && !h.meld3.isChii() && !h.meld4.isChii() ){
             h.toitoi=true;
         }
     }
     private void checkSanAnkou(Hand h){
         Integer closedTriplets = 0;
-        if( !isChii(h.set1) && !isSetOpenOrWinningTile(h.set1) ){
+        if( !h.meld1.isChii() && !h.meld1.isOpenOrWinningTile() ){
             closedTriplets += 1;
         }
-        if( !isChii(h.set2) && !isSetOpenOrWinningTile(h.set2) ){
+        if( !h.meld2.isChii() && !h.meld2.isOpenOrWinningTile() ){
             closedTriplets += 1;
         }
-        if( !isChii(h.set3) && !isSetOpenOrWinningTile(h.set3) ){
+        if( !h.meld3.isChii() && !h.meld3.isOpenOrWinningTile() ){
             closedTriplets += 1;
         }
-        if( !isChii(h.set4) && !isSetOpenOrWinningTile(h.set4) ){
+        if( !h.meld4.isChii() && !h.meld4.isOpenOrWinningTile() ){
             closedTriplets += 1;
         }
 
@@ -986,17 +912,17 @@ public class ScoreCalculator {
     private void checkSanshokuDoukou(Hand h){
         //Get 3+ triplets
         List<Tile> leadTiles = new ArrayList<>();
-        if( !isChii(h.set1) && h.set1.get(0).suit!=Tile.Suit.HONOR ){
-            leadTiles.add(h.set1.get(0));
+        if( !h.meld1.isChii() && h.meld1.getSuit()!=Tile.Suit.HONOR ){
+            leadTiles.add(h.meld1.tiles.get(0));
         }
-        if( !isChii(h.set2) && h.set2.get(0).suit!=Tile.Suit.HONOR ){
-            leadTiles.add(h.set2.get(0));
+        if( !h.meld2.isChii() && h.meld2.getSuit()!=Tile.Suit.HONOR ){
+            leadTiles.add(h.meld2.tiles.get(0));
         }
-        if( !isChii(h.set3) && h.set3.get(0).suit!=Tile.Suit.HONOR ){
-            leadTiles.add(h.set3.get(0));
+        if( !h.meld3.isChii() && h.meld3.getSuit()!=Tile.Suit.HONOR ){
+            leadTiles.add(h.meld3.tiles.get(0));
         }
-        if( !isChii(h.set4) && h.set4.get(0).suit!=Tile.Suit.HONOR ){
-            leadTiles.add(h.set4.get(0));
+        if( !h.meld4.isChii() && h.meld4.getSuit()!=Tile.Suit.HONOR ){
+            leadTiles.add(h.meld4.tiles.get(0));
         }
         if( leadTiles.size()<3 ){
             return;
@@ -1031,16 +957,16 @@ public class ScoreCalculator {
     }
     private void checkSanKantsu(Hand h){
         Integer kanNumber = 0;
-        kanNumber = (isKan(h.set1)) ? kanNumber+1 : kanNumber;
-        kanNumber = (isKan(h.set2)) ? kanNumber+1 : kanNumber;
-        kanNumber = (isKan(h.set3)) ? kanNumber+1 : kanNumber;
-        kanNumber = (isKan(h.set4)) ? kanNumber+1 : kanNumber;
+        kanNumber = (h.meld1.isKan()) ? kanNumber+1 : kanNumber;
+        kanNumber = (h.meld2.isKan()) ? kanNumber+1 : kanNumber;
+        kanNumber = (h.meld3.isKan()) ? kanNumber+1 : kanNumber;
+        kanNumber = (h.meld4.isKan()) ? kanNumber+1 : kanNumber;
         if( kanNumber==3 ){
             h.sanKantsu = true;
         }
     }
     private void checkTanyao(Hand h){
-        if( !containsHonorsOrTerminals(h.tiles) ){
+        if( !Utils.containsHonorsOrTerminals(h.tiles) ){
             h.tanyao=true;
         }
     }
@@ -1052,25 +978,25 @@ public class ScoreCalculator {
         h.seatWind    = h.hasPlayerWindSet();
     }
     private void checkJunchan(Hand h){
-        if( containsTerminals(h.pair)
-                && containsTerminals(h.set1)
-                && containsTerminals(h.set2)
-                && containsTerminals(h.set3)
-                && containsTerminals(h.set4) ){
+        if( Utils.containsTerminals(h.pair.tiles)
+                && Utils.containsTerminals(h.meld1.tiles)
+                && Utils.containsTerminals(h.meld2.tiles)
+                && Utils.containsTerminals(h.meld3.tiles)
+                && Utils.containsTerminals(h.meld4.tiles) ){
             h.junchan = true;
         }
     }
     private void checkHonroutou(Hand h){
-        if( containsHonorsOrTerminalsOnly(h.tiles) ){
+        if( Utils.containsHonorsOrTerminalsOnly(h.tiles) ){
             h.honroutou = true;
         }
     }
     private void checkChanta(Hand h){
-        if( containsHonorsOrTerminals(h.pair)
-                && containsHonorsOrTerminals(h.set1)
-                && containsHonorsOrTerminals(h.set2)
-                && containsHonorsOrTerminals(h.set3)
-                && containsHonorsOrTerminals(h.set4)
+        if( Utils.containsHonorsOrTerminals(h.pair.tiles)
+                && Utils.containsHonorsOrTerminals(h.meld1.tiles)
+                && Utils.containsHonorsOrTerminals(h.meld2.tiles)
+                && Utils.containsHonorsOrTerminals(h.meld3.tiles)
+                && Utils.containsHonorsOrTerminals(h.meld4.tiles)
                 && !h.honroutou
                 && !h.junchan ){
             h.chanta = true;
@@ -1078,8 +1004,8 @@ public class ScoreCalculator {
     }
     private void checkShousangen(Hand h){
         HashSet<String> noDupSet = new HashSet<>();
-        if( h.pair.get(0).dragon!=null ){
-            noDupSet.add(h.pair.get(0).dragon.toString());
+        if( h.pair.tiles.get(0).dragon!=null ){
+            noDupSet.add(h.pair.tiles.get(0).dragon.toString());
         }
         if( h.whiteDragon ){
             noDupSet.add("WHITE");
@@ -1095,12 +1021,12 @@ public class ScoreCalculator {
         }
     }
     private void checkHonitsu(Hand h){
-        if( containsHonors(h.tiles) && countSuits(h.tiles)==1 ){
+        if( Utils.containsHonors(h.tiles) && countSuits(h.tiles)==1 ){
             h.honitsu = true;
         }
     }
     private void checkChinitsu(Hand h){
-        if( !containsHonors(h.tiles) && countSuits(h.tiles)==1 ){
+        if( !Utils.containsHonors(h.tiles) && countSuits(h.tiles)==1 ){
             h.chinitsu = true;
         }
     }
@@ -1185,7 +1111,7 @@ public class ScoreCalculator {
         }
     }     // 7 pairs of all honors
     private void checkChinroutou(Hand h){
-        if( !containsHonors(h.tiles) && !containsSimples(h.tiles) ){
+        if( !Utils.containsHonors(h.tiles) && !Utils.containsSimples(h.tiles) ){
             h.chinroutou = true;
         }
     }    // All terminals
@@ -1200,7 +1126,7 @@ public class ScoreCalculator {
         h.ryuuiisou = true;
     }     // All green
     private void checkChuurenPoutou(Hand h){
-        if( countSuits(h.tiles)!=1 || containsHonors(h.tiles) ){
+        if( countSuits(h.tiles)!=1 || Utils.containsHonors(h.tiles) ){
             return;
         }
 
@@ -1244,7 +1170,7 @@ public class ScoreCalculator {
         //TODO implement 9-sided wait... seems like a pain...
     }
     private void checkSuuKantsu(Hand h){
-        if( isKan(h.set1) && isKan(h.set2) && isKan(h.set3) && isKan(h.set4) ){
+        if( h.meld1.isKan() && h.meld2.isKan() && h.meld3.isKan() && h.meld4.isKan() ){
             h.suuKantsu = true;
         }
     }     // Four Kans
@@ -1253,17 +1179,17 @@ public class ScoreCalculator {
     private void checkSanrenkou(Hand h){
         //Get 3+ triplets
         List<Tile> leadTiles = new ArrayList<>();
-        if( !isChii(h.set1) && h.set1.get(0).suit!=Tile.Suit.HONOR ){
-            leadTiles.add(h.set1.get(0));
+        if( !h.meld1.isChii() && h.meld1.getSuit()!=Tile.Suit.HONOR ){
+            leadTiles.add(h.meld1.tiles.get(0));
         }
-        if( !isChii(h.set2) && h.set2.get(0).suit!=Tile.Suit.HONOR ){
-            leadTiles.add(h.set2.get(0));
+        if( !h.meld2.isChii() && h.meld2.getSuit()!=Tile.Suit.HONOR ){
+            leadTiles.add(h.meld2.tiles.get(0));
         }
-        if( !isChii(h.set3) && h.set3.get(0).suit!=Tile.Suit.HONOR ){
-            leadTiles.add(h.set3.get(0));
+        if( !h.meld3.isChii() && h.meld3.getSuit()!=Tile.Suit.HONOR ){
+            leadTiles.add(h.meld3.tiles.get(0));
         }
-        if( !isChii(h.set4) && h.set4.get(0).suit!=Tile.Suit.HONOR ){
-            leadTiles.add(h.set4.get(0));
+        if( !h.meld4.isChii() && h.meld4.getSuit()!=Tile.Suit.HONOR ){
+            leadTiles.add(h.meld4.tiles.get(0));
         }
         if( leadTiles.size()<3 ){
             return;
@@ -1302,17 +1228,17 @@ public class ScoreCalculator {
     private void checkSuurenkou(Hand h){
         //Get 4 triplets
         List<Tile> leadTiles = new ArrayList<>();
-        if( !isChii(h.set1) && h.set1.get(0).suit!=Tile.Suit.HONOR ){
-            leadTiles.add(h.set1.get(0));
+        if( !h.meld1.isChii() && h.meld1.getSuit()!=Tile.Suit.HONOR ){
+            leadTiles.add(h.meld1.tiles.get(0));
         }
-        if( !isChii(h.set2) && h.set2.get(0).suit!=Tile.Suit.HONOR ){
-            leadTiles.add(h.set2.get(0));
+        if( !h.meld2.isChii() && h.meld2.getSuit()!=Tile.Suit.HONOR ){
+            leadTiles.add(h.meld2.tiles.get(0));
         }
-        if( !isChii(h.set3) && h.set3.get(0).suit!=Tile.Suit.HONOR ){
-            leadTiles.add(h.set3.get(0));
+        if( !h.meld3.isChii() && h.meld3.getSuit()!=Tile.Suit.HONOR ){
+            leadTiles.add(h.meld3.tiles.get(0));
         }
-        if( !isChii(h.set4) && h.set4.get(0).suit!=Tile.Suit.HONOR ){
-            leadTiles.add(h.set4.get(0));
+        if( !h.meld4.isChii() && h.meld4.getSuit()!=Tile.Suit.HONOR ){
+            leadTiles.add(h.meld4.tiles.get(0));
         }
         if( leadTiles.size()<4 ){
             return;
@@ -1343,7 +1269,7 @@ public class ScoreCalculator {
         Set<Tile> tz = findDuplicateTiles(h.tiles);
         if( tz.size()==7
                 && findDuplicateTiles(tz).size()==0
-                && !containsHonorsOrTerminals(h.tiles)
+                && !Utils.containsHonorsOrTerminals(h.tiles)
                 && countSuits(h.tiles)==1 ){
             h.daiSharin = true;
         }

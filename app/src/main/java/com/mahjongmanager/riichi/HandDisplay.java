@@ -61,7 +61,6 @@ public class HandDisplay extends LinearLayout {
         hand = h;
         displayHand();
     }
-
     private void displayHand(){
         if( hand==null ){
             return;
@@ -73,7 +72,6 @@ public class HandDisplay extends LinearLayout {
             displayComplexHand();
         }
     }
-
     /**
      * Adds the tiles to HandDisplay with no spacing or distinction for open/called/winning-tile
      */
@@ -85,7 +83,6 @@ public class HandDisplay extends LinearLayout {
             addTileClosed(t);
         }
     }
-
     /**
      * Displaying a completed hand in the most pretty format possible is a bit more complex
      * than it initially seems. Properties of a cleanly displayed finished hand include:
@@ -106,11 +103,11 @@ public class HandDisplay extends LinearLayout {
      *
      */
     private void displayComplexHand() {
-        addSetComplex(hand.set1);
-        addSetComplex(hand.set2);
-        addSetComplex(hand.set3);
-        addSetComplex(hand.set4);
-        addPairComplex(withoutTile(hand.pair, hand.getWinningTile()));
+        addSetComplex(hand.meld1);
+        addSetComplex(hand.meld2);
+        addSetComplex(hand.meld3);
+        addSetComplex(hand.meld4);
+        addClosedSet( hand.pair);
         if( includeWinningTile ){
             addTileWinningTile();
         }
@@ -124,73 +121,66 @@ public class HandDisplay extends LinearLayout {
         return tempList;
     }
 
-    private void addSetComplex(List<Tile> tiles){
-        if( tiles.size()<3 || tiles.size()>4 ){
+    private void addSetComplex(Meld meld){
+        if( meld.size()<3 || meld.size()>4 ){
             //This should never happen
             return;
         }
 
-        Utils.SetState setState = Utils.getSetState(tiles);
+        Utils.SetState setState = Utils.getSetState(meld);
         switch (setState.toString()){
             case "INVALID":
                 //This should never happen
                 break;
             case "CLOSEDSET":
-                addClosedSet(withoutTile(tiles, hand.getWinningTile()));
+                addClosedSet(meld);
                 break;
             case "OPENCHII":
-                addOpenChii(tiles);
+                addOpenChii(meld);
                 break;
             case "OPENPON":
-                addOpenPon(tiles);
+                addOpenPon(meld);
                 break;
             case "OPENKAN":
-                addOpenKan(tiles);
+                addOpenKan(meld);
                 break;
             case "ADDEDKAN":
-                addAddedKan(tiles);
+                addAddedKan(meld);
                 break;
             case "CLOSEDKAN":
-                addClosedKan(tiles);
+                addClosedKan(meld);
                 break;
         }
     }
-    private void addClosedSet(List<Tile> set) {
+    private void addClosedSet(Meld meld) {
         if( closedTilesContainer.getChildCount()!=0 ){
             addSpacer(closedTilesContainer, 8);
         }
-        for( Tile t : set ){
+        List<Tile> remainderSet = withoutTile(meld.tiles, hand.getWinningTile());
+        for( Tile t : remainderSet ){
             addTileClosed(t);
         }
     }
-    private void addPairComplex(List<Tile> pair){
-        if( closedTilesContainer.getChildCount()!=0 ){
-            addSpacer(closedTilesContainer, 8);
-        }
-        for( Tile t : pair ){
-            addTileClosed(t);
-        }
+    private void addOpenChii(Meld meld) {
+        addOpenPon(meld);      // Logically the same thing, except calledFrom always is LEFT
     }
-    private void addOpenChii(List<Tile> tiles) {
-        addOpenPon(tiles);      // Logically the same thing, except calledFrom always is LEFT
+    private void addOpenPon(Meld meld){
+        addAddedKan(meld);     // Neat, don't have to copy code here, addedTile will just be null
     }
-    private void addOpenPon(List<Tile> tiles){
-        addAddedKan(tiles);     // Neat, don't have to copy code here, addedTile will just be null
+    private void addOpenKan(Meld meld) {
+        addAddedKan(meld);     // ... I guess these are all the same thing if in a valid state
     }
-    private void addOpenKan(List<Tile> tiles) {
-        addAddedKan(tiles);     // ... I guess these are all the same thing if in a valid state
-    }
-    private void addAddedKan(List<Tile> tiles) {
+    private void addAddedKan(Meld meld) {
         if( openTilesContainer.getChildCount()==0 ){
             addSpacer(openTilesContainer, 25);
         } else {
             addSpacer(openTilesContainer, 8);
         }
 
-        Tile calledTile = Utils.getCalledTile(tiles);
-        Tile addedTile = Utils.getAddedTile(tiles);
+        Tile calledTile = meld.getCalledTile();
+        Tile addedTile = meld.getAddedTile();
 
-        List<Tile> remainderSet = withoutTile(tiles, calledTile);
+        List<Tile> remainderSet = withoutTile(meld.tiles, calledTile);
         remainderSet = withoutTile(remainderSet, addedTile);
 
         switch( calledTile.calledFrom.toString() ){
@@ -220,7 +210,7 @@ public class HandDisplay extends LinearLayout {
                 break;
         }
     }
-    private void addClosedKan(List<Tile> tiles) {
+    private void addClosedKan(Meld meld) {
         if( openTilesContainer.getChildCount()==0 ){
             addSpacer(openTilesContainer, 25);
         } else {
@@ -228,22 +218,22 @@ public class HandDisplay extends LinearLayout {
         }
 
         Tile redFiveTile = null;
-        for(Tile t : tiles){
+        for(Tile t : meld.tiles){
             if( t.red ){
                 redFiveTile = t;
             }
         }
 
-        tiles.get(0).faceDown = true;
-        addTileOpen(tiles.get(0));
-        addTileOpen(tiles.get(1));
+        meld.tiles.get(0).faceDown = true;
+        addTileOpen(meld.tiles.get(0));
+        addTileOpen(meld.tiles.get(1));
         if( redFiveTile!=null ){
             addTileOpen(redFiveTile);
         } else {
-            addTileOpen(tiles.get(2));
+            addTileOpen(meld.tiles.get(2));
         }
-        tiles.get(3).faceDown = true;
-        addTileOpen(tiles.get(3));
+        meld.tiles.get(3).faceDown = true;
+        addTileOpen(meld.tiles.get(3));
     }
 
     private void addTileClosed(Tile t){

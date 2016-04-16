@@ -12,11 +12,11 @@ import java.util.Map;
 public class Hand {
     public List<Tile> tiles = new ArrayList<>();
     public List<Tile> unsortedTiles = new ArrayList<>();
-    public List<Tile> pair = new ArrayList<>();
-    public List<Tile> set1 = new ArrayList<>();
-    public List<Tile> set2 = new ArrayList<>();
-    public List<Tile> set3 = new ArrayList<>();
-    public List<Tile> set4 = new ArrayList<>();
+    public Meld pair  = new Meld();
+    public Meld meld1 = new Meld();
+    public Meld meld2 = new Meld();
+    public Meld meld3 = new Meld();
+    public Meld meld4 = new Meld();
 
     public Integer han = 0;
     public Integer fu = 0;
@@ -98,11 +98,11 @@ public class Hand {
     public Hand( Hand oldHand ){
         tiles.addAll(oldHand.tiles);
         unsortedTiles.addAll(oldHand.unsortedTiles);
-        pair.addAll(oldHand.pair);
-        set1.addAll(oldHand.set1);
-        set2.addAll(oldHand.set2);
-        set3.addAll(oldHand.set3);
-        set4.addAll(oldHand.set4);
+        pair  = new Meld(oldHand.pair);
+        meld1 = new Meld(oldHand.meld1);
+        meld2 = new Meld(oldHand.meld2);
+        meld3 = new Meld(oldHand.meld3);
+        meld4 = new Meld(oldHand.meld4);
 
         han = oldHand.han;
         fu  = oldHand.fu;
@@ -164,16 +164,12 @@ public class Hand {
     }
 
     public Tile findTile(String val, String suit){
-        Tile target = null;
-//        Log.d("findTile", "Attenpting to find tile: suit=" + suit + ", val=" + val );
-
         for( Tile tile : tiles ){
             if( tile.suit.toString().equalsIgnoreCase(suit) && tile.value.equalsIgnoreCase(val) ){
-                target = tile;
-                break;
+                return tile;
             }
         }
-        return target;
+        return null;
     }
     public Tile findTile( String string ){
         switch (string){
@@ -216,16 +212,16 @@ public class Hand {
     }
 
     public void setSet( List<Tile> tbdSet ){
-        if( set1.size()==0 ){
-            set1 = tbdSet;
-        } else if( set2.size()==0 ){
-            set2 = tbdSet;
-        } else if( set3.size()==0 ){
-            set3 = tbdSet;
-        } else if( set4.size()==0 ){
-            set4 = tbdSet;
+        if( meld1.tiles.size()==0 ){
+            meld1.setTiles(tbdSet);
+        } else if( meld2.tiles.size()==0 ){
+            meld2.setTiles(tbdSet);
+        } else if( meld3.tiles.size()==0 ){
+            meld3.setTiles(tbdSet);
+        } else if( meld4.tiles.size()==0 ){
+            meld4.setTiles(tbdSet);
         } else {
-            Log.e("All hand sets set", "all sets: " + set1.toString() + " "+ set2.toString() + " "+ set3.toString() + " "+ set4.toString());
+            Log.e("All hand sets set", "all sets: " + meld1.toString() + " "+ meld2.toString() + " "+ meld3.toString() + " "+ meld4.toString());
             Log.e("All hand sets set", "unsortedTiles: " + unsortedTiles.toString());
             Log.e("All hand sets set", "Attempted to setSet when all sets were already full: " + tbdSet);
         }
@@ -303,7 +299,7 @@ public class Hand {
         }
 
         if( !chiiToitsu && !kokushiMusou && !nagashiMangan ){
-            if( tiles.size()!=(pair.size()+set1.size()+set2.size()+set3.size()+set4.size()) ){
+            if( tiles.size()!=(pair.size()+meld1.size()+meld2.size()+meld3.size()+meld4.size()) ){
                 Log.e("validateCompleteState", "(1/2) Tile counts don't match! tiles: "+unsortedTiles.toString());
                 Log.e("validateCompleteState", "(2/2) Tile counts don't match! melds: "+printAllSets());
                 return false;
@@ -311,20 +307,20 @@ public class Hand {
 
             //All sets are set
             if( pair.size()!=2
-                    || (set1.size()<3 || set1.size()>4)
-                    || (set2.size()<3 || set2.size()>4)
-                    || (set3.size()<3 || set3.size()>4)
-                    || (set4.size()<3 || set4.size()>4) ){
+                    || (meld1.tiles.size()<3 || meld1.tiles.size()>4)
+                    || (meld2.tiles.size()<3 || meld2.tiles.size()>4)
+                    || (meld3.tiles.size()<3 || meld3.tiles.size()>4)
+                    || (meld4.tiles.size()<3 || meld4.tiles.size()>4) ){
                 Log.e("validateCompleteState", "Sets are not all set: "+printAllSets());
                 return false;
             }
 
             //ALl tiles in each set match states
-            if( !Utils.validateSet(pair)
-                || !Utils.validateSet(set1)
-                || !Utils.validateSet(set2)
-                || !Utils.validateSet(set3)
-                || !Utils.validateSet(set4) ){
+            if( !pair.validate()
+                || !meld1.validate()
+                || !meld2.validate()
+                || !meld3.validate()
+                || !meld4.validate() ){
                 Log.e("validateHand", "Something went wrong, here's the whole hand: "+toStringVerbose());
                 return false;
             }
@@ -382,29 +378,29 @@ public class Hand {
     public List<Tile> getWinningMeld(){
         Log.d("printAllSets", "Print all sets: " + printAllSets());
 
-        for( Tile t : pair ){
+        for( Tile t : pair.tiles ){
             if( t.winningTile ){
-                return pair;
+                return pair.tiles;
             }
         }
-        for( Tile t : set1 ){
+        for( Tile t : meld1.tiles ){
             if( t.winningTile ){
-                return set1;
+                return meld1.tiles;
             }
         }
-        for( Tile t : set2 ){
+        for( Tile t : meld2.tiles ){
             if( t.winningTile ){
-                return set2;
+                return meld2.tiles;
             }
         }
-        for( Tile t : set3 ){
+        for( Tile t : meld3.tiles ){
             if( t.winningTile ){
-                return set3;
+                return meld3.tiles;
             }
         }
-        for( Tile t : set4 ){
+        for( Tile t : meld4.tiles ){
             if( t.winningTile ){
-                return set4;
+                return meld4.tiles;
             }
         }
         return null;
@@ -419,10 +415,10 @@ public class Hand {
     }
     public int emptyMeldCount(){
         int count = 0;
-        count = (set1.size()==0) ? count + 1 : count;
-        count = (set2.size()==0) ? count + 1 : count;
-        count = (set3.size()==0) ? count + 1 : count;
-        count = (set4.size()==0) ? count + 1 : count;
+        count = (meld1.tiles.size()==0) ? count + 1 : count;
+        count = (meld2.tiles.size()==0) ? count + 1 : count;
+        count = (meld3.tiles.size()==0) ? count + 1 : count;
+        count = (meld4.tiles.size()==0) ? count + 1 : count;
         return count;
     }
     public int countTile(Tile countedTile){
@@ -435,7 +431,7 @@ public class Hand {
         return count;
     }
     public boolean hasKan(){
-        return !(set1.size()!=4 && set2.size()!=4 && set3.size()!=4 && set4.size()!=4);
+        return meld1.isKan() || meld2.isKan() || meld3.isKan() || meld4.isKan();
     }
     public boolean hasYakuman(){
         return ( kokushiMusou || suuAnkou      || daisangen || shousuushii
@@ -466,11 +462,11 @@ public class Hand {
     public void sort(){
         sort(tiles);
         sort(unsortedTiles);
-        sort(pair);
-        sort(set1);
-        sort(set2);
-        sort(set3);
-        sort(set4);
+        sort(pair.tiles);
+        sort(meld1.tiles);
+        sort(meld2.tiles);
+        sort(meld3.tiles);
+        sort(meld4.tiles);
     }
     private void sort( List<Tile> tz ){
         Collections.sort(tz, new Comparator<Tile>() {
@@ -482,23 +478,22 @@ public class Hand {
     }
     public String toString(){
         return (tiles.isEmpty()) ? "[...]" : tiles.toString();
-//        return printAllSets();
     }
     public String toStringVerbose(){
         String s = " tiles: " + toString() + "\n";
         s = s + " unsortedTiles: " + unsortedTiles.toString() + "\n";
         s = s + " pair: " + pair.toString() + "\n";
-        s = s + " set1: " + set1.toString() + "\n";
-        s = s + " set2: " + set2.toString() + "\n";
-        s = s + " set3: " + set3.toString() + "\n";
-        s = s + " set4: " + set4.toString() + "\n";
+        s = s + " meld1: " + meld1.toString() + "\n";
+        s = s + " meld2: " + meld2.toString() + "\n";
+        s = s + " meld3: " + meld3.toString() + "\n";
+        s = s + " meld4: " + meld4.toString() + "\n";
         s = s + " winningTile: " + getWinningTile().toString() + "\n";
         s = s + " hanList: " + hanList.toString() + "\n";
         s = s + " fuList: " + fuList.toString() + "\n";
         return s;
     }
     public String printAllSets(){
-        return "(pair:"+pair.toString()+") (set1:"+set1.toString()+") (set2:"+set2.toString()+") (set3:"+set3.toString()+") (set4:"+set4.toString()+")";
+        return "(pair:"+pair.toString()+") (set1:"+meld1.toString()+") (set2:"+meld2.toString()+") (set3:"+meld3.toString()+") (set4:"+meld4.toString()+")";
     }
     public String getString(Tile.Wind w){
         switch (w){

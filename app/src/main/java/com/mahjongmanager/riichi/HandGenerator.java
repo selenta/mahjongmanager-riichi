@@ -15,17 +15,18 @@ import java.util.Random;
  * This class is a mess... can't seem to get it all in my head at once
  *      The problem is creating interesting hands with realish yaku
  *      For now, stick to using h=completelyRandomHand() followed by addOtherYaku(h)
+ *      Generating hands from yaku is probably more effort than it's worth, tbh
  */
 public class HandGenerator {
     private Context context;
 
     HashMap<String, Double> yakuOdds = new HashMap<>();
 
-    List<Tile> pair = new ArrayList<>();
-    List<Tile> meld1 = new ArrayList<>();
-    List<Tile> meld2 = new ArrayList<>();
-    List<Tile> meld3 = new ArrayList<>();
-    List<Tile> meld4 = new ArrayList<>();
+    Meld pair  = new Meld();
+    Meld meld1 = new Meld();
+    Meld meld2 = new Meld();
+    Meld meld3 = new Meld();
+    Meld meld4 = new Meld();
 
     List<String> yakuList = new ArrayList<>();
 
@@ -106,10 +107,10 @@ public class HandGenerator {
         if( Math.random()<0.2 && !h.isOpen() ){
             addTsumo(h);
         }
-        boolean hasKan = (h.set1.size()==4);
-        hasKan = (h.set2.size() == 4) || hasKan;
-        hasKan = (h.set3.size() == 4) || hasKan;
-        hasKan = (h.set4.size() == 4) || hasKan;
+        boolean hasKan = (h.meld1.size()==4);
+        hasKan = (h.meld2.size() == 4) || hasKan;
+        hasKan = (h.meld3.size() == 4) || hasKan;
+        hasKan = (h.meld4.size() == 4) || hasKan;
         if( Math.random()<0.003 && hasKan ){
             addRinshan(h);
         }
@@ -122,9 +123,9 @@ public class HandGenerator {
 
         // Dora indicators
         Integer doraIndicators = 1;
-        doraIndicators = (h.set1.size()==4) ? doraIndicators+1 : doraIndicators;
-        doraIndicators = (h.set2.size()==4) ? doraIndicators+1 : doraIndicators;
-        doraIndicators = (h.set3.size()==4) ? doraIndicators+1 : doraIndicators;
+        doraIndicators = (h.meld1.size()==4) ? doraIndicators+1 : doraIndicators;
+        doraIndicators = (h.meld2.size()==4) ? doraIndicators+1 : doraIndicators;
+        doraIndicators = (h.meld3.size()==4) ? doraIndicators+1 : doraIndicators;
         doraIndicators = (Math.random()<0.2) ? doraIndicators+1 : doraIndicators;
         for(int i=0; i<doraIndicators ; i++){
             addDoraIndicator(h);
@@ -136,17 +137,17 @@ public class HandGenerator {
         List<Tile> foundingTiles = new ArrayList<>();
         foundingTiles.add(randomTile());
 
-        pair.add(foundingTiles.get(0));
+        pair.addTile(foundingTiles.get(0));
         foundingTiles.add(randomTile(foundingTiles));
-        meld1.add(foundingTiles.get(foundingTiles.size() - 1));
+        meld1.addTile(foundingTiles.get(foundingTiles.size() - 1));
         foundingTiles.add(randomTile(foundingTiles));
-        meld2.add(foundingTiles.get(foundingTiles.size() - 1));
+        meld2.addTile(foundingTiles.get(foundingTiles.size() - 1));
         foundingTiles.add(randomTile(foundingTiles));
-        meld3.add(foundingTiles.get(foundingTiles.size() - 1));
+        meld3.addTile(foundingTiles.get(foundingTiles.size() - 1));
         foundingTiles.add(randomTile(foundingTiles));
-        meld4.add(foundingTiles.get(foundingTiles.size() - 1));
+        meld4.addTile(foundingTiles.get(foundingTiles.size() - 1));
 
-        pair.add(new Tile(pair.get(0)));
+        pair.addTile(new Tile(pair.tiles.get(0)));
 
         expandMeld(meld1);
         expandMeld(meld2);
@@ -154,19 +155,19 @@ public class HandGenerator {
         expandMeld(meld4);
 
         List<Tile> allTiles = new ArrayList<>();
-        allTiles.addAll(pair);
-        allTiles.addAll(meld1);
-        allTiles.addAll(meld2);
-        allTiles.addAll(meld3);
-        allTiles.addAll(meld4);
+        allTiles.addAll(pair.tiles);
+        allTiles.addAll(meld1.tiles);
+        allTiles.addAll(meld2.tiles);
+        allTiles.addAll(meld3.tiles);
+        allTiles.addAll(meld4.tiles);
 
         randomWinningTile();
 
         return new Hand(allTiles);
     }
-    private void expandMeld(List<Tile> meld){
+    private void expandMeld(Meld meld){
         Double roll = Math.random();
-        if(roll<0.7 && meld.get(0).suit!=Tile.Suit.HONOR ){
+        if(roll<0.7 && meld.getSuit()!=Tile.Suit.HONOR ){
             expandChii(meld);
         } else if(roll<0.1) {
             expandKan(meld);
@@ -174,35 +175,35 @@ public class HandGenerator {
             expandPon(meld);
         }
     }
-    private void expandPon(List<Tile> meld){
-        Tile founder = meld.get(0);
-        meld.add(new Tile(founder));
-        meld.add(new Tile(founder));
+    private void expandPon(Meld meld){
+        Tile founder = meld.tiles.get(0);
+        meld.addTile(new Tile(founder));
+        meld.addTile(new Tile(founder));
 
         if( Math.random()<0.4 ){
-            Tile calledTile = meld.get(new Random().nextInt(meld.size()));
+            Tile calledTile = meld.getRandomTile();
             calledTile.calledFrom = Tile.CalledFrom.CENTER;
-            for(Tile t : meld){
+            for(Tile t : meld.tiles){
                 t.revealedState = Tile.RevealedState.PON;
             }
         }
     }
-    private void expandKan(List<Tile> meld){
-        Tile founder = meld.get(0);
-        meld.add(new Tile(founder));
-        meld.add(new Tile(founder));
-        meld.add(new Tile(founder));
+    private void expandKan(Meld meld){
+        Tile founder = meld.tiles.get(0);
+        meld.addTile(new Tile(founder));
+        meld.addTile(new Tile(founder));
+        meld.addTile(new Tile(founder));
 
         Double roll = Math.random();
         if( roll<0.4 ){
-            for( Tile t : meld ){
+            for( Tile t : meld.tiles ){
                 t.revealedState=Tile.RevealedState.CLOSEDKAN;
             }
         } else if( roll<0.7 ){
             List<Tile> remainders = new ArrayList<>();
-            remainders.addAll(meld);
+            remainders.addAll(meld.tiles);
 
-            Tile calledTile = meld.get(new Random().nextInt(meld.size()));
+            Tile calledTile = meld.getRandomTile();
             calledTile.calledFrom = Tile.CalledFrom.CENTER;
             calledTile.revealedState = Tile.RevealedState.PON;
             remainders.remove(calledTile);
@@ -215,10 +216,10 @@ public class HandGenerator {
                 t.revealedState = Tile.RevealedState.PON;
             }
         } else {
-            Tile calledTile = meld.get(new Random().nextInt(meld.size()));
+            Tile calledTile = meld.getRandomTile();
             calledTile.calledFrom = Tile.CalledFrom.CENTER;
 
-            for(Tile t : meld){
+            for(Tile t : meld.tiles){
                 t.revealedState = Tile.RevealedState.OPENKAN;
             }
         }
@@ -227,24 +228,24 @@ public class HandGenerator {
 //        Log.d("GenerateKan", "Tile 3: "+meld.get(2)+" - "+meld.get(2).calledFrom+" - "+meld.get(2).revealedState);
 //        Log.d("GenerateKan", "Tile 4: "+meld.get(3)+" - "+meld.get(3).calledFrom+" - "+meld.get(3).revealedState);
     }
-    private void expandChii(List<Tile> meld){
-        Tile founder = meld.get(0);
+    private void expandChii(Meld meld){
+        Tile founder = meld.tiles.get(0);
 
         if(founder.number==1){
-            meld.add(new Tile(2, founder.suit.toString()));
-            meld.add(new Tile(3, founder.suit.toString()));
+            meld.addTile(new Tile(2, founder.suit.toString()));
+            meld.addTile(new Tile(3, founder.suit.toString()));
         } else if(founder.number==9){
-            meld.add(new Tile(8, founder.suit.toString()));
-            meld.add(new Tile(7, founder.suit.toString()));
+            meld.addTile(new Tile(8, founder.suit.toString()));
+            meld.addTile(new Tile(7, founder.suit.toString()));
         } else {
-            meld.add(new Tile(founder.number-1, founder.suit.toString()));
-            meld.add(new Tile(founder.number+1, founder.suit.toString()));
+            meld.addTile(new Tile(founder.number-1, founder.suit.toString()));
+            meld.addTile(new Tile(founder.number+1, founder.suit.toString()));
         }
 
         if( Math.random()<0.3 ){
-            Tile calledTile = meld.get(new Random().nextInt(meld.size()));
+            Tile calledTile = meld.getRandomTile();
             calledTile.calledFrom = Tile.CalledFrom.LEFT;
-            for(Tile t : meld){
+            for(Tile t : meld.tiles){
                 t.revealedState = Tile.RevealedState.CHI;
             }
         }
@@ -303,29 +304,29 @@ public class HandGenerator {
     //modify hand
     private void randomWinningTile(){
         List<Tile> candidates = new ArrayList<>();
-        candidates.addAll(pair);
+        candidates.addAll(pair.tiles);
         if( meld1.size()==3 ){
-            Tile calledTile = Utils.getCalledTile(meld1);
+            Tile calledTile = meld1.getCalledTile();
             if( calledTile==null ){
-                candidates.addAll(meld1);
+                candidates.addAll(meld1.tiles);
             }
         }
         if( meld2.size()==3 ){
-            Tile calledTile = Utils.getCalledTile(meld2);
+            Tile calledTile = meld2.getCalledTile();
             if( calledTile==null ){
-                candidates.addAll(meld2);
+                candidates.addAll(meld2.tiles);
             }
         }
         if( meld3.size()==3 ){
-            Tile calledTile = Utils.getCalledTile(meld3);
+            Tile calledTile = meld3.getCalledTile();
             if( calledTile==null ){
-                candidates.addAll(meld3);
+                candidates.addAll(meld3.tiles);
             }
         }
         if( meld4.size()==3 ){
-            Tile calledTile = Utils.getCalledTile(meld4);
+            Tile calledTile = meld4.getCalledTile();
             if( calledTile==null ){
-                candidates.addAll(meld4);
+                candidates.addAll(meld4.tiles);
             }
         }
 
@@ -600,11 +601,11 @@ public class HandGenerator {
         Log.i("readCsv", "yakuOdds: " + yakuOdds.toString());
     }
     private void cleanup(){
-        pair  = new ArrayList<>();
-        meld1 = new ArrayList<>();
-        meld2 = new ArrayList<>();
-        meld3 = new ArrayList<>();
-        meld4 = new ArrayList<>();
+        pair  = new Meld();
+        meld1 = new Meld();
+        meld2 = new Meld();
+        meld3 = new Meld();
+        meld4 = new Meld();
         yakuList = new ArrayList<>();
     }
 }
