@@ -78,11 +78,15 @@ public class ScoreCalculator {
         Set<Tile> duplicateTiles = findDuplicateTiles(unsortedHand.tiles);
 
         for( Tile dupeTile : duplicateTiles ){
-            Hand sortingHand = new Hand(unsortedHand);
-            Tile pairTile1 = sortingHand.popUnsortedTile(dupeTile.value, dupeTile.suit);
-            Tile pairTile2 = sortingHand.popUnsortedTile(dupeTile.value, dupeTile.suit);
-            sortingHand.pair.addAll(Arrays.asList(pairTile1,pairTile2));
-            sortingHands.add(sortingHand);
+            if( dupeTile.revealedState==Tile.RevealedState.NONE ){
+                Hand sortingHand = new Hand(unsortedHand);
+                Tile pairTile1 = sortingHand.popUnsortedTile(dupeTile.value, dupeTile.suit, Tile.RevealedState.NONE);
+                Tile pairTile2 = sortingHand.popUnsortedTile(dupeTile.value, dupeTile.suit, Tile.RevealedState.NONE);
+                if( pairTile1!=null && pairTile2!=null ){
+                    sortingHand.pair.addAll(Arrays.asList(pairTile1,pairTile2));
+                    sortingHands.add(sortingHand);
+                }
+            }
         }
 
         slotTilesIntoMelds(sortingHands);
@@ -102,7 +106,6 @@ public class ScoreCalculator {
             // It's in an invalid state if there are ever less than 3 tiles in the unsortedTiles list
             if( firstHand.unsortedTiles.size()>=0 && firstHand.unsortedTiles.size()<3 ){
                 sortingHands.remove(firstHand);
-                Log.d("SortingError", "Hand being sorted has an invalid number of tiles(most likely due to kan): " + firstHand.unsortedTiles.toString());
                 continue;
             }
 
@@ -128,9 +131,10 @@ public class ScoreCalculator {
         Tile firstTile = h.unsortedTiles.get(0);
         if( !firstTile.suit.toString().equals("HONOR") && firstTile.number>0 ){
             Hand chiiHand = new Hand(h);
-            Tile firstChiiTile = chiiHand.popUnsortedTile(String.valueOf(firstTile.number), firstTile.suit);
-            Tile secondChiiTile = chiiHand.popUnsortedTile(String.valueOf(firstTile.number + 1), firstTile.suit);
-            Tile thirdChiiTile = chiiHand.popUnsortedTile(String.valueOf(firstTile.number + 2), firstTile.suit);
+
+            Tile firstChiiTile = chiiHand.popUnsortedTile(String.valueOf(firstTile.number), firstTile.suit, null);
+            Tile secondChiiTile = chiiHand.popUnsortedTile(String.valueOf(firstTile.number + 1), firstTile.suit, firstChiiTile.revealedState);
+            Tile thirdChiiTile = chiiHand.popUnsortedTile(String.valueOf(firstTile.number + 2), firstTile.suit, firstChiiTile.revealedState);
 
             if( secondChiiTile!=null && thirdChiiTile!=null ){
                 //Yay, we have a chii!
@@ -143,9 +147,10 @@ public class ScoreCalculator {
     private Hand checkForPon(Hand h){
         Tile firstTile = h.unsortedTiles.get(0);
         Hand ponHand = new Hand(h);
-        Tile firstPonTile  = ponHand.popUnsortedTile(firstTile.value, firstTile.suit);
-        Tile secondPonTile = ponHand.popUnsortedTile(firstTile.value, firstTile.suit);
-        Tile thirdPonTile  = ponHand.popUnsortedTile(firstTile.value, firstTile.suit);
+
+        Tile firstPonTile  = ponHand.popUnsortedTile(firstTile.value, firstTile.suit, null);
+        Tile secondPonTile = ponHand.popUnsortedTile(firstTile.value, firstTile.suit, firstPonTile.revealedState);
+        Tile thirdPonTile  = ponHand.popUnsortedTile(firstTile.value, firstTile.suit, firstPonTile.revealedState);
 
         if( secondPonTile!=null && thirdPonTile!=null ){
             //Yay, we have a pon!
@@ -158,10 +163,10 @@ public class ScoreCalculator {
         Tile firstTile = h.unsortedTiles.get(0);
         if( h.unsortedTiles.size() > 3 ){
             Hand kanHand = new Hand(h);
-            Tile firstKanTile  = kanHand.popUnsortedTile(firstTile.value, firstTile.suit);
-            Tile secondKanTile = kanHand.popUnsortedTile(firstTile.value, firstTile.suit);
-            Tile thirdKanTile  = kanHand.popUnsortedTile(firstTile.value, firstTile.suit);
-            Tile fourthKanTile = kanHand.popUnsortedTile(firstTile.value, firstTile.suit);
+            Tile firstKanTile  = kanHand.popUnsortedTile(firstTile.value, firstTile.suit, null);
+            Tile secondKanTile = kanHand.popUnsortedTile(firstTile.value, firstTile.suit, null);
+            Tile thirdKanTile  = kanHand.popUnsortedTile(firstTile.value, firstTile.suit, null);
+            Tile fourthKanTile = kanHand.popUnsortedTile(firstTile.value, firstTile.suit, null);
 
             if( fourthKanTile!=null ){
                 //Double Yay! We have a kam!
@@ -591,7 +596,6 @@ public class ScoreCalculator {
         return waitFu;
     }
 
-    // Mangan threshold for base points = 2000
     public Integer scoreBasePoints( Integer han, Integer fu ){
         Integer roundedFu = (fu==25) ? 25 : (int) Math.ceil(fu/10.0)*10;
         Double value = roundedFu * Math.pow(2,2+han);
@@ -604,7 +608,8 @@ public class ScoreCalculator {
         Integer value = scoreBasePoints(han, fu);
         Integer childValue = 0;
 
-        //exclude invalid hands or hands capped by mangan rules
+        // Exclude invalid hands or hands capped by mangan rules
+        // Mangan threshold for base points = 2000
         if( han==0 || (han==1&&fu==20) || (han==1&&fu==25) || (han==2&&fu==25&&tsumo) ){
             return "---";
         } else if( han < 5 && value >= 2000 ){

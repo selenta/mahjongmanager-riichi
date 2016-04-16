@@ -163,18 +163,6 @@ public class Hand {
         dora =           oldHand.dora;
     }
 
-    public Tile findUnsortedTile(String val, String suit){
-        Tile target = null;
-//        Log.d("findUnsortedTile", "Attenpting to find tile: suit=" + suit + ", val=" + val );
-
-        for( Tile tile : unsortedTiles ){
-            if( tile.suit.toString().equalsIgnoreCase(suit) && tile.value.equalsIgnoreCase(val) ){
-                target = tile;
-                break;
-            }
-        }
-        return target;
-    }
     public Tile findTile(String val, String suit){
         Tile target = null;
 //        Log.d("findTile", "Attenpting to find tile: suit=" + suit + ", val=" + val );
@@ -215,16 +203,17 @@ public class Hand {
         return findTile(string.split(" ")[0], tileSuit);
     }
 
-    public Tile popUnsortedTile(String val, String suit) {
-        Tile t = findUnsortedTile(val, suit);
-        if( t==null ){
-            //Log.d("Tile doesn't exist", "Tried to find tile that does not exist: " + suit + ", " + val);
-            return null;
+    public Tile popUnsortedTile(String val, Tile.Suit suit, Tile.RevealedState rState){
+        for( Tile tile : unsortedTiles ){
+            if( tile.suit==suit
+                    && tile.value.equalsIgnoreCase(val)
+                    && (rState==null || tile.revealedState==rState ) ){
+                unsortedTiles.remove(tile);
+                return tile;
+            }
         }
-        unsortedTiles.remove(t);
-        return t;
+        return null;
     }
-    public Tile popUnsortedTile(String val, Tile.Suit suit){ return popUnsortedTile(val, suit.toString()); }
 
     public void setSet( List<Tile> tbdSet ){
         if( set1.size()==0 ){
@@ -309,7 +298,7 @@ public class Hand {
 
         //validate that score is not impossible (e.g. 1 han 20 fu)
         if( (han==1&&fu==20) || (han==1&&fu==25) || (han==2&&fu==25&&tsumo) ){
-            Log.e("validateCompleteState", "Impossible score: han-"+han.toString()+" fu-"+fu.toString()+" tsumo-"+tsumo.toString());
+            Log.e("validateCompleteState", "Impossible score: han-"+han.toString()+" fu-"+fu.toString()+" tsumo-"+tsumo.toString()+" - "+toStringVerbose());
             return false;
         }
 
@@ -336,6 +325,7 @@ public class Hand {
                 || !Utils.validateSet(set2)
                 || !Utils.validateSet(set3)
                 || !Utils.validateSet(set4) ){
+                Log.e("validateHand", "Something went wrong, here's the whole hand: "+toStringVerbose());
                 return false;
             }
         }
