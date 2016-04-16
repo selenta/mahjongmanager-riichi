@@ -9,7 +9,7 @@ import java.util.List;
 import java.util.Random;
 
 public class Meld {
-    List<Tile> tiles = new ArrayList<>();
+    public List<Tile> tiles = new ArrayList<>();
 
     public Meld(Meld oldM){
         tiles.addAll(oldM.tiles);
@@ -138,7 +138,7 @@ public class Meld {
             }
         } else {
             if( setRevealedState == Tile.RevealedState.CHI || setRevealedState == Tile.RevealedState.NONE ){
-                Log.e("validateSet", "Closed/Chii must be a set of size 3: "+setRevealedState.toString()+" - "+toString());
+                Log.e("validateSet", "Unrevealed sets must be a set of size 3: "+setRevealedState.toString()+" - "+toString());
                 return false;
             }
         }
@@ -279,4 +279,5 @@ public class Meld {
             }
         });
     }
+    public String toString(){ return tiles.toString(); }
 }

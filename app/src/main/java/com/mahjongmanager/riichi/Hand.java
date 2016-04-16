@@ -487,7 +487,8 @@ public class Hand {
         s = s + " meld2: " + meld2.toString() + "\n";
         s = s + " meld3: " + meld3.toString() + "\n";
         s = s + " meld4: " + meld4.toString() + "\n";
-        s = s + " winningTile: " + getWinningTile().toString() + "\n";
+        String wTile = (getWinningTile()==null) ? "null" : getWinningTile().toString();
+        s = s + " winningTile: " + wTile + "\n";
         s = s + " hanList: " + hanList.toString() + "\n";
         s = s + " fuList: " + fuList.toString() + "\n";
         return s;

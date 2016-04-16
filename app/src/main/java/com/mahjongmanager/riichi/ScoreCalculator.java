@@ -596,7 +596,7 @@ public class ScoreCalculator {
         return waitFu;
     }
 
-    public Integer scoreBasePoints( Integer han, Integer fu ){
+    public static Integer scoreBasePoints( Integer han, Integer fu ){
         Integer roundedFu = (fu==25) ? 25 : (int) Math.ceil(fu/10.0)*10;
         Double value = roundedFu * Math.pow(2,2+han);
         if( han>4 ){
@@ -604,7 +604,7 @@ public class ScoreCalculator {
         }
         return value.intValue();
     }
-    public String scoreHanFu( Integer han, Integer fu, Boolean dealer, Boolean tsumo ){
+    public static String scoreHanFu( Integer han, Integer fu, Boolean dealer, Boolean tsumo ){
         Integer value = scoreBasePoints(han, fu);
         Integer childValue = 0;
 
@@ -642,7 +642,7 @@ public class ScoreCalculator {
         int roundedCV = ((childValue + 99) / 100 ) * 100;
         return roundedCV==0 ? String.valueOf(roundedV) : String.valueOf(roundedCV) + '/' + String.valueOf(roundedV);
     }
-    private int getBasePointsForLargeHand(int han, int base){
+    private static int getBasePointsForLargeHand(int han, int base){
         if( han==5 ){
             return 2000;
         } else if( han==6 || han==7 ){

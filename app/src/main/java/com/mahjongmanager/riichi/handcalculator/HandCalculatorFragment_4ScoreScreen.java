@@ -14,9 +14,12 @@ import android.widget.TextView;
 import com.mahjongmanager.riichi.Hand;
 import com.mahjongmanager.riichi.HandDisplay;
 import com.mahjongmanager.riichi.MainActivity;
+import com.mahjongmanager.riichi.Meld;
 import com.mahjongmanager.riichi.R;
 import com.mahjongmanager.riichi.ScoreCalculator;
 import com.mahjongmanager.riichi.Tile;
+
+import java.util.Arrays;
 
 public class HandCalculatorFragment_4ScoreScreen extends Fragment {
 
@@ -40,16 +43,20 @@ public class HandCalculatorFragment_4ScoreScreen extends Fragment {
         Log.i("actHand", "actHand: " + actHand.toString());
 
         registerControls(myInflatedView);
-        handDisplay.setHand(actHand);
 
         displayScores();
+        handDisplay.setHand(actHand);
 
         return myInflatedView;
     }
 
     private void displayScores(){
-        ScoreCalculator sc = new ScoreCalculator(actHand);
+        Hand sortedHand = new ScoreCalculator(actHand).scoredHand;
+        updateRevealedStatus(sortedHand);
+        ScoreCalculator sc = new ScoreCalculator(sortedHand);
         Hand sh = sc.validatedHand;
+        actHand = sh;
+
         Integer roundedFu = (sh.fu==25) ? 25 : (int) Math.ceil(sh.fu/10.0)*10;
         Log.i("displayScore", "hanList: " + sh.hanList.toString());
         Log.i("displayScore", "fuList: " + sh.fuList.toString());
@@ -65,7 +72,7 @@ public class HandCalculatorFragment_4ScoreScreen extends Fragment {
         }
 
 
-        String result = sc.scoreHanFu(sh.han, sh.fu, sh.playerWind== Tile.Wind.EAST, sh.tsumo);
+        String result = ScoreCalculator.scoreHanFu(sh.han, sh.fu, sh.playerWind== Tile.Wind.EAST, sh.tsumo);
         scoreValue.setText(result);
 
         //Do this second, so that we can make it a little more pretty
@@ -91,6 +98,36 @@ public class HandCalculatorFragment_4ScoreScreen extends Fragment {
         }
         scoreBreakdown.setText(sBreakdown);
     }
+
+    /*
+     * In an attempt to minimize the number of user inputs during the HandCalculator, some
+     * information has to be inferred, such as the precise revealed status of the tiles. It
+     * doesn't really matter (for the purposes of scoring) whether it's an OpenKan or an AddedKan
+     * or who you called the tile from. Either way, a hand won't validate without consistent
+     * RevealedStatus info, so we need to just make something up so it'll pass validation.
+     */
+    private void updateRevealedStatus(Hand h){
+        for(Meld m : Arrays.asList(h.meld1, h.meld2, h.meld3, h.meld4)){
+            Tile calledTile = m.getCalledTile();
+
+            Tile.RevealedState newState = Tile.RevealedState.NONE;
+            if( m.isKan() && calledTile==null ){
+                newState = Tile.RevealedState.CLOSEDKAN;
+            } else if( m.isKan() && calledTile!=null ){
+                newState = Tile.RevealedState.OPENKAN;
+            } else if( m.isChii() && calledTile!=null ){
+                newState = Tile.RevealedState.CHI;
+            } else if( m.size()==3 && calledTile!=null ){
+                newState = Tile.RevealedState.PON;
+            }
+
+            for(Tile t : m.tiles){
+                t.revealedState = newState;
+            }
+        }
+    }
+
+
 
     private void addRow( String itemName, String value, TableLayout table ){
         TableRow newRow = new TableRow(getContext());
