@@ -62,9 +62,8 @@ public class ScoreCalculator {
         }
 
         if( unsortedHand.unsortedTiles.size()==0 ){
-            //TODO scrub hand, so it can be rescored? or directly assign it to validated? (scrub is definitely cleaner)
+            scrubScore(unsortedHand);
             scoredHand = unsortedHand;
-            validatedHand = unsortedHand;
         } else if( unsortedHand.meld1.size()+unsortedHand.meld1.size()
                   +unsortedHand.meld1.size()+unsortedHand.meld1.size()
                   +unsortedHand.unsortedTiles.size() != unsortedHand.tiles.size() ){
@@ -122,7 +121,6 @@ public class ScoreCalculator {
                 sortingHands.add(kanHand);
             }
 
-            //TODO Check if tiles marked as revealed are appropriately grouped
             // Remove the original version of the hand. If it didn't have children, its line ends here
             sortingHands.remove(firstHand);
         }
@@ -1278,6 +1276,32 @@ public class ScoreCalculator {
     private void checkShiisuupuuta(Hand h){}  // Fourteen unconnected tiles (on first draw? wut)
     private void checkParenchan(Hand h){}     // Eight consecutive wins as dealer
 
+    private void scrubScore(Hand h){
+        clearYakuman(h);
+        clearNonYakuman(h);
+        h.hanList.clear();
+    }
+    private void clearYakuman(Hand h){
+        h.kokushiMusou = false;
+        h.kokushiMusou13wait = false;
+        h.suuAnkou = false;
+        h.suuAnkouTanki = false;
+        h.daisangen = false;
+        h.shousuushii = false;
+        h.daisuushii = false;
+        h.tsuuiisou = false;
+        h.daichisei = false;
+        h.chinroutou = false;
+        h.ryuuiisou = false;
+        h.chuurenPoutou = false;
+        h.chuurenPoutou9wait = false;
+        h.suuKantsu = false;
+        h.suurenkou = false;
+        h.daiSharin = false;
+        h.shiisanpuuta = false;
+        h.shiisuupuuta = false;
+        h.parenchan = false;
+    }
     private void clearNonYakuman(Hand h){
         h.doubleRiichi = false;
         h.riichi = false;

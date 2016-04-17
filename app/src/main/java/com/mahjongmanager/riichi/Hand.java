@@ -3,8 +3,6 @@ package com.mahjongmanager.riichi;
 import android.util.Log;
 
 import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -90,10 +88,10 @@ public class Hand {
 
     public Hand( List<Tile> h ){
         tiles.addAll(h);
-        sort(tiles);
+        Utils.sort(tiles);
 
         unsortedTiles.addAll(h);
-        sort(unsortedTiles);
+        Utils.sort(unsortedTiles);
     }
     public Hand( Hand oldHand ){
         tiles.addAll(oldHand.tiles);
@@ -244,13 +242,9 @@ public class Hand {
 
 
     // Verify hand consistency, including:
-    //TODO can't be haitei without selfDrawWinningTile
-    //TODO can't be houtei with Tsumo or selfDrawWinningTile
     //TODO consider other inherently contradictory yaku conditions
     //TODO Chiitoitsu/kokushi/nagashi don't work with most things
-    //TODO Can't have Chan Kan if it isn't the winning tile and only copy of tile in hand or if SelfDrawWinningTile is false
-    //TODO Can't have Rinshan unless there is at least one Kan, winning tile is not part of kan, and selfDrawWinningTile is true
-    //TODO WinningTile can't be part of a set of 4
+    // Good spreadsheet to use as reference: http://arcturus.su/wiki/Yaku_compatability
     public boolean validateCompleteState(){
         if( unsortedTiles.size()!=0 ){
             Log.e("validateCompleteState", "unsortedTiles is not empty: "+unsortedTiles.toString());
@@ -260,6 +254,25 @@ public class Hand {
             return false;
         }
 
+        if( !validateNotTooManyTiles()
+                || !validateOnlyOneWinningTile()
+                || !validateEachTile()
+                || !validateRealScore()
+                || !validateHaiteiHoutei()
+                || !validateChanKan()
+                || !validateRinshan() ){
+            return false;
+        }
+
+        if( !hasAbnormalStructure() &&
+                (!validateNoMissingTiles()
+                        || !validateAllMelds()
+                        || !validateWinningTileNotInKan() )){
+            return false;
+        }
+        return true;
+    }
+    private boolean validateNotTooManyTiles(){
         for( Tile t : tiles ){
             int tCount = 0;
             for( Tile tNested : tiles ){
@@ -272,7 +285,9 @@ public class Hand {
                 return false;
             }
         }
-
+        return true;
+    }
+    private boolean validateOnlyOneWinningTile(){
         //There is exactly one winning tile
         Tile winningTile = null;
         for( Tile t : tiles ){
@@ -283,7 +298,9 @@ public class Hand {
                 return false;
             }
         }
-
+        return true;
+    }
+    private boolean validateEachTile(){
         //verify each tile
         for(Tile t : tiles ){
             if( !t.validateTile() ){
@@ -291,41 +308,70 @@ public class Hand {
                 return false;
             }
         }
-
+        return true;
+    }
+    private boolean validateRealScore(){
         //validate that score is not impossible (e.g. 1 han 20 fu)
         if( (han==1&&fu==20) || (han==1&&fu==25) || (han==2&&fu==25&&tsumo) ){
             Log.e("validateCompleteState", "Impossible score: han-"+han.toString()+" fu-"+fu.toString()+" tsumo-"+tsumo.toString()+" - "+toStringVerbose());
             return false;
         }
-
-        if( !chiiToitsu && !kokushiMusou && !nagashiMangan ){
-            if( tiles.size()!=(pair.size()+meld1.size()+meld2.size()+meld3.size()+meld4.size()) ){
-                Log.e("validateCompleteState", "(1/2) Tile counts don't match! tiles: "+unsortedTiles.toString());
-                Log.e("validateCompleteState", "(2/2) Tile counts don't match! melds: "+printAllSets());
+        return true;
+    }
+    private boolean validateHaiteiHoutei(){
+        if( haitei && (!selfDrawWinningTile || houtei || rinshan || chanKan ) ){
+            Log.e("validateHand", "Cannot have haitei without selfDraw or with houtei/rinshan/chankan: "+selfDrawWinningTile+" - "+houtei+" - "+rinshan+" - "+chanKan+" - "+toStringVerbose());
+            return false;
+        }
+        if( houtei && (selfDrawWinningTile || ippatsu || tsumo || rinshan || chanKan ) ){
+            Log.e("validateHand", "Cannot have houtei with selfDraw or ippatsu/tsumo/rinshan/chankan: "+selfDrawWinningTile+" - "+ippatsu+" - "+tsumo+" - "+rinshan+" - "+chanKan+" - "+toStringVerbose());
+            return false;
+        }
+        return true;
+    }
+    private boolean validateChanKan(){
+        if( chanKan ){
+            int wTileCount = (getWinningTile()==null) ? 0 : countTile(getWinningTile());
+            if( wTileCount!=1 || selfDrawWinningTile || tsumo || rinshan ){
+                Log.e("validateHand", "Cannot have chanKan with more than one copy of winning tile in hand (or with selfDraw/tsumo/rinshan): "+wTileCount+" "+getWinningTile()+" - "+selfDrawWinningTile+" - "+tsumo+" - "+rinshan+" - "+toStringVerbose());
                 return false;
             }
-
-            //All sets are set
-            if( pair.size()!=2
-                    || (meld1.tiles.size()<3 || meld1.tiles.size()>4)
-                    || (meld2.tiles.size()<3 || meld2.tiles.size()>4)
-                    || (meld3.tiles.size()<3 || meld3.tiles.size()>4)
-                    || (meld4.tiles.size()<3 || meld4.tiles.size()>4) ){
-                Log.e("validateCompleteState", "Sets are not all set: "+printAllSets());
-                return false;
-            }
-
-            //ALl tiles in each set match states
-            if( !pair.validate()
+        }
+        return true;
+    }
+    private boolean validateRinshan(){
+        if( rinshan && (!hasKan() || selfDrawWinningTile) ){
+            Log.e("validateCompleteState", "Hand must contain a Kan to win with rinshan: "+toStringVerbose());
+            return false;
+        }
+        return true;
+    }
+    private boolean validateNoMissingTiles(){
+        if( tiles.size()!=(pair.size()+meld1.size()+meld2.size()+meld3.size()+meld4.size()) ){
+            Log.e("validateCompleteState", "(1/2) Tile counts don't match! tiles: "+unsortedTiles.toString());
+            Log.e("validateCompleteState", "(2/2) Tile counts don't match! melds: "+printAllSets());
+            return false;
+        }
+        return true;
+    }
+    private boolean validateAllMelds(){
+        //All tiles in each set match states
+        if( !pair.validate()
                 || !meld1.validate()
                 || !meld2.validate()
                 || !meld3.validate()
                 || !meld4.validate() ){
-                Log.e("validateHand", "Something went wrong, here's the whole hand: "+toStringVerbose());
-                return false;
-            }
+            Log.e("validateHand", "Something went wrong, here's the whole hand: "+toStringVerbose());
+            return false;
         }
-
+        return true;
+    }
+    private boolean validateWinningTileNotInKan(){
+        Meld winningMeld = getWinningMeld();
+        if( winningMeld!=null && winningMeld.isKan() ){
+            Log.e("validateHand", "WinningTile cannot be part of a kan: "+toStringVerbose());
+            return false;
+        }
         return true;
     }
 
@@ -336,14 +382,6 @@ public class Hand {
     public boolean isOpen( List<Tile> list ){
         for( Tile t : list ){
             if(t.revealedState!=Tile.RevealedState.NONE && t.revealedState!=Tile.RevealedState.CLOSEDKAN){
-                return true;
-            }
-        }
-        return false;
-    }
-    public boolean setContains( String val, String suit, List<Tile> set ){
-        for( Tile tile : set ){
-            if( tile.value.equalsIgnoreCase(val) && tile.suit.toString().equalsIgnoreCase(suit) ){
                 return true;
             }
         }
@@ -375,32 +413,30 @@ public class Hand {
         }
         return usedTiles;
     }
-    public List<Tile> getWinningMeld(){
-        Log.d("printAllSets", "Print all sets: " + printAllSets());
-
+    public Meld getWinningMeld(){
         for( Tile t : pair.tiles ){
             if( t.winningTile ){
-                return pair.tiles;
+                return pair;
             }
         }
         for( Tile t : meld1.tiles ){
             if( t.winningTile ){
-                return meld1.tiles;
+                return meld1;
             }
         }
         for( Tile t : meld2.tiles ){
             if( t.winningTile ){
-                return meld2.tiles;
+                return meld2;
             }
         }
         for( Tile t : meld3.tiles ){
             if( t.winningTile ){
-                return meld3.tiles;
+                return meld3;
             }
         }
         for( Tile t : meld4.tiles ){
             if( t.winningTile ){
-                return meld4.tiles;
+                return meld4;
             }
         }
         return null;
@@ -460,22 +496,15 @@ public class Hand {
     }
 
     public void sort(){
-        sort(tiles);
-        sort(unsortedTiles);
-        sort(pair.tiles);
-        sort(meld1.tiles);
-        sort(meld2.tiles);
-        sort(meld3.tiles);
-        sort(meld4.tiles);
+        Utils.sort(tiles);
+        Utils.sort(unsortedTiles);
+        Utils.sort(pair.tiles);
+        Utils.sort(meld1.tiles);
+        Utils.sort(meld2.tiles);
+        Utils.sort(meld3.tiles);
+        Utils.sort(meld4.tiles);
     }
-    private void sort( List<Tile> tz ){
-        Collections.sort(tz, new Comparator<Tile>() {
-            @Override
-            public int compare(Tile p1, Tile p2) {
-                return p1.sortId - p2.sortId; // Ascending
-            }
-        });
-    }
+
     public String toString(){
         return (tiles.isEmpty()) ? "[...]" : tiles.toString();
     }

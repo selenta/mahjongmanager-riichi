@@ -13,6 +13,8 @@ import android.graphics.drawable.shapes.Shape;
 import android.util.Log;
 import android.widget.TextView;
 
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 public class Utils {
@@ -191,5 +193,14 @@ public class Utils {
             }
         }
         return false;
+    }
+
+    public static void sort( List<Tile> tz ){
+        Collections.sort(tz, new Comparator<Tile>() {
+            @Override
+            public int compare(Tile p1, Tile p2) {
+                return p1.sortId - p2.sortId; // Ascending
+            }
+        });
     }
 }

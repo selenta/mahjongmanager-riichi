@@ -13,15 +13,17 @@ public class Meld {
 
     public Meld(Meld oldM){
         tiles.addAll(oldM.tiles);
+        Utils.sort(tiles);
     }
     public Meld(List<Tile> startingTiles){
         tiles.addAll(startingTiles);
+        Utils.sort(tiles);
     }
     public Meld(){}
 
     public void addTile(Tile t){
         tiles.add(t);
-        sort(tiles);
+        Utils.sort(tiles);
     }
     public void setTiles(List<Tile> newTiles){
         tiles.clear();
@@ -270,14 +272,6 @@ public class Meld {
             }
         }
         return false;
-    }
-    private void sort( List<Tile> tz ){
-        Collections.sort(tz, new Comparator<Tile>() {
-            @Override
-            public int compare(Tile p1, Tile p2) {
-                return p1.sortId - p2.sortId; // Ascending
-            }
-        });
     }
     public String toString(){ return tiles.toString(); }
 }
