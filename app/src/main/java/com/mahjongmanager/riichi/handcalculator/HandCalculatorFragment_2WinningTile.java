@@ -27,8 +27,6 @@ public class HandCalculatorFragment_2WinningTile extends Fragment implements Vie
 
     private Button nextButton;
 
-    //TODO Prevent user from selecting tile involved in Kan as winning tile
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View myInflatedView = inflater.inflate(R.layout.fragment_handcalculator_2winningtile, container, false);
@@ -101,7 +99,9 @@ public class HandCalculatorFragment_2WinningTile extends Fragment implements Vie
     private void setWinningTileOptions(){
         HashSet<String> uniqueTiles = new HashSet<String>();
         for( Tile t : actHand.tiles ){
-            uniqueTiles.add(t.toString());
+            if( !isDefinitivelyKanTile(actHand, t) ){
+                uniqueTiles.add(t.toString());
+            }
         }
         Log.i("WinningTileOptions", "Winning tile options: " + uniqueTiles.toString());
 
@@ -116,6 +116,54 @@ public class HandCalculatorFragment_2WinningTile extends Fragment implements Vie
                 }
             }
         }
+    }
+    private boolean isDefinitivelyKanTile(Hand h, Tile t){
+        return h.countTile(t)==4
+                && (t.suit == Tile.Suit.HONOR
+                        || t.revealedState == Tile.RevealedState.ADDEDKAN
+                        || t.revealedState == Tile.RevealedState.OPENKAN
+                        || t.revealedState == Tile.RevealedState.CLOSEDKAN
+                        || !isChiiCandidate(h, t));
+    }
+    // This is hardly the "smartest" way to do this, but probably best not to over-analyze
+    // Looking for at least two neighboring tiles that indicate it could be part of a chii
+    private boolean isChiiCandidate(Hand h, Tile t ){
+        Tile lowerTile=null;
+        Tile upperTile=null;
+        int candidateNumber;
+        switch(t.number){
+            case 1:
+                candidateNumber = 2;
+                break;
+            case 2:
+                candidateNumber = 1;
+                break;
+            default:
+                candidateNumber = t.number-2;
+                break;
+        }
+
+        // Code inspection say it's always null? Seems to work fine
+        while( lowerTile==null && upperTile==null ){
+            lowerTile = h.findTile(String.valueOf(candidateNumber), t.suit.toString() );
+            if( candidateNumber+1==t.number ){
+                upperTile = h.findTile(String.valueOf(candidateNumber+2), t.suit.toString() );
+            } else {
+                upperTile = h.findTile(String.valueOf(candidateNumber+1), t.suit.toString() );
+            }
+            if( lowerTile==null || upperTile==null ){
+                lowerTile = null;
+                upperTile = null;
+            }
+
+            candidateNumber++;
+            if( candidateNumber==t.number ){
+                candidateNumber++;
+            } else if( candidateNumber>t.number+2 ){
+                break;
+            }
+        }
+        return !(lowerTile==null && upperTile==null) ;
     }
 
     @Override

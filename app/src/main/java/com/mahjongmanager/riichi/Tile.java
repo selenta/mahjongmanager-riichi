@@ -142,6 +142,12 @@ public class Tile {
             Log.e("validateTile", "Only 5s can be red: " + toString());
             return false;
         }
+
+        if( calledFrom!=CalledFrom.NONE && revealedState==RevealedState.ADDEDKAN ){
+            Log.e("validateTile", "CalledTile cannot be an AddedKan: "+toString());
+            return false;
+        }
+
         determineSortId();
         value = getValue();
         return true;
