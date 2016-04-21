@@ -13,7 +13,7 @@ public class ScoreCalculatorTest {
     // (4)  Kokushi Musou
     // (5)  Double Riichi, Chii Toitsu
     // (6)  Toitoi, Shousangen, Red Dragon, Green Dragon
-    // (7)  San Kantsu, White Dragon, Honroutou, Haitei, Rinshan
+    // (7)  San Kantsu, White Dragon, Honroutou, Rinshan, Toitoi
     // (8)  Chanta, Prevailing Wind, Seat Wind, San Ankou
     // (9)  Sanshoku Doukou, Junchan, Houtei
     // (10)  Ryanpeikou, Honitsu
@@ -135,7 +135,7 @@ public class ScoreCalculatorTest {
         Hand validatedHand = sc.validatedHand;
 
         Assert.assertSame(7, validatedHand.han);
-        Assert.assertSame(20, validatedHand.fu);
+        Assert.assertSame(30, validatedHand.fu);
     }
 
     @Test
@@ -236,7 +236,7 @@ public class ScoreCalculatorTest {
 
     @Test
     public void handTest7() {
-        // This hand should have: San Kantsu, White Dragon, Honroutou, Haitei, Rinshan, Toitoi
+        // This hand should have: San Kantsu, White Dragon, Honroutou, Rinshan, Toitoi
         // Han: 9       Fu: ??
         Tile t1 = new Tile(1, "SOUZU");
         Tile t2 = new Tile(1, "SOUZU");
@@ -267,13 +267,11 @@ public class ScoreCalculatorTest {
 
         Hand h = new Hand(Arrays.asList(t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11, t12, t13, t14, t15, t16, t17));
         h.rinshan = true;
-        h.haitei = true;
 
         ScoreCalculator sc = new ScoreCalculator(h);
         Hand validatedHand = sc.validatedHand;
 
-        Assert.assertSame(9, validatedHand.han);
-        //Assert.assertSame(25, validatedHand.fu);
+        Assert.assertSame(8, validatedHand.han);
     }
 
     @Test
@@ -384,22 +382,21 @@ public class ScoreCalculatorTest {
         Tile t3 = new Tile(2, "SOUZU");
         Tile t4 = new Tile(3, "SOUZU");
         Tile t5 = new Tile(3, "SOUZU");
-        Tile t6 = new Tile(4, "SOUZU");
+        Tile t6 = new Tile(3, "SOUZU");
         Tile t7 = new Tile(3, "SOUZU");
-        Tile t8 = new Tile(3, "SOUZU");
+        Tile t8 = new Tile(4, "SOUZU");
         Tile t9 = new Tile(5, "SOUZU");
         Tile t10 = new Tile(5, "SOUZU");
         Tile t11 = new Tile(5, "SOUZU");
-        Tile t12 = new Tile(6, "SOUZU");
-        Tile t13 = new Tile(7, "SOUZU");
-        Tile t14 = new Tile(8, "SOUZU");
+        Tile t12 = new Tile(5, "SOUZU");
+        Tile t13 = new Tile(6, "SOUZU");
+        Tile t14 = new Tile(7, "SOUZU");
+        Tile t15 = new Tile(8, "SOUZU");
 
-        Tile t15 = new Tile(5, "SOUZU");
+        t9.revealedState = t10.revealedState = t11.revealedState = t12.revealedState = Tile.RevealedState.CLOSEDKAN;
 
-        t9.revealedState = t10.revealedState = t11.revealedState = t15.revealedState = Tile.RevealedState.CLOSEDKAN;
-
-        t5.calledFrom = Tile.CalledFrom.CENTER;
-        t5.winningTile = true;
+        t8.calledFrom = Tile.CalledFrom.CENTER;
+        t8.winningTile = true;
 
         Hand h = new Hand(Arrays.asList(t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11, t12, t13, t14, t15));
         h.chanKan = true;
