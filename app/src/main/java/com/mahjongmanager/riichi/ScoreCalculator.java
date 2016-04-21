@@ -54,10 +54,11 @@ public class ScoreCalculator {
         //Check for unusually structured hands
         checkKokushiMusou(unsortedHand);
         checkChiitoitsu(unsortedHand);
+        checkDaichisei(unsortedHand);
         checkNagashiMangan(unsortedHand);
 
         //The hand should already be "processed" if it's an unusual hand
-        if( scoredHand!=null && (scoredHand.kokushiMusou||scoredHand.nagashiMangan) ){
+        if( scoredHand!=null && (scoredHand.kokushiMusou||scoredHand.kokushiMusou13wait||scoredHand.nagashiMangan || scoredHand.daichisei) ){
             return;
         }
 
@@ -200,7 +201,7 @@ public class ScoreCalculator {
 
     // Checks hand for all yaku that consist of normal melds (e.g. does NOT check for Chiitoitsu or Kokushi)
     private void scoreHand(Hand h){
-        if( h.kokushiMusou || h.chiiToitsu || h.nagashiMangan ){
+        if( h.hasAbnormalStructure() ){
             return;
         }
 
@@ -492,9 +493,14 @@ public class ScoreCalculator {
 
         // (5) Add fu for tsumo (pinfu exception)
         if( h.pinfu ){
+            boolean isClosed = h.fuList.containsKey("Menzen-Kafu");
             h.fuList.clear();
             h.fuList.put( "Pinfu", 20);
             fu = 20;
+            if( isClosed ){
+                h.fuList.put("Menzen-Kafu", 10);
+                fu += 10;
+            }
         } else if( h.selfDrawWinningTile ) {
             h.fuList.put( "Self Draw Winning Tile", 2);
             fu += 2;
@@ -558,7 +564,7 @@ public class ScoreCalculator {
         Integer meldFu = 0;
         if( !meld.isChii() ){
             meldFu += 2;
-            meldFu = (!meld.isOpenOrWinningTile())                      ? meldFu*2 : meldFu;
+            meldFu = (meld.isClosed())                                  ? meldFu*2 : meldFu;
             meldFu = (Utils.containsHonorsOrTerminalsOnly(meld.tiles))  ? meldFu*2 : meldFu;
             meldFu = (meld.isKan())                                     ? meldFu*4 : meldFu;
             h.fuList.put( label, meldFu);
@@ -705,6 +711,18 @@ public class ScoreCalculator {
             sortedHands.add(chiitoitsuHand);
         }
     }
+    private void checkDaichisei(Hand h){
+        Set<Tile> tz = findDuplicateTiles(h.tiles);
+        Set<Tile> doubleDupes = findDuplicateTiles(tz);
+        int suitCount = countSuits(h.tiles);
+        if( tz.size()==7 && doubleDupes.size()==0 && suitCount==0 ){
+            h.unsortedTiles.clear();
+            h.daichisei = true;
+            clearNonYakuman(h);
+            scoredHand = h;
+            countHan(h);
+        }
+    }     // 7 pairs of all honors
     private void checkKokushiMusou(Hand h){
         if( !Utils.containsHonorsOrTerminalsOnly(h.tiles) ){
             return;
@@ -732,6 +750,7 @@ public class ScoreCalculator {
     private void checkNagashiMangan(Hand h){
         if( h.nagashiMangan ){
             h.unsortedTiles.clear();
+            scoredHand=h;
             validatedHand=h;
             countHan(validatedHand);
         }
@@ -892,16 +911,16 @@ public class ScoreCalculator {
     }
     private void checkSanAnkou(Hand h){
         Integer closedTriplets = 0;
-        if( !h.meld1.isChii() && !h.meld1.isOpenOrWinningTile() ){
+        if( !h.meld1.isChii() && h.meld1.isClosed() ){
             closedTriplets += 1;
         }
-        if( !h.meld2.isChii() && !h.meld2.isOpenOrWinningTile() ){
+        if( !h.meld2.isChii() && h.meld2.isClosed() ){
             closedTriplets += 1;
         }
-        if( !h.meld3.isChii() && !h.meld3.isOpenOrWinningTile() ){
+        if( !h.meld3.isChii() && h.meld3.isClosed() ){
             closedTriplets += 1;
         }
-        if( !h.meld4.isChii() && !h.meld4.isOpenOrWinningTile() ){
+        if( !h.meld4.isChii() && h.meld4.isClosed() ){
             closedTriplets += 1;
         }
 
@@ -1031,21 +1050,17 @@ public class ScoreCalculator {
 
     // Yakuman
     private void checkSuuAnkou(Hand h){
-        HashSet<String> uniqueTiles = new HashSet<>();
-        for( Tile t : h.tiles ){
-            uniqueTiles.add(t.toString());
-        }
-        if( uniqueTiles.size()==5 ){
-            int tripletCount = 0;
-            for( String s : uniqueTiles ){
-                if( countTileInSet(h.findTile(s), h.tiles)==3 || countTileInSet(h.findTile(s), h.tiles)==4){
-                    tripletCount++;
-                }
+        int selfDrawnTriplets = 0;
+        for(Meld m : Arrays.asList(h.meld1, h.meld2, h.meld3, h.meld4)){
+            if( !m.isPair() && !m.isChii() && m.isClosed() ){
+                selfDrawnTriplets++;
             }
-            if( tripletCount==4 && h.getWinningTile()!=null && countTileInSet(h.getWinningTile(),h.tiles)==2 ){
+        }
+        if( selfDrawnTriplets==4 ){
+            if( h.pair.hasWinningTile() ){
                 h.suuAnkou = false;
                 h.suuAnkouTanki = true;
-            } else if( tripletCount==4 && !h.isOpen() && h.selfDrawWinningTile ){
+            } else {
                 h.suuAnkou = true;
             }
         }
@@ -1085,14 +1100,14 @@ public class ScoreCalculator {
     private void checkDaisuushii(Hand h){
         List<Tile.Wind> winds = new ArrayList<>(Arrays.asList(Tile.Wind.values()));
         for( Tile.Wind w : Tile.Wind.values() ){
-            if( countTileInSet(new Tile(w.toString(), "HONOR"),h.tiles)==3
-                    || countTileInSet(new Tile(w.toString(), "HONOR"),h.tiles)==4 ){
+            int tileCount = countTileInSet(new Tile(w.toString(), "HONOR"),h.tiles);
+            if( tileCount==3 || tileCount==4 ){
                 winds.remove(w);
             }
         }
 
         if( winds.size()==0 ){
-            h.shousuushii = true;
+            h.daisuushii = true;
         }
     }    // Four triplets of winds
     private void checkTsuuiisou(Hand h){
@@ -1100,14 +1115,6 @@ public class ScoreCalculator {
             h.tsuuiisou = true;
         }
     }     // All honors
-    private void checkDaichisei(Hand h){
-        Set<Tile> tz = findDuplicateTiles(h.tiles);
-        if( tz.size()==7
-                && findDuplicateTiles(tz).size()==0
-                && countSuits(h.tiles)==0 ){
-            h.daichisei = true;
-        }
-    }     // 7 pairs of all honors
     private void checkChinroutou(Hand h){
         if( !Utils.containsHonors(h.tiles) && !Utils.containsSimples(h.tiles) ){
             h.chinroutou = true;
@@ -1117,7 +1124,7 @@ public class ScoreCalculator {
         for(Tile t : h.tiles){
             if( t.suit==Tile.Suit.HONOR && t.dragon!=Tile.Dragon.GREEN ){
                 return;
-            } else if( t.number!=null && (t.number==1||t.number==5||t.number==7||t.number==8) ){
+            } else if( t.number!=null && (t.number==1||t.number==5||t.number==7||t.number==9) ){
                 return;
             }
         }

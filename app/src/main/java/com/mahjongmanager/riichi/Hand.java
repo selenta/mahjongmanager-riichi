@@ -340,7 +340,7 @@ public class Hand {
         return true;
     }
     private boolean validateRinshan(){
-        if( rinshan && (!hasKan() || selfDrawWinningTile) ){
+        if( rinshan && (!hasKan() || !selfDrawWinningTile) ){
             Log.e("validateCompleteState", "Hand must contain a Kan to win with rinshan: "+toStringVerbose());
             return false;
         }
@@ -475,6 +475,13 @@ public class Hand {
                 || ryuuiisou  || chuurenPoutou || suuKantsu
                 || suuAnkouTanki || kokushiMusou13wait || chuurenPoutou9wait);
     }
+    public boolean hasYakuhai(){
+        return hasDragonWhiteSet()
+                || hasDragonGreenSet()
+                || hasDragonRedSet()
+                || hasPrevailingWindSet()
+                || hasPlayerWindSet();
+    }
     public boolean hasDragonWhiteSet(){
         return countTile(new Tile("White", "HONOR"))>=3;
     }
@@ -492,7 +499,7 @@ public class Hand {
     }
     // TODO this seems like it should be used more, or shouldn't exist, not sure which
     public boolean hasAbnormalStructure(){
-        return kokushiMusou || kokushiMusou13wait || chiiToitsu || nagashiMangan;
+        return kokushiMusou || kokushiMusou13wait || chiiToitsu || daichisei || nagashiMangan;
     }
 
     public void sort(){

@@ -3,8 +3,6 @@ package com.mahjongmanager.riichi;
 import android.util.Log;
 
 import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
 import java.util.List;
 import java.util.Random;
 
@@ -264,10 +262,18 @@ public class Meld {
     public boolean isKan(){ return tiles.size()==4; }
     public Tile.Suit getSuit(){ return tiles.get(0).suit; }
 
-    public boolean isOpenOrWinningTile(){
+    public boolean isClosed(){
         for( Tile t : tiles ){
-            if( (t.revealedState!=Tile.RevealedState.NONE && t.revealedState!=Tile.RevealedState.CLOSEDKAN)
-                    || t.calledFrom!=Tile.CalledFrom.NONE ){
+            if( (t.revealedState !=Tile.RevealedState.NONE && t.revealedState !=Tile.RevealedState.CLOSEDKAN)
+                    || t.calledFrom !=Tile.CalledFrom.NONE ){
+                return false;
+            }
+        }
+        return true;
+    }
+    public boolean hasWinningTile(){
+        for( Tile t : tiles ){
+            if(t.winningTile){
                 return true;
             }
         }
