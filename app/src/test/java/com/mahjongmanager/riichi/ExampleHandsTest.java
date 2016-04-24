@@ -1,10 +1,20 @@
 package com.mahjongmanager.riichi;
 
+import com.mahjongmanager.riichi.utils.ExampleHands;
+
 import junit.framework.Assert;
 
 import org.junit.Test;
 
 public class ExampleHandsTest {
+
+    @Test
+    public void chiitoitsuHandTest(){
+        Hand h = ExampleHands.getChiitoitsuHand();
+        Assert.assertNotNull(h);
+        Assert.assertTrue(h.chiiToitsu);
+        Assert.assertEquals(1, h.hanList.size());
+    }
 
     @Test
     public void pinfuHandTest(){
@@ -157,7 +167,7 @@ public class ExampleHandsTest {
         Hand h = ExampleHands.getKokushiMusouHand();
         Assert.assertNotNull(h);
         Assert.assertTrue(h.kokushiMusou);
-        Assert.assertEquals(h.hanList.size(), 1);
+        Assert.assertEquals(1, h.hanList.size());
     }
 
     @Test
@@ -165,7 +175,7 @@ public class ExampleHandsTest {
         Hand h = ExampleHands.getKokushiMusou13SidedHand();
         Assert.assertNotNull(h);
         Assert.assertTrue(h.kokushiMusou13wait);
-        Assert.assertEquals(h.hanList.size(), 1);
+        Assert.assertEquals(1, h.hanList.size());
     }
 
     @Test
@@ -173,7 +183,7 @@ public class ExampleHandsTest {
         Hand h = ExampleHands.getSuuAnkouHand();
         Assert.assertNotNull(h);
         Assert.assertTrue(h.suuAnkou);
-        Assert.assertEquals(h.hanList.size(), 1);
+        Assert.assertEquals(1, h.hanList.size());
     }
 
     @Test
@@ -181,7 +191,7 @@ public class ExampleHandsTest {
         Hand h = ExampleHands.getSuuAnkouTankiHand();
         Assert.assertNotNull(h);
         Assert.assertTrue(h.suuAnkouTanki);
-        Assert.assertEquals(h.hanList.size(), 1);
+        Assert.assertEquals(1, h.hanList.size());
     }
 
     @Test
@@ -189,7 +199,7 @@ public class ExampleHandsTest {
         Hand h = ExampleHands.getDaisangenHand();
         Assert.assertNotNull(h);
         Assert.assertTrue(h.daisangen);
-        Assert.assertEquals(h.hanList.size(), 1);
+        Assert.assertEquals(1, h.hanList.size());
     }
 
     @Test
@@ -197,15 +207,15 @@ public class ExampleHandsTest {
         Hand h = ExampleHands.getShousuushiiHand();
         Assert.assertNotNull(h);
         Assert.assertTrue(h.shousuushii);
-        Assert.assertEquals(h.hanList.size(), 1);
+        Assert.assertEquals(1, h.hanList.size());
     }
 
     @Test
     public void daishuushiiHandTest(){
-        Hand h = ExampleHands.getDaishuushiiHand();
+        Hand h = ExampleHands.getDaisuushiiHand();
         Assert.assertNotNull(h);
         Assert.assertTrue(h.daisuushii);
-        Assert.assertEquals(h.hanList.size(), 1);
+        Assert.assertEquals(1, h.hanList.size());
     }
 
     @Test
@@ -213,7 +223,7 @@ public class ExampleHandsTest {
         Hand h = ExampleHands.getTsuuiisouHand();
         Assert.assertNotNull(h);
         Assert.assertTrue(h.tsuuiisou);
-        Assert.assertEquals(h.hanList.size(), 1);
+        Assert.assertEquals(1, h.hanList.size());
     }
 
     @Test
@@ -221,7 +231,15 @@ public class ExampleHandsTest {
         Hand h = ExampleHands.getDaichiseiHand();
         Assert.assertNotNull(h);
         Assert.assertTrue(h.daichisei);
-        Assert.assertEquals(h.hanList.size(), 1);
+        Assert.assertEquals(1, h.hanList.size());
+    }
+
+    @Test
+    public void chinroutouHandTest(){
+        Hand h = ExampleHands.getChinroutouHand();
+        Assert.assertNotNull(h);
+        Assert.assertTrue(h.chinroutou);
+        Assert.assertEquals(1, h.hanList.size());
     }
 
     @Test
@@ -229,7 +247,7 @@ public class ExampleHandsTest {
         Hand h = ExampleHands.getRyuuiisouHand();
         Assert.assertNotNull(h);
         Assert.assertTrue(h.ryuuiisou);
-        Assert.assertEquals(h.hanList.size(), 1);
+        Assert.assertEquals(1, h.hanList.size());
     }
 
     @Test
@@ -237,7 +255,7 @@ public class ExampleHandsTest {
         Hand h = ExampleHands.getChuurenPoutouHand();
         Assert.assertNotNull(h);
         Assert.assertTrue(h.chuurenPoutou);
-        Assert.assertEquals(h.hanList.size(), 1);
+        Assert.assertEquals(1, h.hanList.size());
     }
 
     // TODO turn on this test after implementing 9-sided wait
@@ -246,7 +264,7 @@ public class ExampleHandsTest {
 //        Hand h = ExampleHands.getChuurenPoutou9SidedHand();
 //        Assert.assertNotNull(h);
 //        Assert.assertTrue(h.chuurenPoutou9wait);
-//        Assert.assertEquals(h.hanList.size(), 1);
+//        Assert.assertEquals(1, h.hanList.size());
 //    }
 
     @Test
@@ -254,6 +272,6 @@ public class ExampleHandsTest {
         Hand h = ExampleHands.getSuuKantsuHand();
         Assert.assertNotNull(h);
         Assert.assertTrue(h.suuKantsu);
-        Assert.assertEquals(h.hanList.size(), 1);
+        Assert.assertEquals(1, h.hanList.size());
     }
 }

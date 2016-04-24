@@ -1,4 +1,4 @@
-package com.mahjongmanager.riichi;
+package com.mahjongmanager.riichi.utils;
 
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -13,12 +13,16 @@ import android.graphics.drawable.shapes.Shape;
 import android.util.Log;
 import android.widget.TextView;
 
+import com.mahjongmanager.riichi.MainActivity;
+import com.mahjongmanager.riichi.Meld;
+import com.mahjongmanager.riichi.Tile;
+
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
 public class Utils {
-    MainActivity activity;
+    private MainActivity activity;
     public Utils(MainActivity ma){
         activity = ma;
     }

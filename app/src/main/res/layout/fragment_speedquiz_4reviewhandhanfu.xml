@@ -35,7 +35,7 @@
         android:text="You guessed: Z Han XX Fu"
         android:id="@+id/playerGuessReminder" />
 
-    <com.mahjongmanager.riichi.HandDisplay
+    <com.mahjongmanager.riichi.components.HandDisplay
         android:layout_width="match_parent"
         android:layout_height="60dp"
         android:id="@+id/handDisplay" />

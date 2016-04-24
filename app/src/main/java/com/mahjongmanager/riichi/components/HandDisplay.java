@@ -1,4 +1,4 @@
-package com.mahjongmanager.riichi;
+package com.mahjongmanager.riichi.components;
 
 import android.content.Context;
 import android.util.AttributeSet;
@@ -7,6 +7,13 @@ import android.view.LayoutInflater;
 import android.widget.LinearLayout;
 import android.widget.Space;
 import android.widget.TextView;
+
+import com.mahjongmanager.riichi.Hand;
+import com.mahjongmanager.riichi.MainActivity;
+import com.mahjongmanager.riichi.Meld;
+import com.mahjongmanager.riichi.R;
+import com.mahjongmanager.riichi.Tile;
+import com.mahjongmanager.riichi.utils.Utils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -53,6 +60,11 @@ public class HandDisplay extends LinearLayout {
     ///////////////////////////////////////////
     /////////////     Main     ////////////////
     ///////////////////////////////////////////
+    /**
+     * Change whether or not the HandDisplay will include the winning tile (only set to false
+     * if you intend to manually display the winning tile somewhere else). Defaults to true.
+     * @param bool Display winning tile
+     */
     public void setIncludeWinningTile(boolean bool){
         includeWinningTile = bool;
     }

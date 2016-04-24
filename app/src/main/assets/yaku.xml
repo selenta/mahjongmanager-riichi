@@ -1,0 +1,484 @@
+<?xml version="1.0" encoding="utf-8"?>
+<yakus>
+    <yaku>
+        <name>PINFU</name>
+        <english>No Fu Hand</english>
+        <romaji>pinfu</romaji>
+        <kanji>平和</kanji>
+        <closedValue>1</closedValue>
+        <openValue>---</openValue>
+        <description>This is a very common yaku, since it is rather easy to get. A no-points hand is just that—a hand that is worth no additional fu-points whatsoever. Specifically, the hand must have no triplets or quads, and must not contain any pair of dragons, player’s own wind, or wind of the round which is worth points, meaning the pair can be other winds.
+Furthermore, the hand must be waiting for multiple winning tiles that can make a sequence, such as having number 2 and 3 and waiting for 1 or 4; if the hand is in a closed, edge, or pair wait, it is worth two points, thus violating the no-points condition.
+
+When the hand is won by drawing from the wall, as an exception, in most rules the two fu for the self-drawing are not awarded.</description>
+    </yaku>
+    <yaku>
+        <name>IIPEIKOU</name>
+        <english>Closed Double Run</english>
+        <romaji>iipeikou</romaji>
+        <kanji>一盃口</kanji>
+        <closedValue>1</closedValue>
+        <openValue>---</openValue>
+        <description>One set of two sequences of the same numbers in the same suit.</description>
+    </yaku>
+    <yaku>
+        <name>SANSHOKUDOUJUN</name>
+        <english>Three Color Straight</english>
+        <romaji>sanshoku doujun</romaji>
+        <kanji>三色同順</kanji>
+        <closedValue>2</closedValue>
+        <openValue>1</openValue>
+        <description>Three sequences of the same numbers in all three suits.</description>
+    </yaku>
+    <yaku>
+        <name>ITTSUU</name>
+        <english>Straight</english>
+        <romaji>ittsuu</romaji>
+        <kanji>一通</kanji>
+        <closedValue>2</closedValue>
+        <openValue>1</openValue>
+        <description>A straight from number 1 through 9 of one suit, namely, three sequences of 1-2-3, 4-5-6 and 7-8-9.</description>
+    </yaku>
+    <yaku>
+        <name>RYANPEIKOU</name>
+        <english>Two Closed Double Runs</english>
+        <romaji>ryanpeikou</romaji>
+        <kanji>二盃口</kanji>
+        <closedValue>3</closedValue>
+        <openValue>---</openValue>
+        <description>One set of identical sequences, and another set that can match the first. Some rules may not allow the two sets to be the same using four identical sequences. The seven pairs yaku is not counted in this case, because this yaku is actually composed of sequential melds, rather than pairs.</description>
+    </yaku>
+    <yaku>
+        <name>TOITOI</name>
+        <english>All Triplets</english>
+        <romaji>toitoi</romaji>
+        <kanji>対々</kanji>
+        <closedValue>2</closedValue>
+        <openValue>2</openValue>
+        <description>The hand consists of all triplets or quads; no sequences.</description>
+    </yaku>
+    <yaku>
+        <name>SANANKOU</name>
+        <english>Three Closed Triplets</english>
+        <romaji>san ankou</romaji>
+        <kanji>三暗刻</kanji>
+        <closedValue>2</closedValue>
+        <openValue>2</openValue>
+        <description>Three sets of triplets or quads formed without calling on any tiles. The fourth set can be an open triplet or quad, or a sequence.</description>
+    </yaku>
+    <yaku>
+        <name>SANSHOKUDOUKOU</name>
+        <english>Three Color Triplets</english>
+        <romaji>sanshoku doukou</romaji>
+        <kanji>三色同刻</kanji>
+        <closedValue>2</closedValue>
+        <openValue>2</openValue>
+        <description>Three triplets consisting of the same numbers in all three suits.</description>
+    </yaku>
+    <yaku>
+        <name>SANKANTSU</name>
+        <english>Three Kans</english>
+        <romaji>san kantsu</romaji>
+        <kanji>三槓子</kanji>
+        <closedValue>2</closedValue>
+        <openValue>2</openValue>
+        <description>Three quads in one hand, in any combination of open or closed.</description>
+    </yaku>
+    <yaku>
+        <name>TANYAO</name>
+        <english>All Simples</english>
+        <romaji>tan'yao</romaji>
+        <kanji>断么</kanji>
+        <closedValue>1</closedValue>
+        <openValue>1</openValue>
+        <description>Tan'yaochuu literally means "no 1's or 9's". Only numbered tiles from 2 through 8 are used eliminating terminals or honors. If the hand is open, it is called "kuitan" (喰い断), which means tan'yao made by "eating" discards. As there are varieties of rules, this hand can be closed only. The rule that does not allow kuitan is called "kuitan nashi" (喰い断無し; no kuitan, or kuitan invalid).</description>
+    </yaku>
+    <yaku>
+        <name>YAKUHAI</name>
+        <english>Honor Tiles</english>
+        <romaji>yakuhai</romaji>
+        <kanji>役牌</kanji>
+        <closedValue>1 per set</closedValue>
+        <openValue>1 per set</openValue>
+        <description>Any triplets (or quads) of dragons, the player’s wind, and/or the prevailing wind. If a wind is both the player’s wind and the prevailing wind, it is worth two han per set.</description>
+    </yaku>
+    <yaku>
+        <name>CHANTA</name>
+        <english>Terminal or Honor in Each Set</english>
+        <romaji>chanta</romaji>
+        <kanji>チャンタ</kanji>
+        <closedValue>2</closedValue>
+        <openValue>1</openValue>
+        <description>The sequences in the hand must be 1-2-3 and 7-8-9, and triplets and the pair must be 1’s, 9’s and honor tiles. The hand contains at least one sequence (or it would qualify for Honroutou).</description>
+    </yaku>
+    <yaku>
+        <name>JUNCHAN</name>
+        <english>Terminal in Each Set</english>
+        <romaji>junchan</romaji>
+        <kanji>純チャン</kanji>
+        <closedValue>3</closedValue>
+        <openValue>2</openValue>
+        <description>The jun in junchan literally means "pure." As such, no honor tiles are included. The sequences must be 1-2-3 and 7-8-9, and triplets and the pair must be 1’s and 9’s. The hand has at least one sequence (or it would qualify for Chinroutou).</description>
+    </yaku>
+    <yaku>
+        <name>HONROUTOU</name>
+        <english>All Terminals and Honors</english>
+        <romaji>honroutou</romaji>
+        <kanji>混老頭</kanji>
+        <closedValue>2 (4*)</closedValue>
+        <openValue>2 (4*)</openValue>
+        <description>The hand consists of all terminals and honors.
+ * The yaku separately counts the two han of an all triplet hand or seven pairs and therefore always has four han.</description>
+    </yaku>
+    <yaku>
+        <name>SHOUSANGEN</name>
+        <english>Little Three Dragons</english>
+        <romaji>shousangen</romaji>
+        <kanji>小三元</kanji>
+        <closedValue>2 (4*)</closedValue>
+        <openValue>2 (4*)</openValue>
+        <description>Two triplets or quads of dragons, plus a pair of the third.
+ * The hand consequently has four han since the two han for honor tiles yaku from the two sets of dragons are added separately.</description>
+    </yaku>
+    <yaku>
+        <name>HONITSU</name>
+        <english>Half-Flush</english>
+        <romaji>hon'itsu</romaji>
+        <kanji>混一</kanji>
+        <closedValue>3</closedValue>
+        <openValue>2</openValue>
+        <description>The hand contains tiles from one suit and honors. The honors can be two or more sets. The hand can be seven pairs.</description>
+    </yaku>
+    <yaku>
+        <name>CHINITSU</name>
+        <english>Flush</english>
+        <romaji>chin'itsu</romaji>
+        <kanji>清一</kanji>
+        <closedValue>6</closedValue>
+        <openValue>5</openValue>
+        <description>All tiles in the hand are exclusively of one suit with no honor tiles.</description>
+    </yaku>
+    <yaku>
+        <name>TSUMO</name>
+        <english>Self-Draw</english>
+        <romaji>tsumo</romaji>
+        <kanji>自摸</kanji>
+        <closedValue>1</closedValue>
+        <openValue>---</openValue>
+        <description>When a player has a closed hand and draws a winning tile from the wall or the dead wall.</description>
+    </yaku>
+    <yaku>
+        <name>IPPATSU</name>
+        <english>One-shot</english>
+        <romaji>ippatsu</romaji>
+        <kanji>一発</kanji>
+        <closedValue>1</closedValue>
+        <openValue>---</openValue>
+        <description>If a player declares Richi and then completes their hand by the end of their next turn. The winning tile can be either a discard or a self-drawn tile. One-shot no longer applies if another player creates an open meld.</description>
+    </yaku>
+    <yaku>
+        <name>HAITEI</name>
+        <english>Last Draw</english>
+        <romaji>haitei raoyue</romaji>
+        <kanji>海底撈月</kanji>
+        <closedValue>1</closedValue>
+        <openValue>1</openValue>
+        <description>The last self-drawn tile; every tile has been drawn except for the dead wall completes that player's hand. Haitei raoyue means "to scoop up the reflected moon from the seabed."</description>
+    </yaku>
+    <yaku>
+        <name>HOUTEI</name>
+        <english>Last Discard</english>
+        <romaji>houtei raoyui</romaji>
+        <kanji>河底撈魚</kanji>
+        <closedValue>1</closedValue>
+        <openValue>1</openValue>
+        <description>If a player wins on the last tile to be discarded; every tile has been drawn except for the dead wall. Houtei raoyui means "to scoop up a swimming fish from the riverbed."</description>
+    </yaku>
+    <yaku>
+        <name>RINSHAN</name>
+        <english>Dead Wall Draw</english>
+        <romaji>rinshan kaihou</romaji>
+        <kanji>嶺上開花</kanji>
+        <closedValue>1</closedValue>
+        <openValue>1</openValue>
+        <description>When a player declares a quad, they must draw a supplemental tile from the dead wall to keep the number of tiles in the hand consistent. If that tile completes the hand, it adds one han to the hand’s value. Rinshan kaihou means "a flower blooms on a ridge".
+            Sometimes the pao (包) rule is applied to this yaku, that is, if a player claims a discard to make an open quad and then completes their hand with a tile drawn from the dead wall, the player who discarded the tile is responsible for paying the entire amount for the hand.</description>
+    </yaku>
+    <yaku>
+        <name>CHANKAN</name>
+        <english>Robbing a Kan</english>
+        <romaji>chankan</romaji>
+        <kanji>搶槓</kanji>
+        <closedValue>1</closedValue>
+        <openValue>1</openValue>
+        <description>If a player has an open triplet and draws the fourth tile, they can add it to the triplet to make a quad. At the time, another player can win on the tile, namely, they can "rob" that tile. Doing so increases the hand’s value by one han.
+Example: Player A has three 6’s of dots in an open triplet and draws the fourth 6, and added it to the triplet for a quad. If player B waits to win by having a 4-5 of dots left, they can win on that 6. Player A then has to pay the full value of the hand.</description>
+    </yaku>
+    <yaku>
+        <name>DOUBLERIICHI</name>
+        <english>Double-Ready</english>
+        <romaji>daburu riichi</romaji>
+        <kanji>ダブルリーチ</kanji>
+        <closedValue>2</closedValue>
+        <openValue>---</openValue>
+        <description>If a player can declare ready within the first go-around of a hand, they can call "daburu riichi" to declare a double ready for two han instead of one. All other conditions are the same as declaring a normal ready.</description>
+    </yaku>
+    <yaku>
+        <name>RIICHI</name>
+        <english>Ready hand</english>
+        <romaji>riichi</romaji>
+        <kanji>立直</kanji>
+        <closedValue>1</closedValue>
+        <openValue>---</openValue>
+        <description>This yaku is often called reach because its Japanese name is phonetically similar to the English word. When a player's hand needs only one tile to win (tenpai) and the player has not claimed another players' discards to make open melds, then the player has the option to declare riichi. The player may choose to continue to play with a ready hand without making a declaration, or may declare at a later time (when discarding), so long as their hand is ready. To make a declaration, the player calls out “riichi”, discards their tile sideways, and places a 1,000-point stick on the table as a deposit.
+
+Conditions after declaration
+Once a declaration has been made, the player must discard any drawn tile that does not allow them to win. Also, they may not change the content of their hand under any circumstances, with the exception of declaring certain closed quads.
+
+In some rules, a player can declare ready only when there are four or more tiles remaining in the wall, which means the player needs to be able to draw another tile. The player owes no penalty if other players make open melds or closed quads after the declaration that prevents the player from drawing another tile.
+
+If all four players successfully declare ready, the hand ends as an abortive draw. Players show their hands to confirm they are tenpai or suffer a chombo penalty.
+
+Underneath dora
+When players declare ready and win, they can have access to underneath dora indicator tiles. This may include tiles underneath the dora indicators revealed by kan calls. This is the only time Underneath Dora may be claimed.
+
+riichi deposits
+The winner of the hand receives any 1,000-point riichi sticks in the middle of the board. In the case of multiple winners, the sticks may be split amongst the winners or all the sticks may be given to the Head Bump (atama hane) winner, depending on the rule set. When draws occur after ready hand declarations, any riichi deposits carry-over and are placed near the counters, with the next winner receiving those riichi deposits.
+
+Claiming a riichi discard
+If another player claims a riichi discard to make open melds, the player who declared ready discards the next tile sideways. If a riichi discard is called to win at the time, the declaration is considered incomplete and therefore the riichi deposit is not forfeited.
+
+Declaring closed quads
+A closed quad can be declared after a declaration of ready when the fourth tile of a triplet is drawn. However, the quad must not otherwise change the composition of the hand or its waits.</description>
+    </yaku>
+    <yaku>
+        <name>CHIITOITSU</name>
+        <english>Seven Pairs</english>
+        <romaji>chiitoitsu</romaji>
+        <kanji>七対子</kanji>
+        <closedValue>2</closedValue>
+        <openValue>---</openValue>
+        <description>A hand composed of seven pairs is considered a valid hand in Japanese mahjong. The hand is one of the two exceptions to the rule requiring winning hands to have four melds and a pair, the other being thirteen orphans. The hand also has its own special rules for scoring, in which the hand has a fixed fu value of 25. The format of this yaku does not count iipeikou when three pairs are in sequence. The hand of ryanpeikou does not count as including seven pairs.</description>
+    </yaku>
+    <yaku>
+        <name>NAGASHI</name>
+        <english>Nagashi Mangan</english>
+        <romaji>nagashi mangan</romaji>
+        <kanji>流し満貫</kanji>
+        <closedValue>5</closedValue>
+        <openValue>5</openValue>
+        <description>A player's discards consist of all terminals and honors, and usually requires no other to player to have called any of the player's discards. This yaku is applied to discards, as opposed to the hand value itself. A hand must be a draw (abortive draws not applied). The player can make open melds under some rulesets. As for the payment, the hand is regarded as a self-drawn mangan. The rule of nou-ten bappu is usually not applied to this case as it is no longer regarded as a draw. In addition, this hand cannot be combined with any other yaku.</description>
+    </yaku>
+    <yaku>
+        <name>KOKUSHIMUSOU</name>
+        <english>Thirteen Orphans</english>
+        <romaji>kokushi musou</romaji>
+        <kanji>国士無双</kanji>
+        <closedValue>Yakuman</closedValue>
+        <openValue>---</openValue>
+        <description>In a thirteen orphans hand, the player has one of each dragon tile, one of each wind tile, a 1 and a 9 (terminal) from each suit, plus any tile that matches anything else in the hand. If a player wins in a 13-way wait for the pair, it is counted as a double yakuman. Along with seven pairs, this is the only hand that contradicts the requirement for a hand to have four melds and a pair. The Japanese name of the yaku, kokushi musou, means "a peerless distinguished person in a country." </description>
+    </yaku>
+    <yaku>
+        <name>KOKUSHIMUSOU13SIDED</name>
+        <english>Thirteen Orphans (13 sided wait)</english>
+        <romaji>kokushi musou juusannen machi</romaji>
+        <kanji>国士無双１３面待ち</kanji>
+        <closedValue>2x Yakuman</closedValue>
+        <openValue>---</openValue>
+        <description>In a thirteen orphans hand, the player has one of each dragon tile, one of each wind tile, a 1 and a 9 (terminal) from each suit, plus any tile that matches anything else in the hand. In order to qualify for this version of the hand (the double yakuman), the winning tile must be the pair tile.</description>
+    </yaku>
+    <yaku>
+        <name>SUUANKOU</name>
+        <english>Four Concealed Triplets</english>
+        <romaji>suu ankou</romaji>
+        <kanji>四暗刻</kanji>
+        <closedValue>Yakuman</closedValue>
+        <openValue>---</openValue>
+        <description>A hand that has four closed triplets/quads. If the hand has two pairs left when it is one tile away from winning, it can only qualify with a tile drawn off the wall as a yakuman hand. In the case of a single-tile wait for the pair, the tile can either be self-drawn or won from another player's discard, and it is worth two yakuman.</description>
+    </yaku>
+    <yaku>
+        <name>SUUANKOUTANKI</name>
+        <english>Four Concealed Triplets (Pair wait)</english>
+        <romaji>suu ankou tanki</romaji>
+        <kanji>四暗刻単騎</kanji>
+        <closedValue>2x Yakuman</closedValue>
+        <openValue>2x Yakuman</openValue>
+        <description>A hand that has four closed triplets/quads. In order to qualify for this version of the hand (double yakuman), the winning tile must be part of the pair.</description>
+    </yaku>
+    <yaku>
+        <name>DAISANGEN</name>
+        <english>Big Three Dragons</english>
+        <romaji>daisangen</romaji>
+        <kanji>大三元</kanji>
+        <closedValue>Yakuman</closedValue>
+        <openValue>Yakuman</openValue>
+        <description>A hand consisting of a triplet or quad of each type of dragon tile.</description>
+    </yaku>
+    <yaku>
+        <name>SHOUSUUSHII</name>
+        <english>Little Four Winds</english>
+        <romaji>shousuushii</romaji>
+        <kanji>小四喜</kanji>
+        <closedValue>Yakuman</closedValue>
+        <openValue>Yakuman</openValue>
+        <description>A hand consisting of three triplets/quads of winds and a pair of the fourth wind.</description>
+    </yaku>
+    <yaku>
+        <name>DAISUUSHII</name>
+        <english>Big Four Winds</english>
+        <romaji>daisuushii</romaji>
+        <kanji>大四喜</kanji>
+        <closedValue>2x Yakuman</closedValue>
+        <openValue>2x Yakuman</openValue>
+        <description>A hand consisting of four triplets/quads of winds.</description>
+    </yaku>
+    <yaku>
+        <name>TSUUIISOU</name>
+        <english>All Honors</english>
+        <romaji>tsuuiisou</romaji>
+        <kanji>字一色</kanji>
+        <closedValue>Yakuman</closedValue>
+        <openValue>Yakuman</openValue>
+        <description>A hand composed exclusively of wind and dragon tiles.</description>
+    </yaku>
+    <yaku>
+        <name>DAICHISEI</name>
+        <english>Big Seven Stars</english>
+        <romaji>daichisei</romaji>
+        <kanji>大七星</kanji>
+        <closedValue>2x Yakuman</closedValue>
+        <openValue>---</openValue>
+        <description>This is the seven pair variation to all honors. This hand adds one more yakuman towards all honors.</description>
+    </yaku>
+    <yaku>
+        <name>CHINROUTOU</name>
+        <english>All Terminals</english>
+        <romaji>chinroutou</romaji>
+        <kanji>清老頭</kanji>
+        <closedValue>Yakuman</closedValue>
+        <openValue>Yakuman</openValue>
+        <description>A hand containing only 1’s and 9’s (terminals).</description>
+    </yaku>
+    <yaku>
+        <name>RYUUIISOU</name>
+        <english>All Green</english>
+        <romaji>ryuuiisou</romaji>
+        <kanji>緑一色</kanji>
+        <closedValue>Yakuman</closedValue>
+        <openValue>Yakuman</openValue>
+        <description>A hand containing only green tiles. Green tiles are: 2, 3, 4, 6, 8 of bamboo, and green dragons. Many of the Japanese sets exclusively color those tiles as green only. The other bamboo tiles of 1, 5, 7, and 9 have red paint on them, thereby not making them all green. Although the hand can include green dragons, it does not have to.</description>
+    </yaku>
+    <yaku>
+        <name>CHUURENPOUTOU</name>
+        <english>Nine Gates</english>
+        <romaji>chuuren poutou</romaji>
+        <kanji>九蓮宝燈</kanji>
+        <closedValue>Yakuman</closedValue>
+        <openValue>Yakuman</openValue>
+        <description>A hand composed of 1-1-1-2-3-4-5-6-7-8-9-9-9 of one suit, plus any other tile of the same suit. It is counted as a double yakuman if the winning tile was part of a 9-sided wait.</description>
+    </yaku>
+    <yaku>
+        <name>CHUURENPOUTOU9SIDED</name>
+        <english>Nine Gates (9-sided wait)</english>
+        <romaji>junsei chuuren poutou</romaji>
+        <kanji>純正九蓮宝燈 (9 wait)</kanji>
+        <closedValue>2x Yakuman</closedValue>
+        <openValue>2x Yakuman</openValue>
+        <description>A hand composed of 1-1-1-2-3-4-5-6-7-8-9-9-9 of one suit, with the winning tile being a 9-sided wait for any other tile of the same suit. </description>
+    </yaku>
+    <yaku>
+        <name>SUUKANTSU</name>
+        <english>Four Kans</english>
+        <romaji>suu kantsu</romaji>
+        <kanji>四槓子</kanji>
+        <closedValue>Yakuman</closedValue>
+        <openValue>Yakuman</openValue>
+        <description>Four quads in one hand, which can be open or closed. Normally, a hand is a draw when four quads are made by two or more players. However, when the four quads are drawn by one player, the play continues until the player claims a win (and yakuman) or a fifth kan is made by another player.</description>
+    </yaku>
+    <yaku>
+        <name>TENHOU</name>
+        <english>Heavenly Hand</english>
+        <romaji>tenhou</romaji>
+        <kanji>天和</kanji>
+        <closedValue>Yakuman</closedValue>
+        <openValue>---</openValue>
+        <description>If the 14 tiles that the dealer draws complete a hand, yakuman is awarded regardless of its contents.</description>
+    </yaku>
+    <yaku>
+        <name>CHIIHOU</name>
+        <english>Hand of Earth</english>
+        <romaji>chiihou</romaji>
+        <kanji>地和</kanji>
+        <closedValue>Yakuman</closedValue>
+        <openValue>---</openValue>
+        <description>If a non-dealer is dealt 13 tiles that are one tile away from completing a hand, and then draws the fourteenth tile from the wall to complete it on the first draw when no open-meld declaration has been made.</description>
+    </yaku>
+    <yaku>
+        <name>RENHOU</name>
+        <english>Hand of Man</english>
+        <romaji>renhou</romaji>
+        <kanji>人和</kanji>
+        <closedValue>Yakuman</closedValue>
+        <openValue>---</openValue>
+        <description>In general rules, the yaku is achieved if a non-dealer completes a hand with a discard before the first self-drawing when no one has declared open melds. Depending on rules, the hand needs or does not need other yaku. Its value can be yakuman, baiman, mangan and so on. A rule says that players can win on other players' first discard and thus some players can go out after the first draw, and another says that players must win on the dealer's first discard.</description>
+    </yaku>
+    <yaku>
+        <name>SANRENKOU</name>
+        <english>Three Chained Triplets</english>
+        <romaji>sanrenkou</romaji>
+        <kanji>三連刻</kanji>
+        <closedValue>2</closedValue>
+        <openValue>2</openValue>
+        <description>A hand with three number triplets or quads in one suit with successive numbers. This hand is not normally a recognized hand in Japanese mahjong.</description>
+    </yaku>
+    <yaku>
+        <name>SUURENKOU</name>
+        <english>Four Chained Triplets</english>
+        <romaji>suurenkou</romaji>
+        <kanji>四連刻</kanji>
+        <closedValue>Yakuman</closedValue>
+        <openValue>Yakuman</openValue>
+        <description>A hand with four number triplets or quads in one suit with successive numbers. This hand is not normally a recognized hand in Japanese mahjong.</description>
+    </yaku>
+    <yaku>
+        <name>DAISHARIN</name>
+        <english>Chariot</english>
+        <romaji>dai sharin</romaji>
+        <kanji>大車輪</kanji>
+        <closedValue>Yakuman</closedValue>
+        <openValue>---</openValue>
+        <description>A hand composed of 2-2-3-3-4-4-5-5-6-6-7-7-8-8 of one suit. This hand is not normally a recognized hand in Japanese mahjong.
+Each of the numbered suits may also use special names for this hand:
+
+Pinzu (circles), dai sharin – 大車輪 or big wheels
+Souzu (bamboo), dai chikurin – 大竹林 or bamboo forest
+Manzu (characters), dai suurin – 大数隣 or numerous neighbours</description>
+    </yaku>
+    <yaku>
+        <name>SHIISANPUUTA</name>
+        <english>Thirteen Unconnected Tiles</english>
+        <romaji>shiisanpuutaa</romaji>
+        <kanji>十三不塔</kanji>
+        <closedValue>Yakuman</closedValue>
+        <openValue>---</openValue>
+        <description>The hand contains thirteen tiles such that there are no pairs and no number tiles closer than 3 apart from one another, plus an additional one of any of the tiles in the hand. Can only be claimed by a player on their first draw.</description>
+    </yaku>
+    <yaku>
+        <name>SHIISUUPUUTA</name>
+        <english>Fourteen Unconnected Tiles</english>
+        <romaji>shisuupuutaa</romaji>
+        <kanji>十四不塔</kanji>
+        <closedValue>Yakuman</closedValue>
+        <openValue>---</openValue>
+        <description>The hand contains fourteen tiles so that there are no pairs and no number tiles closer than 3 apart from one another. Can only be claimed by a player on their first draw.</description>
+    </yaku>
+    <yaku>
+        <name>PARENCHAN</name>
+        <english>Eight Consecutive Wins</english>
+        <romaji>parenchan</romaji>
+        <kanji>八連荘</kanji>
+        <closedValue>Yakuman</closedValue>
+        <openValue>---</openValue>
+        <description>A player wins eight times consecutively. The conditions of the hand depend on rules. The ninth and following winnings are often yakuman again, while some rules say the sixteenth is the next yakuman. It has nothing to do with the number of counters because the number increases when a hand is a draw. In some rules, no other yaku is necessary in the eighth winning. Some say the player must be a dealer in order to start the streak (the player is always a dealer when the hand is accomplished, obviously). The hand is often optional.</description>
+    </yaku>
+</yakus>

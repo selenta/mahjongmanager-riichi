@@ -38,7 +38,7 @@
                 android:measureWithLargestChild="false"
                 android:shrinkColumns="*"
                 android:stretchColumns="*"
-                android:background="@drawable/border"
+                android:background="@drawable/tile_border"
                 android:layout_marginLeft="15dp"
                 android:layout_marginRight="15dp"
                 android:layout_marginBottom="15dp" >
@@ -432,7 +432,7 @@
                 android:measureWithLargestChild="false"
                 android:shrinkColumns="*"
                 android:stretchColumns="*"
-                android:background="@drawable/border"
+                android:background="@drawable/tile_border"
                 android:layout_marginLeft="15dp"
                 android:layout_marginRight="15dp"
                 android:layout_marginBottom="15dp" >
@@ -824,7 +824,7 @@
                 android:measureWithLargestChild="false"
                 android:shrinkColumns="*"
                 android:stretchColumns="*"
-                android:background="@drawable/border"
+                android:background="@drawable/tile_border"
                 android:layout_marginLeft="15dp"
                 android:layout_marginRight="15dp"
                 android:layout_marginBottom="15dp" >
@@ -1218,7 +1218,7 @@
                 android:measureWithLargestChild="false"
                 android:shrinkColumns="*"
                 android:stretchColumns="*"
-                android:background="@drawable/border"
+                android:background="@drawable/tile_border"
                 android:layout_marginLeft="15dp"
                 android:layout_marginRight="15dp"
                 android:layout_marginBottom="15dp" >

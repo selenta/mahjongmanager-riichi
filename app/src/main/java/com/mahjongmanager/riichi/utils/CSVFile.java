@@ -1,4 +1,4 @@
-package com.mahjongmanager.riichi;
+package com.mahjongmanager.riichi.utils;
 
 import java.io.BufferedReader;
 import java.io.IOException;

@@ -15,7 +15,10 @@ import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
 
-import com.mahjongmanager.riichi.CSVFile;
+import com.mahjongmanager.riichi.MainActivity;
+import com.mahjongmanager.riichi.Yaku;
+import com.mahjongmanager.riichi.components.YakuDescription;
+import com.mahjongmanager.riichi.utils.CSVFile;
 import com.mahjongmanager.riichi.R;
 
 import java.io.IOException;
@@ -50,9 +53,11 @@ public class YakuListFragment extends Fragment {
         registerControls(myInflatedView);
 
         populateRealWorldDataTable();
-        initializeSpinner();
+        initializeDropdown();
         spinner.setSelection(0);
         setView();
+
+        populateYakuSortedByPattern();
 
         return myInflatedView;
     }
@@ -82,20 +87,6 @@ public class YakuListFragment extends Fragment {
         }
     }
 
-    private void initializeSpinner(){
-        List<String> viewOptions = new ArrayList<>();
-        viewOptions.add(YAKU_LIST_BY_PATTERN);
-        viewOptions.add(YAKU_LIST_BY_HAN);
-        viewOptions.add(YAKU_BY_FREQUENCY_LABEL);
-        viewOptions.add(YAKU_BY_AVERAGE_HAN);
-//        viewOptions.add(YAKU_COMBINATORICS);
-
-        ArrayAdapter<String> dataAdapter = new ArrayAdapter<>
-                (getActivity(), R.layout.spinner_item_large, R.id.spinneritem, viewOptions);
-        spinner.setAdapter(dataAdapter);
-
-    }
-
     private void populateRealWorldDataTable(){
         InputStream inputStream = null;
         try {
@@ -112,7 +103,6 @@ public class YakuListFragment extends Fragment {
             e.printStackTrace();
         }
     }
-
     private void addRow( String itemName, String col1, TableLayout table ){
         TableRow newRow = new TableRow(getContext());
         TextView yakuName = new TextView(getContext());
@@ -142,7 +132,77 @@ public class YakuListFragment extends Fragment {
         table.addView(newRow);
     }
 
+    private void populateYakuSortedByPattern(){
+        List<Yaku> yakuDescriptions = ((MainActivity)getContext()).getExampleHands().yakuDescriptions;
+        for( Yaku y : yakuDescriptions ){
+            YakuDescription yd = new YakuDescription(getContext());
+            yd.setYaku(y);
 
+            checkForCategoryByPattern(y, yd);
+            yakuListByPattern.addView(yd);
+        }
+    }
+    private void checkForCategoryByPattern(Yaku y, YakuDescription yd){
+        switch (y.name){
+            case PINFU:
+                addYakuCategoryLabel(yakuListByPattern, "Yaku based on Sequences" );
+                yd.showLabels();
+                break;
+            case TOITOI:
+                addYakuCategoryLabel(yakuListByPattern, "Yaku based on Triplets/Quads" );
+                yd.showLabels();
+                break;
+            case TANYAO:
+                addYakuCategoryLabel(yakuListByPattern, "Yaku based on Terminals/Honors" );
+                yd.showLabels();
+                break;
+            case HONITSU:
+                addYakuCategoryLabel(yakuListByPattern, "Yaku based on Suits" );
+                yd.showLabels();
+                break;
+            case TSUMO:
+                addYakuCategoryLabel(yakuListByPattern, "Yaku based on Luck" );
+                yd.showLabels();
+                break;
+            case RIICHI:
+                addYakuCategoryLabel(yakuListByPattern, "Special Criteria" );
+                yd.showLabels();
+                break;
+            case KOKUSHIMUSOU:
+                addYakuCategoryLabel(yakuListByPattern, "Yakuman Hands" );
+                yd.showLabels();
+                break;
+            case TENHOU:
+                addYakuCategoryLabel(yakuListByPattern, "Yakuman on Opening Hands" );
+                yd.showLabels();
+                break;
+            case SANRENKOU:
+                addYakuCategoryLabel(yakuListByPattern, "Uncommon Yaku" );
+                yd.showLabels();
+                break;
+        }
+    }
+    private void addYakuCategoryLabel(LinearLayout ll, String s){
+        TextView tv = new TextView(getContext());
+        tv.setText(s);
+        tv.setTextSize(22);
+        tv.setTypeface(null, Typeface.BOLD);
+        tv.setPadding(50,15,0,5);
+        ll.addView(tv);
+    }
+
+    private void initializeDropdown(){
+        List<String> viewOptions = new ArrayList<>();
+        viewOptions.add(YAKU_LIST_BY_PATTERN);
+        viewOptions.add(YAKU_LIST_BY_HAN);
+        viewOptions.add(YAKU_BY_FREQUENCY_LABEL);
+        viewOptions.add(YAKU_BY_AVERAGE_HAN);
+//        viewOptions.add(YAKU_COMBINATORICS);
+
+        ArrayAdapter<String> dataAdapter = new ArrayAdapter<>
+                (getActivity(), R.layout.spinner_item_large, R.id.spinneritem, viewOptions);
+        spinner.setAdapter(dataAdapter);
+    }
     private void registerControls(View myInflatedView){
         spinner = (Spinner) myInflatedView.findViewById(R.id.spinner);
         spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
@@ -150,12 +210,10 @@ public class YakuListFragment extends Fragment {
             public void onItemSelected(AdapterView<?> parentView, View selectedItemView, int position, long id) {
                 setView();
             }
-
             @Override
             public void onNothingSelected(AdapterView<?> parentView) {
                 // your code here
             }
-
         });
 
         yakuListByPattern= (LinearLayout) myInflatedView.findViewById(R.id.yakuListByPattern);
@@ -167,7 +225,5 @@ public class YakuListFragment extends Fragment {
         yakuFrequencyTable = (TableLayout) myInflatedView.findViewById(R.id.yakuFrequencyTable);
         yakuByAverageHanTable = (TableLayout) myInflatedView.findViewById(R.id.yakuByAverageHanTable);
         yakuCombinatoricsTable = (TableLayout) myInflatedView.findViewById(R.id.yakuCombinatoricsTable);
-
-
     }
 }

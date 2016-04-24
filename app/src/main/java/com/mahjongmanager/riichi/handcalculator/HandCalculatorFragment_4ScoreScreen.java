@@ -12,7 +12,7 @@ import android.widget.TableRow;
 import android.widget.TextView;
 
 import com.mahjongmanager.riichi.Hand;
-import com.mahjongmanager.riichi.HandDisplay;
+import com.mahjongmanager.riichi.components.HandDisplay;
 import com.mahjongmanager.riichi.MainActivity;
 import com.mahjongmanager.riichi.Meld;
 import com.mahjongmanager.riichi.R;

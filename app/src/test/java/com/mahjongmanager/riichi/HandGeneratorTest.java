@@ -2,6 +2,8 @@ package com.mahjongmanager.riichi;
 
 import android.util.Log;
 
+import com.mahjongmanager.riichi.utils.HandGenerator;
+
 import org.junit.Test;
 
 import java.util.ArrayList;

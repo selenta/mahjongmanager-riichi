@@ -19,6 +19,8 @@ import com.mahjongmanager.riichi.speedquiz.SpeedQuizFragment_1Start;
 import com.mahjongmanager.riichi.speedquiz.SpeedQuizFragment_2ScoreHand;
 import com.mahjongmanager.riichi.speedquiz.SpeedQuizFragment_3ScoreScreen;
 import com.mahjongmanager.riichi.speedquiz.SpeedQuizFragment_4ReviewHandHanFu;
+import com.mahjongmanager.riichi.utils.ExampleHands;
+import com.mahjongmanager.riichi.utils.Utils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -53,6 +55,8 @@ public class MainActivity extends AppCompatActivity {
 
             transaction.commit();
         }
+
+        getExampleHands();
     }
     ////////////////////////////////////////////
     /////////////    General     ///////////////
@@ -233,5 +237,12 @@ public class MainActivity extends AppCompatActivity {
             _utils = new Utils(this);
         }
         return _utils;
+    }
+    private ExampleHands _exampleHands;
+    public ExampleHands getExampleHands(){
+        if(_exampleHands==null){
+            _exampleHands = new ExampleHands(this);
+        }
+        return _exampleHands;
     }
 }

@@ -61,7 +61,8 @@
                     android:textAlignment="center"
                     android:textStyle="italic"
                     android:layout_marginLeft="20dp"
-                    android:layout_marginRight="20dp" />
+                    android:layout_marginRight="20dp"
+                    android:layout_marginBottom="20dp" />
 
             </LinearLayout>
 
@@ -122,7 +123,7 @@
                     android:shrinkColumns="*"
                     android:stretchColumns="*"
                     android:textAlignment="viewEnd"
-                    android:background="@drawable/border"
+                    android:background="@drawable/tile_border"
                     android:layout_marginLeft="15dp"
                     android:layout_marginRight="15dp"
                     android:layout_marginBottom="15dp"
@@ -181,7 +182,7 @@
                     android:shrinkColumns="*"
                     android:stretchColumns="*"
                     android:textAlignment="viewEnd"
-                    android:background="@drawable/border"
+                    android:background="@drawable/tile_border"
                     android:layout_marginLeft="15dp"
                     android:layout_marginRight="15dp"
                     android:layout_marginBottom="15dp"
@@ -236,7 +237,7 @@
                     android:shrinkColumns="*"
                     android:stretchColumns="*"
                     android:textAlignment="viewEnd"
-                    android:background="@drawable/border"
+                    android:background="@drawable/tile_border"
                     android:layout_marginLeft="15dp"
                     android:layout_marginRight="15dp"
                     android:layout_marginBottom="15dp"

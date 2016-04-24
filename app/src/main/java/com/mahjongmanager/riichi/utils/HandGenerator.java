@@ -1,7 +1,12 @@
-package com.mahjongmanager.riichi;
+package com.mahjongmanager.riichi.utils;
 
 import android.content.Context;
 import android.util.Log;
+
+import com.mahjongmanager.riichi.Hand;
+import com.mahjongmanager.riichi.Meld;
+import com.mahjongmanager.riichi.Tile;
+import com.mahjongmanager.riichi.utils.CSVFile;
 
 import java.io.IOException;
 import java.io.InputStream;

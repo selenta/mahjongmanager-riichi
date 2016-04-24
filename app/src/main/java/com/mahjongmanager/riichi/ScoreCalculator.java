@@ -2,6 +2,8 @@ package com.mahjongmanager.riichi;
 
 import android.util.Log;
 
+import com.mahjongmanager.riichi.utils.Utils;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;

@@ -45,7 +45,7 @@
             android:textColor="#ff0000"
             android:layout_gravity="center_horizontal" />
 
-        <com.mahjongmanager.riichi.HandDisplay
+        <com.mahjongmanager.riichi.components.HandDisplay
             android:layout_width="match_parent"
             android:layout_height="60dp"
             android:id="@+id/handDisplay" />

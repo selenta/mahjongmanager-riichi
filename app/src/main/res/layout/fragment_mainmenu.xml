@@ -114,7 +114,7 @@
             android:layout_width="wrap_content"
             android:layout_height="fill_parent"
             android:textAppearance="?android:attr/textAppearanceSmall"
-            android:text="v0.65"
+            android:text="v0.75"
             android:id="@+id/textView"
             android:layout_gravity="center_horizontal"
             android:longClickable="true" />

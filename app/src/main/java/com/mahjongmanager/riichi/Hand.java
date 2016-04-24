@@ -2,6 +2,8 @@ package com.mahjongmanager.riichi;
 
 import android.util.Log;
 
+import com.mahjongmanager.riichi.utils.Utils;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -244,6 +246,7 @@ public class Hand {
     // Verify hand consistency, including:
     //TODO consider other inherently contradictory yaku conditions
     //TODO Chiitoitsu/kokushi/nagashi don't work with most things
+    //TODO If hand is open, check for yaku that are contradictory (such as Iipeikou, which currently fails)
     // Good spreadsheet to use as reference: http://arcturus.su/wiki/Yaku_compatability
     public boolean validateCompleteState(){
         if( unsortedTiles.size()!=0 ){
@@ -497,7 +500,7 @@ public class Hand {
     public boolean hasPlayerWindSet(){
         return countTile(new Tile(playerWind.toString(), "HONOR"))>=3;
     }
-    // TODO this seems like it should be used more, or shouldn't exist, not sure which
+
     public boolean hasAbnormalStructure(){
         return kokushiMusou || kokushiMusou13wait || chiiToitsu || daichisei || nagashiMangan;
     }

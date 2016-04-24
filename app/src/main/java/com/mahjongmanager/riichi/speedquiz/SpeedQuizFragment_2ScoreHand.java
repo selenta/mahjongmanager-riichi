@@ -10,8 +10,8 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.mahjongmanager.riichi.Hand;
-import com.mahjongmanager.riichi.HandDisplay;
-import com.mahjongmanager.riichi.HandGenerator;
+import com.mahjongmanager.riichi.components.HandDisplay;
+import com.mahjongmanager.riichi.utils.HandGenerator;
 import com.mahjongmanager.riichi.MainActivity;
 import com.mahjongmanager.riichi.R;
 import com.mahjongmanager.riichi.ScoreCalculator;
