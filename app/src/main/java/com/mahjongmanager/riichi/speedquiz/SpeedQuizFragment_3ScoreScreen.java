@@ -3,6 +3,7 @@ package com.mahjongmanager.riichi.speedquiz;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.os.CountDownTimer;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -23,6 +24,7 @@ public class SpeedQuizFragment_3ScoreScreen extends Fragment implements View.OnC
     private TextView correctScoreLabel;
     private TextView newHighScore;
     private TextView incorrectScoreLabel;
+    private Button mainMenuButton;
 
     private LinearLayout incorrectButtonContainer;
 
@@ -40,10 +42,12 @@ public class SpeedQuizFragment_3ScoreScreen extends Fragment implements View.OnC
         newHighScore        = (TextView) myInflatedView.findViewById(R.id.newHighScoreNotice);
         incorrectScoreLabel = (TextView) myInflatedView.findViewById(R.id.incorrectScore);
         incorrectButtonContainer = (LinearLayout) myInflatedView.findViewById(R.id.incorrectHandButtonContainer);
+        mainMenuButton      = (Button) myInflatedView.findViewById(R.id.mainMenuButton);
 
         loadHighScore();
         scoreGuesses();
         updateUI();
+        createMainMenuButtonTimer();
 
         return myInflatedView;
     }
@@ -110,5 +114,17 @@ public class SpeedQuizFragment_3ScoreScreen extends Fragment implements View.OnC
     private void updateUI(){
         correctScoreLabel.setText(String.valueOf(correctGuesses));
         incorrectScoreLabel.setText(String.valueOf(incorrectGuesses));
+    }
+
+    private void createMainMenuButtonTimer(){
+        new CountDownTimer(2000, 500){
+            @Override
+            public void onTick(long millisUntilFinished){}
+
+            @Override
+            public void onFinish(){
+                mainMenuButton.setEnabled(true);
+            }
+        }.start();
     }
 }
