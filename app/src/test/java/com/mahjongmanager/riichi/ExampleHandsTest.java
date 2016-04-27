@@ -211,7 +211,7 @@ public class ExampleHandsTest {
     }
 
     @Test
-    public void daishuushiiHandTest(){
+    public void daisuushiiHandTest(){
         Hand h = ExampleHands.getDaisuushiiHand();
         Assert.assertNotNull(h);
         Assert.assertTrue(h.daisuushii);

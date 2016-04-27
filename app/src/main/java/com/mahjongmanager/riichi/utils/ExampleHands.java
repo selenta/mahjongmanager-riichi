@@ -66,7 +66,7 @@ public class ExampleHands {
                     if (tagname.equalsIgnoreCase("yaku")) {
                         // add the example hand and then add yaku object to list
                         attachHand(yaku);
-                        Log.i("yakuDescription", yaku.toString());
+                        //Log.i("yakuDescription", yaku.toString());
                         yakuDescriptions.add(yaku);
                     } else if (tagname.equalsIgnoreCase("name")) {
                         yaku.name = Yaku.YakuName.valueOf(text);
