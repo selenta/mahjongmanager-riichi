@@ -22,6 +22,7 @@ public class HandCalculatorFragment_1Keyboard extends Fragment implements View.O
     private Tile.Suit currentSuit;
 
     private Hand fragHand;
+    private boolean validCurrentHand = false;
 
     private Button manzuButton;
     private Button pinzuButton;
@@ -79,84 +80,89 @@ public class HandCalculatorFragment_1Keyboard extends Fragment implements View.O
                break;
             case R.id.placeholderButton1:
                 addTile(1);
+                checkButtonEnablement(phButton1, 1);
+                checkNextEnablement();
                 break;
             case R.id.placeholderButton2:
                 addTile(2);
+                checkButtonEnablement(phButton2, 2);
+                checkNextEnablement();
                 break;
             case R.id.placeholderButton3:
                 addTile(3);
+                checkButtonEnablement(phButton3, 3);
+                checkNextEnablement();
                 break;
             case R.id.placeholderButton4:
                 addTile(4);
+                checkButtonEnablement(phButton4, 4);
+                checkNextEnablement();
                 break;
             case R.id.placeholderButton5:
                 addTile(5);
+                checkButtonEnablement(phButton5, 5);
+                checkNextEnablement();
                 break;
             case R.id.placeholderButton6:
                 addTile(6);
+                checkButtonEnablement(phButton6, 6);
+                checkNextEnablement();
                 break;
             case R.id.placeholderButton7:
                 addTile(7);
+                checkButtonEnablement(phButton7, 7);
+                checkNextEnablement();
                 break;
             case R.id.placeholderButton8:
                 addTile(8);
+                checkButtonEnablement(phButton8, 8);
+                checkNextEnablement();
                 break;
             case R.id.placeholderButton9:
                 addTile(9);
+                checkButtonEnablement(phButton9, 9);
+                checkNextEnablement();
                 break;
             case R.id.clearHandButton:
                 fragHand = new Hand(new ArrayList<Tile>());
                 checkNextEnablement();
                 handDisplay.setHand(fragHand);
                 errorMessage.setText("");
+                checkAllButtonEnablement();
                 break;
         }
-        setKeyboardSuit();
-        checkNextEnablement();
     }
 
-    private void addTile( Integer button ){
-        String val = button.toString();
-
+    private void addTile( Integer numb ){
         if( fragHand.tiles.size()>=18 ){
             errorMessage.setText("Too many tiles: Impossible to create valid hand");
             return;
         }
 
-        if( currentSuit== Tile.Suit.HONOR ){
-            switch (button){
-                case 1:
-                    val = "East";
-                    break;
-                case 2:
-                    val = "South";
-                    break;
-                case 3:
-                    val = "West";
-                    break;
-                case 4:
-                    val = "North";
-                    break;
-                case 6:
-                    val = "White";
-                    break;
-                case 7:
-                    val = "Green";
-                    break;
-                case 8:
-                    val = "Red";
-                    break;
+        Tile t = getTileForButton(numb);
+        if( !tileBreaksHand(t) ){
+            fragHand.addTile(t);
+            handDisplay.setHand(fragHand);
+        }
+    }
+    private boolean tileBreaksHand(Tile t){
+        if( validCurrentHand ){
+            Hand testHand = new Hand(fragHand);
+            testHand.addTile(t);
+
+            ScoreCalculator testSc = new ScoreCalculator(testHand);
+            if( testSc.scoredHand==null ){
+                return true;
             }
         }
-        Tile t = new Tile(val, currentSuit.toString());
-        fragHand.addTile(t);
-
-        handDisplay.setHand(fragHand);
+        return false;
     }
 
     private void checkNextEnablement(){
         ScoreCalculator sc = new ScoreCalculator(fragHand);
-        if( sc.scoredHand!=null ){
+        validCurrentHand = (sc.scoredHand!=null);
+
+        if( validCurrentHand ){
             ((MainActivity)getActivity()).setCurrentHand(fragHand);
             nextButton.setEnabled(true);
         } else {
@@ -192,28 +198,21 @@ public class HandCalculatorFragment_1Keyboard extends Fragment implements View.O
     private void setButtonsToNumbers(){
         phButton1.setTextSize(20);
         phButton1.setText("1");
-        phButton1.setEnabled(!fragHand.containsMaxOfTile(new Tile(1, currentSuit.toString())));
         phButton2.setTextSize(20);
         phButton2.setText("2");
-        phButton2.setEnabled(!fragHand.containsMaxOfTile(new Tile(2, currentSuit.toString())));
         phButton3.setTextSize(20);
         phButton3.setText("3");
-        phButton3.setEnabled(!fragHand.containsMaxOfTile(new Tile(3, currentSuit.toString())));
         phButton4.setTextSize(20);
         phButton4.setText("4");
-        phButton4.setEnabled(!fragHand.containsMaxOfTile(new Tile(4, currentSuit.toString())));
-        phButton5.setEnabled(!fragHand.containsMaxOfTile(new Tile(5, currentSuit.toString())));
 
         phButton6.setTextSize(20);
         phButton6.setText("6");
-        phButton6.setEnabled(!fragHand.containsMaxOfTile(new Tile(6, currentSuit.toString())));
         phButton7.setTextSize(20);
         phButton7.setText("7");
-        phButton7.setEnabled(!fragHand.containsMaxOfTile(new Tile(7, currentSuit.toString())));
         phButton8.setTextSize(20);
         phButton8.setText("8");
-        phButton8.setEnabled(!fragHand.containsMaxOfTile(new Tile(8, currentSuit.toString())));
-        phButton9.setEnabled(!fragHand.containsMaxOfTile(new Tile(9, currentSuit.toString())));
+
+        checkAllButtonEnablement();
 
         phButton5.setVisibility(View.VISIBLE);
         phButton9.setVisibility(View.VISIBLE);
@@ -221,29 +220,59 @@ public class HandCalculatorFragment_1Keyboard extends Fragment implements View.O
     private void setButtonsToHonors(){
         phButton1.setTextSize(16);
         phButton1.setText("E");
-        phButton1.setEnabled(!fragHand.containsMaxOfTile(new Tile("East", currentSuit.toString())));
         phButton2.setTextSize(16);
         phButton2.setText("S");
-        phButton2.setEnabled(!fragHand.containsMaxOfTile(new Tile("South", currentSuit.toString())));
         phButton3.setTextSize(16);
         phButton3.setText("We");
-        phButton3.setEnabled(!fragHand.containsMaxOfTile(new Tile("West", currentSuit.toString())));
         phButton4.setTextSize(16);
         phButton4.setText("N");
-        phButton4.setEnabled(!fragHand.containsMaxOfTile(new Tile("North", currentSuit.toString())));
 
         phButton6.setTextSize(16);
         phButton6.setText("Wh");
-        phButton6.setEnabled(!fragHand.containsMaxOfTile(new Tile("White", currentSuit.toString())));
         phButton7.setTextSize(16);
         phButton7.setText("G");
-        phButton7.setEnabled(!fragHand.containsMaxOfTile(new Tile("Green", currentSuit.toString())));
         phButton8.setTextSize(16);
         phButton8.setText("R");
-        phButton8.setEnabled(!fragHand.containsMaxOfTile(new Tile("Red", currentSuit.toString())));
+
+        checkAllButtonEnablement();
 
         phButton5.setVisibility(View.GONE);
         phButton9.setVisibility(View.GONE);
+    }
+    private void checkAllButtonEnablement(){
+        checkButtonEnablement(phButton1, 1);
+        checkButtonEnablement(phButton2, 2);
+        checkButtonEnablement(phButton3, 3);
+        checkButtonEnablement(phButton4, 4);
+        checkButtonEnablement(phButton5, 5);
+        checkButtonEnablement(phButton6, 6);
+        checkButtonEnablement(phButton7, 7);
+        checkButtonEnablement(phButton8, 8);
+        checkButtonEnablement(phButton9, 9);
+    }
+    private void checkButtonEnablement(Button b, int number){
+        b.setEnabled(!fragHand.containsMaxOfTile(getTileForButton(number)));
+    }
+    private Tile getTileForButton(int i){
+        if( currentSuit==Tile.Suit.HONOR ){
+            switch (i){
+                case 1:
+                    return new Tile("East", "HONOR");
+                case 2:
+                    return new Tile("South", "HONOR");
+                case 3:
+                    return new Tile("West", "HONOR");
+                case 4:
+                    return new Tile("North", "HONOR");
+                case 6:
+                    return new Tile("White", "HONOR");
+                case 7:
+                    return new Tile("Green", "HONOR");
+                case 8:
+                    return new Tile("Red", "HONOR");
+            }
+        }
+        return new Tile(i, currentSuit.toString());
     }
 
     private void registerButtons(View myInflatedView){
