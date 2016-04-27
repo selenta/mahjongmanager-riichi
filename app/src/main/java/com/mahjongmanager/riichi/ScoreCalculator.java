@@ -49,7 +49,7 @@ public class ScoreCalculator {
      * this step and be set as the scoredHand immediately.
      */
     private void processUnsortedHand(){
-        if( unsortedHand==null || unsortedHand.tiles.size()<14 || unsortedHand.tiles.size()>18 ){
+        if( unsortedHand==null || unsortedHand.tiles.size()<14 || unsortedHand.tiles.size()>18 || !unsortedHand.tilesSortedProperly() ){
             return;
         }
 
@@ -60,18 +60,13 @@ public class ScoreCalculator {
         checkNagashiMangan(unsortedHand);
 
         //The hand should already be "processed" if it's an unusual hand
-        if( scoredHand!=null && (scoredHand.kokushiMusou||scoredHand.kokushiMusou13wait||scoredHand.nagashiMangan || scoredHand.daichisei) ){
+        if( scoredHand!=null ){
             return;
         }
 
         if( unsortedHand.unsortedTiles.size()==0 ){
             scrubScore(unsortedHand);
             scoredHand = unsortedHand;
-        } else if( unsortedHand.meld1.size()+unsortedHand.meld1.size()
-                  +unsortedHand.meld1.size()+unsortedHand.meld1.size()
-                  +unsortedHand.unsortedTiles.size() != unsortedHand.tiles.size() ){
-            Log.wtf("InvalidHandState", "tiles list size does not match the number of tiles used in sets/unsortedTiles: \n" + unsortedHand.toStringVerbose());
-            return;
         }
 
         // Start the sorting process, now that unusual hands are accounted for
@@ -111,10 +106,6 @@ public class ScoreCalculator {
                 continue;
             }
 
-            Hand chiiHand = checkForChii(firstHand);
-            if( chiiHand!=null ){
-                sortingHands.add(chiiHand);
-            }
             Hand ponHand = checkForPon(firstHand);
             if( ponHand!=null ){
                 sortingHands.add(ponHand);
@@ -123,27 +114,14 @@ public class ScoreCalculator {
             if( kanHand!=null ){
                 sortingHands.add(kanHand);
             }
+            Hand chiiHand = checkForChii(firstHand);
+            if( chiiHand!=null ){
+                sortingHands.add(chiiHand);
+            }
 
             // Remove the original version of the hand. If it didn't have children, its line ends here
             sortingHands.remove(firstHand);
         }
-    }
-    private Hand checkForChii(Hand h){
-        Tile firstTile = h.unsortedTiles.get(0);
-        if( !firstTile.suit.toString().equals("HONOR") && firstTile.number>0 ){
-            Hand chiiHand = new Hand(h);
-
-            Tile firstChiiTile = chiiHand.popUnsortedTile(String.valueOf(firstTile.number), firstTile.suit, null);
-            Tile secondChiiTile = chiiHand.popUnsortedTile(String.valueOf(firstTile.number + 1), firstTile.suit, firstChiiTile.revealedState);
-            Tile thirdChiiTile = chiiHand.popUnsortedTile(String.valueOf(firstTile.number + 2), firstTile.suit, firstChiiTile.revealedState);
-
-            if( secondChiiTile!=null && thirdChiiTile!=null ){
-                //Yay, we have a chii!
-                chiiHand.setSet(Arrays.asList(firstChiiTile, secondChiiTile, thirdChiiTile));
-                return chiiHand;
-            }
-        }
-        return null;
     }
     private Hand checkForPon(Hand h){
         Tile firstTile = h.unsortedTiles.get(0);
@@ -177,9 +155,27 @@ public class ScoreCalculator {
         }
         return null;
     }
+    private Hand checkForChii(Hand h){
+        Tile firstTile = h.unsortedTiles.get(0);
+        if( !firstTile.suit.toString().equals("HONOR") && firstTile.number>0 ){
+            Hand chiiHand = new Hand(h);
+
+            Tile firstChiiTile = chiiHand.popUnsortedTile(String.valueOf(firstTile.number), firstTile.suit, null);
+            Tile secondChiiTile = chiiHand.popUnsortedTile(String.valueOf(firstTile.number + 1), firstTile.suit, firstChiiTile.revealedState);
+            Tile thirdChiiTile = chiiHand.popUnsortedTile(String.valueOf(firstTile.number + 2), firstTile.suit, firstChiiTile.revealedState);
+
+            if( secondChiiTile!=null && thirdChiiTile!=null ){
+                //Yay, we have a chii!
+                chiiHand.setSet(Arrays.asList(firstChiiTile, secondChiiTile, thirdChiiTile));
+                return chiiHand;
+            }
+        }
+        return null;
+    }
 
     /*
      * Only keep the version of the hand that gives the largest score. Set that hand as scoredHand.
+     * If any one of the hands in sortedHands passes validation, all the rest must, or be immediately discarded.
      */
     private void determineScoredHand(){
         if( scoredHand!=null ){
@@ -187,12 +183,20 @@ public class ScoreCalculator {
             countHan(scoredHand);
             countFu(scoredHand);
         } else if( sortedHands.size()>0 ){
-            scoredHand = sortedHands.get(0);
+            boolean anyHandValidated = false;
             for( Hand unscoredHand : sortedHands ){
+                boolean validated = unscoredHand.validateCompleteState();
+                anyHandValidated = anyHandValidated || validated;
+
+                if( anyHandValidated && !validated ){
+                    continue;
+                }
+
                 scoreHand(unscoredHand);
                 countHan(unscoredHand);
                 countFu(unscoredHand);
-                if( scoreBasePoints(unscoredHand.han,unscoredHand.fu) > scoreBasePoints(scoredHand.han, scoredHand.fu) ){
+                if( scoredHand==null
+                        || scoreBasePoints(unscoredHand.han,unscoredHand.fu) > scoreBasePoints(scoredHand.han, scoredHand.fu) ){
                     scoredHand = unscoredHand;
                 }
             }
@@ -219,7 +223,7 @@ public class ScoreCalculator {
         checkSuuKantsu(h);
 
         if( h.hasYakuman() ){
-            clearNonYakuman(h);
+            clearNormalYaku(h);
             return;
         }
 
@@ -720,7 +724,7 @@ public class ScoreCalculator {
         if( tz.size()==7 && doubleDupes.size()==0 && suitCount==0 ){
             h.unsortedTiles.clear();
             h.daichisei = true;
-            clearNonYakuman(h);
+            clearNormalYaku(h);
             scoredHand = h;
             countHan(h);
         }
@@ -738,13 +742,13 @@ public class ScoreCalculator {
         if( noDupSet.size()==13 && h.getWinningTile()!=null && countTileInSet(h.getWinningTile(), h.tiles)==2 ){
             h.unsortedTiles.clear();
             h.kokushiMusou13wait = true;
-            clearNonYakuman(h);
+            clearNormalYaku(h);
             scoredHand=h;
             countHan(scoredHand);
         } else if( noDupSet.size()==13 ){
             h.unsortedTiles.clear();
             h.kokushiMusou = true;
-            clearNonYakuman(h);
+            clearNormalYaku(h);
             scoredHand=h;
             countHan(scoredHand);
         }
@@ -768,14 +772,9 @@ public class ScoreCalculator {
                 h.selfDrawWinningTile = true;
             }
         }
-        for( Tile t : h.tiles ){
-            if( !t.winningTile ){
-                if( t.revealedState!= Tile.RevealedState.NONE && t.revealedState!= Tile.RevealedState.CLOSEDKAN ){
-                    return;
-                }
-            }
+        if( !h.isOpen() && h.selfDrawWinningTile ){
+            h.tsumo = (h.selfDrawWinningTile);
         }
-        h.tsumo = (h.selfDrawWinningTile);
     }
     private void checkIppatsu(Hand h){}
     private void checkHaitei(Hand h){}
@@ -797,18 +796,20 @@ public class ScoreCalculator {
         h.pinfu = true;
     }
     private void checkIipeikou(Hand h){
-        if(        h.meld1.toString().equals(h.meld2.toString()) ){
-            h.iipeikou = true;
-        } else if( h.meld1.toString().equals(h.meld3.toString()) ){
-            h.iipeikou = true;
-        } else if( h.meld1.toString().equals(h.meld4.toString()) ){
-            h.iipeikou = true;
-        } else if( h.meld2.toString().equals(h.meld3.toString()) ){
-            h.iipeikou = true;
-        } else if( h.meld2.toString().equals(h.meld4.toString()) ){
-            h.iipeikou = true;
-        } else if( h.meld3.toString().equals(h.meld4.toString()) ){
-            h.iipeikou = true;
+        if( !h.isOpen() ){
+            if(        h.meld1.toString().equals(h.meld2.toString()) ){
+                h.iipeikou = true;
+            } else if( h.meld1.toString().equals(h.meld3.toString()) ){
+                h.iipeikou = true;
+            } else if( h.meld1.toString().equals(h.meld4.toString()) ){
+                h.iipeikou = true;
+            } else if( h.meld2.toString().equals(h.meld3.toString()) ){
+                h.iipeikou = true;
+            } else if( h.meld2.toString().equals(h.meld4.toString()) ){
+                h.iipeikou = true;
+            } else if( h.meld3.toString().equals(h.meld4.toString()) ){
+                h.iipeikou = true;
+            }
         }
     }
     private void checkSanshokuDoujun(Hand h){
@@ -1159,18 +1160,18 @@ public class ScoreCalculator {
                 }
             }
         }
-        Log.v("checkChuurenPoutou", "usedTiles is not empty: "+usedTiles.toString());
-        Log.v("checkChuurenPoutou", "usedExpectedTiles is not empty: " + usedExpectedTiles.toString());
+        //Log.v("checkChuurenPoutou", "usedTiles is not empty: "+usedTiles.toString());
+        //Log.v("checkChuurenPoutou", "usedExpectedTiles is not empty: " + usedExpectedTiles.toString());
         expectedTiles.removeAll(usedExpectedTiles);
         if( expectedTiles.size()!=0 ){
-            Log.v("checkChuurenPoutou", "expectedTiles is not empty: "+expectedTiles.toString());
+            //Log.v("checkChuurenPoutou", "expectedTiles is not empty: "+expectedTiles.toString());
             return;
         }
         List<Tile> tempList = new ArrayList<>();
         tempList.addAll(h.tiles);
         tempList.removeAll(usedTiles);
         if( tempList.size()>1 ){
-            Log.v("checkChuurenPoutou", "tempList still too big: "+tempList.toString());
+            //Log.v("checkChuurenPoutou", "tempList still too big: "+tempList.toString());
             return;
         }
         h.chuurenPoutou = true;
@@ -1281,13 +1282,13 @@ public class ScoreCalculator {
             h.daiSharin = true;
         }
     }     // Single suit, pairs from 2-8
-    private void checkShiisanpuuta(Hand h){}  // Thirteen unconnected tiles on first draw
-    private void checkShiisuupuuta(Hand h){}  // Fourteen unconnected tiles (on first draw? wut)
-    private void checkParenchan(Hand h){}     // Eight consecutive wins as dealer
+    private void checkShiisanpuuta(Hand h){}     // Thirteen unconnected tiles on first draw
+    private void checkShiisuupuuta(Hand h){}     // Fourteen unconnected tiles (on first draw? wut)
+    private void checkParenchan(Hand h){}        // Eight consecutive wins as dealer
 
     private void scrubScore(Hand h){
         clearYakuman(h);
-        clearNonYakuman(h);
+        clearNormalYaku(h);
         h.hanList.clear();
     }
     private void clearYakuman(Hand h){
@@ -1311,17 +1312,8 @@ public class ScoreCalculator {
         h.shiisuupuuta = false;
         h.parenchan = false;
     }
-    private void clearNonYakuman(Hand h){
-        h.doubleRiichi = false;
-        h.riichi = false;
-        h.ippatsu = false;
-        h.tsumo = false;
-        h.rinshan = false;
-        h.chanKan = false;
-        h.haitei = false;
-        h.houtei = false;
+    private void clearNormalYaku(Hand h){
         h.chiiToitsu = false;
-        h.nagashiMangan = false;
         h.pinfu = false;
         h.iipeikou = false;
         h.sanshokuDoujun = false;

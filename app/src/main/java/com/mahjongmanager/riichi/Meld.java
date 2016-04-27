@@ -282,4 +282,11 @@ public class Meld {
         return false;
     }
     public String toString(){ return tiles.toString(); }
+    public String toStringVerbose(){
+        String s = tiles.toString()+" "+getNonCalledRevealedState().toString();
+        if( getCalledTile()!=null ){
+            s = s+" "+getCalledTile().calledFrom.toString();
+        }
+        return s;
+    }
 }

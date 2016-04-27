@@ -246,7 +246,6 @@ public class Hand {
     // Verify hand consistency, including:
     //TODO consider other inherently contradictory yaku conditions
     //TODO Chiitoitsu/kokushi/nagashi don't work with most things
-    //TODO If hand is open, check for yaku that are contradictory (such as Iipeikou, which currently fails)
     // Good spreadsheet to use as reference: http://arcturus.su/wiki/Yaku_compatability
     public boolean validateCompleteState(){
         if( unsortedTiles.size()!=0 ){
@@ -257,13 +256,14 @@ public class Hand {
             return false;
         }
 
-        if( !validateNotTooManyTiles()
-                || !validateOnlyOneWinningTile()
-                || !validateEachTile()
-                || !validateRealScore()
-                || !validateHaiteiHoutei()
-                || !validateChanKan()
-                || !validateRinshan() ){
+        if( !(validateNotTooManyTiles()
+                && validateOnlyOneWinningTile()
+                && validateEachTile()
+                && validateRealScore()
+                && validateHaiteiHoutei()
+                && validateChanKan()
+                && validateRinshan()
+                && validateYakuWithOpenState()) ){
             return false;
         }
 
@@ -345,6 +345,13 @@ public class Hand {
     private boolean validateRinshan(){
         if( rinshan && (!hasKan() || !selfDrawWinningTile) ){
             Log.e("validateCompleteState", "Hand must contain a Kan to win with rinshan: "+toStringVerbose());
+            return false;
+        }
+        return true;
+    }
+    private boolean validateYakuWithOpenState(){
+        if( isOpen() && (riichi || tsumo || ippatsu || doubleRiichi || pinfu || iipeikou ) ){
+            Log.e("validateCompleteState", "Open hand has a conflicting yaku: "+toStringVerbose());
             return false;
         }
         return true;
@@ -504,6 +511,14 @@ public class Hand {
     public boolean hasAbnormalStructure(){
         return kokushiMusou || kokushiMusou13wait || chiiToitsu || daichisei || nagashiMangan;
     }
+    public boolean tilesSortedProperly(){
+        int usedTiles = meld1.size() + meld2.size() + meld3.size() + meld4.size() + pair.size() + unsortedTiles.size();
+        if( usedTiles != tiles.size() ){
+            Log.wtf("InvalidHandState", "tiles list size does not match the number of tiles used in sets/unsortedTiles: "+usedTiles+" "+tiles.size()+"\n"+toStringVerbose());
+            return false;
+        }
+        return true;
+    }
 
     public void sort(){
         Utils.sort(tiles);
@@ -521,11 +536,11 @@ public class Hand {
     public String toStringVerbose(){
         String s = " tiles: " + toString() + "\n";
         s = s + " unsortedTiles: " + unsortedTiles.toString() + "\n";
-        s = s + " pair: " + pair.toString() + "\n";
-        s = s + " meld1: " + meld1.toString() + "\n";
-        s = s + " meld2: " + meld2.toString() + "\n";
-        s = s + " meld3: " + meld3.toString() + "\n";
-        s = s + " meld4: " + meld4.toString() + "\n";
+        s = s + " pair: " + pair.toStringVerbose() + "\n";
+        s = s + " meld1: " + meld1.toStringVerbose() + "\n";
+        s = s + " meld2: " + meld2.toStringVerbose() + "\n";
+        s = s + " meld3: " + meld3.toStringVerbose() + "\n";
+        s = s + " meld4: " + meld4.toStringVerbose() + "\n";
         String wTile = (getWinningTile()==null) ? "null" : getWinningTile().toString();
         s = s + " winningTile: " + wTile + "\n";
         s = s + " hanList: " + hanList.toString() + "\n";
