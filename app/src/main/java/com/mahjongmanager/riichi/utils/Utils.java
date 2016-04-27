@@ -147,9 +147,9 @@ public class Utils {
 
         return SetState.CLOSEDSET;
     }
-    public static SetState getSetState(Meld meld){ return getSetState(meld.tiles); }
+    public static SetState getSetState(Meld meld){ return getSetState(meld.getTiles()); }
 
-    public static boolean containsHonorsOrTerminalsOnly(Meld meld){ return containsHonorsOrTerminalsOnly(meld.tiles); }
+    public static boolean containsHonorsOrTerminalsOnly(Meld meld){ return containsHonorsOrTerminalsOnly(meld.getTiles()); }
     public static boolean containsHonorsOrTerminalsOnly(List<Tile> tiles){
         for( Tile t : tiles ){
             if( t.number!=null && t.number>1 && t.number<9 ){

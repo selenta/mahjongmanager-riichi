@@ -168,7 +168,7 @@ public class HandDisplay extends LinearLayout {
         if( closedTilesContainer.getChildCount()!=0 ){
             addSpacer(closedTilesContainer, 8);
         }
-        List<Tile> remainderSet = withoutTile(meld.tiles, hand.getWinningTile());
+        List<Tile> remainderSet = withoutTile(meld.getTiles(), hand.getWinningTile());
         for( Tile t : remainderSet ){
             addTileClosed(t);
         }
@@ -192,7 +192,7 @@ public class HandDisplay extends LinearLayout {
         Tile calledTile = meld.getCalledTile();
         Tile addedTile = meld.getAddedTile();
 
-        List<Tile> remainderSet = withoutTile(meld.tiles, calledTile);
+        List<Tile> remainderSet = withoutTile(meld.getTiles(), calledTile);
         remainderSet = withoutTile(remainderSet, addedTile);
 
         switch( calledTile.calledFrom.toString() ){
@@ -230,22 +230,22 @@ public class HandDisplay extends LinearLayout {
         }
 
         Tile redFiveTile = null;
-        for(Tile t : meld.tiles){
+        for(Tile t : meld.getTiles()){
             if( t.red ){
                 redFiveTile = t;
             }
         }
 
-        meld.tiles.get(0).faceDown = true;
-        addTileOpen(meld.tiles.get(0));
-        addTileOpen(meld.tiles.get(1));
+        meld.getTiles().get(0).faceDown = true;
+        addTileOpen(meld.getTiles().get(0));
+        addTileOpen(meld.getTiles().get(1));
         if( redFiveTile!=null ){
             addTileOpen(redFiveTile);
         } else {
-            addTileOpen(meld.tiles.get(2));
+            addTileOpen(meld.getTiles().get(2));
         }
-        meld.tiles.get(3).faceDown = true;
-        addTileOpen(meld.tiles.get(3));
+        meld.getTiles().get(3).faceDown = true;
+        addTileOpen(meld.getTiles().get(3));
     }
 
     private void addTileClosed(Tile t){

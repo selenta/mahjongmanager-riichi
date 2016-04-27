@@ -212,13 +212,13 @@ public class Hand {
     }
 
     public void setSet( List<Tile> tbdSet ){
-        if( meld1.tiles.size()==0 ){
+        if( meld1.size()==0 ){
             meld1.setTiles(tbdSet);
-        } else if( meld2.tiles.size()==0 ){
+        } else if( meld2.size()==0 ){
             meld2.setTiles(tbdSet);
-        } else if( meld3.tiles.size()==0 ){
+        } else if( meld3.size()==0 ){
             meld3.setTiles(tbdSet);
-        } else if( meld4.tiles.size()==0 ){
+        } else if( meld4.size()==0 ){
             meld4.setTiles(tbdSet);
         } else {
             Log.e("All hand sets set", "all sets: " + meld1.toString() + " "+ meld2.toString() + " "+ meld3.toString() + " "+ meld4.toString());
@@ -424,27 +424,27 @@ public class Hand {
         return usedTiles;
     }
     public Meld getWinningMeld(){
-        for( Tile t : pair.tiles ){
+        for( Tile t : pair.getTiles() ){
             if( t.winningTile ){
                 return pair;
             }
         }
-        for( Tile t : meld1.tiles ){
+        for( Tile t : meld1.getTiles() ){
             if( t.winningTile ){
                 return meld1;
             }
         }
-        for( Tile t : meld2.tiles ){
+        for( Tile t : meld2.getTiles() ){
             if( t.winningTile ){
                 return meld2;
             }
         }
-        for( Tile t : meld3.tiles ){
+        for( Tile t : meld3.getTiles() ){
             if( t.winningTile ){
                 return meld3;
             }
         }
-        for( Tile t : meld4.tiles ){
+        for( Tile t : meld4.getTiles() ){
             if( t.winningTile ){
                 return meld4;
             }
@@ -461,10 +461,10 @@ public class Hand {
     }
     public int emptyMeldCount(){
         int count = 0;
-        count = (meld1.tiles.size()==0) ? count + 1 : count;
-        count = (meld2.tiles.size()==0) ? count + 1 : count;
-        count = (meld3.tiles.size()==0) ? count + 1 : count;
-        count = (meld4.tiles.size()==0) ? count + 1 : count;
+        count = (meld1.size()==0) ? count + 1 : count;
+        count = (meld2.size()==0) ? count + 1 : count;
+        count = (meld3.size()==0) ? count + 1 : count;
+        count = (meld4.size()==0) ? count + 1 : count;
         return count;
     }
     public int countTile(Tile countedTile){
@@ -523,11 +523,11 @@ public class Hand {
     public void sort(){
         Utils.sort(tiles);
         Utils.sort(unsortedTiles);
-        Utils.sort(pair.tiles);
-        Utils.sort(meld1.tiles);
-        Utils.sort(meld2.tiles);
-        Utils.sort(meld3.tiles);
-        Utils.sort(meld4.tiles);
+        pair.sort();
+        meld1.sort();
+        meld2.sort();
+        meld3.sort();
+        meld4.sort();
     }
 
     public String toString(){

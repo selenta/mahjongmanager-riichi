@@ -152,7 +152,7 @@ public class HandGenerator {
         foundingTiles.add(randomTile(foundingTiles));
         meld4.addTile(foundingTiles.get(foundingTiles.size() - 1));
 
-        pair.addTile(new Tile(pair.tiles.get(0)));
+        pair.addTile(new Tile(pair.firstTile()));
 
         expandMeld(meld1);
         expandMeld(meld2);
@@ -160,11 +160,11 @@ public class HandGenerator {
         expandMeld(meld4);
 
         List<Tile> allTiles = new ArrayList<>();
-        allTiles.addAll(pair.tiles);
-        allTiles.addAll(meld1.tiles);
-        allTiles.addAll(meld2.tiles);
-        allTiles.addAll(meld3.tiles);
-        allTiles.addAll(meld4.tiles);
+        allTiles.addAll( pair.getTiles());
+        allTiles.addAll(meld1.getTiles());
+        allTiles.addAll(meld2.getTiles());
+        allTiles.addAll(meld3.getTiles());
+        allTiles.addAll(meld4.getTiles());
 
         randomWinningTile();
 
@@ -181,32 +181,32 @@ public class HandGenerator {
         }
     }
     private void expandPon(Meld meld){
-        Tile founder = meld.tiles.get(0);
+        Tile founder = meld.firstTile();
         meld.addTile(new Tile(founder));
         meld.addTile(new Tile(founder));
 
         if( Math.random()<0.4 ){
             Tile calledTile = meld.getRandomTile();
             calledTile.calledFrom = Tile.CalledFrom.CENTER;
-            for(Tile t : meld.tiles){
+            for(Tile t : meld.getTiles()){
                 t.revealedState = Tile.RevealedState.PON;
             }
         }
     }
     private void expandKan(Meld meld){
-        Tile founder = meld.tiles.get(0);
+        Tile founder = meld.firstTile();
         meld.addTile(new Tile(founder));
         meld.addTile(new Tile(founder));
         meld.addTile(new Tile(founder));
 
         Double roll = Math.random();
         if( roll<0.4 ){
-            for( Tile t : meld.tiles ){
+            for( Tile t : meld.getTiles() ){
                 t.revealedState=Tile.RevealedState.CLOSEDKAN;
             }
         } else if( roll<0.7 ){
             List<Tile> remainders = new ArrayList<>();
-            remainders.addAll(meld.tiles);
+            remainders.addAll(meld.getTiles());
 
             Tile calledTile = meld.getRandomTile();
             calledTile.calledFrom = Tile.CalledFrom.CENTER;
@@ -224,7 +224,7 @@ public class HandGenerator {
             Tile calledTile = meld.getRandomTile();
             calledTile.calledFrom = Tile.CalledFrom.CENTER;
 
-            for(Tile t : meld.tiles){
+            for(Tile t : meld.getTiles()){
                 t.revealedState = Tile.RevealedState.OPENKAN;
             }
         }
@@ -234,7 +234,7 @@ public class HandGenerator {
 //        Log.d("GenerateKan", "Tile 4: "+meld.get(3)+" - "+meld.get(3).calledFrom+" - "+meld.get(3).revealedState);
     }
     private void expandChii(Meld meld){
-        Tile founder = meld.tiles.get(0);
+        Tile founder = meld.firstTile();
 
         if(founder.number==1){
             meld.addTile(new Tile(2, founder.suit.toString()));
@@ -250,7 +250,7 @@ public class HandGenerator {
         if( Math.random()<0.3 ){
             Tile calledTile = meld.getRandomTile();
             calledTile.calledFrom = Tile.CalledFrom.LEFT;
-            for(Tile t : meld.tiles){
+            for(Tile t : meld.getTiles()){
                 t.revealedState = Tile.RevealedState.CHI;
             }
         }
@@ -309,29 +309,29 @@ public class HandGenerator {
     //modify hand
     private void randomWinningTile(){
         List<Tile> candidates = new ArrayList<>();
-        candidates.addAll(pair.tiles);
+        candidates.addAll(pair.getTiles());
         if( meld1.size()==3 ){
             Tile calledTile = meld1.getCalledTile();
             if( calledTile==null ){
-                candidates.addAll(meld1.tiles);
+                candidates.addAll(meld1.getTiles());
             }
         }
         if( meld2.size()==3 ){
             Tile calledTile = meld2.getCalledTile();
             if( calledTile==null ){
-                candidates.addAll(meld2.tiles);
+                candidates.addAll(meld2.getTiles());
             }
         }
         if( meld3.size()==3 ){
             Tile calledTile = meld3.getCalledTile();
             if( calledTile==null ){
-                candidates.addAll(meld3.tiles);
+                candidates.addAll(meld3.getTiles());
             }
         }
         if( meld4.size()==3 ){
             Tile calledTile = meld4.getCalledTile();
             if( calledTile==null ){
-                candidates.addAll(meld4.tiles);
+                candidates.addAll(meld4.getTiles());
             }
         }
 

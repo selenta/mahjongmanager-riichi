@@ -108,7 +108,11 @@ public class HandCalculatorFragment_4ScoreScreen extends Fragment {
      */
     private void updateRevealedStatus(Hand h){
         for(Meld m : Arrays.asList(h.meld1, h.meld2, h.meld3, h.meld4)){
+
             Tile calledTile = m.getCalledTile();
+            if( calledTile!=null && calledTile.winningTile ) {
+                continue;
+            }
 
             Tile.RevealedState newState = Tile.RevealedState.NONE;
             if( m.isKan() && calledTile==null ){
@@ -121,7 +125,7 @@ public class HandCalculatorFragment_4ScoreScreen extends Fragment {
                 newState = Tile.RevealedState.PON;
             }
 
-            for(Tile t : m.tiles){
+            for(Tile t : m.getTiles()){
                 t.revealedState = newState;
             }
         }

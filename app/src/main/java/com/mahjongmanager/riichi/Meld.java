@@ -9,25 +9,30 @@ import java.util.List;
 import java.util.Random;
 
 public class Meld {
-    public List<Tile> tiles = new ArrayList<>();
+    private List<Tile> tiles = new ArrayList<>();
 
     public Meld(Meld oldM){
         tiles.addAll(oldM.tiles);
-        Utils.sort(tiles);
+        sort();
     }
     public Meld(List<Tile> startingTiles){
         tiles.addAll(startingTiles);
-        Utils.sort(tiles);
+        sort();
     }
     public Meld(){}
 
+    public void setTiles(List<Tile> newTiles){
+        tiles.clear();
+        for(Tile t : newTiles){
+            addTile(t);
+        }
+    }
     public void addTile(Tile t){
         tiles.add(t);
         Utils.sort(tiles);
     }
-    public void setTiles(List<Tile> newTiles){
-        tiles.clear();
-        tiles.addAll(newTiles);
+    public List<Tile> getTiles(){
+        return tiles;
     }
 
     /**
@@ -253,11 +258,38 @@ public class Meld {
     public Tile getRandomTile(){
         return tiles.get(new Random().nextInt(tiles.size()));
     }
+    public Tile firstTile(){
+        if( tiles.size()>0 ){
+            return tiles.get(0);
+        }
+        return null;
+    }
+    public Tile secondTile(){
+        if( tiles.size()>1 ){
+            return tiles.get(0);
+        }
+        return null;
+    }
+    public Tile thirdTile(){
+        if( tiles.size()>2 ){
+            return tiles.get(2);
+        }
+        return null;
+    }
+    public Tile fourthTile(){
+        if( tiles.size()>3 ){
+            return tiles.get(3);
+        }
+        return null;
+    }
 
 
     //////////////////////////////////////////////////////////////////////
     /////////////////////       Utility Methods      /////////////////////
     //////////////////////////////////////////////////////////////////////
+    public void sort(){
+        Utils.sort(tiles);
+    }
     public int size(){ return tiles.size(); }
     public boolean isPair(){ return tiles.size()==2 && tiles.get(0).value.equals(tiles.get(1).value); }
     public boolean isChii(){ return tiles.size()==3 && !tiles.get(0).value.equals(tiles.get(1).value); }
