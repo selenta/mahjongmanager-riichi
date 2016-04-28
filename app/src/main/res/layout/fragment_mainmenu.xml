@@ -26,17 +26,18 @@
         <Button
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="League Tracker (v2.0)"
+            android:text="League Tracker (v3.0)"
             android:id="@+id/button"
             android:layout_gravity="center_horizontal"
             android:maxWidth="800dp"
             android:singleLine="true"
-            android:enabled="false" />
+            android:enabled="false"
+            android:visibility="gone" />
 
         <Button
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:text="Game Score Tracker (v1.5)"
+            android:text="Game Score Tracker (v2.0)"
             android:id="@+id/button2"
             android:layout_gravity="center_horizontal"
             android:enabled="false" />
@@ -59,15 +60,6 @@
             android:enabled="true"
             android:onClick="gotoHandCalculator"/>
 
-        <Button
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:text="Han/Fu Calculator"
-            android:id="@+id/button3"
-            android:layout_gravity="center_horizontal"
-            android:enabled="true"
-            android:onClick="goToHanFuCalculator" />
-
         <LinearLayout
             android:orientation="horizontal"
             android:layout_width="fill_parent"
@@ -87,12 +79,22 @@
             <Button
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Yaku List"
-                android:id="@+id/button7"
+                android:text="Han/Fu"
+                android:id="@+id/button3"
+                android:layout_gravity="center_horizontal"
                 android:enabled="true"
-                android:layout_weight="1"
-                android:onClick="goToYakuList" />
+                android:onClick="goToHanFuCalculator"
+                android:layout_weight="1" />
+
         </LinearLayout>
+
+        <Button
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:text="Yaku Descriptions and Info"
+            android:id="@+id/button7"
+            android:enabled="true"
+            android:onClick="goToYakuList" />
 
         <Button
             android:layout_width="fill_parent"
@@ -112,12 +114,53 @@
 
         <TextView
             android:layout_width="wrap_content"
-            android:layout_height="fill_parent"
+            android:layout_height="wrap_content"
             android:textAppearance="?android:attr/textAppearanceSmall"
             android:text="v0.75"
             android:id="@+id/textView"
             android:layout_gravity="center_horizontal"
-            android:longClickable="true" />
+            android:longClickable="true"
+            android:layout_weight="1" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:text="TODOs for 1.0"
+            android:id="@+id/textView94"
+            android:layout_gravity="center_horizontal"
+            android:textStyle="bold" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:text="- TileKeyboard config: by suit, or all at once"
+            android:id="@+id/textView97"
+            android:layout_gravity="left|center_horizontal" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:text="- Make HandDisplay interactable"
+            android:id="@+id/textView98"
+            android:layout_gravity="left|center_horizontal" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:text="- Can hover over yaku for details"
+            android:id="@+id/textView99"
+            android:layout_gravity="left|center_horizontal" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:text="- Fix performance problems"
+            android:id="@+id/textView96" />
 
     </LinearLayout>
 

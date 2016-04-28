@@ -13,6 +13,7 @@ import com.mahjongmanager.riichi.handcalculator.HandCalculatorFragment_4ScoreScr
 import com.mahjongmanager.riichi.simplefragments.HanFuCalculatorFragment;
 import com.mahjongmanager.riichi.simplefragments.MainMenuFragment;
 import com.mahjongmanager.riichi.simplefragments.OptionsFragment;
+import com.mahjongmanager.riichi.simplefragments.OptionsRulesetFragment;
 import com.mahjongmanager.riichi.simplefragments.ScoreTableFragment;
 import com.mahjongmanager.riichi.simplefragments.YakuListFragment;
 import com.mahjongmanager.riichi.speedquiz.SpeedQuizFragment_1Start;
@@ -68,60 +69,40 @@ public class MainActivity extends AppCompatActivity {
     ///////////////////////////////////////////////////
     public void goToHanFuCalculator(View view){
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-
         transaction.replace(R.id.fragment_container, new HanFuCalculatorFragment());
         //transaction.addToBackStack("MainMenu");
-
         transaction.commit();
     }
 
     public void gotoHandCalculator(View view){
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-
         transaction.replace(R.id.fragment_container, new HandCalculatorFragment_1Keyboard());
-        //transaction.addToBackStack("MainMenu");
-
         transaction.commit();
     }
     public void gotoHandCalculatorWinningTile(View view){
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-
         transaction.replace(R.id.fragment_container, new HandCalculatorFragment_2WinningTile());
-        //transaction.addToBackStack("MainMenu");
-
         transaction.commit();
     }
     public void goToHandCalculatorOtherInfo(View view){
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-
         transaction.replace(R.id.fragment_container, new HandCalculatorFragment_3OtherInfo());
-        //transaction.addToBackStack("MainMenu");
-
         transaction.commit();
     }
     public void goToHandCalculatorScoreScreen(View view){
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-
         transaction.replace(R.id.fragment_container, new HandCalculatorFragment_4ScoreScreen());
-        //transaction.addToBackStack("MainMenu");
-
         transaction.commit();
     }
 
     public void goToSpeedQuizStart(View view){
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-
         transaction.replace(R.id.fragment_container, new SpeedQuizFragment_1Start());
-        //transaction.addToBackStack("MainMenu");
-
         transaction.commit();
     }
     public void speedQuizHanFu(View view){
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-
         transaction.replace(R.id.fragment_container, new SpeedQuizFragment_2ScoreHand());
-        //transaction.addToBackStack("MainMenu");
-
         transaction.commit();
 
         speedQuizTimer = new CountDownTimer(90000, 100){
@@ -148,60 +129,46 @@ public class MainActivity extends AppCompatActivity {
         hanFuGuesses.add(guess);
 
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-
         transaction.replace(R.id.fragment_container, new SpeedQuizFragment_2ScoreHand());
-        //transaction.addToBackStack("MainMenu");
-
         transaction.commit();
     }
     public void speedQuizScoreScreen(View view){
         speedQuizTimer.cancel();
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-
         transaction.replace(R.id.fragment_container, new SpeedQuizFragment_3ScoreScreen());
-        //transaction.addToBackStack("MainMenu");
-
         transaction.commit();
     }
     public void speedQuizReviewHand(View view){
-         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-
+        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
         transaction.replace(R.id.fragment_container, new SpeedQuizFragment_4ReviewHandHanFu());
-        //transaction.addToBackStack("MainMenu");
-
         transaction.commit();
     }
 
     public void goToScoreTable(View view){
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-
         transaction.replace(R.id.fragment_container, new ScoreTableFragment());
-        //transaction.addToBackStack("MainMenu");
-
         transaction.commit();
     }
 
     public void goToYakuList(View view){
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-
         transaction.replace(R.id.fragment_container, new YakuListFragment());
-        //transaction.addToBackStack("MainMenu");
-
         transaction.commit();
     }
 
     public void goToOptions(View view){
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-
         transaction.replace(R.id.fragment_container, new OptionsFragment());
-        //transaction.addToBackStack("MainMenu");
-
+        transaction.commit();
+    }
+    public void goToOptionsRuleset(View view){
+        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+        transaction.replace(R.id.fragment_container, new OptionsRulesetFragment());
         transaction.commit();
     }
 
     public void backToMainMenu(View view){
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-
         transaction.replace(R.id.fragment_container, new MainMenuFragment());
 
         currentHanGuess = 0;
@@ -211,7 +178,6 @@ public class MainActivity extends AppCompatActivity {
         hanFuGuesses = new ArrayList<>();
         transaction.commit();
     }
-
 
     /////////////////////////////////////////////////////////
     /////////    Cross-Fragment Communication     ///////////
