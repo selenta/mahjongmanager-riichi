@@ -437,4 +437,26 @@ public class Tile {
         }
         return R.drawable.blank;
     }
+    public String getImageCacheKey(String usage, boolean rotated){
+        String s = getImageCacheKey(usage);
+        if( rotated ){
+            s += " Rotated";
+        }
+        return s;
+    }
+    public String getImageCacheKey(String usage){
+        String s = usage;
+        if( faceDown ){
+            s = s + "Facedown";
+        } else if( red ){
+            s = s + toString() + " Red";
+        } else if( !validateTile() ){
+            s = s + "Blank";
+        } else {
+            s = s + toString();
+        }
+        return s;
+    }
+
+
 }

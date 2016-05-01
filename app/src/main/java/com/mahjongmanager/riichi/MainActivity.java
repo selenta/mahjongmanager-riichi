@@ -21,6 +21,7 @@ import com.mahjongmanager.riichi.speedquiz.SpeedQuizFragment_2ScoreHand;
 import com.mahjongmanager.riichi.speedquiz.SpeedQuizFragment_3ScoreScreen;
 import com.mahjongmanager.riichi.speedquiz.SpeedQuizFragment_4ReviewHandHanFu;
 import com.mahjongmanager.riichi.utils.ExampleHands;
+import com.mahjongmanager.riichi.utils.ImageCache;
 import com.mahjongmanager.riichi.utils.Utils;
 
 import java.util.ArrayList;
@@ -210,5 +211,13 @@ public class MainActivity extends AppCompatActivity {
             _exampleHands = new ExampleHands(this);
         }
         return _exampleHands;
+    }
+    private ImageCache _imageCache;
+    public ImageCache getImageCache(){
+        if(_imageCache==null){
+            _imageCache = new ImageCache(this);
+            getUtils().populateImageCacheForHandDisplay(50);
+        }
+        return _imageCache;
     }
 }

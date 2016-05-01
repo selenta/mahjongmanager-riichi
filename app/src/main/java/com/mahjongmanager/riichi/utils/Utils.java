@@ -10,21 +10,25 @@ import android.graphics.drawable.LayerDrawable;
 import android.graphics.drawable.ShapeDrawable;
 import android.graphics.drawable.shapes.RoundRectShape;
 import android.graphics.drawable.shapes.Shape;
-import android.util.Log;
-import android.widget.TextView;
+import android.widget.ImageView;
 
 import com.mahjongmanager.riichi.MainActivity;
 import com.mahjongmanager.riichi.Meld;
+import com.mahjongmanager.riichi.R;
 import com.mahjongmanager.riichi.Tile;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
 public class Utils {
     private MainActivity activity;
+    private ImageCache imageCache;
     public Utils(MainActivity ma){
         activity = ma;
+        imageCache = ma.getImageCache();
     }
 
     ////////////////////////////////////////////////////////////////
@@ -40,86 +44,120 @@ public class Utils {
         CLOSEDSET, OPENCHII, OPENPON, OPENKAN, ADDEDKAN, CLOSEDKAN
     }
 
-    public TextView getTileView(Tile t){
+    private String HAND_DISPLAY_KEY = "HandDisplay ";
+
+    public ImageView getHandDisplayTileView(Tile t, boolean rotated){
         if( activity==null ){
-            //This should never happen
             return null;
-        } else if( t.faceDown ){
-            return getTileFaceDown(t);
         }
 
+        String keyString = t.getImageCacheKey(HAND_DISPLAY_KEY, rotated);
+
+        Drawable dBmap = imageCache.getBitmapFromCache(keyString);
+        LayerDrawable tileImage = getCombinedImage(dBmap, t.faceDown, rotated);
+
+        ImageView view = new ImageView(activity);
+        view.setImageDrawable(tileImage);
+
+        return view;
+    }
+    private LayerDrawable getCombinedImage(Drawable bmp, boolean isFacedown, boolean isRotated){
+        if( isFacedown ){
+            Drawable[] layers = new Drawable[1];
+            layers[0] = bmp;
+            return new LayerDrawable(layers);
+        }
+        String frontTileKey = HAND_DISPLAY_KEY + "Front";
+        ShapeDrawable tileOutline = getTileOutline(tileWidth, tileHeight);
+
+        if( isRotated ){
+            frontTileKey+=" Rotated";
+            tileOutline = getTileOutline(tileHeight, tileWidth);
+        }
+
+        Drawable[] layers = new Drawable[3];
+        layers[0] = tileOutline;
+        layers[1] = imageCache.getBitmapFromCache(frontTileKey);
+        layers[2] = bmp;
+        LayerDrawable layerDrawable = new LayerDrawable(layers);
+        layerDrawable.setLayerInset(1, 3,3,3,3);
+        layerDrawable.setLayerInset(2, tilePadding,tilePadding,tilePadding,tilePadding);
+        return layerDrawable;
+    }
+    private ShapeDrawable getTileOutline(int width, int height){
         float[] outerR = new float[8];
         for(int i=0; i<8; i++ ){
             outerR[i] = tileCornerRadius;
         }
         Shape tileOutline = new RoundRectShape(outerR, new RectF(3,3,3,3), null);
-        tileOutline.resize((float)tileWidth, (float)tileHeight);
-        ShapeDrawable drawableShape = new ShapeDrawable(tileOutline);
-
-        Bitmap origBmap = BitmapFactory.decodeResource(activity.getResources(), t.getImageInt());
-        Bitmap resizedBmap = Bitmap.createScaledBitmap(origBmap, tileWidth, tileHeight, false);
-        Drawable dBmap = new BitmapDrawable(activity.getResources(), resizedBmap);
-
-
-        Drawable[] layers = new Drawable[2];
-        layers[0] = drawableShape;
-        layers[1] = dBmap;
-        LayerDrawable layerDrawable = new LayerDrawable(layers);
-        layerDrawable.setLayerInset(1, tilePadding,tilePadding,tilePadding,tilePadding);
-
-        TextView view = new TextView(activity);
-        view.setBackground(layerDrawable);
-
-        return view;
+        tileOutline.resize((float)width, (float)height);
+        return new ShapeDrawable(tileOutline);
     }
-    private TextView getTileFaceDown(Tile t){
-        int faceDownWidth = tileWidth + 2*tilePadding;
-        int faceDownHeight = tileHeight + 2*tilePadding;
 
-        Bitmap origBmap = BitmapFactory.decodeResource(activity.getResources(), t.getImageInt());
-        Bitmap resizedBmap = Bitmap.createScaledBitmap(origBmap, faceDownWidth, faceDownHeight, false);
-        Drawable dBmap = new BitmapDrawable(activity.getResources(), resizedBmap);
+    public void populateImageCacheForHandDisplay(int width){
+        imageCache.clearCache();
 
-        Drawable[] layers = new Drawable[1];
-        layers[0] = dBmap;
-        LayerDrawable layerDrawable = new LayerDrawable(layers);
-
-        TextView view = new TextView(activity);
-        view.setBackground(layerDrawable);
-
-        return view;
-    }
-    public TextView getTileViewRotated(Tile t){
-        if( activity==null ){
-            //This should never happen
-            return null;
+        // First, do the normal vertical version of the tiles
+        int height = (int) ((double)width*tileRatio);
+        List<Tile> allTiles = getAllTilesWithImages();
+        for(Tile t : allTiles){
+            Bitmap origBmap = BitmapFactory.decodeResource(activity.getResources(), t.getImageInt());
+            Bitmap resizedBmap = Bitmap.createScaledBitmap(origBmap, width, height, false);
+            BitmapDrawable dBmap = new BitmapDrawable(activity.getResources(), resizedBmap);
+            String keyString = t.getImageCacheKey(HAND_DISPLAY_KEY);
+            imageCache.addBitmapToCache(keyString, dBmap);
         }
+        Bitmap frontOrigBmap = BitmapFactory.decodeResource(activity.getResources(), R.drawable.front);
+        Bitmap frontResizedBmap = Bitmap.createScaledBitmap(frontOrigBmap, width, height, false);
+        BitmapDrawable frontDBmap = new BitmapDrawable(activity.getResources(), frontResizedBmap);
+        String frontKeyString = HAND_DISPLAY_KEY + "Front";
+        imageCache.addBitmapToCache(frontKeyString, frontDBmap);
 
-        float[] outerR = new float[8];
-        for(int i=0; i<8; i++ ){
-            outerR[i] = tileCornerRadius;
-        }
-        Shape tileOutline = new RoundRectShape(outerR, new RectF(3,3,3,3), null);
-        tileOutline.resize((float)tileWidth, (float)tileHeight);
-        ShapeDrawable drawableShape = new ShapeDrawable(tileOutline);
-
-        Bitmap origBmap = BitmapFactory.decodeResource(activity.getResources(), t.getImageInt());
-        Bitmap resizedBmap = Bitmap.createScaledBitmap(origBmap, tileWidth, tileHeight, false);
+        // Second, do a rotated version of all the tile images
         Matrix matrix = new Matrix();
         matrix.postRotate(270);
-        Bitmap rotatedBitmap = Bitmap.createBitmap(resizedBmap, 0, 0, resizedBmap.getWidth(), resizedBmap.getHeight(), matrix, true);
-        Drawable dBmap = new BitmapDrawable(activity.getResources(), rotatedBitmap);
+        for(Tile t : allTiles){
+            Bitmap origBmap = BitmapFactory.decodeResource(activity.getResources(), t.getImageInt());
+            Bitmap resizedBmap = Bitmap.createScaledBitmap(origBmap, width, height, false);
+            Bitmap rotatedBitmap = Bitmap.createBitmap(resizedBmap, 0, 0, resizedBmap.getWidth(), resizedBmap.getHeight(), matrix, true);
 
-        Drawable[] layers = new Drawable[2];
-        layers[0] = drawableShape;
-        layers[1] = dBmap;
-        LayerDrawable layerDrawable = new LayerDrawable(layers);
-        layerDrawable.setLayerInset(1, tilePadding,tilePadding,tilePadding,tilePadding);
+            BitmapDrawable dBmap = new BitmapDrawable(activity.getResources(), rotatedBitmap);
+            String keyString = t.getImageCacheKey(HAND_DISPLAY_KEY, true);
+            imageCache.addBitmapToCache(keyString, dBmap);
+        }
+        Bitmap rotatedFrontResizedBmap = Bitmap.createBitmap(frontResizedBmap, 0, 0, frontResizedBmap.getWidth(), frontResizedBmap.getHeight(), matrix, true);
+        BitmapDrawable rotatedFrontDBmap = new BitmapDrawable(activity.getResources(), rotatedFrontResizedBmap);
+        String rotatedFrontKeyString = HAND_DISPLAY_KEY + "Front Rotated";
+        imageCache.addBitmapToCache(rotatedFrontKeyString, rotatedFrontDBmap);
+    }
+    private List<Tile> getAllTilesWithImages(){
+        List<Tile> tiles = new ArrayList<>();
+        for(int i=1; i<10; i++){
+            tiles.add(new Tile(i, "MANZU"));
+            tiles.add(new Tile(i, "PINZU"));
+            tiles.add(new Tile(i, "SOUZU"));
+        }
+        tiles.add(new Tile("East", "HONOR"));
+        tiles.add(new Tile("South", "HONOR"));
+        tiles.add(new Tile("West", "HONOR"));
+        tiles.add(new Tile("North", "HONOR"));
+        tiles.add(new Tile("White", "HONOR"));
+        tiles.add(new Tile("Green", "HONOR"));
+        tiles.add(new Tile("Red", "HONOR"));
 
-        TextView view = new TextView(activity);
-        view.setBackground(layerDrawable);
+        for(Tile.Suit suit : Arrays.asList(Tile.Suit.MANZU, Tile.Suit.PINZU, Tile.Suit.SOUZU)){
+            Tile red5 = new Tile(5, suit.toString());
+            red5.red = true;
+            tiles.add(red5);
+        }
+        Tile facedownTile = new Tile(1, "MANZU");
+        facedownTile.faceDown = true;
+        tiles.add(facedownTile);
 
-        return view;
+        Tile blankTile = new Tile(0, "MANZU");
+        tiles.add(blankTile);
+
+        return tiles;
     }
 
     /**

@@ -4,6 +4,7 @@ import android.content.Context;
 import android.util.AttributeSet;
 import android.view.Gravity;
 import android.view.LayoutInflater;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.Space;
 import android.widget.TextView;
@@ -249,12 +250,11 @@ public class HandDisplay extends LinearLayout {
     }
 
     private void addTileClosed(Tile t){
-        TextView view = getUtils().getTileView(t);
+        ImageView view = getUtils().getHandDisplayTileView(t, false);
         closedTilesContainer.addView(view);
     }
     private void addTileOpen(Tile t){
-        TextView view = getUtils().getTileView(t);
-        view.setGravity(Gravity.BOTTOM);
+        ImageView view = getUtils().getHandDisplayTileView(t, false);
 
         openTilesContainer.addView(view);
     }
@@ -265,10 +265,10 @@ public class HandDisplay extends LinearLayout {
         container.setGravity(Gravity.BOTTOM);
 
         if( addedTile!=null ){
-            TextView aTile = getUtils().getTileViewRotated(addedTile);
+            ImageView aTile = getUtils().getHandDisplayTileView(addedTile, true);
             container.addView(aTile);
         }
-        TextView cTile = getUtils().getTileViewRotated(calledTile);
+        ImageView cTile = getUtils().getHandDisplayTileView(calledTile, true);
         container.addView(cTile);
 
         openTilesContainer.addView(container);
@@ -277,7 +277,7 @@ public class HandDisplay extends LinearLayout {
         addSpacer(winningTileContainer, 25);
 
         Tile winningTile = hand.getWinningTile();
-        TextView view = getUtils().getTileView(winningTile);
+        ImageView view = getUtils().getHandDisplayTileView(winningTile, false);
         winningTileContainer.addView(view);
     }
 

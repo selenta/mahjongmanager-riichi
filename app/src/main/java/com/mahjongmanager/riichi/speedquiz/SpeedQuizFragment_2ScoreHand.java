@@ -6,6 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -96,7 +97,7 @@ public class SpeedQuizFragment_2ScoreHand extends Fragment implements View.OnCli
         playerWindLabel.setText(fragHand.getString(fragHand.playerWind));
         selfDrawLabel.setText((fragHand.selfDrawWinningTile)?"Yes":"No");
 
-        TextView winningTileImage = ((MainActivity)getContext()).getUtils().getTileView(fragHand.getWinningTile());
+        ImageView winningTileImage = ((MainActivity)getContext()).getUtils().getHandDisplayTileView(fragHand.getWinningTile(), false);
         speedQuizWinningTile.addView(winningTileImage);
 
         String oys = "Other Yaku: ";
