@@ -16,6 +16,7 @@ import com.mahjongmanager.riichi.MainActivity;
 import com.mahjongmanager.riichi.Meld;
 import com.mahjongmanager.riichi.R;
 import com.mahjongmanager.riichi.Tile;
+import com.mahjongmanager.riichi.components.HandDisplay;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -34,24 +35,23 @@ public class Utils {
     ////////////////////////////////////////////////////////////////
     //////////////////          Main              //////////////////
     ////////////////////////////////////////////////////////////////
-    private int tileWidth = 50;
-    private Double tileRatio = 1.36;
-    private int tileHeight = (int) ((double)tileWidth*tileRatio);
+    public static Double TILE_RATIO = 1.36;
     private int tilePadding = 8;
     private int tileCornerRadius = 8;
+
+    public static String KEYBOARD_KEY = "Keyboard ";
+    public static int KEYBOARD_TILE_WIDTH = 100;
 
     public enum SetState {
         CLOSEDSET, OPENCHII, OPENPON, OPENKAN, ADDEDKAN, CLOSEDKAN
     }
-
-    private String HAND_DISPLAY_KEY = "HandDisplay ";
 
     public ImageView getHandDisplayTileView(Tile t, boolean rotated){
         if( activity==null ){
             return null;
         }
 
-        String keyString = t.getImageCacheKey(HAND_DISPLAY_KEY, rotated);
+        String keyString = t.getImageCacheKey(HandDisplay.HAND_DISPLAY_KEY, rotated);
 
         Drawable dBmap = imageCache.getBitmapFromCache(keyString);
         LayerDrawable tileImage = getCombinedImage(dBmap, t.faceDown, rotated);
@@ -61,18 +61,21 @@ public class Utils {
 
         return view;
     }
+    @SuppressWarnings("SuspiciousNameCombination")
     private LayerDrawable getCombinedImage(Drawable bmp, boolean isFacedown, boolean isRotated){
         if( isFacedown ){
             Drawable[] layers = new Drawable[1];
             layers[0] = bmp;
             return new LayerDrawable(layers);
         }
-        String frontTileKey = HAND_DISPLAY_KEY + "Front";
-        ShapeDrawable tileOutline = getTileOutline(tileWidth, tileHeight);
+        String frontTileKey = HandDisplay.HAND_DISPLAY_KEY + "Front";
+        int width  = HandDisplay.TILE_WIDTH;
+        int height = HandDisplay.TILE_HEIGHT;
+        ShapeDrawable tileOutline = getTileOutline(width, height);
 
         if( isRotated ){
             frontTileKey+=" Rotated";
-            tileOutline = getTileOutline(tileHeight, tileWidth);
+            tileOutline = getTileOutline(height, width);
         }
 
         Drawable[] layers = new Drawable[3];
@@ -94,41 +97,66 @@ public class Utils {
         return new ShapeDrawable(tileOutline);
     }
 
-    public void populateImageCacheForHandDisplay(int width){
-        imageCache.clearCache();
+//    public BitmapDrawable getKeyboardTileImage(Tile t){}
 
-        // First, do the normal vertical version of the tiles
-        int height = (int) ((double)width*tileRatio);
+    //////////////////////////////////////////////////////////////////////////
+    ////////////////////     Populate ImageCache      ////////////////////////
+    //////////////////////////////////////////////////////////////////////////
+    public void populateImageCacheForHandDisplay(int width){
+        // First, do the normal (vertical) version of the tiles
         List<Tile> allTiles = getAllTilesWithImages();
         for(Tile t : allTiles){
-            Bitmap origBmap = BitmapFactory.decodeResource(activity.getResources(), t.getImageInt());
-            Bitmap resizedBmap = Bitmap.createScaledBitmap(origBmap, width, height, false);
-            BitmapDrawable dBmap = new BitmapDrawable(activity.getResources(), resizedBmap);
-            String keyString = t.getImageCacheKey(HAND_DISPLAY_KEY);
+            BitmapDrawable dBmap = getBitmapDrawableFromFile(t.getImageInt(), width, null, t.faceDown);
+            String keyString = t.getImageCacheKey(HandDisplay.HAND_DISPLAY_KEY);
             imageCache.addBitmapToCache(keyString, dBmap);
         }
-        Bitmap frontOrigBmap = BitmapFactory.decodeResource(activity.getResources(), R.drawable.front);
-        Bitmap frontResizedBmap = Bitmap.createScaledBitmap(frontOrigBmap, width, height, false);
-        BitmapDrawable frontDBmap = new BitmapDrawable(activity.getResources(), frontResizedBmap);
-        String frontKeyString = HAND_DISPLAY_KEY + "Front";
+        BitmapDrawable frontDBmap = getBitmapDrawableFromFile(R.drawable.front, width);
+        String frontKeyString = HandDisplay.HAND_DISPLAY_KEY + "Front";
         imageCache.addBitmapToCache(frontKeyString, frontDBmap);
 
         // Second, do a rotated version of all the tile images
         Matrix matrix = new Matrix();
         matrix.postRotate(270);
         for(Tile t : allTiles){
-            Bitmap origBmap = BitmapFactory.decodeResource(activity.getResources(), t.getImageInt());
-            Bitmap resizedBmap = Bitmap.createScaledBitmap(origBmap, width, height, false);
-            Bitmap rotatedBitmap = Bitmap.createBitmap(resizedBmap, 0, 0, resizedBmap.getWidth(), resizedBmap.getHeight(), matrix, true);
-
-            BitmapDrawable dBmap = new BitmapDrawable(activity.getResources(), rotatedBitmap);
-            String keyString = t.getImageCacheKey(HAND_DISPLAY_KEY, true);
+            BitmapDrawable dBmap = getBitmapDrawableFromFile(t.getImageInt(), width, matrix, false);
+            String keyString = t.getImageCacheKey(HandDisplay.HAND_DISPLAY_KEY, true);
             imageCache.addBitmapToCache(keyString, dBmap);
         }
-        Bitmap rotatedFrontResizedBmap = Bitmap.createBitmap(frontResizedBmap, 0, 0, frontResizedBmap.getWidth(), frontResizedBmap.getHeight(), matrix, true);
-        BitmapDrawable rotatedFrontDBmap = new BitmapDrawable(activity.getResources(), rotatedFrontResizedBmap);
-        String rotatedFrontKeyString = HAND_DISPLAY_KEY + "Front Rotated";
+        BitmapDrawable rotatedFrontDBmap = getBitmapDrawableFromFile(R.drawable.front, width, matrix, false);
+        String rotatedFrontKeyString = HandDisplay.HAND_DISPLAY_KEY + "Front Rotated";
         imageCache.addBitmapToCache(rotatedFrontKeyString, rotatedFrontDBmap);
+    }
+    public void populateImageCacheForKeyboard(int width){
+        List<Tile> allTiles = getAllTilesWithImages();
+        for(Tile t : allTiles){
+            BitmapDrawable dBmap = getBitmapDrawableFromFile(t.getImageInt(), width);
+            String keyString = t.getImageCacheKey(KEYBOARD_KEY);
+            imageCache.addBitmapToCache(keyString, dBmap);
+        }
+        BitmapDrawable frontDBmap = getBitmapDrawableFromFile(R.drawable.front, width);
+        String frontKeyString = KEYBOARD_KEY + "Front";
+        imageCache.addBitmapToCache(frontKeyString, frontDBmap);
+    }
+    private BitmapDrawable getBitmapDrawableFromFile(int imageInt, int width ){
+        return getBitmapDrawableFromFile(imageInt, width, null, false);
+    }
+    private BitmapDrawable getBitmapDrawableFromFile(int imageInt, int width, Matrix matrix, boolean isFacedown ){
+        int height = (int) ((double)width*TILE_RATIO);
+
+        Bitmap origBmap = BitmapFactory.decodeResource(activity.getResources(), imageInt);
+        Bitmap resizedBmap;
+        if( isFacedown ){
+            resizedBmap = Bitmap.createScaledBitmap(origBmap, width+2*tilePadding, height+2*tilePadding, false);
+        } else {
+            resizedBmap = Bitmap.createScaledBitmap(origBmap, width, height, false);
+        }
+        Bitmap rotatedBitmap;
+        if( matrix==null ){
+            rotatedBitmap = resizedBmap;
+        } else {
+            rotatedBitmap = Bitmap.createBitmap(resizedBmap, 0, 0, resizedBmap.getWidth(), resizedBmap.getHeight(), matrix, true);
+        }
+        return new BitmapDrawable(activity.getResources(), rotatedBitmap);
     }
     private List<Tile> getAllTilesWithImages(){
         List<Tile> tiles = new ArrayList<>();
@@ -160,6 +188,9 @@ public class Utils {
         return tiles;
     }
 
+    //////////////////////////////////////////////////////////////////////////
+    ////////////////////     Common Util Methods      ////////////////////////
+    //////////////////////////////////////////////////////////////////////////
     /**
      * When provided a Set (aka Meld) from a complete hand, will return a local enum indicating
      * the nature of the set, and thus how it should be displayed as part of a complete hand.

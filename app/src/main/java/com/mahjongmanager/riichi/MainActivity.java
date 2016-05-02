@@ -6,6 +6,7 @@ import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 
+import com.mahjongmanager.riichi.components.HandDisplay;
 import com.mahjongmanager.riichi.handcalculator.HandCalculatorFragment_1Keyboard;
 import com.mahjongmanager.riichi.handcalculator.HandCalculatorFragment_2WinningTile;
 import com.mahjongmanager.riichi.handcalculator.HandCalculatorFragment_3OtherInfo;
@@ -216,7 +217,9 @@ public class MainActivity extends AppCompatActivity {
     public ImageCache getImageCache(){
         if(_imageCache==null){
             _imageCache = new ImageCache(this);
-            getUtils().populateImageCacheForHandDisplay(50);
+            _imageCache.clearCache();
+            getUtils().populateImageCacheForHandDisplay(HandDisplay.TILE_WIDTH);
+            getUtils().populateImageCacheForKeyboard(Utils.KEYBOARD_TILE_WIDTH);
         }
         return _imageCache;
     }
