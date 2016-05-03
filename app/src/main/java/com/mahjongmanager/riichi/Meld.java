@@ -266,7 +266,7 @@ public class Meld {
     }
     public Tile secondTile(){
         if( tiles.size()>1 ){
-            return tiles.get(0);
+            return tiles.get(1);
         }
         return null;
     }
