@@ -11,6 +11,12 @@ public class ImageCache {
     private static final int DEFAULT_MEM_CACHE_SIZE = 1024 * 5; // 5MB
     private LruCache<String, BitmapDrawable> mMemoryCache;
 
+    public static String HAND_DISPLAY_KEY = "HandDisplay ";
+    public static int HAND_DISPLAY_TILE_WIDTH = 50;
+
+    public static String KEYBOARD_KEY = "Keyboard ";
+    public static int KEYBOARD_TILE_WIDTH = 110;
+
     public ImageCache(MainActivity ma){
         activity = ma;
         init();
@@ -58,7 +64,19 @@ public class ImageCache {
             memValue = mMemoryCache.get(keyString);
         }
 
+        if( memValue==null && keyString.contains(KEYBOARD_KEY) ){
+            activity.getUtils().populateImageCacheForKeyboard();
+            memValue = mMemoryCache.get(keyString);
+        } else if( memValue==null && keyString.contains(HAND_DISPLAY_KEY) ){
+            activity.getUtils().populateImageCacheForHandDisplay();
+            memValue = mMemoryCache.get(keyString);
+        }
+
         return memValue;
+    }
+
+    public static int getTileHeight(int width){
+        return (int) ((double)width * Utils.TILE_RATIO);
     }
 
     public void clearCache() {

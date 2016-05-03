@@ -10,6 +10,7 @@ import android.graphics.drawable.LayerDrawable;
 import android.graphics.drawable.ShapeDrawable;
 import android.graphics.drawable.shapes.RoundRectShape;
 import android.graphics.drawable.shapes.Shape;
+import android.media.Image;
 import android.widget.ImageView;
 
 import com.mahjongmanager.riichi.MainActivity;
@@ -39,9 +40,6 @@ public class Utils {
     private int tilePadding = 8;
     private int tileCornerRadius = 8;
 
-    public static String KEYBOARD_KEY = "Keyboard ";
-    public static int KEYBOARD_TILE_WIDTH = 100;
-
     public enum SetState {
         CLOSEDSET, OPENCHII, OPENPON, OPENKAN, ADDEDKAN, CLOSEDKAN
     }
@@ -51,7 +49,7 @@ public class Utils {
             return null;
         }
 
-        String keyString = t.getImageCacheKey(HandDisplay.HAND_DISPLAY_KEY, rotated);
+        String keyString = t.getImageCacheKey(ImageCache.HAND_DISPLAY_KEY, rotated);
 
         Drawable dBmap = imageCache.getBitmapFromCache(keyString);
         LayerDrawable tileImage = getCombinedImage(dBmap, t.faceDown, rotated);
@@ -68,9 +66,9 @@ public class Utils {
             layers[0] = bmp;
             return new LayerDrawable(layers);
         }
-        String frontTileKey = HandDisplay.HAND_DISPLAY_KEY + "Front";
-        int width  = HandDisplay.TILE_WIDTH;
-        int height = HandDisplay.TILE_HEIGHT;
+        String frontTileKey = ImageCache.HAND_DISPLAY_KEY + "Front";
+        int width  = ImageCache.HAND_DISPLAY_TILE_WIDTH;
+        int height = ImageCache.getTileHeight(width);
         ShapeDrawable tileOutline = getTileOutline(width, height);
 
         if( isRotated ){
@@ -97,21 +95,21 @@ public class Utils {
         return new ShapeDrawable(tileOutline);
     }
 
-//    public BitmapDrawable getKeyboardTileImage(Tile t){}
-
     //////////////////////////////////////////////////////////////////////////
     ////////////////////     Populate ImageCache      ////////////////////////
     //////////////////////////////////////////////////////////////////////////
-    public void populateImageCacheForHandDisplay(int width){
+    public void populateImageCacheForHandDisplay(){
+        int width = ImageCache.HAND_DISPLAY_TILE_WIDTH;
+
         // First, do the normal (vertical) version of the tiles
         List<Tile> allTiles = getAllTilesWithImages();
         for(Tile t : allTiles){
             BitmapDrawable dBmap = getBitmapDrawableFromFile(t.getImageInt(), width, null, t.faceDown);
-            String keyString = t.getImageCacheKey(HandDisplay.HAND_DISPLAY_KEY);
+            String keyString = t.getImageCacheKey(ImageCache.HAND_DISPLAY_KEY);
             imageCache.addBitmapToCache(keyString, dBmap);
         }
         BitmapDrawable frontDBmap = getBitmapDrawableFromFile(R.drawable.front, width);
-        String frontKeyString = HandDisplay.HAND_DISPLAY_KEY + "Front";
+        String frontKeyString = ImageCache.HAND_DISPLAY_KEY + "Front";
         imageCache.addBitmapToCache(frontKeyString, frontDBmap);
 
         // Second, do a rotated version of all the tile images
@@ -119,22 +117,24 @@ public class Utils {
         matrix.postRotate(270);
         for(Tile t : allTiles){
             BitmapDrawable dBmap = getBitmapDrawableFromFile(t.getImageInt(), width, matrix, false);
-            String keyString = t.getImageCacheKey(HandDisplay.HAND_DISPLAY_KEY, true);
+            String keyString = t.getImageCacheKey(ImageCache.HAND_DISPLAY_KEY, true);
             imageCache.addBitmapToCache(keyString, dBmap);
         }
         BitmapDrawable rotatedFrontDBmap = getBitmapDrawableFromFile(R.drawable.front, width, matrix, false);
-        String rotatedFrontKeyString = HandDisplay.HAND_DISPLAY_KEY + "Front Rotated";
+        String rotatedFrontKeyString = ImageCache.HAND_DISPLAY_KEY + "Front Rotated";
         imageCache.addBitmapToCache(rotatedFrontKeyString, rotatedFrontDBmap);
     }
-    public void populateImageCacheForKeyboard(int width){
+    public void populateImageCacheForKeyboard(){
+        int width = ImageCache.KEYBOARD_TILE_WIDTH;
+
         List<Tile> allTiles = getAllTilesWithImages();
         for(Tile t : allTiles){
             BitmapDrawable dBmap = getBitmapDrawableFromFile(t.getImageInt(), width);
-            String keyString = t.getImageCacheKey(KEYBOARD_KEY);
+            String keyString = t.getImageCacheKey(ImageCache.KEYBOARD_KEY);
             imageCache.addBitmapToCache(keyString, dBmap);
         }
         BitmapDrawable frontDBmap = getBitmapDrawableFromFile(R.drawable.front, width);
-        String frontKeyString = KEYBOARD_KEY + "Front";
+        String frontKeyString = ImageCache.KEYBOARD_KEY + "Front";
         imageCache.addBitmapToCache(frontKeyString, frontDBmap);
     }
     private BitmapDrawable getBitmapDrawableFromFile(int imageInt, int width ){

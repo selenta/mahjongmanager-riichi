@@ -116,7 +116,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textAppearance="?android:attr/textAppearanceSmall"
-            android:text="v0.75"
+            android:text="v0.76"
             android:id="@+id/textView"
             android:layout_gravity="center_horizontal"
             android:longClickable="true"
@@ -154,13 +154,6 @@
             android:text="- Can hover over yaku for details"
             android:id="@+id/textView99"
             android:layout_gravity="left|center_horizontal" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textAppearance="?android:attr/textAppearanceSmall"
-            android:text="- Fix performance problems"
-            android:id="@+id/textView96" />
 
     </LinearLayout>
 

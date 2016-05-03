@@ -187,7 +187,7 @@ public class YakuListFragment extends Fragment {
         tv.setText(s);
         tv.setTextSize(22);
         tv.setTypeface(null, Typeface.BOLD);
-        tv.setPadding(50,15,0,5);
+        tv.setPadding(50,30,0,5);
         ll.addView(tv);
     }
 

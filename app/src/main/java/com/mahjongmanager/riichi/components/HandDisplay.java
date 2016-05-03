@@ -29,10 +29,6 @@ public class HandDisplay extends LinearLayout {
     private Hand hand;
     private Boolean includeWinningTile = true;
 
-    public static String HAND_DISPLAY_KEY = "HandDisplay ";
-    public static int TILE_WIDTH = 50;
-    public static int TILE_HEIGHT = (int) ((double)TILE_WIDTH * Utils.TILE_RATIO);
-
     /////////////////////////////////////////
     ///////////   Constructors   ////////////
     /////////////////////////////////////////

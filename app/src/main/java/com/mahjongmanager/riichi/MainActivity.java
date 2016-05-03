@@ -218,8 +218,7 @@ public class MainActivity extends AppCompatActivity {
         if(_imageCache==null){
             _imageCache = new ImageCache(this);
             _imageCache.clearCache();
-            getUtils().populateImageCacheForHandDisplay(HandDisplay.TILE_WIDTH);
-            getUtils().populateImageCacheForKeyboard(Utils.KEYBOARD_TILE_WIDTH);
+            getUtils().populateImageCacheForHandDisplay();
         }
         return _imageCache;
     }

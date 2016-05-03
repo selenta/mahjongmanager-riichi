@@ -1,11 +1,14 @@
 package com.mahjongmanager.riichi.handcalculator;
 
+import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageButton;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.mahjongmanager.riichi.Hand;
@@ -14,6 +17,8 @@ import com.mahjongmanager.riichi.MainActivity;
 import com.mahjongmanager.riichi.R;
 import com.mahjongmanager.riichi.ScoreCalculator;
 import com.mahjongmanager.riichi.Tile;
+import com.mahjongmanager.riichi.utils.ImageCache;
+import com.mahjongmanager.riichi.utils.Utils;
 
 import java.util.ArrayList;
 
@@ -29,15 +34,15 @@ public class HandCalculatorFragment_1Keyboard extends Fragment implements View.O
     private Button souzuButton;
     private Button honorsButton;
 
-    private Button phButton1;
-    private Button phButton2;
-    private Button phButton3;
-    private Button phButton4;
-    private Button phButton5;
-    private Button phButton6;
-    private Button phButton7;
-    private Button phButton8;
-    private Button phButton9;
+    private ImageButton phButton1;
+    private ImageButton phButton2;
+    private ImageButton phButton3;
+    private ImageButton phButton4;
+    private ImageButton phButton5;
+    private ImageButton phButton6;
+    private ImageButton phButton7;
+    private ImageButton phButton8;
+    private ImageButton phButton9;
 
     private Button clearHandButton;
 
@@ -196,21 +201,16 @@ public class HandCalculatorFragment_1Keyboard extends Fragment implements View.O
         }
     }
     private void setButtonsToNumbers(){
-        phButton1.setTextSize(20);
-        phButton1.setText("1");
-        phButton2.setTextSize(20);
-        phButton2.setText("2");
-        phButton3.setTextSize(20);
-        phButton3.setText("3");
-        phButton4.setTextSize(20);
-        phButton4.setText("4");
+        setButtonImage(phButton1, 1);
+        setButtonImage(phButton2, 2);
+        setButtonImage(phButton3, 3);
+        setButtonImage(phButton4, 4);
+        setButtonImage(phButton5, 5);
 
-        phButton6.setTextSize(20);
-        phButton6.setText("6");
-        phButton7.setTextSize(20);
-        phButton7.setText("7");
-        phButton8.setTextSize(20);
-        phButton8.setText("8");
+        setButtonImage(phButton6, 6);
+        setButtonImage(phButton7, 7);
+        setButtonImage(phButton8, 8);
+        setButtonImage(phButton9, 9);
 
         checkAllButtonEnablement();
 
@@ -218,26 +218,25 @@ public class HandCalculatorFragment_1Keyboard extends Fragment implements View.O
         phButton9.setVisibility(View.VISIBLE);
     }
     private void setButtonsToHonors(){
-        phButton1.setTextSize(16);
-        phButton1.setText("E");
-        phButton2.setTextSize(16);
-        phButton2.setText("S");
-        phButton3.setTextSize(16);
-        phButton3.setText("We");
-        phButton4.setTextSize(16);
-        phButton4.setText("N");
+        setButtonImage(phButton1, 1);
+        setButtonImage(phButton2, 2);
+        setButtonImage(phButton3, 3);
+        setButtonImage(phButton4, 4);
 
-        phButton6.setTextSize(16);
-        phButton6.setText("Wh");
-        phButton7.setTextSize(16);
-        phButton7.setText("G");
-        phButton8.setTextSize(16);
-        phButton8.setText("R");
+        setButtonImage(phButton6, 6);
+        setButtonImage(phButton7, 7);
+        setButtonImage(phButton8, 8);
 
         checkAllButtonEnablement();
 
         phButton5.setVisibility(View.GONE);
         phButton9.setVisibility(View.GONE);
+    }
+    private void setButtonImage(ImageButton b, int i){
+        Tile t = getTileForButton(i);
+        String cacheKey = t.getImageCacheKey(ImageCache.KEYBOARD_KEY);
+        BitmapDrawable tileDrawable = getImageCache().getBitmapFromCache(cacheKey);
+        b.setImageDrawable(tileDrawable);
     }
     private void checkAllButtonEnablement(){
         checkButtonEnablement(phButton1, 1);
@@ -250,7 +249,7 @@ public class HandCalculatorFragment_1Keyboard extends Fragment implements View.O
         checkButtonEnablement(phButton8, 8);
         checkButtonEnablement(phButton9, 9);
     }
-    private void checkButtonEnablement(Button b, int number){
+    private void checkButtonEnablement(ImageButton b, int number){
         b.setEnabled(!fragHand.containsMaxOfTile(getTileForButton(number)));
     }
     private Tile getTileForButton(int i){
@@ -291,26 +290,34 @@ public class HandCalculatorFragment_1Keyboard extends Fragment implements View.O
         honorsButton = (Button) myInflatedView.findViewById(R.id.honorsButton);
         honorsButton.setOnClickListener(this);
 
-        phButton1 = (Button) myInflatedView.findViewById(R.id.placeholderButton1);
+        phButton1 = (ImageButton) myInflatedView.findViewById(R.id.placeholderButton1);
         phButton1.setOnClickListener(this);
-        phButton2 = (Button) myInflatedView.findViewById(R.id.placeholderButton2);
+        phButton2 = (ImageButton) myInflatedView.findViewById(R.id.placeholderButton2);
         phButton2.setOnClickListener(this);
-        phButton3 = (Button) myInflatedView.findViewById(R.id.placeholderButton3);
+        phButton3 = (ImageButton) myInflatedView.findViewById(R.id.placeholderButton3);
         phButton3.setOnClickListener(this);
-        phButton4 = (Button) myInflatedView.findViewById(R.id.placeholderButton4);
+        phButton4 = (ImageButton) myInflatedView.findViewById(R.id.placeholderButton4);
         phButton4.setOnClickListener(this);
-        phButton5 = (Button) myInflatedView.findViewById(R.id.placeholderButton5);
+        phButton5 = (ImageButton) myInflatedView.findViewById(R.id.placeholderButton5);
         phButton5.setOnClickListener(this);
-        phButton6 = (Button) myInflatedView.findViewById(R.id.placeholderButton6);
+        phButton6 = (ImageButton) myInflatedView.findViewById(R.id.placeholderButton6);
         phButton6.setOnClickListener(this);
-        phButton7 = (Button) myInflatedView.findViewById(R.id.placeholderButton7);
+        phButton7 = (ImageButton) myInflatedView.findViewById(R.id.placeholderButton7);
         phButton7.setOnClickListener(this);
-        phButton8 = (Button) myInflatedView.findViewById(R.id.placeholderButton8);
+        phButton8 = (ImageButton) myInflatedView.findViewById(R.id.placeholderButton8);
         phButton8.setOnClickListener(this);
-        phButton9 = (Button) myInflatedView.findViewById(R.id.placeholderButton9);
+        phButton9 = (ImageButton) myInflatedView.findViewById(R.id.placeholderButton9);
         phButton9.setOnClickListener(this);
 
         clearHandButton = (Button) myInflatedView.findViewById(R.id.clearHandButton);
         clearHandButton.setOnClickListener(this);
+    }
+
+    ImageCache _imageCache;
+    private ImageCache getImageCache(){
+        if( _imageCache==null ){
+            _imageCache = ((MainActivity)getActivity()).getImageCache();
+        }
+        return _imageCache;
     }
 }
