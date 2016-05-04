@@ -832,7 +832,7 @@ public class ScoreCalculator {
         for( Tile t : leadTiles ){
             if( t.number.equals(leadTiles.get(0).number) ){
                 firstTile++;
-            } else if( t.number.equals(leadTiles.get(0).number) ){
+            } else if( t.number.equals(leadTiles.get(1).number) ){
                 secondTile++;
             }
         }
