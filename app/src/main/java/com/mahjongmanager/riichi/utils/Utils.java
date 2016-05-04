@@ -10,14 +10,12 @@ import android.graphics.drawable.LayerDrawable;
 import android.graphics.drawable.ShapeDrawable;
 import android.graphics.drawable.shapes.RoundRectShape;
 import android.graphics.drawable.shapes.Shape;
-import android.media.Image;
 import android.widget.ImageView;
 
 import com.mahjongmanager.riichi.MainActivity;
 import com.mahjongmanager.riichi.Meld;
 import com.mahjongmanager.riichi.R;
 import com.mahjongmanager.riichi.Tile;
-import com.mahjongmanager.riichi.components.HandDisplay;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -124,17 +122,15 @@ public class Utils {
         String rotatedFrontKeyString = ImageCache.HAND_DISPLAY_KEY + "Front Rotated";
         imageCache.addBitmapToCache(rotatedFrontKeyString, rotatedFrontDBmap);
     }
-    public void populateImageCacheForKeyboard(){
-        int width = ImageCache.KEYBOARD_TILE_WIDTH;
-
+    public void populateImageCacheForKeyboard(String keyboardKey, int width){
         List<Tile> allTiles = getAllTilesWithImages();
         for(Tile t : allTiles){
             BitmapDrawable dBmap = getBitmapDrawableFromFile(t.getImageInt(), width);
-            String keyString = t.getImageCacheKey(ImageCache.KEYBOARD_KEY);
+            String keyString = t.getImageCacheKey(keyboardKey);
             imageCache.addBitmapToCache(keyString, dBmap);
         }
         BitmapDrawable frontDBmap = getBitmapDrawableFromFile(R.drawable.front, width);
-        String frontKeyString = ImageCache.KEYBOARD_KEY + "Front";
+        String frontKeyString = keyboardKey + "Front";
         imageCache.addBitmapToCache(frontKeyString, frontDBmap);
     }
     private BitmapDrawable getBitmapDrawableFromFile(int imageInt, int width ){

@@ -3,247 +3,265 @@
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-
     <LinearLayout
-        android:orientation="horizontal"
+        android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:gravity="center"
-        android:measureWithLargestChild="false"
-        android:baselineAligned="false"
-        android:background="#cccccc"
-        android:padding="10dp">
+        android:id="@+id/smallTilesModeContainer"
+        android:background="#eeeeee">
 
-        <Button
-            style="?android:attr/buttonStyleSmall"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Manzu"
-            android:id="@+id/manzuButton"
-            android:onClick="setManzuSuit"
-            android:enabled="true"
-            android:backgroundTint="#f6f6f6"
-            android:layout_weight="1" />
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:measureWithLargestChild="false"
+            android:baselineAligned="false"
+            android:id="@+id/firstButtonContainer"
+            android:layout_marginTop="5dp">
 
-        <Button
-            style="?android:attr/buttonStyleSmall"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Pinzu"
-            android:id="@+id/pinzuButton"
-            android:onClick="setPinzuSuit"
-            android:enabled="true"
-            android:backgroundTint="#f6f6f6"
-            android:layout_weight="1" />
+        </LinearLayout>
 
-        <Button
-            style="?android:attr/buttonStyleSmall"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Souzu"
-            android:id="@+id/souzuButton"
-            android:onClick="setSouzuSuit"
-            android:enabled="true"
-            android:backgroundTint="#f6f6f6"
-            android:layout_weight="1" />
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:measureWithLargestChild="false"
+            android:baselineAligned="false"
+            android:id="@+id/secondButtonContainer">
 
-        <Button
-            style="?android:attr/buttonStyleSmall"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Honors"
-            android:id="@+id/honorsButton"
-            android:onClick="setHonorsSuit"
-            android:enabled="true"
-            android:backgroundTint="#f6f6f6"
-            android:layout_weight="1" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:measureWithLargestChild="false"
+            android:baselineAligned="false"
+            android:id="@+id/thirdButtonContainer" />
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:measureWithLargestChild="false"
+            android:baselineAligned="false"
+            android:id="@+id/fourthButtonContainer"
+            android:layout_marginBottom="5dp" />
     </LinearLayout>
-
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="3dp"
-        android:background="@android:color/darker_gray"/>
 
     <LinearLayout
         android:orientation="vertical"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:id="@+id/largeTilesModeContainer" >
 
         <LinearLayout
             android:orientation="horizontal"
             android:layout_width="match_parent"
-            android:layout_height="fill_parent"
+            android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:gravity="center"
             android:measureWithLargestChild="false"
             android:baselineAligned="false"
-            android:background="#eeeeee"
-            android:layout_weight="1"
-            android:id="@+id/firstButtonContainer"
-            android:paddingLeft="10dp"
-            android:paddingRight="10dp"
-            android:paddingTop="10dp">
+            android:background="#cccccc"
+            android:padding="10dp">
 
-            <ImageButton
+            <Button
                 style="?android:attr/buttonStyleSmall"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="1"
-                android:id="@+id/placeholderButton1"
+                android:text="Manzu"
+                android:id="@+id/manzuButton"
+                android:onClick="setManzuSuit"
                 android:enabled="true"
-                android:backgroundTint="#d6d7d7"
-                android:textSize="20sp"
-                android:minHeight="50dp"
-                android:minWidth="50dp" />
+                android:backgroundTint="#f6f6f6"
+                android:layout_weight="1" />
 
-            <ImageButton
+            <Button
                 style="?android:attr/buttonStyleSmall"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="2"
-                android:id="@+id/placeholderButton2"
+                android:text="Pinzu"
+                android:id="@+id/pinzuButton"
+                android:onClick="setPinzuSuit"
                 android:enabled="true"
-                android:backgroundTint="#d6d7d7"
-                android:textSize="20sp"
-                android:minHeight="50dp"
-                android:minWidth="50dp" />
+                android:backgroundTint="#f6f6f6"
+                android:layout_weight="1" />
 
-            <ImageButton
+            <Button
                 style="?android:attr/buttonStyleSmall"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="3"
-                android:id="@+id/placeholderButton3"
+                android:text="Souzu"
+                android:id="@+id/souzuButton"
+                android:onClick="setSouzuSuit"
                 android:enabled="true"
-                android:backgroundTint="#d6d7d7"
-                android:textSize="20sp"
-                android:minHeight="50dp"
-                android:minWidth="50dp" />
+                android:backgroundTint="#f6f6f6"
+                android:layout_weight="1" />
 
-            <ImageButton
+            <Button
                 style="?android:attr/buttonStyleSmall"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="4"
-                android:id="@+id/placeholderButton4"
+                android:text="Honors"
+                android:id="@+id/honorsButton"
+                android:onClick="setHonorsSuit"
                 android:enabled="true"
-                android:backgroundTint="#d6d7d7"
-                android:textSize="20sp"
-                android:minHeight="50dp"
-                android:minWidth="50dp" />
-
-            <ImageButton
-                style="?android:attr/buttonStyleSmall"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="5"
-                android:id="@+id/placeholderButton5"
-                android:enabled="true"
-                android:backgroundTint="#d6d7d7"
-                android:textSize="20sp"
-                android:minHeight="50dp"
-                android:minWidth="50dp" />
+                android:backgroundTint="#f6f6f6"
+                android:layout_weight="1" />
         </LinearLayout>
 
-        <LinearLayout
-            android:orientation="horizontal"
+        <View
             android:layout_width="match_parent"
-            android:layout_height="fill_parent"
-            android:layout_gravity="center"
-            android:gravity="center"
-            android:measureWithLargestChild="false"
-            android:baselineAligned="false"
-            android:background="#eeeeee"
-            android:layout_weight="1"
-            android:id="@+id/secondButtonContainer"
-            android:paddingLeft="10dp"
-            android:paddingRight="10dp"
-            android:paddingBottom="5dp">
-
-            <ImageButton
-                style="?android:attr/buttonStyleSmall"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="6"
-                android:id="@+id/placeholderButton6"
-                android:enabled="true"
-                android:backgroundTint="#d6d7d7"
-                android:textSize="20sp"
-                android:minHeight="50dp"
-                android:minWidth="50dp" />
-
-            <ImageButton
-                style="?android:attr/buttonStyleSmall"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="7"
-                android:id="@+id/placeholderButton7"
-                android:enabled="true"
-                android:backgroundTint="#d6d7d7"
-                android:textSize="20sp"
-                android:minHeight="50dp"
-                android:minWidth="50dp" />
-
-            <ImageButton
-                style="?android:attr/buttonStyleSmall"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="8"
-                android:id="@+id/placeholderButton8"
-                android:enabled="true"
-                android:backgroundTint="#d6d7d7"
-                android:textSize="20sp"
-                android:minHeight="50dp"
-                android:minWidth="50dp" />
-
-            <ImageButton
-                style="?android:attr/buttonStyleSmall"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="9"
-                android:id="@+id/placeholderButton9"
-                android:enabled="true"
-                android:backgroundTint="#d6d7d7"
-                android:textSize="20sp"
-                android:minHeight="50dp"
-                android:minWidth="50dp" />
-        </LinearLayout>
+            android:layout_height="3dp"
+            android:background="@android:color/darker_gray"/>
 
         <LinearLayout
-            android:orientation="horizontal"
+            android:orientation="vertical"
             android:layout_width="match_parent"
-            android:layout_height="fill_parent"
-            android:layout_gravity="center"
-            android:gravity="center"
-            android:measureWithLargestChild="false"
-            android:baselineAligned="false"
-            android:background="#eeeeee"
-            android:layout_weight="1"
-            android:id="@+id/thirdButtonContainer"
-            android:paddingLeft="10dp"
-            android:paddingRight="10dp"
-            android:paddingBottom="5dp"
-            android:visibility="gone">
+            android:layout_height="wrap_content">
 
-        </LinearLayout>
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_gravity="center"
+                android:gravity="center"
+                android:measureWithLargestChild="false"
+                android:baselineAligned="false"
+                android:background="#eeeeee"
+                android:paddingTop="5dp">
 
-        <LinearLayout
-            android:orientation="horizontal"
-            android:layout_width="match_parent"
-            android:layout_height="fill_parent"
-            android:layout_gravity="center"
-            android:gravity="center"
-            android:measureWithLargestChild="false"
-            android:baselineAligned="false"
-            android:background="#eeeeee"
-            android:layout_weight="1"
-            android:id="@+id/fourthButtonContainer"
-            android:paddingLeft="10dp"
-            android:paddingRight="10dp"
-            android:paddingBottom="5dp"
-            android:visibility="gone">
+                <ImageButton
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="1"
+                    android:id="@+id/placeholderButton1"
+                    android:enabled="true"
+                    android:backgroundTint="#d6d7d7"
+                    android:textSize="20sp"
+                    android:maxWidth="50dp"
+                    android:minHeight="50dp"
+                    style="?android:attr/buttonStyleSmall" />
+
+                <ImageButton
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="2"
+                    android:id="@+id/placeholderButton2"
+                    android:enabled="true"
+                    android:backgroundTint="#d6d7d7"
+                    android:textSize="20sp"
+                    android:maxWidth="50dp"
+                    android:minHeight="50dp"
+                    style="?android:attr/buttonStyleSmall" />
+
+                <ImageButton
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="3"
+                    android:id="@+id/placeholderButton3"
+                    android:enabled="true"
+                    android:backgroundTint="#d6d7d7"
+                    android:textSize="20sp"
+                    android:maxWidth="50dp"
+                    android:minHeight="50dp"
+                    style="?android:attr/buttonStyleSmall" />
+
+                <ImageButton
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="4"
+                    android:id="@+id/placeholderButton4"
+                    android:enabled="true"
+                    android:backgroundTint="#d6d7d7"
+                    android:textSize="20sp"
+                    android:maxWidth="50dp"
+                    android:minHeight="50dp"
+                    style="?android:attr/buttonStyleSmall" />
+
+                <ImageButton
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="5"
+                    android:id="@+id/placeholderButton5"
+                    android:enabled="true"
+                    android:backgroundTint="#d6d7d7"
+                    android:textSize="20sp"
+                    android:maxWidth="50dp"
+                    android:minHeight="50dp"
+                    style="?android:attr/buttonStyleSmall" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_gravity="center"
+                android:gravity="center"
+                android:measureWithLargestChild="false"
+                android:baselineAligned="false"
+                android:background="#eeeeee"
+                android:paddingBottom="5dp">
+
+                <ImageButton
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="6"
+                    android:id="@+id/placeholderButton6"
+                    android:enabled="true"
+                    android:backgroundTint="#d6d7d7"
+                    android:textSize="20sp"
+                    android:maxWidth="50dp"
+                    android:minHeight="50dp"
+                    style="?android:attr/buttonStyleSmall" />
+
+                <ImageButton
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="7"
+                    android:id="@+id/placeholderButton7"
+                    android:enabled="true"
+                    android:backgroundTint="#d6d7d7"
+                    android:textSize="20sp"
+                    android:maxWidth="50dp"
+                    android:minHeight="50dp"
+                    style="?android:attr/buttonStyleSmall" />
+
+                <ImageButton
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="8"
+                    android:id="@+id/placeholderButton8"
+                    android:enabled="true"
+                    android:backgroundTint="#d6d7d7"
+                    android:textSize="20sp"
+                    android:maxWidth="50dp"
+                    android:minHeight="50dp"
+                    style="?android:attr/buttonStyleSmall" />
+
+                <ImageButton
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="9"
+                    android:id="@+id/placeholderButton9"
+                    android:enabled="true"
+                    android:backgroundTint="#d6d7d7"
+                    android:textSize="20sp"
+                    android:maxWidth="50dp"
+                    android:minHeight="50dp"
+                    style="?android:attr/buttonStyleSmall" />
+            </LinearLayout>
 
         </LinearLayout>
     </LinearLayout>
+
 </LinearLayout>

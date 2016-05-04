@@ -20,7 +20,7 @@ public class OptionsFragment extends Fragment implements View.OnClickListener {
     private RadioGroup terminology;
 
     private String TERMINOLOGY = "Terminology";
-    private String TILE_KEYBOARD = "LargeUIKeyboard";
+    private String KEYBOARD_TILE_SIZE = "KeyboardSmallTiles";
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -34,7 +34,7 @@ public class OptionsFragment extends Fragment implements View.OnClickListener {
     }
     private void loadSavedSettings(){
         loadTerminology();
-        loadSetting(tileKeyboardCheckbox, TILE_KEYBOARD, false);
+        loadSetting(tileKeyboardCheckbox, KEYBOARD_TILE_SIZE, false);
     }
     private void loadSetting( CheckBox cBox, String settingName, boolean def ){
         SharedPreferences sharedPref = getActivity().getPreferences(Context.MODE_PRIVATE);
@@ -59,7 +59,7 @@ public class OptionsFragment extends Fragment implements View.OnClickListener {
     public void onClick(View v) {
         switch(v.getId()){
             case R.id.tileKeyboadCheckbox:
-                savePreferenceBoolean(tileKeyboardCheckbox.isChecked(), TILE_KEYBOARD);
+                savePreferenceBoolean(tileKeyboardCheckbox.isChecked(), KEYBOARD_TILE_SIZE);
                 break;
         }
     }

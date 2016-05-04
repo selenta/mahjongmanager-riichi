@@ -14,8 +14,11 @@ public class ImageCache {
     public static String HAND_DISPLAY_KEY = "HandDisplay ";
     public static int HAND_DISPLAY_TILE_WIDTH = 50;
 
-    public static String KEYBOARD_KEY = "Keyboard ";
-    public static int KEYBOARD_TILE_WIDTH = 110;
+    public static String KEYBOARD_KEY_LARGE = "KeyboardLarge ";
+    public static int KEYBOARD_TILE_WIDTH_LARGE = 110;
+
+    public static String KEYBOARD_KEY_SMALL = "KeyboardSmall ";
+    public static int KEYBOARD_TILE_WIDTH_SMALL = 70;
 
     public ImageCache(MainActivity ma){
         activity = ma;
@@ -64,11 +67,14 @@ public class ImageCache {
             memValue = mMemoryCache.get(keyString);
         }
 
-        if( memValue==null && keyString.contains(KEYBOARD_KEY) ){
-            activity.getUtils().populateImageCacheForKeyboard();
-            memValue = mMemoryCache.get(keyString);
-        } else if( memValue==null && keyString.contains(HAND_DISPLAY_KEY) ){
+        if( memValue==null && keyString.contains(HAND_DISPLAY_KEY) ){
             activity.getUtils().populateImageCacheForHandDisplay();
+            memValue = mMemoryCache.get(keyString);
+        } else if( memValue==null && keyString.contains(KEYBOARD_KEY_LARGE) ){
+            activity.getUtils().populateImageCacheForKeyboard(KEYBOARD_KEY_LARGE, KEYBOARD_TILE_WIDTH_LARGE);
+            memValue = mMemoryCache.get(keyString);
+        } else if( memValue==null && keyString.contains(KEYBOARD_KEY_SMALL) ){
+            activity.getUtils().populateImageCacheForKeyboard(KEYBOARD_KEY_SMALL, KEYBOARD_TILE_WIDTH_SMALL);
             memValue = mMemoryCache.get(keyString);
         }
 

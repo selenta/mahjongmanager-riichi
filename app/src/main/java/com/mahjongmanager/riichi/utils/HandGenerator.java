@@ -387,7 +387,7 @@ public class HandGenerator {
         primaryList.removeAll(markedForRemoval);
     }
 
-    private List<Tile> allTiles(){
+    public static List<Tile> allTiles(){
         List<Tile> tiles = new ArrayList<>();
         for(int i=1; i<10; i++){
             tiles.add(new Tile(i, "MANZU"));

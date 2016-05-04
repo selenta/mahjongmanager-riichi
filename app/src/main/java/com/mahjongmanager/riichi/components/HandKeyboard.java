@@ -10,6 +10,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
+import android.widget.Space;
 
 import com.mahjongmanager.riichi.Hand;
 import com.mahjongmanager.riichi.MainActivity;
@@ -17,9 +18,11 @@ import com.mahjongmanager.riichi.R;
 import com.mahjongmanager.riichi.ScoreCalculator;
 import com.mahjongmanager.riichi.Tile;
 import com.mahjongmanager.riichi.handcalculator.HandCalculatorFragment_1Keyboard;
+import com.mahjongmanager.riichi.utils.HandGenerator;
 import com.mahjongmanager.riichi.utils.ImageCache;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class HandKeyboard extends LinearLayout implements View.OnClickListener {
     Context context;
@@ -46,13 +49,20 @@ public class HandKeyboard extends LinearLayout implements View.OnClickListener {
     private ImageButton phButton8;
     private ImageButton phButton9;
 
+    private LinearLayout largeTilesModeContainer;
+    private LinearLayout smallTilesModeContainer;
+
     private LinearLayout firstButtonContainer;
     private LinearLayout secondButtonContainer;
     private LinearLayout thirdButtonContainer;
     private LinearLayout fourthButtonContainer;
 
-    private boolean isLargeKeyboardMode = false;
-    private String TILE_KEYBOARD = "LargeUIKeyboard";
+    private boolean isKeyboardSmallTilesMode = false;
+    private String KEYBOARD_TILE_SIZE = "KeyboardSmallTiles";
+    private int smallTilePadding = 10;
+    private int smallTileMargin  = 10;
+
+    private List<TileButton> buttonList = new ArrayList<>();
 
     /////////////////////////////////////////
     ///////////   Constructors   ////////////
@@ -73,8 +83,21 @@ public class HandKeyboard extends LinearLayout implements View.OnClickListener {
         inflater.inflate(R.layout.component_handkeyboard, this);
 
         registerUIElements();
-        setKeyboardSuit();
-        checkForLargeKeyboardMode();
+        checkKeyboardMode();
+    }
+    private void checkKeyboardMode(){
+        if(isInEditMode()){     // This is only here so that Android Studio will display component
+            return;
+        }
+        SharedPreferences sharedPref = ((MainActivity)context).getPreferences(Context.MODE_PRIVATE);
+        isKeyboardSmallTilesMode = sharedPref.getBoolean(KEYBOARD_TILE_SIZE, false);
+        if( isKeyboardSmallTilesMode ){
+            largeTilesModeContainer.setVisibility(GONE);
+            createSmallButtons();
+        } else {
+            smallTilesModeContainer.setVisibility(GONE);
+            setKeyboardSuit();
+        }
     }
 
     @Override
@@ -133,17 +156,21 @@ public class HandKeyboard extends LinearLayout implements View.OnClickListener {
                 checkButtonEnablement(phButton9, 9);
                 break;
         }
+        if( v.getClass()==ImageButton.class ){
+            TileButton smallButton = getButton((ImageButton)v);
+            if( smallButton!=null ){
+                addTile(new Tile(smallButton.tile));
+            }
+        }
     }
-    private void addTile( Integer numb ){
+    private void addTile( Tile tile ){
         Hand fragHand = getFragmentHand();
         if( fragHand.tiles.size()>=18 ){
-//            errorMessage.setText("Too many tiles: Impossible to create valid hand");
             return;
         }
 
-        Tile t = getTileForButton(numb);
-        if( !tileBreaksHand(t) ){
-            fragHand.addTile(t);
+        if( !tileBreaksHand(tile) ){
+            fragHand.addTile(tile);
             handDisplay.setHand(fragHand);
             ((HandCalculatorFragment_1Keyboard)fragment).checkNextEnablement(); // TODO whatever, clean later
         }
@@ -161,8 +188,11 @@ public class HandKeyboard extends LinearLayout implements View.OnClickListener {
         return false;
     }
 
+    ////////////////////////////////////////////
+    ///////////   Large Tile Mode   ////////////
+    ////////////////////////////////////////////
     private void setKeyboardSuit(){
-        if(isInEditMode()){     // This is only here so that Android Studio will display component
+        if(isInEditMode() || isKeyboardSmallTilesMode){     // This is only here so that Android Studio will display component
             return;
         }
 
@@ -221,16 +251,6 @@ public class HandKeyboard extends LinearLayout implements View.OnClickListener {
 
         checkAllButtonEnablement();
     }
-    private void checkForLargeKeyboardMode(){
-        if(isInEditMode()){     // This is only here so that Android Studio will display component
-            return;
-        }
-        SharedPreferences sharedPref = ((MainActivity)context).getPreferences(Context.MODE_PRIVATE);
-        isLargeKeyboardMode = sharedPref.getBoolean(TILE_KEYBOARD, false);
-        if( !isLargeKeyboardMode ){
-            return;
-        }
-    }
 
     public void checkAllButtonEnablement(){
         if(fragment==null){
@@ -248,6 +268,11 @@ public class HandKeyboard extends LinearLayout implements View.OnClickListener {
     }
     private void checkButtonEnablement(ImageButton b, int number){
         b.setEnabled(!getFragmentHand().containsMaxOfTile(getTileForButton(number)));
+    }
+
+    private void addTile( int number ){
+        Tile t = getTileForButton(number);
+        addTile(t);
     }
     private Tile getTileForButton(int i){
         if( currentSuit==Tile.Suit.HONOR ){
@@ -272,11 +297,94 @@ public class HandKeyboard extends LinearLayout implements View.OnClickListener {
     }
     private void setButtonImage(ImageButton b, int i){
         Tile t = getTileForButton(i);
-        String cacheKey = t.getImageCacheKey(ImageCache.KEYBOARD_KEY);
+        String cacheKey = t.getImageCacheKey(ImageCache.KEYBOARD_KEY_LARGE);
         BitmapDrawable tileDrawable = getImageCache().getBitmapFromCache(cacheKey);
         b.setImageDrawable(tileDrawable);
     }
 
+    ////////////////////////////////////////////
+    ///////////   Small Tile Mode   ////////////
+    ////////////////////////////////////////////
+    private void createSmallButtons(){
+        List<Tile> tiles = HandGenerator.allTiles();
+        for(Tile t : tiles){
+            TileButton tileButton = new TileButton(t);
+            tileButton.button.setOnClickListener(this);
+            buttonList.add(tileButton);
+            addSmallButtonToLayout(tileButton);
+        }
+    }
+    private void addSmallButtonToLayout(TileButton tileButton){
+        switch(tileButton.suit){
+            case "MANZU":
+                firstButtonContainer.addView(tileButton.button);
+                break;
+            case "PINZU":
+                secondButtonContainer.addView(tileButton.button);
+                break;
+            case "SOUZU":
+                thirdButtonContainer.addView(tileButton.button);
+                break;
+            case "HONOR":
+                ImageButton honorButton = tileButton.button;
+                fourthButtonContainer.addView(honorButton);
+                if( tileButton.tile.toString().equals("North") ){
+                    int spacerSize = ImageCache.KEYBOARD_TILE_WIDTH_SMALL + 2*smallTileMargin + 2*smallTilePadding;
+                    Space spacer = new Space(context);
+                    spacer.setMinimumWidth(spacerSize);
+                    fourthButtonContainer.addView(spacer);
+                }
+                break;
+        }
+    }
+
+    class TileButton {
+        public String value;
+        public String suit;
+        public Tile tile;
+        public ImageButton button;
+
+        public TileButton(Tile t){
+            tile = t;
+            value = tile.value;
+            suit = tile.suit.toString();
+            createButtonWithImage();
+        }
+
+        private void createButtonWithImage(){
+            button = new ImageButton(context);
+            button.setBackgroundColor(0xFFD6D7D7);
+
+            button.setPadding(smallTilePadding,smallTilePadding,smallTilePadding,smallTilePadding);
+            LayoutParams params = new LayoutParams(LayoutParams.WRAP_CONTENT,LayoutParams.WRAP_CONTENT);
+            params.setMargins(smallTileMargin,smallTileMargin,smallTileMargin,smallTileMargin);
+            button.setLayoutParams(params);
+
+            String cacheKey = tile.getImageCacheKey(ImageCache.KEYBOARD_KEY_SMALL);
+            BitmapDrawable tileDrawable = getImageCache().getBitmapFromCache(cacheKey);
+            button.setImageDrawable(tileDrawable);
+        }
+    }
+    private TileButton getButton(String v, String s){
+        for( TileButton tb : buttonList ){
+            if( tb.suit.equals(s) && tb.value.equals(v) ){
+                return tb;
+            }
+        }
+        return null;
+    }
+    private TileButton getButton(ImageButton button){
+        for( TileButton tb : buttonList ){
+            if( tb.button==button ){
+                return tb;
+            }
+        }
+        return null;
+    }
+
+    ////////////////////////////////////////////////////
+    /////////////////      Other      //////////////////
+    ////////////////////////////////////////////////////
     public void setValidCurrentHand(boolean b){
         validCurrentHand = b;
     }
@@ -317,10 +425,13 @@ public class HandKeyboard extends LinearLayout implements View.OnClickListener {
         phButton9 = (ImageButton) findViewById(R.id.placeholderButton9);
         phButton9.setOnClickListener(this);
 
-//        firstButtonContainer  = (LinearLayout) findViewById(R.id.firstButtonContainer);
-//        secondButtonContainer = (LinearLayout) findViewById(R.id.secondButtonContainer);
-//        thirdButtonContainer  = (LinearLayout) findViewById(R.id.thirdButtonContainer);
-//        fourthButtonContainer = (LinearLayout) findViewById(R.id.fourthButtonContainer);
+        largeTilesModeContainer  = (LinearLayout) findViewById(R.id.largeTilesModeContainer);
+        smallTilesModeContainer  = (LinearLayout) findViewById(R.id.smallTilesModeContainer);
+
+        firstButtonContainer  = (LinearLayout) findViewById(R.id.firstButtonContainer);
+        secondButtonContainer = (LinearLayout) findViewById(R.id.secondButtonContainer);
+        thirdButtonContainer  = (LinearLayout) findViewById(R.id.thirdButtonContainer);
+        fourthButtonContainer = (LinearLayout) findViewById(R.id.fourthButtonContainer);
     }
     public void initialize(Fragment f, HandDisplay hd){
         fragment = f;
