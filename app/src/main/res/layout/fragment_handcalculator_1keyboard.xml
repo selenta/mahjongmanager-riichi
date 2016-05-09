@@ -43,7 +43,8 @@
             android:id="@+id/errorMessageLabel"
             android:textStyle="bold|italic"
             android:textColor="#ff0000"
-            android:layout_gravity="center_horizontal" />
+            android:layout_gravity="center_horizontal"
+            android:textAlignment="center" />
 
         <com.mahjongmanager.riichi.components.HandDisplay
             android:layout_width="match_parent"

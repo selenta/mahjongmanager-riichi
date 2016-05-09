@@ -4,6 +4,66 @@
     android:layout_height="match_parent">
 
     <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:gravity="center"
+        android:measureWithLargestChild="false"
+        android:baselineAligned="false"
+        android:background="#cccccc"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp">
+
+        <CheckBox
+            android:layout_width="wrap_content"
+            android:layout_height="fill_parent"
+            android:text="Add Open Melds"
+            android:id="@+id/openMeldsCheckbox"
+            android:checked="false"
+            android:textSize="18dp"
+            android:paddingRight="5dp" />
+
+        <Button
+            style="?android:attr/buttonStyleSmall"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Chii"
+            android:id="@+id/openChii"
+            android:onClick="setOpenChii"
+            android:enabled="false"
+            android:backgroundTint="#f6f6f6"
+            android:layout_weight="1" />
+
+        <Button
+            style="?android:attr/buttonStyleSmall"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Pon"
+            android:id="@+id/openPon"
+            android:onClick="setOpenPon"
+            android:enabled="false"
+            android:backgroundTint="#f6f6f6"
+            android:layout_weight="1" />
+
+        <Button
+            style="?android:attr/buttonStyleSmall"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Kan"
+            android:id="@+id/openKan"
+            android:onClick="setOpenKan"
+            android:enabled="false"
+            android:backgroundTint="#f6f6f6"
+            android:layout_weight="1" />
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="3dp"
+        android:background="@android:color/darker_gray"/>
+
+    <LinearLayout
         android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -72,7 +132,8 @@
             android:measureWithLargestChild="false"
             android:baselineAligned="false"
             android:background="#cccccc"
-            android:padding="10dp">
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp">
 
             <Button
                 style="?android:attr/buttonStyleSmall"

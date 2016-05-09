@@ -8,6 +8,7 @@ import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.Space;
@@ -22,6 +23,7 @@ import com.mahjongmanager.riichi.utils.HandGenerator;
 import com.mahjongmanager.riichi.utils.ImageCache;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public class HandKeyboard extends LinearLayout implements View.OnClickListener {
@@ -33,6 +35,11 @@ public class HandKeyboard extends LinearLayout implements View.OnClickListener {
     private boolean validCurrentHand = false;
 
     private Tile.Suit currentSuit = Tile.Suit.MANZU;
+
+    private CheckBox openMeldsCheckbox;
+    private Button openChiiButton;
+    private Button openPonButton;
+    private Button openKanButton;
 
     private Button manzuButton;
     private Button pinzuButton;
@@ -57,16 +64,21 @@ public class HandKeyboard extends LinearLayout implements View.OnClickListener {
     private LinearLayout thirdButtonContainer;
     private LinearLayout fourthButtonContainer;
 
+    private enum OpenTileMode {
+        NONE, OPEN_CHII, OPEN_PON, OPEN_KAN
+    }
+    private OpenTileMode openTileMode = OpenTileMode.NONE;
     private boolean isKeyboardSmallTilesMode = false;
-    private String KEYBOARD_TILE_SIZE = "KeyboardSmallTiles";
+
+    private String KEYBOARD_TILE_SIZE_SETTING = "KeyboardSmallTiles";
     private int smallTilePadding = 10;
     private int smallTileMargin  = 10;
 
     private List<TileButton> buttonList = new ArrayList<>();
 
-    /////////////////////////////////////////
-    ///////////   Constructors   ////////////
-    /////////////////////////////////////////
+    ///////////////////////////////////////////////////
+    ////////////////   Constructors   /////////////////
+    ///////////////////////////////////////////////////
     public HandKeyboard(Context ctx){
         this(ctx, null);
     }
@@ -90,7 +102,7 @@ public class HandKeyboard extends LinearLayout implements View.OnClickListener {
             return;
         }
         SharedPreferences sharedPref = ((MainActivity)context).getPreferences(Context.MODE_PRIVATE);
-        isKeyboardSmallTilesMode = sharedPref.getBoolean(KEYBOARD_TILE_SIZE, false);
+        isKeyboardSmallTilesMode = sharedPref.getBoolean(KEYBOARD_TILE_SIZE_SETTING, false);
         if( isKeyboardSmallTilesMode ){
             largeTilesModeContainer.setVisibility(GONE);
             createSmallButtons();
@@ -103,6 +115,23 @@ public class HandKeyboard extends LinearLayout implements View.OnClickListener {
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
+            case R.id.openMeldsCheckbox:
+                boolean isChecked = openMeldsCheckbox.isChecked();
+                openTileMode = (isChecked) ? OpenTileMode.OPEN_CHII : OpenTileMode.NONE;
+                setOpenTileMode();
+                break;
+            case R.id.openChii:
+                openTileMode = OpenTileMode.OPEN_CHII;
+                setOpenTileMode();
+                break;
+            case R.id.openPon:
+                openTileMode = OpenTileMode.OPEN_PON;
+                setOpenTileMode();
+                break;
+            case R.id.openKan:
+                openTileMode = OpenTileMode.OPEN_KAN;
+                setOpenTileMode();
+                break;
             case R.id.manzuButton:
                 currentSuit = Tile.Suit.MANZU;
                 setKeyboardSuit();
@@ -163,9 +192,51 @@ public class HandKeyboard extends LinearLayout implements View.OnClickListener {
             }
         }
     }
+    private void setOpenTileMode(){
+        openChiiButton.setEnabled(false);
+        openPonButton.setEnabled(false);
+        openKanButton.setEnabled(false);
+        switch (openTileMode){
+            case OPEN_CHII:
+                openPonButton.setEnabled(true);
+                openKanButton.setEnabled(true);
+                break;
+            case OPEN_PON:
+                openChiiButton.setEnabled(true);
+                openKanButton.setEnabled(true);
+                break;
+            case OPEN_KAN:
+                openChiiButton.setEnabled(true);
+                openPonButton.setEnabled(true);
+                break;
+        }
+
+        if( isKeyboardSmallTilesMode ){
+            setOpenTileEnablementSmall();
+        } else {
+            setOpenTileEnablementLarge();
+        }
+    }
     private void addTile( Tile tile ){
+        switch (openTileMode){
+            case NONE:
+                addTileSingle(tile);
+                break;
+            case OPEN_CHII:
+                addOpenChii(tile);
+                break;
+            case OPEN_PON:
+                addOpenPon(tile);
+                break;
+            case OPEN_KAN:
+                addOpenKan(tile);
+                break;
+        }
+    }
+    private void addTileSingle(Tile tile){
         Hand fragHand = getFragmentHand();
         if( fragHand.tiles.size()>=18 ){
+            setErrorMessage("Hand is too large to add an additional tile.");
             return;
         }
 
@@ -173,6 +244,8 @@ public class HandKeyboard extends LinearLayout implements View.OnClickListener {
             fragHand.addTile(tile);
             handDisplay.setHand(fragHand);
             ((HandCalculatorFragment_1Keyboard)fragment).checkNextEnablement(); // TODO whatever, clean later
+        } else {
+            setErrorMessage("Adding an additional "+tile.toString()+" tile would break this hand.");
         }
     }
     private boolean tileBreaksHand(Tile t){
@@ -187,10 +260,89 @@ public class HandKeyboard extends LinearLayout implements View.OnClickListener {
         }
         return false;
     }
+    private void addOpenChii(Tile tile){
+        if( getFragmentHand().tiles.size() > 15 ){
+            setErrorMessage("Hand is too large to add an additional open chii.");
+            return;
+        } else if( tile.suit==Tile.Suit.HONOR ){
+            setErrorMessage("Can't add a chii of honors, not sure what to do.");
+            return;
+        }
 
-    ////////////////////////////////////////////
-    ///////////   Large Tile Mode   ////////////
-    ////////////////////////////////////////////
+        Tile secondTile = new Tile(tile.number + 1, tile.suit.toString());
+        Tile thirdTile = new Tile(tile.number + 2, tile.suit.toString());
+
+        tile.calledFrom = Tile.CalledFrom.LEFT;
+        tile.revealedState = secondTile.revealedState = thirdTile.revealedState = Tile.RevealedState.CHI;
+
+        addTiles(Arrays.asList(tile, secondTile, thirdTile));
+    }
+    private void addOpenPon(Tile tile){
+        if( getFragmentHand().tiles.size() > 15 ){
+            setErrorMessage("Hand is too large to add an additional open pon.");
+            return;
+        }
+
+        Tile secondTile = new Tile(tile);
+        Tile thirdTile = new Tile(tile);
+
+        secondTile.calledFrom = Tile.CalledFrom.CENTER;
+        tile.revealedState = secondTile.revealedState = thirdTile.revealedState = Tile.RevealedState.PON;
+
+        addTiles(Arrays.asList(tile, secondTile, thirdTile));
+    }
+    private void addOpenKan(Tile tile){
+        if( getFragmentHand().tiles.size() > 14 ){
+            setErrorMessage("Hand is too large to add an additional open kan.");
+            return;
+        }
+
+        Tile secondTile = new Tile(tile);
+        Tile thirdTile  = new Tile(tile);
+        Tile fourthTile = new Tile(tile);
+
+        secondTile.calledFrom = Tile.CalledFrom.CENTER;
+        tile.revealedState = secondTile.revealedState = thirdTile.revealedState = fourthTile.revealedState = Tile.RevealedState.OPENKAN;
+
+        addTiles(Arrays.asList(tile, secondTile, thirdTile, fourthTile));
+    }
+    private void addTiles(List<Tile> tiles){
+        Hand fragHand = getFragmentHand();
+
+        if( !tilesBreakHand(tiles) ){
+            for(Tile t : tiles){
+                fragHand.addTile(t);
+            }
+            handDisplay.setHand(fragHand);
+            ((HandCalculatorFragment_1Keyboard)fragment).checkNextEnablement(); // TODO whatever, clean later
+        }
+    }
+    private boolean tilesBreakHand(List<Tile> tiles){
+        Hand testHand = new Hand(getFragmentHand());
+        for(Tile t : tiles){
+            boolean addResult = testHand.addTile(t);
+            if( !addResult ){
+                setErrorMessage("Tile could not be added to hand, contains too many: "+t.toString());
+                return true;
+            }
+        }
+        return false;
+    }
+
+    //////////////////////////////////////////////////////
+    ////////////////   Large Tile Mode   /////////////////
+    //////////////////////////////////////////////////////
+    private void setOpenTileEnablementLarge(){
+        if( openTileMode==OpenTileMode.OPEN_CHII && currentSuit!=Tile.Suit.HONOR){
+            phButton8.setVisibility(INVISIBLE);
+            phButton9.setVisibility(INVISIBLE);
+        } else if( currentSuit==Tile.Suit.HONOR ){
+            phButton8.setVisibility(VISIBLE);
+        } else {
+            phButton8.setVisibility(VISIBLE);
+            phButton9.setVisibility(VISIBLE);
+        }
+    }
     private void setKeyboardSuit(){
         if(isInEditMode() || isKeyboardSmallTilesMode){     // This is only here so that Android Studio will display component
             return;
@@ -220,8 +372,9 @@ public class HandKeyboard extends LinearLayout implements View.OnClickListener {
         }
     }
     private void setButtonsToNumbers(){
-        phButton5.setVisibility(View.VISIBLE);
-        phButton9.setVisibility(View.VISIBLE);
+        phButton5.setVisibility(VISIBLE);
+        phButton9.setVisibility(VISIBLE);
+        setOpenTileEnablementLarge();
 
         setButtonImage(phButton1, 1);
         setButtonImage(phButton2, 2);
@@ -237,8 +390,9 @@ public class HandKeyboard extends LinearLayout implements View.OnClickListener {
         checkAllButtonEnablement();
     }
     private void setButtonsToHonors(){
-        phButton5.setVisibility(View.GONE);
-        phButton9.setVisibility(View.GONE);
+        phButton5.setVisibility(GONE);
+        phButton9.setVisibility(GONE);
+        setOpenTileEnablementLarge();
 
         setButtonImage(phButton1, 1);
         setButtonImage(phButton2, 2);
@@ -302,9 +456,20 @@ public class HandKeyboard extends LinearLayout implements View.OnClickListener {
         b.setImageDrawable(tileDrawable);
     }
 
-    ////////////////////////////////////////////
-    ///////////   Small Tile Mode   ////////////
-    ////////////////////////////////////////////
+    //////////////////////////////////////////////////////
+    ////////////////   Small Tile Mode   /////////////////
+    //////////////////////////////////////////////////////
+    private void setOpenTileEnablementSmall(){
+        for(TileButton tb : buttonList){
+            if( tb.tile.suit!=Tile.Suit.HONOR && (tb.tile.number==8 || tb.tile.number==9) ){
+                if( openTileMode==OpenTileMode.OPEN_CHII ){
+                    tb.button.setVisibility(INVISIBLE);
+                } else {
+                    tb.button.setVisibility(VISIBLE);
+                }
+            }
+        }
+    }
     private void createSmallButtons(){
         List<Tile> tiles = HandGenerator.allTiles();
         for(Tile t : tiles){
@@ -385,6 +550,10 @@ public class HandKeyboard extends LinearLayout implements View.OnClickListener {
     ////////////////////////////////////////////////////
     /////////////////      Other      //////////////////
     ////////////////////////////////////////////////////
+    private void setErrorMessage(String s){
+        ((HandCalculatorFragment_1Keyboard)fragment).setErrorMessage(s);
+    }
+
     public void setValidCurrentHand(boolean b){
         validCurrentHand = b;
     }
@@ -397,6 +566,15 @@ public class HandKeyboard extends LinearLayout implements View.OnClickListener {
     }
 
     private void registerUIElements(){
+        openMeldsCheckbox = (CheckBox) findViewById(R.id.openMeldsCheckbox);
+        openMeldsCheckbox.setOnClickListener(this);
+        openChiiButton = (Button) findViewById(R.id.openChii);
+        openChiiButton.setOnClickListener(this);
+        openPonButton = (Button) findViewById(R.id.openPon);
+        openPonButton.setOnClickListener(this);
+        openKanButton = (Button) findViewById(R.id.openKan);
+        openKanButton.setOnClickListener(this);
+
         manzuButton = (Button) findViewById(R.id.manzuButton);
         manzuButton.setOnClickListener(this);
         pinzuButton = (Button) findViewById(R.id.pinzuButton);

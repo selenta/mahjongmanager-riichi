@@ -68,6 +68,10 @@ public class HandCalculatorFragment_1Keyboard extends Fragment implements View.O
         }
     }
 
+    public void setErrorMessage(String s){
+        errorMessage.setText(s);
+    }
+
     public Hand getHand(){
         return fragHand;
     }

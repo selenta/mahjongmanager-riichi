@@ -99,7 +99,7 @@ public class HandCalculatorFragment_2WinningTile extends Fragment implements Vie
     private void setWinningTileOptions(){
         HashSet<String> uniqueTiles = new HashSet<String>();
         for( Tile t : actHand.tiles ){
-            if( !isDefinitivelyKanTile(actHand, t) ){
+            if( !isDefinitivelyKanTile(actHand, t) && t.revealedState==Tile.RevealedState.NONE ){
                 uniqueTiles.add(t.toString());
             }
         }

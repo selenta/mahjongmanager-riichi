@@ -91,7 +91,7 @@
         <Button
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:text="Yaku Descriptions and Info"
+            android:text="Yaku Descriptions"
             android:id="@+id/button7"
             android:enabled="true"
             android:onClick="goToYakuList" />
@@ -116,7 +116,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textAppearance="?android:attr/textAppearanceSmall"
-            android:text="v0.76"
+            android:text="v0.79"
             android:id="@+id/textView"
             android:layout_gravity="center_horizontal"
             android:longClickable="true"
@@ -135,14 +135,6 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textAppearance="?android:attr/textAppearanceSmall"
-            android:text="- TileKeyboard config: by suit, or all at once"
-            android:id="@+id/textView97"
-            android:layout_gravity="left|center_horizontal" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textAppearance="?android:attr/textAppearanceSmall"
             android:text="- Make HandDisplay interactable"
             android:id="@+id/textView98"
             android:layout_gravity="left|center_horizontal" />
@@ -153,6 +145,22 @@
             android:textAppearance="?android:attr/textAppearanceSmall"
             android:text="- Can hover over yaku for details"
             android:id="@+id/textView99"
+            android:layout_gravity="left|center_horizontal" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:text="- Banner Ads"
+            android:id="@+id/textView97"
+            android:layout_gravity="left|center_horizontal" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:text="- Finish Glossary/i18n (v1.2?)"
+            android:id="@+id/textView96"
             android:layout_gravity="left|center_horizontal" />
 
     </LinearLayout>

@@ -194,7 +194,7 @@ public class YakuListFragment extends Fragment {
     private void initializeDropdown(){
         List<String> viewOptions = new ArrayList<>();
         viewOptions.add(YAKU_LIST_BY_PATTERN);
-        viewOptions.add(YAKU_LIST_BY_HAN);
+//        viewOptions.add(YAKU_LIST_BY_HAN);
         viewOptions.add(YAKU_BY_FREQUENCY_LABEL);
         viewOptions.add(YAKU_BY_AVERAGE_HAN);
 //        viewOptions.add(YAKU_COMBINATORICS);
