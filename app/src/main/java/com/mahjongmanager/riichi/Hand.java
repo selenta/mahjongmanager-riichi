@@ -232,12 +232,14 @@ public class Hand {
             return false;
         }
 
-        if( unsortedTiles.size()==0 && tiles.size()>0 ){
-            tiles.add(t);
-        } else {
-            tiles.add(t);
+        if( !pair.getTiles().contains(t)
+                && !meld1.getTiles().contains(t)
+                && !meld2.getTiles().contains(t)
+                && !meld3.getTiles().contains(t)
+                && !meld4.getTiles().contains(t) ){
             unsortedTiles.add(t);
         }
+        tiles.add(t);
         sort();
         return true;
     }
@@ -398,12 +400,7 @@ public class Hand {
         return false;
     }
     public boolean containsMaxOfTile( Tile tilePrime ){
-        int tileCount = 0;
-        for( Tile t : tiles ){
-            if( t.toString().equals(tilePrime.toString()) ){
-                tileCount++;
-            }
-        }
+        int tileCount = countTile(tilePrime);
         return (tileCount>=4);
     }
     public List<Tile> getAllUsedTiles(){

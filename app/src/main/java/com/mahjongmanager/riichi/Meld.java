@@ -315,7 +315,10 @@ public class Meld {
     }
     public String toString(){ return tiles.toString(); }
     public String toStringVerbose(){
-        String s = tiles.toString()+" "+getNonCalledRevealedState().toString();
+        String s = tiles.toString();
+        if( getNonCalledRevealedState()!=null ){
+            s = s+" "+getNonCalledRevealedState().toString();
+        }
         if( getCalledTile()!=null ){
             s = s+" "+getCalledTile().calledFrom.toString();
         }

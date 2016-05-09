@@ -513,7 +513,10 @@ public class ScoreCalculator {
         }
 
         // (6) Set fu for open pinfu
-        //      TODO Handle open pinfu here?
+        if( h.fuList.size()==1 && !h.pinfu ){
+            h.fuList.put( "Open Pinfu", 10);
+            fu += 10;
+        }
 
         h.fu = fu;
     }

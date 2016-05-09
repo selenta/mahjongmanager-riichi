@@ -55,6 +55,9 @@ public class HandCalculatorFragment_4ScoreScreen extends Fragment {
         updateRevealedStatus(sortedHand);
         ScoreCalculator sc = new ScoreCalculator(sortedHand);
         Hand sh = sc.validatedHand;
+        if(sh==null){
+            return;
+        }
         actHand = sh;
 
         Integer roundedFu = (sh.fu==25) ? 25 : (int) Math.ceil(sh.fu/10.0)*10;

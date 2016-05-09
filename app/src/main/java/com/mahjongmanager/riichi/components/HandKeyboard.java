@@ -311,8 +311,9 @@ public class HandKeyboard extends LinearLayout implements View.OnClickListener {
 
         if( !tilesBreakHand(tiles) ){
             for(Tile t : tiles){
-                fragHand.addTile(t);
+                fragHand.tiles.add(t);
             }
+            fragHand.setSet(tiles);
             handDisplay.setHand(fragHand);
             ((HandCalculatorFragment_1Keyboard)fragment).checkNextEnablement(); // TODO whatever, clean later
         }
@@ -325,6 +326,10 @@ public class HandKeyboard extends LinearLayout implements View.OnClickListener {
                 setErrorMessage("Tile could not be added to hand, contains too many: "+t.toString());
                 return true;
             }
+        }
+        if( testHand.emptyMeldCount()==0 ){
+            setErrorMessage("No empty melds!");
+            return true;
         }
         return false;
     }

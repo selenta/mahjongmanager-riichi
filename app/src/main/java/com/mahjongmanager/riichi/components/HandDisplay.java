@@ -92,8 +92,29 @@ public class HandDisplay extends LinearLayout {
         closedTilesContainer.removeAllViews();
         openTilesContainer.removeAllViews();
         winningTileContainer.removeAllViews();
+
+        List<Tile> usedTiles = new ArrayList<>();
+        if( hand.meld1.size()!=0 ){
+            addSetComplex(hand.meld1);
+            usedTiles.addAll(hand.meld1.getTiles());
+        }
+        if( hand.meld2.size()!=0 ){
+            addSetComplex(hand.meld2);
+            usedTiles.addAll(hand.meld2.getTiles());
+        }
+        if( hand.meld3.size()!=0 ){
+            addSetComplex(hand.meld3);
+            usedTiles.addAll(hand.meld3.getTiles());
+        }
+        if( hand.meld4.size()!=0 ){
+            addSetComplex(hand.meld4);
+            usedTiles.addAll(hand.meld4.getTiles());
+        }
+
         for( Tile t : hand.tiles ){
-            addTileClosed(t);
+            if( !usedTiles.contains(t) ){
+                addTileClosed(t);
+            }
         }
     }
     /**
