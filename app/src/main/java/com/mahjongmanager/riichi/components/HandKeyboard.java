@@ -193,21 +193,28 @@ public class HandKeyboard extends LinearLayout implements View.OnClickListener {
         }
     }
     private void setOpenTileMode(){
-        openChiiButton.setEnabled(false);
-        openPonButton.setEnabled(false);
-        openKanButton.setEnabled(false);
+        if( openTileMode==OpenTileMode.NONE ){
+            openChiiButton.setVisibility(INVISIBLE);
+            openPonButton.setVisibility(INVISIBLE);
+            openKanButton.setVisibility(INVISIBLE);
+        } else {
+            openChiiButton.setVisibility(VISIBLE);
+            openPonButton.setVisibility(VISIBLE);
+            openKanButton.setVisibility(VISIBLE);
+        }
+
+        openChiiButton.setEnabled(true);
+        openPonButton.setEnabled(true);
+        openKanButton.setEnabled(true);
         switch (openTileMode){
             case OPEN_CHII:
-                openPonButton.setEnabled(true);
-                openKanButton.setEnabled(true);
+                openChiiButton.setEnabled(false);
                 break;
             case OPEN_PON:
-                openChiiButton.setEnabled(true);
-                openKanButton.setEnabled(true);
+                openPonButton.setEnabled(false);
                 break;
             case OPEN_KAN:
-                openChiiButton.setEnabled(true);
-                openPonButton.setEnabled(true);
+                openKanButton.setEnabled(false);
                 break;
         }
 
