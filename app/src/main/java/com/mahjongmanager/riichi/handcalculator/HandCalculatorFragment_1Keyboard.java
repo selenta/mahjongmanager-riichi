@@ -6,13 +6,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.TextView;
 
 import com.mahjongmanager.riichi.Hand;
-import com.mahjongmanager.riichi.components.HandDisplay;
 import com.mahjongmanager.riichi.MainActivity;
 import com.mahjongmanager.riichi.R;
-import com.mahjongmanager.riichi.ScoreCalculator;
 import com.mahjongmanager.riichi.Tile;
 import com.mahjongmanager.riichi.components.HandKeyboard;
 
@@ -21,8 +18,6 @@ import java.util.ArrayList;
 public class HandCalculatorFragment_1Keyboard extends Fragment implements View.OnClickListener {
     private Hand fragHand;
 
-    private TextView errorMessage;
-    private HandDisplay handDisplay;
     private HandKeyboard handKeyboard;
 
     private Button clearHandButton;
@@ -35,8 +30,8 @@ public class HandCalculatorFragment_1Keyboard extends Fragment implements View.O
         fragHand = ((MainActivity)getActivity()).getCurrentHand();
 
         registerUIElements(myInflatedView);
-        handKeyboard.initialize(this, handDisplay);
-        errorMessage.setText(null);
+        handKeyboard.initialize(this);
+        handKeyboard.setHand(fragHand);
 
         return myInflatedView;
     }
@@ -47,20 +42,16 @@ public class HandCalculatorFragment_1Keyboard extends Fragment implements View.O
             case R.id.clearHandButton:
                 fragHand = new Hand(new ArrayList<Tile>());
                 checkNextEnablement();
-                handDisplay.setHand(fragHand);
-                errorMessage.setText("");
-                handKeyboard.checkAllButtonEnablement();
+                handKeyboard.setHand(fragHand);
+//                handKeyboard.checkAllButtonEnablement();
                 break;
         }
     }
 
     public void checkNextEnablement(){
-        ScoreCalculator sc = new ScoreCalculator(fragHand);
-        boolean validCurrentHand = (sc.scoredHand != null);
-        handKeyboard.setValidCurrentHand(validCurrentHand);
-
+        boolean validCurrentHand = handKeyboard.isValidCurrentHand();
         if(validCurrentHand){
-            ((MainActivity)getActivity()).setCurrentHand(fragHand);
+            ((MainActivity)getActivity()).setCurrentHand(getHand());
             nextButton.setEnabled(true);
         } else {
             ((MainActivity)getActivity()).setCurrentHand(new Hand(new ArrayList<Tile>()));
@@ -68,19 +59,14 @@ public class HandCalculatorFragment_1Keyboard extends Fragment implements View.O
         }
     }
 
-    public void setErrorMessage(String s){
-        errorMessage.setText(s);
-    }
-
     public Hand getHand(){
+        fragHand = handKeyboard.getHand();
         return fragHand;
     }
 
     private void registerUIElements(View myInflatedView){
-        handDisplay  = (HandDisplay)  myInflatedView.findViewById(R.id.handDisplay);
         handKeyboard = (HandKeyboard) myInflatedView.findViewById(R.id.handKeyboard);
-
-        errorMessage = (TextView) myInflatedView.findViewById(R.id.errorMessageLabel);
+        handKeyboard.setOnClickListener(this);
 
         nextButton = (Button) myInflatedView.findViewById(R.id.nextButton);
 

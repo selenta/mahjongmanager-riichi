@@ -12,6 +12,7 @@ import android.widget.CheckBox;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.Space;
+import android.widget.TextView;
 
 import com.mahjongmanager.riichi.Hand;
 import com.mahjongmanager.riichi.MainActivity;
@@ -32,9 +33,12 @@ public class HandKeyboard extends LinearLayout implements View.OnClickListener {
     private Fragment fragment;
     private HandDisplay handDisplay;
 
-    private boolean validCurrentHand = false;
+    private Hand hand;
 
+    private boolean validCurrentHand = false;
     private Tile.Suit currentSuit = Tile.Suit.MANZU;
+
+    private TextView errorMessage;
 
     private CheckBox openMeldsCheckbox;
     private Button openChiiButton;
@@ -96,6 +100,7 @@ public class HandKeyboard extends LinearLayout implements View.OnClickListener {
 
         registerUIElements();
         checkKeyboardMode();
+        setErrorMessage(null);
     }
     private void checkKeyboardMode(){
         if(isInEditMode()){     // This is only here so that Android Studio will display component
@@ -114,6 +119,12 @@ public class HandKeyboard extends LinearLayout implements View.OnClickListener {
 
     @Override
     public void onClick(View v) {
+        if( v.getClass()==ImageButton.class ){
+            TileButton smallButton = getButton((ImageButton)v);
+            if( smallButton!=null ){
+                addTile(new Tile(smallButton.tile));
+            }
+        }
         switch (v.getId()) {
             case R.id.openMeldsCheckbox:
                 boolean isChecked = openMeldsCheckbox.isChecked();
@@ -150,46 +161,40 @@ public class HandKeyboard extends LinearLayout implements View.OnClickListener {
                 break;
             case R.id.placeholderButton1:
                 addTile(1);
-                checkButtonEnablement(phButton1, 1);
+//                checkButtonEnablement(phButton1, 1);
                 break;
             case R.id.placeholderButton2:
                 addTile(2);
-                checkButtonEnablement(phButton2, 2);
+//                checkButtonEnablement(phButton2, 2);
                 break;
             case R.id.placeholderButton3:
                 addTile(3);
-                checkButtonEnablement(phButton3, 3);
+//                checkButtonEnablement(phButton3, 3);
                 break;
             case R.id.placeholderButton4:
                 addTile(4);
-                checkButtonEnablement(phButton4, 4);
+//                checkButtonEnablement(phButton4, 4);
                 break;
             case R.id.placeholderButton5:
                 addTile(5);
-                checkButtonEnablement(phButton5, 5);
+//                checkButtonEnablement(phButton5, 5);
                 break;
             case R.id.placeholderButton6:
                 addTile(6);
-                checkButtonEnablement(phButton6, 6);
+//                checkButtonEnablement(phButton6, 6);
                 break;
             case R.id.placeholderButton7:
                 addTile(7);
-                checkButtonEnablement(phButton7, 7);
+//                checkButtonEnablement(phButton7, 7);
                 break;
             case R.id.placeholderButton8:
                 addTile(8);
-                checkButtonEnablement(phButton8, 8);
+//                checkButtonEnablement(phButton8, 8);
                 break;
             case R.id.placeholderButton9:
                 addTile(9);
-                checkButtonEnablement(phButton9, 9);
+//                checkButtonEnablement(phButton9, 9);
                 break;
-        }
-        if( v.getClass()==ImageButton.class ){
-            TileButton smallButton = getButton((ImageButton)v);
-            if( smallButton!=null ){
-                addTile(new Tile(smallButton.tile));
-            }
         }
     }
     private void setOpenTileMode(){
@@ -241,23 +246,22 @@ public class HandKeyboard extends LinearLayout implements View.OnClickListener {
         }
     }
     private void addTileSingle(Tile tile){
-        Hand fragHand = getFragmentHand();
-        if( fragHand.tiles.size()>=18 ){
+        if( hand.tiles.size()>=18 ){
             setErrorMessage("Hand is too large to add an additional tile.");
             return;
         }
 
         if( !tileBreaksHand(tile) ){
-            fragHand.addTile(tile);
-            handDisplay.setHand(fragHand);
-            ((HandCalculatorFragment_1Keyboard)fragment).checkNextEnablement(); // TODO whatever, clean later
+            hand.addTile(tile);
+            handDisplay.setHand(hand);
+            checkValidCurrentHand();
         } else {
             setErrorMessage("Adding an additional "+tile.toString()+" tile would break this hand.");
         }
     }
     private boolean tileBreaksHand(Tile t){
         if( validCurrentHand ){
-            Hand testHand = new Hand(getFragmentHand());
+            Hand testHand = new Hand(hand);
             testHand.addTile(t);
 
             ScoreCalculator testSc = new ScoreCalculator(testHand);
@@ -268,11 +272,11 @@ public class HandKeyboard extends LinearLayout implements View.OnClickListener {
         return false;
     }
     private void addOpenChii(Tile tile){
-        if( getFragmentHand().tiles.size() > 15 ){
+        if( hand.tiles.size() > 15 ){
             setErrorMessage("Hand is too large to add an additional open chii.");
             return;
         } else if( tile.suit==Tile.Suit.HONOR ){
-            setErrorMessage("Can't add a chii of honors, not sure what to do.");
+            setErrorMessage("Can't add a chii of honors, not sure what you want me to do.");
             return;
         }
 
@@ -285,7 +289,7 @@ public class HandKeyboard extends LinearLayout implements View.OnClickListener {
         addTiles(Arrays.asList(tile, secondTile, thirdTile));
     }
     private void addOpenPon(Tile tile){
-        if( getFragmentHand().tiles.size() > 15 ){
+        if( hand.tiles.size() > 15 ){
             setErrorMessage("Hand is too large to add an additional open pon.");
             return;
         }
@@ -299,7 +303,7 @@ public class HandKeyboard extends LinearLayout implements View.OnClickListener {
         addTiles(Arrays.asList(tile, secondTile, thirdTile));
     }
     private void addOpenKan(Tile tile){
-        if( getFragmentHand().tiles.size() > 14 ){
+        if( hand.tiles.size() > 14 ){
             setErrorMessage("Hand is too large to add an additional open kan.");
             return;
         }
@@ -314,19 +318,17 @@ public class HandKeyboard extends LinearLayout implements View.OnClickListener {
         addTiles(Arrays.asList(tile, secondTile, thirdTile, fourthTile));
     }
     private void addTiles(List<Tile> tiles){
-        Hand fragHand = getFragmentHand();
-
         if( !tilesBreakHand(tiles) ){
             for(Tile t : tiles){
-                fragHand.tiles.add(t);
+                hand.tiles.add(t);
             }
-            fragHand.setSet(tiles);
-            handDisplay.setHand(fragHand);
-            ((HandCalculatorFragment_1Keyboard)fragment).checkNextEnablement(); // TODO whatever, clean later
+            hand.setSet(tiles);
+            handDisplay.setHand(hand);
+            checkValidCurrentHand();
         }
     }
     private boolean tilesBreakHand(List<Tile> tiles){
-        Hand testHand = new Hand(getFragmentHand());
+        Hand testHand = new Hand(hand);
         for(Tile t : tiles){
             boolean addResult = testHand.addTile(t);
             if( !addResult ){
@@ -399,7 +401,7 @@ public class HandKeyboard extends LinearLayout implements View.OnClickListener {
         setButtonImage(phButton8, 8);
         setButtonImage(phButton9, 9);
 
-        checkAllButtonEnablement();
+//        checkAllButtonEnablement();
     }
     private void setButtonsToHonors(){
         phButton5.setVisibility(GONE);
@@ -415,26 +417,26 @@ public class HandKeyboard extends LinearLayout implements View.OnClickListener {
         setButtonImage(phButton7, 7);
         setButtonImage(phButton8, 8);
 
-        checkAllButtonEnablement();
+//        checkAllButtonEnablement();
     }
 
-    public void checkAllButtonEnablement(){
-        if(fragment==null){
-            return;
-        }
-        checkButtonEnablement(phButton1, 1);
-        checkButtonEnablement(phButton2, 2);
-        checkButtonEnablement(phButton3, 3);
-        checkButtonEnablement(phButton4, 4);
-        checkButtonEnablement(phButton5, 5);
-        checkButtonEnablement(phButton6, 6);
-        checkButtonEnablement(phButton7, 7);
-        checkButtonEnablement(phButton8, 8);
-        checkButtonEnablement(phButton9, 9);
-    }
-    private void checkButtonEnablement(ImageButton b, int number){
-        b.setEnabled(!getFragmentHand().containsMaxOfTile(getTileForButton(number)));
-    }
+//    public void checkAllButtonEnablement(){
+//        if(fragment==null){
+//            return;
+//        }
+//        checkButtonEnablement(phButton1, 1);
+//        checkButtonEnablement(phButton2, 2);
+//        checkButtonEnablement(phButton3, 3);
+//        checkButtonEnablement(phButton4, 4);
+//        checkButtonEnablement(phButton5, 5);
+//        checkButtonEnablement(phButton6, 6);
+//        checkButtonEnablement(phButton7, 7);
+//        checkButtonEnablement(phButton8, 8);
+//        checkButtonEnablement(phButton9, 9);
+//    }
+//    private void checkButtonEnablement(ImageButton b, int number){
+//        b.setEnabled(!hand.containsMaxOfTile(getTileForButton(number)));
+//    }
 
     private void addTile( int number ){
         Tile t = getTileForButton(number);
@@ -563,21 +565,25 @@ public class HandKeyboard extends LinearLayout implements View.OnClickListener {
     /////////////////      Other      //////////////////
     ////////////////////////////////////////////////////
     private void setErrorMessage(String s){
-        ((HandCalculatorFragment_1Keyboard)fragment).setErrorMessage(s);
+        errorMessage.setText(s);
     }
 
-    public void setValidCurrentHand(boolean b){
-        validCurrentHand = b;
+    private void checkValidCurrentHand(){
+        ScoreCalculator sc = new ScoreCalculator(hand);
+        validCurrentHand = (sc.scoredHand != null);
+        ((HandCalculatorFragment_1Keyboard)fragment).checkNextEnablement(); // TODO whatever, clean later
     }
-    private Hand getFragmentHand(){
-        Hand h = ((HandCalculatorFragment_1Keyboard)fragment).getHand();   // TODO whatever, clean later
-        if(h==null){
-            h = new Hand(new ArrayList<Tile>());
-        }
-        return h;
+    public boolean isValidCurrentHand(){
+        return validCurrentHand;
     }
 
     private void registerUIElements(){
+        errorMessage = (TextView) findViewById(R.id.errorMessageLabel);
+
+        handDisplay  = (HandDisplay) findViewById(R.id.handDisplay);
+        handDisplay.setOnClickListener(this);
+        handDisplay.setParentKeyboard(this);
+
         openMeldsCheckbox = (CheckBox) findViewById(R.id.openMeldsCheckbox);
         openMeldsCheckbox.setOnClickListener(this);
         openChiiButton = (Button) findViewById(R.id.openChii);
@@ -623,9 +629,16 @@ public class HandKeyboard extends LinearLayout implements View.OnClickListener {
         thirdButtonContainer  = (LinearLayout) findViewById(R.id.thirdButtonContainer);
         fourthButtonContainer = (LinearLayout) findViewById(R.id.fourthButtonContainer);
     }
-    public void initialize(Fragment f, HandDisplay hd){
+    public void initialize(Fragment f){
         fragment = f;
-        handDisplay = hd;
+    }
+
+    public Hand getHand(){ return hand; }
+    public void setHand(Hand h){
+        hand = h;
+        handDisplay.setHand(hand);
+        setErrorMessage(null);
+        checkValidCurrentHand();
     }
 
     ImageCache _imageCache;

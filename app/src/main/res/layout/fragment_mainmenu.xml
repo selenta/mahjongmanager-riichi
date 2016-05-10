@@ -116,7 +116,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textAppearance="?android:attr/textAppearanceSmall"
-            android:text="v0.79"
+            android:text="v0.80"
             android:id="@+id/textView"
             android:layout_gravity="center_horizontal"
             android:longClickable="true"
@@ -135,7 +135,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textAppearance="?android:attr/textAppearanceSmall"
-            android:text="- Make HandDisplay interactable"
+            android:text="- Get UI/UX Review"
             android:id="@+id/textView98"
             android:layout_gravity="left|center_horizontal" />
 

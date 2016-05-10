@@ -420,6 +420,20 @@ public class Hand {
         }
         return usedTiles;
     }
+    public Meld getMeld(Tile t){
+        if( pair.getTiles().contains(t) ){
+            return pair;
+        } else if( meld1.getTiles().contains(t) ){
+            return meld1;
+        } else if( meld2.getTiles().contains(t) ){
+            return meld2;
+        } else if( meld3.getTiles().contains(t) ){
+            return meld3;
+        } else if( meld4.getTiles().contains(t) ){
+            return meld4;
+        }
+        return null;
+    }
     public Meld getWinningMeld(){
         for( Tile t : pair.getTiles() ){
             if( t.winningTile ){

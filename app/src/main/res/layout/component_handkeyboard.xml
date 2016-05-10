@@ -3,6 +3,49 @@
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent">
 
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:text="[Warning Message]"
+        android:id="@+id/errorMessageLabel"
+        android:textStyle="bold|italic"
+        android:textColor="#ff0000"
+        android:layout_gravity="center_horizontal"
+        android:textAlignment="center" />
+
+    <com.mahjongmanager.riichi.components.HandDisplay
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:id="@+id/handDisplay"
+        android:layout_weight="1" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="Click on a tile to delete"
+        android:id="@+id/textView6"
+        android:textSize="18sp"
+        android:textStyle="italic"
+        android:layout_gravity="center_horizontal" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="Closed Kans are not &quot;open melds&quot;"
+        android:id="@+id/textView7"
+        android:textSize="18sp"
+        android:textStyle="italic"
+        android:layout_gravity="center_horizontal" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="3dp"
+        android:background="@android:color/darker_gray"/>
+
+
     <LinearLayout
         android:orientation="horizontal"
         android:layout_width="match_parent"

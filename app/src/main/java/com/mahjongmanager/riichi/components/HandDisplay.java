@@ -4,10 +4,11 @@ import android.content.Context;
 import android.util.AttributeSet;
 import android.view.Gravity;
 import android.view.LayoutInflater;
+import android.view.View;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.Space;
-import android.widget.TextView;
 
 import com.mahjongmanager.riichi.Hand;
 import com.mahjongmanager.riichi.MainActivity;
@@ -19,8 +20,9 @@ import com.mahjongmanager.riichi.utils.Utils;
 import java.util.ArrayList;
 import java.util.List;
 
-public class HandDisplay extends LinearLayout {
-    Context context;
+public class HandDisplay extends LinearLayout implements View.OnClickListener {
+    private Context context;
+    private HandKeyboard parentKeyboard = null;
 
     private LinearLayout closedTilesContainer;
     private LinearLayout openTilesContainer;
@@ -28,6 +30,8 @@ public class HandDisplay extends LinearLayout {
 
     private Hand hand;
     private Boolean includeWinningTile = true;
+
+    private List<TileDisplay> tileList = new ArrayList<>();
 
     /////////////////////////////////////////
     ///////////   Constructors   ////////////
@@ -61,6 +65,31 @@ public class HandDisplay extends LinearLayout {
     ///////////////////////////////////////////
     /////////////     Main     ////////////////
     ///////////////////////////////////////////
+    @Override
+    public void onClick(View v) {
+        if( parentKeyboard!=null && v.getClass()==ImageView.class ){
+            TileDisplay td = getTileDisplay((ImageView) v);
+            if( td!=null ){
+                deleteTile(td);
+            }
+        }
+    }
+    private void deleteTile(TileDisplay tileDisplay){
+        if( tileDisplay.tile.revealedState!=Tile.RevealedState.NONE ){
+            Meld meld = hand.getMeld(tileDisplay.tile);
+            for( Tile t : meld.getTiles() ){
+                hand.tiles.remove(t);
+            }
+            meld.setTiles(new ArrayList<Tile>());
+        } else {
+            hand.tiles.remove(tileDisplay.tile);
+            hand.unsortedTiles.remove(tileDisplay.tile);
+        }
+        tileList.remove(tileDisplay);
+        displayHand();
+        parentKeyboard.setHand(hand);
+    }
+
     /**
      * Change whether or not the HandDisplay will include the winning tile (only set to false
      * if you intend to manually display the winning tile somewhere else). Defaults to true.
@@ -69,7 +98,13 @@ public class HandDisplay extends LinearLayout {
     public void setIncludeWinningTile(boolean bool){
         includeWinningTile = bool;
     }
+    public void setParentKeyboard(HandKeyboard handKeyboard){
+        parentKeyboard = handKeyboard;
+    }
 
+    public Hand getHand(){
+        return hand;
+    }
     public void setHand(Hand h){
         hand = h;
         displayHand();
@@ -271,13 +306,18 @@ public class HandDisplay extends LinearLayout {
     }
 
     private void addTileClosed(Tile t){
-        ImageView view = getUtils().getHandDisplayTileView(t, false);
-        closedTilesContainer.addView(view);
+        TileDisplay tileDisplay = new TileDisplay(t, false);
+        tileList.add(tileDisplay);
+
+        tileDisplay.view.setOnClickListener(this);
+        closedTilesContainer.addView(tileDisplay.view);
     }
     private void addTileOpen(Tile t){
-        ImageView view = getUtils().getHandDisplayTileView(t, false);
+        TileDisplay tileDisplay = new TileDisplay(t, false);
+        tileList.add(tileDisplay);
 
-        openTilesContainer.addView(view);
+        tileDisplay.view.setOnClickListener(this);
+        openTilesContainer.addView(tileDisplay.view);
     }
     private void addTileCalled(Tile calledTile, Tile addedTile){
         LinearLayout container = new LinearLayout(context);
@@ -286,11 +326,17 @@ public class HandDisplay extends LinearLayout {
         container.setGravity(Gravity.BOTTOM);
 
         if( addedTile!=null ){
-            ImageView aTile = getUtils().getHandDisplayTileView(addedTile, true);
-            container.addView(aTile);
+            TileDisplay aDisplay = new TileDisplay(addedTile, true);
+            tileList.add(aDisplay);
+
+            aDisplay.view.setOnClickListener(this);
+            container.addView(aDisplay.view);
         }
-        ImageView cTile = getUtils().getHandDisplayTileView(calledTile, true);
-        container.addView(cTile);
+        TileDisplay cDisplay = new TileDisplay(calledTile, true);
+        tileList.add(cDisplay);
+
+        cDisplay.view.setOnClickListener(this);
+        container.addView(cDisplay.view);
 
         openTilesContainer.addView(container);
     }
@@ -298,8 +344,11 @@ public class HandDisplay extends LinearLayout {
         addSpacer(winningTileContainer, 25);
 
         Tile winningTile = hand.getWinningTile();
-        ImageView view = getUtils().getHandDisplayTileView(winningTile, false);
-        winningTileContainer.addView(view);
+        TileDisplay tileDisplay = new TileDisplay(winningTile, false);
+        tileList.add(tileDisplay);
+
+        tileDisplay.view.setOnClickListener(this);
+        winningTileContainer.addView(tileDisplay.view);
     }
 
     /**
@@ -312,8 +361,31 @@ public class HandDisplay extends LinearLayout {
         view.addView(spacer);
     }
 
+    class TileDisplay {
+        public String value;
+        public String suit;
+        public Tile tile;
+        public ImageView view;
+
+        public TileDisplay(Tile t, boolean rotated){
+            tile = t;
+            value = tile.value;
+            suit = tile.suit.toString();
+            view = getUtils().getHandDisplayTileView(tile, rotated);
+        }
+    }
+    private TileDisplay getTileDisplay(ImageView imageView){
+        for( TileDisplay tileDisplay : tileList ){
+            if( tileDisplay.view == imageView ){
+                return tileDisplay;
+            }
+        }
+        return null;
+    }
+
+
     Utils _utils;
-    public Utils getUtils(){
+    private Utils getUtils(){
         if( _utils==null ){
             _utils = ((MainActivity)context).getUtils();
         }
