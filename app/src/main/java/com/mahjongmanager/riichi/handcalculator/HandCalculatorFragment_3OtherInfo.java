@@ -132,19 +132,25 @@ public class HandCalculatorFragment_3OtherInfo extends Fragment implements View.
             rinshanCheckBox.setEnabled(false);
         }
 
-        if( doubleRiichiCheckBox.isChecked() ){
-            riichiCheckBox.setChecked(false);
-            riichiCheckBox.setEnabled(false);
-            ippatsuCheckBox.setEnabled(true);
-        } else if( riichiCheckBox.isChecked() ){
-            doubleRiichiCheckBox.setChecked(false);
-            doubleRiichiCheckBox.setEnabled(false);
-            ippatsuCheckBox.setEnabled(true);
+        //Riichi: Can't riichi if the hand is open
+        if( !actHand.isOpen() ){
+            if( doubleRiichiCheckBox.isChecked() ){
+                riichiCheckBox.setChecked(false);
+                riichiCheckBox.setEnabled(false);
+                ippatsuCheckBox.setEnabled(true);
+            } else if( riichiCheckBox.isChecked() ){
+                doubleRiichiCheckBox.setChecked(false);
+                doubleRiichiCheckBox.setEnabled(false);
+                ippatsuCheckBox.setEnabled(true);
+            } else {
+                doubleRiichiCheckBox.setEnabled(true);
+                riichiCheckBox.setEnabled(true);
+                ippatsuCheckBox.setEnabled(false);
+                ippatsuCheckBox.setChecked(false);
+            }
         } else {
-            doubleRiichiCheckBox.setEnabled(true);
-            riichiCheckBox.setEnabled(true);
-            ippatsuCheckBox.setEnabled(false);
-            ippatsuCheckBox.setChecked(false);
+            riichiCheckBox.setEnabled(false);
+            doubleRiichiCheckBox.setEnabled(false);
         }
         setIppatsu();
     }
