@@ -29,8 +29,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
+    // When a hand needs to be passed along between fragments (such as the HandCalculator)
     public Hand currentHand = new Hand(new ArrayList<Tile>());
 
+    // Speed Quiz - Record the hands/guesses so they can be reviewed at the end
     private List<Hand> scoredHands = new ArrayList<>();
     private List<int[]> hanFuGuesses = new ArrayList<>();
     private int currentHanGuess = 0;
@@ -62,10 +64,6 @@ public class MainActivity extends AppCompatActivity {
         getExampleHands();
         getImageCache();
     }
-    ////////////////////////////////////////////
-    /////////////    General     ///////////////
-    ////////////////////////////////////////////
-
 
     ///////////////////////////////////////////////////
     /////////////    Navigating UIs     ///////////////

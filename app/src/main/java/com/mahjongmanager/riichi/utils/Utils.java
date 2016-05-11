@@ -31,16 +31,12 @@ public class Utils {
         imageCache = ma.getImageCache();
     }
 
-    ////////////////////////////////////////////////////////////////
-    //////////////////          Main              //////////////////
-    ////////////////////////////////////////////////////////////////
+    ///////////////////////////////////////////////////////////////
+    /////////////////        Hand Display         /////////////////
+    ///////////////////////////////////////////////////////////////
     public static Double TILE_RATIO = 1.36;
     private int tilePadding = 8;
     private int tileCornerRadius = 8;
-
-    public enum SetState {
-        CLOSEDSET, OPENCHII, OPENPON, OPENKAN, ADDEDKAN, CLOSEDKAN
-    }
 
     public ImageView getHandDisplayTileView(Tile t, boolean rotated){
         if( activity==null ){
@@ -57,7 +53,6 @@ public class Utils {
 
         return view;
     }
-    @SuppressWarnings("SuspiciousNameCombination")
     private LayerDrawable getCombinedImage(Drawable bmp, boolean isFacedown, boolean isRotated){
         if( isFacedown ){
             Drawable[] layers = new Drawable[1];
@@ -187,32 +182,36 @@ public class Utils {
     //////////////////////////////////////////////////////////////////////////
     ////////////////////     Common Util Methods      ////////////////////////
     //////////////////////////////////////////////////////////////////////////
+    public enum MeldState {
+        CLOSEDSET, OPENCHII, OPENPON, OPENKAN, ADDEDKAN, CLOSEDKAN
+    }
+
     /**
-     * When provided a Set (aka Meld) from a complete hand, will return a local enum indicating
-     * the nature of the set, and thus how it should be displayed as part of a complete hand.
+     * When provided a Meld, will return a local enum indicating how it should be
+     * displayed when viewed as part of a hand.
      *
-     * @param set The full list of tiles in a Set (aka Meld)
-     * @return Local enum indicating the nature of the set
+     * @param meld The Meld object in question
+     * @return Local enum indicating the how the meld should be displayed
      */
-    public static SetState getSetState(List<Tile> set){
-        Tile firstTile = set.get(0);
+    public static MeldState getMeldState(Meld meld){ return getMeldState(meld.getTiles()); }
+    private static MeldState getMeldState(List<Tile> tiles){
+        Tile firstTile = tiles.get(0);
         if( firstTile.revealedState==Tile.RevealedState.CHI ){
-            return SetState.OPENCHII;
+            return MeldState.OPENCHII;
         } else if( firstTile.revealedState==Tile.RevealedState.PON || firstTile.revealedState==Tile.RevealedState.ADDEDKAN ){
-            if( set.size()==3 ){
-                return SetState.OPENPON;
+            if( tiles.size()==3 ){
+                return MeldState.OPENPON;
             } else {
-                return SetState.ADDEDKAN;
+                return MeldState.ADDEDKAN;
             }
         } else if( firstTile.revealedState==Tile.RevealedState.OPENKAN ){
-            return SetState.OPENKAN;
+            return MeldState.OPENKAN;
         } else if( firstTile.revealedState==Tile.RevealedState.CLOSEDKAN ){
-            return SetState.CLOSEDKAN;
+            return MeldState.CLOSEDKAN;
         }
 
-        return SetState.CLOSEDSET;
+        return MeldState.CLOSEDSET;
     }
-    public static SetState getSetState(Meld meld){ return getSetState(meld.getTiles()); }
 
     public static boolean containsHonorsOrTerminalsOnly(Meld meld){ return containsHonorsOrTerminalsOnly(meld.getTiles()); }
     public static boolean containsHonorsOrTerminalsOnly(List<Tile> tiles){

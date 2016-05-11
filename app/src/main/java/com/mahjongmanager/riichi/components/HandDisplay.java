@@ -5,7 +5,6 @@ import android.util.AttributeSet;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.Space;
@@ -196,8 +195,8 @@ public class HandDisplay extends LinearLayout implements View.OnClickListener {
             return;
         }
 
-        Utils.SetState setState = Utils.getSetState(meld);
-        switch (setState.toString()){
+        Utils.MeldState meldState = Utils.getMeldState(meld);
+        switch (meldState.toString()){
             case "INVALID":
                 //This should never happen
                 break;

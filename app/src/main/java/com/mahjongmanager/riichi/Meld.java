@@ -36,7 +36,7 @@ public class Meld {
     }
 
     /**
-     * Check whether the set of tiles is a valid, internally consistent, set of tiles
+     * Check whether the meld of tiles is a valid, internally consistent, set of tiles
      * according to the rules of Mahjong. Checks for the following:
      * <ul>
      *     <li> There are either 2(pair), 3, or 4 tiles
@@ -48,11 +48,11 @@ public class Meld {
      * </ul>
      * TODO verify that all the things I said are being done are being done
      *
-     * @return Boolean that indicates whether the list of tiles is a valid set in Mahjong
+     * @return Boolean that indicates whether the list of tiles is a valid meld in Mahjong
      */
     public boolean validate(){
         if( tiles.size()<2 || tiles.size()>4 ){
-            Log.e("validateSet", "Too many, or too few, tiles: " + tiles.toString());
+            Log.e("validateMeld", "Too many, or too few, tiles: " + tiles.toString());
             return false;
         }
 
@@ -70,17 +70,17 @@ public class Meld {
     }
     private boolean validatePair(){
         if( !tiles.get(0).value.equals(tiles.get(1).value) ){
-            Log.e("validateSet", "It's not a pair if the two tiles aren't the same stupid!: "+toString());
+            Log.e("validateMeld", "It's not a pair if the two tiles aren't the same stupid!: "+toString());
             return false;
         }
         Tile calledTile = getCalledTile();
         if( calledTile!=null && !calledTile.winningTile ){
-            Log.e("validateSet", "A called tile in a pair can only be called if it's the winning tile: "+calledTile.toString());
+            Log.e("validateMeld", "A called tile in a pair can only be called if it's the winning tile: "+calledTile.toString());
             return false;
         }
-        Tile.RevealedState setRevealedState = getNonCalledRevealedState();
-        if( setRevealedState!= Tile.RevealedState.NONE ){
-            Log.e("validateSet", "At least one of the tiles in the pair has to be concealed: "+setRevealedState.toString());
+        Tile.RevealedState meldRevealedState = getNonCalledRevealedState();
+        if( meldRevealedState!= Tile.RevealedState.NONE ){
+            Log.e("validateMeld", "At least one of the tiles in the pair has to be concealed: "+meldRevealedState.toString());
             return false;
         }
         return true;
@@ -89,7 +89,7 @@ public class Meld {
         Tile calledTile = getCalledTile();
         for(Tile t : tiles){
             if( t!=calledTile && t.calledFrom!=Tile.CalledFrom.NONE ){
-                Log.e("validateSet", "More than one tile with a calledFrom status: " + calledTile.toString() + " + " + t.toString());
+                Log.e("validateMeld", "More than one tile with a calledFrom status: " + calledTile.toString() + " + " + t.toString());
                 return false;
             }
         }
@@ -99,7 +99,7 @@ public class Meld {
         Tile addedTile = getAddedTile();
         for(Tile t : tiles){
             if( t!=addedTile && t.revealedState== Tile.RevealedState.ADDEDKAN ){
-                Log.e("validateSet", "More than one tile with a addedTile status: " + addedTile.toString() + " + " + t.toString());
+                Log.e("validateMeld", "More than one tile with a addedTile status: " + addedTile.toString() + " + " + t.toString());
                 return false;
             }
         }
@@ -108,7 +108,7 @@ public class Meld {
     private boolean validateRevealedStates(){
         // Validate revealed state
         //      All non-called tiles match (except in case of AddedKan)
-        //      State makes sense based on number of tiles in the set
+        //      State makes sense based on number of tiles in the meld
         //      Called tile is non-conflicting with the other tiles' state
         //      Other tiles' states are non-conflicting with called tile's state
         // CalledTile for Chii comes from left player
@@ -122,30 +122,30 @@ public class Meld {
     }
     private boolean nonCalledTilesMatchRevealedState(){
         Tile calledTile = getCalledTile();
-        Tile.RevealedState setRevealedState = getNonCalledRevealedState();
+        Tile.RevealedState meldRevealedState = getNonCalledRevealedState();
 
         for( Tile t : tiles ){
             if( t != calledTile
                     && !t.winningTile
-                    && setRevealedState != t.revealedState
+                    && meldRevealedState != t.revealedState
                     && t.revealedState != Tile.RevealedState.ADDEDKAN ){
-                Log.e("validateSet", "(Non-called)Tiles do not match revealed states: " + setRevealedState.toString() + " - " + t.revealedState.toString()+" - "+toString());
+                Log.e("validateMeld", "(Non-called)Tiles do not match revealed states: " + meldRevealedState.toString() + " - " + t.revealedState.toString()+" - "+toString());
                 return false;
             }
         }
         return true;
     }
     private boolean revealedStateMatchesTileCount(){
-        Tile.RevealedState setRevealedState = getNonCalledRevealedState();
+        Tile.RevealedState meldRevealedState = getNonCalledRevealedState();
 
         if( size()==3 ){
-            if( setRevealedState == Tile.RevealedState.CLOSEDKAN || setRevealedState == Tile.RevealedState.OPENKAN ){
-                Log.e("validateSet", "ClosedKan/OpenKan must be a set of size 4: "+toString());
+            if( meldRevealedState == Tile.RevealedState.CLOSEDKAN || meldRevealedState == Tile.RevealedState.OPENKAN ){
+                Log.e("validateMeld", "ClosedKan/OpenKan must be of size 4: "+toString());
                 return false;
             }
         } else {
-            if( setRevealedState == Tile.RevealedState.CHI || setRevealedState == Tile.RevealedState.NONE ){
-                Log.e("validateSet", "Unrevealed sets must be a set of size 3: "+setRevealedState.toString()+" - "+toString());
+            if( meldRevealedState == Tile.RevealedState.CHI || meldRevealedState == Tile.RevealedState.NONE ){
+                Log.e("validateMeld", "Unrevealed melds must be of size 3: "+meldRevealedState.toString()+" - "+toString());
                 return false;
             }
         }
@@ -155,31 +155,31 @@ public class Meld {
         Tile calledTile = getCalledTile();
         if( calledTile!=null ){
             Tile addedTile = getAddedTile();
-            Tile.RevealedState setRevealedState = getNonCalledRevealedState();
+            Tile.RevealedState meldRevealedState = getNonCalledRevealedState();
 
             switch (calledTile.revealedState){
                 case NONE:
                     if( !calledTile.winningTile ){
-                        Log.e("validateSet", "Called tile can't be in a revealed state of NONE unless it is a winning tile: "+calledTile.toString()+" - "+calledTile.revealedState.toString());
+                        Log.e("validateMeld", "Called tile can't be in a revealed state of NONE unless it is a winning tile: "+calledTile.toString()+" - "+calledTile.revealedState.toString());
                         return false;
                     }
                     break;
                 case PON:
                     if( tiles.size()!=3 && addedTile==null ){
-                        Log.e("validateSet", "Called Chii/Pon must be a set of size 3 unless part of AddedKan: "+calledTile.toString()+" - "+calledTile.revealedState.toString()+" - "+toString());
+                        Log.e("validateMeld", "Called Chii/Pon must be of size 3 unless part of AddedKan: "+calledTile.toString()+" - "+calledTile.revealedState.toString()+" - "+toString());
                         return false;
                     }
                     break;
                 case CLOSEDKAN:
-                    Log.e("validateSet", "A called tile cannot be part of a closed kan: "+calledTile.toString()+" - "+calledTile.revealedState.toString());
+                    Log.e("validateMeld", "A called tile cannot be part of a closed kan: "+calledTile.toString()+" - "+calledTile.revealedState.toString());
                     return false;
                 case ADDEDKAN:
-                    Log.e("validateSet", "Called tile cannot be AddedKan: "+tiles.toString());
+                    Log.e("validateMeld", "Called tile cannot be AddedKan: "+tiles.toString());
                     return false;
             }
 
-            if( calledTile.revealedState!=setRevealedState && calledTile.revealedState!=Tile.RevealedState.NONE ){
-                Log.e("validateSet", "CalledTile state does not match the setState of the rest of the tiles: "+calledTile.revealedState.toString()+" - "+setRevealedState.toString());
+            if( calledTile.revealedState!=meldRevealedState && calledTile.revealedState!=Tile.RevealedState.NONE ){
+                Log.e("validateMeld", "CalledTile state does not match the meldState of the rest of the tiles: "+calledTile.revealedState.toString()+" - "+meldRevealedState.toString());
                 return false;
             }
         }
@@ -191,32 +191,32 @@ public class Meld {
                 && calledTile!=null
                 && !calledTile.winningTile
                 && calledTile.calledFrom!=Tile.CalledFrom.LEFT ){
-            Log.e("validateSet", "Called tile is part of a chii and wasn't called from left player: "+calledTile.toString()+" - "+calledTile.revealedState.toString()+" - "+calledTile.calledFrom.toString()+" - "+toString());
+            Log.e("validateMeld", "Called tile is part of a chii and wasn't called from left player: "+calledTile.toString()+" - "+calledTile.revealedState.toString()+" - "+calledTile.calledFrom.toString()+" - "+toString());
             return false;
         }
         return true;
     }
     private boolean hasCalledTileIfRevealed(){
         Tile calledTile = getCalledTile();
-        Tile.RevealedState setRevealedState = getNonCalledRevealedState();
+        Tile.RevealedState meldRevealedState = getNonCalledRevealedState();
 
         if( calledTile==null ){
-            switch (setRevealedState){
+            switch (meldRevealedState){
                 case CHI:
                 case PON:
                 case OPENKAN:
                 case ADDEDKAN:
-                    Log.e("validateSet", "Cannot have a revealed Pon/Chii/OpenKan/AddedKan without a called tile: "+setRevealedState.toString());
+                    Log.e("validateMeld", "Cannot have a revealed Pon/Chii/OpenKan/AddedKan without a called tile: "+meldRevealedState.toString());
                     return false;
             }
         }
         return true;
     }
     private boolean isRevealedIfKan(){
-        Tile.RevealedState setRevealedState = getNonCalledRevealedState();
+        Tile.RevealedState meldRevealedState = getNonCalledRevealedState();
 
-        if( tiles.size()==4 && setRevealedState==Tile.RevealedState.NONE ){
-            Log.e("validateSet", "A set of 4 cannot be unrevealed: "+tiles.toString()+" - "+setRevealedState.toString());
+        if( tiles.size()==4 && meldRevealedState==Tile.RevealedState.NONE ){
+            Log.e("validateMeld", "A set of 4 cannot be unrevealed: "+tiles.toString()+" - "+meldRevealedState.toString());
             return false;
         }
 

@@ -211,19 +211,19 @@ public class Hand {
         return null;
     }
 
-    public void setSet( List<Tile> tbdSet ){
+    public void setMeld(List<Tile> tiles ){
         if( meld1.size()==0 ){
-            meld1.setTiles(tbdSet);
+            meld1.setTiles(tiles);
         } else if( meld2.size()==0 ){
-            meld2.setTiles(tbdSet);
+            meld2.setTiles(tiles);
         } else if( meld3.size()==0 ){
-            meld3.setTiles(tbdSet);
+            meld3.setTiles(tiles);
         } else if( meld4.size()==0 ){
-            meld4.setTiles(tbdSet);
+            meld4.setTiles(tiles);
         } else {
-            Log.e("All hand sets set", "all sets: " + meld1.toString() + " "+ meld2.toString() + " "+ meld3.toString() + " "+ meld4.toString());
-            Log.e("All hand sets set", "unsortedTiles: " + unsortedTiles.toString());
-            Log.e("All hand sets set", "Attempted to setSet when all sets were already full: " + tbdSet);
+            Log.e("All hand melds set", "all melds: " + meld1.toString() + " "+ meld2.toString() + " "+ meld3.toString() + " "+ meld4.toString());
+            Log.e("All hand melds set", "unsortedTiles: " + unsortedTiles.toString());
+            Log.e("All hand melds set", "Attempted to setMeld when all melds were already full: " + tiles);
         }
     }
 
@@ -361,13 +361,13 @@ public class Hand {
     private boolean validateNoMissingTiles(){
         if( tiles.size()!=(pair.size()+meld1.size()+meld2.size()+meld3.size()+meld4.size()) ){
             Log.e("validateCompleteState", "(1/2) Tile counts don't match! tiles: "+unsortedTiles.toString());
-            Log.e("validateCompleteState", "(2/2) Tile counts don't match! melds: "+printAllSets());
+            Log.e("validateCompleteState", "(2/2) Tile counts don't match! melds: "+ printAllMelds());
             return false;
         }
         return true;
     }
     private boolean validateAllMelds(){
-        //All tiles in each set match states
+        //All tiles in each melds match states
         if( !pair.validate()
                 || !meld1.validate()
                 || !meld2.validate()
@@ -525,7 +525,7 @@ public class Hand {
     public boolean tilesSortedProperly(){
         int usedTiles = meld1.size() + meld2.size() + meld3.size() + meld4.size() + pair.size() + unsortedTiles.size();
         if( usedTiles != tiles.size() ){
-            Log.wtf("InvalidHandState", "tiles list size does not match the number of tiles used in sets/unsortedTiles: "+usedTiles+" "+tiles.size()+"\n"+toStringVerbose());
+            Log.wtf("InvalidHandState", "tiles list size does not match the number of tiles used in melds/unsortedTiles: "+usedTiles+" "+tiles.size()+"\n"+toStringVerbose());
             return false;
         }
         return true;
@@ -558,8 +558,8 @@ public class Hand {
         s = s + " fuList: " + fuList.toString() + "\n";
         return s;
     }
-    public String printAllSets(){
-        return "(pair:"+pair.toString()+") (set1:"+meld1.toString()+") (set2:"+meld2.toString()+") (set3:"+meld3.toString()+") (set4:"+meld4.toString()+")";
+    public String printAllMelds(){
+        return "(pair:"+pair.toString()+") (meld1:"+meld1.toString()+") (meld2:"+meld2.toString()+") (meld3:"+meld3.toString()+") (meld4:"+meld4.toString()+")";
     }
     public String getString(Tile.Wind w){
         switch (w){

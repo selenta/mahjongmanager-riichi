@@ -22,18 +22,11 @@ public class ScoreCalculatorTest {
     // (13)  Extreme fu (1 Han, 110 Fu)
     // (14)  Extreme fu (2 Han, 110 Fu)
     // (15)  Confusing structure (no score)
+    // (16)  TODO Value is less than theoretical, because of called tile (inferred for HC)
+    // (17)  TODO Value is less than theoretical, because closed kan was not terminal (inferred for HC)
+    // (18)  TODO Value is less than theoretical, because of winning tile (inferred for HC)
 
     // Unaccounted Hands:
-    // Suu Ankou
-    // Daisangen
-    // Shousuushii
-    // Daisuushii
-    // Tsuuiisou
-    // Daichisei
-    // Chinroutou
-    // Ryuuiisou
-    // Chuuren Poutou
-    // Suu Kantsu
     // Sanrenkou
     // Suurenkou
     // Dai Sharin
@@ -548,5 +541,70 @@ public class ScoreCalculatorTest {
 
         //Assert.assertSame(  2, validatedHand.han);
         //Assert.assertSame(108, validatedHand.fu );
+    }
+
+    @Test
+    public void handTest17() {
+        // This hand is primarily testing the ability to sort this hand correctly
+        // Value is less than theoretical, because closed kan was not terminal
+        Tile t1  = new Tile(1, "MANZU");
+        Tile t2  = new Tile(1, "MANZU");
+        Tile t3  = new Tile(1, "MANZU");
+        Tile t4  = new Tile(1, "MANZU");
+        Tile t5  = new Tile(2, "MANZU");
+        Tile t6  = new Tile(3, "MANZU");
+        Tile t7  = new Tile(4, "MANZU");
+        Tile t8  = new Tile(4, "MANZU");
+        Tile t9  = new Tile(4, "MANZU");
+        Tile t10 = new Tile(4, "MANZU");
+        Tile t11 = new Tile(5, "PINZU");
+        Tile t12 = new Tile(6, "PINZU");
+        Tile t13 = new Tile(7, "PINZU");
+        Tile t14 = new Tile(8, "PINZU");
+        Tile t15 = new Tile(8, "PINZU");
+
+//        t7.revealedState = t8.revealedState = t9.revealedState = t10.revealedState = Tile.RevealedState.CLOSEDKAN;
+
+        t5.calledFrom = Tile.CalledFrom.LEFT;
+        t5.winningTile = true;
+
+        Hand h = new Hand(Arrays.asList(t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11, t12, t13, t14, t15));
+
+        ScoreCalculator sc = new ScoreCalculator(h);
+        Hand scoredHand = sc.scoredHand;
+        Assert.assertTrue(scoredHand!=null);
+        Hand validatedHand = sc.validatedHand;
+        Assert.assertTrue(validatedHand==null);
+    }
+
+
+    @Test
+    public void problemHand1() {
+        // Hand was not returning sanshoku doujun correctly
+        Tile t1  = new Tile(1, "MANZU");
+        Tile t2  = new Tile(2, "MANZU");
+        Tile t3  = new Tile(3, "MANZU");
+        Tile t4  = new Tile(4, "MANZU");
+        Tile t5  = new Tile(4, "MANZU");
+        Tile t6  = new Tile(6, "MANZU");
+        Tile t7  = new Tile(7, "MANZU");
+        Tile t8  = new Tile(8, "MANZU");
+        Tile t9  = new Tile(6, "PINZU");
+        Tile t10 = new Tile(7, "PINZU");
+        Tile t11 = new Tile(8, "PINZU");
+        Tile t12 = new Tile(6, "SOUZU");
+        Tile t13 = new Tile(7, "SOUZU");
+        Tile t14 = new Tile(8, "SOUZU");
+
+        t13.calledFrom = Tile.CalledFrom.CENTER;
+        t13.winningTile = true;
+
+        Hand h = new Hand(Arrays.asList(t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11, t12, t13, t14));
+        h.riichi = true;
+
+        ScoreCalculator sc = new ScoreCalculator(h);
+        Hand validatedHand = sc.validatedHand;
+        Assert.assertNotNull(validatedHand);
+        Assert.assertTrue(validatedHand.sanshokuDoujun);
     }
 }

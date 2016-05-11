@@ -322,7 +322,7 @@ public class HandKeyboard extends LinearLayout implements View.OnClickListener {
             for(Tile t : tiles){
                 hand.tiles.add(t);
             }
-            hand.setSet(tiles);
+            hand.setMeld(tiles);
             handDisplay.setHand(hand);
             checkValidCurrentHand();
         }

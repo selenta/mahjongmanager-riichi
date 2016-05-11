@@ -133,7 +133,7 @@ public class ScoreCalculator {
 
         if( secondPonTile!=null && thirdPonTile!=null ){
             //Yay, we have a pon!
-            ponHand.setSet(Arrays.asList(firstPonTile, secondPonTile, thirdPonTile));
+            ponHand.setMeld(Arrays.asList(firstPonTile, secondPonTile, thirdPonTile));
             return ponHand;
         }
         return null;
@@ -149,7 +149,7 @@ public class ScoreCalculator {
 
             if( fourthKanTile!=null ){
                 //Double Yay! We have a kam!
-                kanHand.setSet(Arrays.asList(firstKanTile, secondKanTile, thirdKanTile, fourthKanTile));
+                kanHand.setMeld(Arrays.asList(firstKanTile, secondKanTile, thirdKanTile, fourthKanTile));
                 return kanHand;
             }
         }
@@ -166,7 +166,7 @@ public class ScoreCalculator {
 
             if( secondChiiTile!=null && thirdChiiTile!=null ){
                 //Yay, we have a chii!
-                chiiHand.setSet(Arrays.asList(firstChiiTile, secondChiiTile, thirdChiiTile));
+                chiiHand.setMeld(Arrays.asList(firstChiiTile, secondChiiTile, thirdChiiTile));
                 return chiiHand;
             }
         }
