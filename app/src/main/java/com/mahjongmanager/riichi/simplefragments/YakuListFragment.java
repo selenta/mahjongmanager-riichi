@@ -133,8 +133,8 @@ public class YakuListFragment extends Fragment {
     }
 
     private void populateYakuSortedByPattern(){
-        List<Yaku> yakuDescriptions = ((MainActivity)getContext()).getExampleHands().yakuDescriptions;
-        for( Yaku y : yakuDescriptions ){
+        List<Yaku> allYaku = ((MainActivity)getContext()).getExampleHands().allYaku;
+        for( Yaku y : allYaku ){
             YakuDescription yd = new YakuDescription(getContext());
             yd.setYaku(y);
 

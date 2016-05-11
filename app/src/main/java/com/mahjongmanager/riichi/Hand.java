@@ -21,7 +21,7 @@ public class Hand {
     public Integer han = 0;
     public Integer fu = 0;
 
-    public Map<String,Integer> hanList = new HashMap<>();
+    public Map<Yaku.Name,Integer> hanList = new HashMap<>();
     public Map<String,Integer> fuList = new HashMap<>();
 
     public Tile.Wind prevailingWind = Tile.Wind.EAST;

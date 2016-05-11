@@ -1,7 +1,5 @@
 package com.mahjongmanager.riichi.utils;
 
-import android.util.Log;
-
 import com.mahjongmanager.riichi.Hand;
 import com.mahjongmanager.riichi.MainActivity;
 import com.mahjongmanager.riichi.ScoreCalculator;
@@ -22,12 +20,13 @@ import java.util.List;
 public class ExampleHands {
     private MainActivity activity;
 
+    public List<Yaku> allYaku = new ArrayList<>();
+
     public ExampleHands(MainActivity ma){
         activity = ma;
         populateYakuDescriptions();
     }
 
-    public List<Yaku> yakuDescriptions = new ArrayList<>();
     private void populateYakuDescriptions(){
         XmlPullParserFactory factory = null;
         try {
@@ -67,9 +66,9 @@ public class ExampleHands {
                         // add the example hand and then add yaku object to list
                         attachHand(yaku);
                         //Log.i("yakuDescription", yaku.toString());
-                        yakuDescriptions.add(yaku);
+                        allYaku.add(yaku);
                     } else if (tagname.equalsIgnoreCase("name")) {
-                        yaku.name = Yaku.YakuName.valueOf(text);
+                        yaku.name = Yaku.Name.valueOf(text);
                     } else if (tagname.equalsIgnoreCase("english")) {
                         yaku.english = text;
                     } else if (tagname.equalsIgnoreCase("romaji")) {

@@ -35,8 +35,6 @@ public class HanFuCalculatorFragment extends Fragment implements View.OnClickLis
 
     private TextView scoreValue;
 
-    ScoreCalculator sc = new ScoreCalculator();
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         han = 2;
@@ -94,7 +92,7 @@ public class HanFuCalculatorFragment extends Fragment implements View.OnClickLis
     private void updateScore(){
         updateUI();
 
-        String result = sc.scoreHanFu(han, fu, dealerCheckbox.isChecked(), tsumoCheckbox.isChecked());
+        String result = ScoreCalculator.scoreHanFu(han, fu, dealerCheckbox.isChecked(), tsumoCheckbox.isChecked());
 
         scoreValue.setText( result );
     }

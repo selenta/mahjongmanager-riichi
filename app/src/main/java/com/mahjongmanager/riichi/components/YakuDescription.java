@@ -51,6 +51,8 @@ public class YakuDescription extends LinearLayout {
         description     = (TextView) myInflatedView.findViewById(R.id.description);
         handDisplay     = (HandDisplay) myInflatedView.findViewById(R.id.handDisplay);
 
+        hideLabels();
+
         //TODO If component is configured incorrectly, display error message, instead of blank
         if(context==null){
             return;
@@ -62,6 +64,9 @@ public class YakuDescription extends LinearLayout {
     }
     public void hideLabels(){
         labelRow.setVisibility(GONE);
+    }
+    public void hideEnglishName(){
+        yakuNameEnglish.setVisibility(GONE);
     }
 
     public void setYaku(Yaku y){
@@ -81,7 +86,7 @@ public class YakuDescription extends LinearLayout {
         }
     }
 
-    public Yaku.YakuName getYakuName(){
+    public Yaku.Name getYakuName(){
         return yaku.name;
     }
 }

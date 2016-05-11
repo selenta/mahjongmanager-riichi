@@ -12,13 +12,24 @@ import java.util.List;
 import java.util.Set;
 
 public class ScoreCalculator {
-
+    /*
+     * These are the four primary stages of the process for the ScoreCalculator:
+     *
+     * unsortedHand  - Raw hand, completely untouched (original hand remains untouched)
+     * sortedHands   - Every possible valid interpretation of how the hand could be
+     *                 sorted/scored are placed in here (e.g. both a chiitoitsu interpretation of
+     *                 the hand AND a ryanpeikou could appear in the list).
+     * scoredHand    - All of the hands in sortedHands are examined, this hand is the one
+     *                 with the highest value.
+     * validatedHand - The scoredHand is thoroughly examined for anything that could be
+     *                 nonsensical or contradictory. If ANY part of the hand/melds/tiles/yaku
+     *                 looks wrong, this will remain null.
+     */
     private Hand       unsortedHand;
     private List<Hand> sortedHands;
     public Hand        scoredHand;
     public Hand        validatedHand;
 
-    public ScoreCalculator(){}
     public ScoreCalculator(Hand h){
         unsortedHand = new Hand(h);
         sortedHands = new ArrayList<>();
@@ -264,215 +275,164 @@ public class ScoreCalculator {
         checkParenchan(h);
     }
     private void countHan(Hand h){
-        Integer han = 0;
-
         if( h.riichi ){
-            h.hanList.put("Riichi",1);
-            han+=1;
+            h.hanList.put(Yaku.Name.RIICHI, 1);
         }
         if(h.tsumo){
-            h.hanList.put("Tsumo",1);
-            han+=1;
+            h.hanList.put(Yaku.Name.TSUMO, 1);
         }
         if(h.ippatsu){
-            h.hanList.put("Ippatsu",1);
-            han+=1;
+            h.hanList.put(Yaku.Name.IPPATSU, 1);
         }
         if(h.haitei){
-            h.hanList.put("Haitei",1);
-            han+=1;
+            h.hanList.put(Yaku.Name.HAITEI, 1);
         }
         if(h.houtei){
-            h.hanList.put("Houtei",1);
-            han+=1;
+            h.hanList.put(Yaku.Name.HOUTEI, 1);
         }
         if(h.rinshan){
-            h.hanList.put("Rinshan",1);
-            han+=1;
+            h.hanList.put(Yaku.Name.RINSHAN, 1);
         }
         if(h.chanKan){
-            h.hanList.put("Chan Kan",1);
-            han+=1;
+            h.hanList.put(Yaku.Name.CHANKAN, 1);
         }
         if(h.doubleRiichi){
-            h.hanList.put("Double Riichi",2);
-            han+=2;
+            h.hanList.put(Yaku.Name.DOUBLERIICHI, 2);
         }
         if(h.chiiToitsu){
-            h.hanList.put("Chiitoitsu",2);
-            han+=2;
+            h.hanList.put(Yaku.Name.CHIITOITSU, 2);
         }
         if(h.pinfu){
-            h.hanList.put("Pinfu",1);
-            han+=1;
+            h.hanList.put(Yaku.Name.PINFU, 1);
         }
         if(h.iipeikou){
-            h.hanList.put("Iipeikou",1);
-            han+=1;
+            h.hanList.put(Yaku.Name.IIPEIKOU, 1);
         }
         if(h.sanshokuDoujun){
-            h.hanList.put("Sanshoku Doujun", (!h.isOpen())?2:1);
-            han = (!h.isOpen()) ? han+2 : han+1;
+            int han = (h.isOpen()) ? 1 : 2;
+            h.hanList.put(Yaku.Name.SANSHOKUDOUJUN, han);
         }
         if(h.ittsuu){
-            h.hanList.put("Ittsuu", (!h.isOpen())?2:1);
-            han = (!h.isOpen()) ? han+2 : han+1;
+            int han = (h.isOpen()) ? 1 : 2;
+            h.hanList.put(Yaku.Name.ITTSUU, han);
         }
         if(h.ryanpeikou){
-            h.hanList.put("Ryanpeikou",3);
-            han+=3;
+            h.hanList.put(Yaku.Name.RYANPEIKOU, 3);
         }
         if(h.toitoi){
-            h.hanList.put("Toitoi",2);
-            han+=2;
+            h.hanList.put(Yaku.Name.TOITOI, 2);
         }
         if(h.sanAnkou){
-            h.hanList.put("San Ankou",2);
-            han+=2;
+            h.hanList.put(Yaku.Name.SANANKOU, 2);
         }
         if(h.sanshokuDoukou){
-            h.hanList.put("Sanshoku Doukou",2);
-            han+=2;
+            h.hanList.put(Yaku.Name.SANSHOKUDOUKOU, 2);
         }
         if(h.sanKantsu){
-            h.hanList.put("San Kantsu",2);
-            han+=2;
+            h.hanList.put(Yaku.Name.SANKANTSU, 2);
         }
         if(h.tanyao){
-            h.hanList.put("Tanyao",1);
-            han+=1;
+            h.hanList.put(Yaku.Name.TANYAO, 1);
         }
-        if(h.whiteDragon){
-            h.hanList.put("White Dragon",1);
-            han+=1;
-        }
-        if(h.greenDragon){
-            h.hanList.put("Green Dragon",1);
-            han+=1;
-        }
-        if(h.redDragon){
-            h.hanList.put("Red Dragon",1);
-            han+=1;
-        }
-        if(h.roundWind){
-            h.hanList.put("Round Wind",1);
-            han+=1;
-        }
-        if(h.seatWind){
-            h.hanList.put("Seat Wind",1);
-            han+=1;
+        if( h.hasYakuhai() ){
+            int han = 0;
+            han = (h.whiteDragon) ? han+1 : han;
+            han = (h.greenDragon) ? han+1 : han;
+            han = (h.redDragon)   ? han+1 : han;
+            han = (h.roundWind)   ? han+1 : han;
+            han = (h.seatWind)    ? han+1 : han;
+            h.hanList.put(Yaku.Name.YAKUHAI, han);
         }
         if(h.chanta){
-            h.hanList.put("Chanta", (!h.isOpen())?2:1);
-            han = (!h.isOpen()) ? han+2 : han+1;
+            int han = (h.isOpen()) ? 1 : 2;
+            h.hanList.put(Yaku.Name.CHANTA, han);
         }
         if(h.junchan){
-            h.hanList.put("Junchan", (!h.isOpen())?3:2);
-            han = (!h.isOpen()) ? han+3 : han+2;
-        }
+            int han = (h.isOpen()) ? 2 : 3;
+            h.hanList.put(Yaku.Name.JUNCHAN, han);        }
         if(h.honroutou){
-            h.hanList.put("Honroutou",2);
-            han+=2;
+            h.hanList.put(Yaku.Name.HONROUTOU, 2);
         }
         if(h.shousangen){
-            h.hanList.put("Shousangen",2);
-            han+=2;
+            h.hanList.put(Yaku.Name.SHOUSANGEN, 2);
         }
         if(h.honitsu){
-            h.hanList.put("Honitsu", (!h.isOpen())?3:2);
-            han = (!h.isOpen()) ? han+3 : han+2;
+            int han = (h.isOpen()) ? 2 : 3;
+            h.hanList.put(Yaku.Name.HONITSU, han);
         }
         if(h.chinitsu){
-            h.hanList.put("Chinitsu", (!h.isOpen())?6:5);
-            han = (!h.isOpen()) ? han+6 : han+5;
-        }
+            int han = (h.isOpen()) ? 5 : 6;
+            h.hanList.put(Yaku.Name.CHINITSU, han);        }
         if(h.kokushiMusou){
-            h.hanList.put("Kokushi Musou",13);
-            han+=13;
+            h.hanList.put(Yaku.Name.KOKUSHIMUSOU, 13);
         } else if(h.kokushiMusou13wait){
-            h.hanList.put("Kokushi Musou [13 wait]",26);
-            han+=26;
+            h.hanList.put(Yaku.Name.KOKUSHIMUSOU13SIDED, 26);
         }
         if(h.suuAnkou){
-            h.hanList.put("Suu Ankou",13);
-            han+=13;
+            h.hanList.put(Yaku.Name.SUUANKOU, 13);
         } else if(h.suuAnkouTanki){
-            h.hanList.put("Suu Ankou [Tanki]",26);
-            han+=26;
+            h.hanList.put(Yaku.Name.SUUANKOUTANKI, 26);
         }
         if(h.daisangen){
-            h.hanList.put("Daisangen",13);
-            han=+13;
+            h.hanList.put(Yaku.Name.DAISANGEN, 13);
         }
         if(h.shousuushii){
-            h.hanList.put("Shousuushii",13);
-            han+=13;
+            h.hanList.put(Yaku.Name.SHOUSUUSHII, 13);
         }
         if(h.daisuushii){
-            h.hanList.put("Daisuushii",26);
-            han+=26;
+            h.hanList.put(Yaku.Name.DAISUUSHII, 26);
         }
         if(h.tsuuiisou){
-            h.hanList.put("Tsuuiisou",13);
-            han+=13;
+            h.hanList.put(Yaku.Name.TSUUIISOU, 13);
         }
         if(h.daichisei){
-            h.hanList.put("Daichisei",26);
-            han+=26;
+            h.hanList.put(Yaku.Name.DAICHISEI, 26);
         }
         if(h.chinroutou){
-            h.hanList.put("Chinroutou",13);
-            han+=13;
+            h.hanList.put(Yaku.Name.CHINROUTOU, 13);
         }
         if(h.ryuuiisou){
-            h.hanList.put("Ryuuiisou",13);
-            han+=13;
+            h.hanList.put(Yaku.Name.RYUUIISOU, 13);
         }
         if(h.chuurenPoutou){
-            h.hanList.put("Chuuren Poutou",13);
-            han+=13;
+            h.hanList.put(Yaku.Name.CHUURENPOUTOU, 13);
         } else if(h.chuurenPoutou9wait){
-            h.hanList.put("Chuuren Poutou [9 wait]",26);
-            han+=26;
+            h.hanList.put(Yaku.Name.CHUURENPOUTOU9SIDED, 26);
         }
         if(h.suuKantsu){
-            h.hanList.put("Suu Kantsu",13);
-            han+=13;
+            h.hanList.put(Yaku.Name.SUUKANTSU, 13);
         }
         if(h.sanrenkou){
-            h.hanList.put("San Renkou",2);
-            han+=2;
+            h.hanList.put(Yaku.Name.SANRENKOU, 2);
         }
         if(h.suurenkou){
-            h.hanList.put("Suu Renkou",13);
-            han+=13;
+            h.hanList.put(Yaku.Name.SUURENKOU, 13);
         }
         if(h.daiSharin){
-            h.hanList.put("Daisharin",13);
-            han+=13;
+            h.hanList.put(Yaku.Name.DAISHARIN, 13);
         }
         if(h.shiisanpuuta){
-            h.hanList.put("Shiisanpuuta",13);
-            han+=13;
+            h.hanList.put(Yaku.Name.SHIISANPUUTA, 13);
         }
         if(h.shiisuupuuta){
-            h.hanList.put("Shiisuupuuta",13);
-            han+=13;
+            h.hanList.put(Yaku.Name.SHIISUUPUUTA, 13);
         }
         if(h.parenchan){
-            h.hanList.put("Parenchan",13);
-            han+=13;
+            h.hanList.put(Yaku.Name.PARENCHAN, 13);
         }
         if(h.nagashiMangan){
-            h.hanList.put("Nagashi Mangan",5);
-            han=5;
-        }
-        if(h.dora!=0){
-            h.hanList.put("Dora",h.dora);
-            han+=h.dora;
+            h.hanList.put(Yaku.Name.NAGASHI, 5);
         }
 
-        h.han = han;
+        if(h.dora!=0){
+            h.hanList.put(Yaku.Name.DORA, h.dora);
+        }
+
+        int hanTotal = 0;
+        for(int i : h.hanList.values() ){
+            hanTotal += i;
+        }
+        h.han = hanTotal;
     }
     private void countFu(Hand h){
         if( h.hasYakuman() || h.nagashiMangan ){

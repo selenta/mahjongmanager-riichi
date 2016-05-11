@@ -11,6 +11,7 @@ import android.graphics.drawable.ShapeDrawable;
 import android.graphics.drawable.shapes.RoundRectShape;
 import android.graphics.drawable.shapes.Shape;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.mahjongmanager.riichi.MainActivity;
 import com.mahjongmanager.riichi.Meld;
