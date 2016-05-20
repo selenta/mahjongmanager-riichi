@@ -2,11 +2,14 @@ package com.mahjongmanager.riichi.components;
 
 import android.app.Dialog;
 import android.content.Context;
+import android.graphics.Paint;
 import android.util.AttributeSet;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.GridLayout;
 import android.widget.LinearLayout;
 import android.widget.ScrollView;
 import android.widget.TableLayout;
@@ -20,6 +23,7 @@ import com.mahjongmanager.riichi.R;
 import com.mahjongmanager.riichi.ScoreCalculator;
 import com.mahjongmanager.riichi.Tile;
 import com.mahjongmanager.riichi.Yaku;
+import com.mahjongmanager.riichi.utils.FuHelper;
 import com.mahjongmanager.riichi.utils.Utils;
 
 import java.util.ArrayList;
@@ -85,20 +89,123 @@ public class ScoreScreen extends LinearLayout implements View.OnClickListener {
     }
     private void createPopup(ScoreDetail scoreDetail){
         if( scoreDetail.isHan() ){
-            Dialog dialog = new Dialog(getContext());
-            ScrollView sv = new ScrollView(getContext());
-
-            YakuDescription yd = new YakuDescription(getContext());
-            yd.setYaku(scoreDetail.yaku);
-            yd.showLabels();
-            yd.hideEnglishName();
-
-            sv.addView(yd);
-            dialog.setContentView(sv);
-            dialog.setTitle(scoreDetail.yaku.english);
-
-            dialog.show();          // TODO remove ability to select riichi on open hand
+            createHanPopup(scoreDetail);
+        } else {
+            createFuPopup(scoreDetail);
         }
+    }
+    private void createHanPopup(ScoreDetail scoreDetail){
+        Dialog dialog = new Dialog(getContext());
+        ScrollView sv = new ScrollView(getContext());
+
+        YakuDescription yd = new YakuDescription(getContext());
+        yd.setYaku(scoreDetail.yaku);
+        yd.showLabels();
+        yd.hideEnglishName();
+
+        sv.addView(yd);
+        dialog.setContentView(sv);
+        dialog.setTitle(scoreDetail.yaku.english);
+
+        dialog.show();
+    }
+    private void createFuPopup(ScoreDetail scoreDetail){
+        Dialog dialog = new Dialog(getContext());
+        LinearLayout container = new LinearLayout(getContext());
+        container.setOrientation(VERTICAL);
+        container.setLayoutParams(new LinearLayout.LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT));
+        int fuPad = 50;
+        container.setPadding(fuPad,fuPad,fuPad,fuPad);
+        container.setGravity(Gravity.CENTER_HORIZONTAL);
+
+        if( scoreDetail.meld!=null ){
+            Hand hand = new Hand(new ArrayList<Tile>());
+            hand.setMeld(scoreDetail.meld.getTiles());
+            hand.tiles.addAll(scoreDetail.meld.getTiles());
+            HandDisplay handDisplay = new HandDisplay(getContext());
+            handDisplay.setHand(hand);
+            handDisplay.setIncludeWinningTile(true);
+
+            container.addView(handDisplay);
+        }
+
+        if( scoreDetail.meld!=null ){
+            String generalDesc = "Melds that are not sequences have a base Fu value of 2, and can increase depending on whether the meld is open/closed, simples/honors, or is a triplet/quad.";
+            TextView tv = new TextView(context);
+            tv.setText(generalDesc);
+            tv.setLayoutParams(new LinearLayout.LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT));
+            tv.setPadding(0,0,0,30);
+            container.addView(tv);
+
+            GridLayout fuTable = buildFuTable(scoreDetail);
+            container.addView(fuTable);
+        } else {
+            TextView description = new TextView(getContext());
+            container.addView(description);
+            String dStr = FuHelper.getDescription(scoreDetail.toString());
+            description.setText(dStr);
+        }
+
+        dialog.setContentView(container);
+        dialog.setTitle(scoreDetail.toString());
+
+        dialog.show();
+    }
+    private GridLayout buildFuTable(ScoreDetail scoreDetail){
+        GridLayout grid = new GridLayout(context);
+        grid.setColumnCount(2);
+
+        grid.addView(newTextLabel("Base Value", false));
+        grid.addView(newTextValue("2", false));
+
+        boolean isOpen = !scoreDetail.meld.isClosed();
+        grid.addView(newTextLabel("Closed", isOpen));
+        grid.addView(newTextValue("x2", isOpen));
+
+        boolean isSimples = !Utils.containsHonorsOrTerminals(scoreDetail.meld.getTiles());
+        grid.addView(newTextLabel("Honors or Terminals", isSimples));
+        grid.addView(newTextValue("x2", isSimples));
+
+        boolean isTriplet = !scoreDetail.meld.isKan();
+        grid.addView(newTextLabel("Set of 4 Tiles", isTriplet));
+        grid.addView(newTextValue("x4", isTriplet));
+
+        View line = new View(context);
+        line.setMinimumHeight(2);
+        GridLayout.LayoutParams lineParams = new GridLayout.LayoutParams();
+        lineParams.height = 4;
+        lineParams.columnSpec = GridLayout.spec(GridLayout.UNDEFINED,2);
+        line.setLayoutParams(lineParams);
+        line.setBackgroundColor(0xFFAAAAAA);
+        grid.addView(line);
+
+        TextView totalLabel = new TextView(context);
+        totalLabel.setText("Total");
+        totalLabel.setPadding(300,0,0,0);
+        grid.addView(totalLabel);
+        grid.addView(newTextValue(scoreDetail.value, false));
+
+        return grid;
+    }
+    private TextView newTextLabel(String s, boolean strikethrough){
+        TextView tv = newTextView(s, strikethrough);
+        tv.setPadding(125,0,0,0);
+        return tv;
+    }
+    private TextView newTextValue(String s, boolean strikethrough){
+        TextView tv = newTextView(s, strikethrough);
+        tv.setWidth(150);
+        tv.setGravity(Gravity.RIGHT);
+        return tv;
+    }
+    private TextView newTextView(String s, boolean strikethrough){
+        TextView tv = new TextView(context);
+        tv.setText(s);
+        if( strikethrough ){
+            tv.setPaintFlags(tv.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
+            tv.setTextColor(0x77000000);
+        }
+        return tv;
     }
 
     /////////////////////////////////////////////////////////////////////////

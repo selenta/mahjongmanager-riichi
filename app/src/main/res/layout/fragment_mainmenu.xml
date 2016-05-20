@@ -10,7 +10,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceLarge"
-        android:text="Main Menu"
+        android:text="Mahjong Manager"
         android:id="@+id/textView8"
         android:textSize="44sp"
         android:textStyle="italic"
@@ -116,7 +116,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textAppearance="?android:attr/textAppearanceSmall"
-            android:text="v0.80"
+            android:text="v0.81"
             android:id="@+id/textView"
             android:layout_gravity="center_horizontal"
             android:longClickable="true"
@@ -143,7 +143,15 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textAppearance="?android:attr/textAppearanceSmall"
-            android:text="- Can hover over yaku for details"
+            android:text="- Add prettified romaji display names"
+            android:id="@+id/textView95"
+            android:layout_gravity="left|center_horizontal" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:text="- Click on Fu doesn&apos;t display winning tile"
             android:id="@+id/textView99"
             android:layout_gravity="left|center_horizontal" />
 

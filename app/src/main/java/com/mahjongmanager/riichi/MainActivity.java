@@ -6,7 +6,6 @@ import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 
-import com.mahjongmanager.riichi.components.HandDisplay;
 import com.mahjongmanager.riichi.handcalculator.HandCalculatorFragment_1Keyboard;
 import com.mahjongmanager.riichi.handcalculator.HandCalculatorFragment_2WinningTile;
 import com.mahjongmanager.riichi.handcalculator.HandCalculatorFragment_3OtherInfo;

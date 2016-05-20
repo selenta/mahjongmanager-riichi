@@ -2,6 +2,7 @@ package com.mahjongmanager.riichi;
 
 import android.util.Log;
 
+import com.mahjongmanager.riichi.utils.FuHelper;
 import com.mahjongmanager.riichi.utils.Utils;
 
 import java.util.ArrayList;
@@ -435,133 +436,13 @@ public class ScoreCalculator {
         h.han = hanTotal;
     }
     private void countFu(Hand h){
-        if( h.hasYakuman() || h.nagashiMangan ){
-            return;
-        }
+        FuHelper.populateFuList(h);
 
-        // (0) Fu starts at 20
-        h.fuList.put("Fuutei", 20);
-        Integer fu = 20;
-
-        // (1) Set fu for chiitoitsu
-        if( h.chiiToitsu ){
-            h.fuList.clear();
-            h.fuList.put("Chiitoitsu", 25);
-            h.fu = 25;
-            return;
+        int fuTotal = 0;
+        for(int i : h.fuList.values() ){
+            fuTotal += i;
         }
-
-        // (2,3,4) Add fu for closed hand, then melds/pair, then wait
-        fu += fuFromClosedHand(h);
-        fu += fuFromPair(h);
-        fu += fuFromMelds(h);
-        fu += fuFromWait(h);
-
-        // (5) Add fu for tsumo (pinfu exception)
-        if( h.pinfu ){
-            boolean isClosed = h.fuList.containsKey("Menzen-Kafu");
-            h.fuList.clear();
-            h.fuList.put( "Pinfu", 20);
-            fu = 20;
-            if( isClosed ){
-                h.fuList.put("Menzen-Kafu", 10);
-                fu += 10;
-            }
-        } else if( h.selfDrawWinningTile ) {
-            h.fuList.put( "Self Draw Winning Tile", 2);
-            fu += 2;
-        }
-
-        // (6) Set fu for open pinfu
-        if( h.fuList.size()==1 && !h.pinfu ){
-            h.fuList.put( "Open Pinfu", 10);
-            fu += 10;
-        }
-
-        h.fu = fu;
-    }
-    private int fuFromClosedHand(Hand h){
-        int closedFu = 0;
-        Boolean isOpen = false;
-        for( Tile t : h.tiles ){
-            if( !t.winningTile ){
-                if( t.revealedState!= Tile.RevealedState.NONE && t.revealedState!= Tile.RevealedState.CLOSEDKAN ){
-                    isOpen = true;
-                }
-            }
-        }
-        if( !isOpen && h.getWinningTile()!=null && h.getWinningTile().calledFrom!=Tile.CalledFrom.NONE ){
-            h.fuList.put("Menzen-Kafu", 10);
-            closedFu += 10;
-        }
-        return closedFu;
-    }
-    private int fuFromPair(Hand h){
-        int pairFu = 0;
-        if( h.pair.firstTile().dragon!=null ){
-            switch (h.pair.firstTile().dragon){
-                case WHITE:
-                    h.fuList.put( "White Dragon Pair", 2);
-                    break;
-                case GREEN:
-                    h.fuList.put( "Green Dragon Pair", 2);
-                    break;
-                case RED:
-                    h.fuList.put( "Red Dragon Pair", 2);
-                    break;
-            }
-            pairFu += 2;
-        } else if( h.pair.firstTile().wind==h.prevailingWind ){
-            h.fuList.put( "Prevailing Wind", 2);
-            pairFu += 2;
-        }
-        if( h.pair.firstTile().wind==h.playerWind ){
-            h.fuList.put( "Seat Wind", 2);
-            pairFu += 2;        // Double counting here for pairs of winds not allowed in all rulesets
-        }
-        return pairFu;
-    }
-    private int fuFromMelds(Hand h){
-        int allMeldsFu = 0;
-        allMeldsFu += fuFromMeld( h, h.meld1, "Meld 1" );
-        allMeldsFu += fuFromMeld( h, h.meld2, "Meld 2" );
-        allMeldsFu += fuFromMeld( h, h.meld3, "Meld 3" );
-        allMeldsFu += fuFromMeld( h, h.meld4, "Meld 4" );
-        return allMeldsFu;
-    }
-    private int fuFromMeld( Hand h, Meld meld, String label ){
-        Integer meldFu = 0;
-        if( !meld.isChii() ){
-            meldFu += 2;
-            meldFu = (meld.isClosed())                                       ? meldFu*2 : meldFu;
-            meldFu = (Utils.containsHonorsOrTerminalsOnly(meld.getTiles()))  ? meldFu*2 : meldFu;
-            meldFu = (meld.isKan())                                          ? meldFu*4 : meldFu;
-            h.fuList.put( label, meldFu);
-        }
-        return meldFu;
-    }
-    private int fuFromWait(Hand h){
-        int waitFu = 0;
-        Meld winningMeld = h.getWinningMeld();
-        if( winningMeld!=null && winningMeld.isPair() ){
-            h.fuList.put( "Pair Wait", 2);
-            waitFu += 2;
-        } else if( winningMeld!=null && winningMeld.isChii() ){
-            if( winningMeld.thirdTile().winningTile && winningMeld.firstTile().number==1 && winningMeld.secondTile().number==2 && winningMeld.thirdTile().number==3 ){
-                // Wait on a 3 for a 1-2-3 meld
-                h.fuList.put( "Single-sided Wait", 2);
-                waitFu += 2;
-            } else if( winningMeld.firstTile().winningTile && winningMeld.firstTile().number==7 && winningMeld.secondTile().number==8 && winningMeld.thirdTile().number==9 ){
-                // Wait on a 7 for a 7-8-9 meld
-                h.fuList.put( "Single-sided Wait", 2);
-                waitFu += 2;
-            } else if( winningMeld.secondTile().winningTile ){
-                // Wait on an inside tile for a chii
-                h.fuList.put( "Inside Wait", 2);
-                waitFu += 2;
-            }
-        }
-        return waitFu;
+        h.fu = fuTotal;
     }
 
     public static Integer scoreBasePoints( Integer han, Integer fu ){
@@ -747,7 +628,7 @@ public class ScoreCalculator {
     // Standard Yaku
     private void checkPinfu(Hand h){
         //If no winning tile has been set, it's ok to still to count this as pinfu
-        if( h.isOpen() || fuFromMelds(h)!=0 || fuFromPair(h)!=0 || fuFromWait(h)!=0 ){
+        if( FuHelper.hasFu(h) ){
             h.pinfu = false;
             return;
         }
