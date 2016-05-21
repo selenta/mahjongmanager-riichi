@@ -3,6 +3,7 @@ package com.mahjongmanager.riichi.components;
 import android.app.Dialog;
 import android.content.Context;
 import android.graphics.Paint;
+import android.graphics.Typeface;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.Gravity;
@@ -77,7 +78,9 @@ public class ScoreScreen extends LinearLayout implements View.OnClickListener {
         scoreValue.setVisibility(GONE);
     }
 
-
+    ////////////////////////////////////////////////////////////////////////
+    ////////////////////////        On Click        ////////////////////////
+    ////////////////////////////////////////////////////////////////////////
     @Override
     public void onClick(View v){
         for(ScoreDetail sd : scoreDetailList){
@@ -123,8 +126,8 @@ public class ScoreScreen extends LinearLayout implements View.OnClickListener {
             hand.setMeld(scoreDetail.meld.getTiles());
             hand.tiles.addAll(scoreDetail.meld.getTiles());
             HandDisplay handDisplay = new HandDisplay(getContext());
+            handDisplay.setState(HandDisplay.State.FU_DISPLAY);
             handDisplay.setHand(hand);
-            handDisplay.setIncludeWinningTile(true);
 
             container.addView(handDisplay);
         }
@@ -155,8 +158,12 @@ public class ScoreScreen extends LinearLayout implements View.OnClickListener {
         GridLayout grid = new GridLayout(context);
         grid.setColumnCount(2);
 
-        grid.addView(newTextLabel("Base Value", false));
-        grid.addView(newTextValue("2", false));
+        TextView baseValLabel = newTextLabel("Base Value", false);
+        baseValLabel.setTypeface(null, Typeface.ITALIC);
+        grid.addView(baseValLabel);
+        TextView baseValValue = newTextValue("2", false);
+        baseValValue.setTypeface(null, Typeface.ITALIC);
+        grid.addView(baseValValue);
 
         boolean isOpen = !scoreDetail.meld.isClosed();
         grid.addView(newTextLabel("Closed", isOpen));
@@ -180,7 +187,7 @@ public class ScoreScreen extends LinearLayout implements View.OnClickListener {
         grid.addView(line);
 
         TextView totalLabel = new TextView(context);
-        totalLabel.setText("Total");
+        totalLabel.setText("Total Fu");
         totalLabel.setPadding(300,0,0,0);
         grid.addView(totalLabel);
         grid.addView(newTextValue(scoreDetail.value, false));
@@ -369,7 +376,7 @@ public class ScoreScreen extends LinearLayout implements View.OnClickListener {
             } else if(fuName!=null) {
                 s = fuName;
             } else {
-                s = yaku.romaji;
+                s = Utils.prettifyName(yaku.romaji);
             }
             return s;
         }

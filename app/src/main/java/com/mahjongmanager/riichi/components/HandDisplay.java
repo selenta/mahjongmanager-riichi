@@ -2,6 +2,7 @@ package com.mahjongmanager.riichi.components;
 
 import android.content.Context;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -28,9 +29,17 @@ public class HandDisplay extends LinearLayout implements View.OnClickListener {
     private LinearLayout winningTileContainer;
 
     private Hand hand;
-    private Boolean includeWinningTile = true;
-
     private List<TileDisplay> tileList = new ArrayList<>();
+
+    public enum State {
+        FU_DISPLAY, HAND_CALCULATOR, SPEED_QUIZ, YAKU_DESCRIPTION
+    }
+    private State state;
+
+    private Boolean isEditable;
+    private Boolean separateClosedMelds;
+    private Boolean includeWinningTile;
+    private Boolean separateWinningTile;
 
     /////////////////////////////////////////
     ///////////   Constructors   ////////////
@@ -55,10 +64,64 @@ public class HandDisplay extends LinearLayout implements View.OnClickListener {
         openTilesContainer   = (LinearLayout) findViewById(R.id.openTilesContainer);
         winningTileContainer = (LinearLayout) findViewById(R.id.winningTileContainer);
 
-        //TODO If component is configured incorrectly, display error message, instead of blank
-        if(context==null){
-            return;
+        setState(State.YAKU_DESCRIPTION);
+    }
+
+    /**
+     * FU_DISPLAY
+     *     SeparateClosedMelds - no
+     *     Separate WinningTile - no
+     *
+     * HAND_CALCULATOR
+     *     SeparateClosedMelds - no
+     *     Separate WinningTile - no
+     *
+     * SPEED_QUIZ
+     *     SeparateClosedMelds - yes
+     *     Separate WinningTile - yes
+     *
+     * YAKU_DESCRIPTION
+     *     SeparateClosedMelds - yes
+     *     Separate WinningTile - yes
+     *
+     * Only hide winning tile during SpeedQuiz
+     * Only editable during HAND_CALCULATOR
+     * Always show open melds in their true form
+     */
+    public void setState(State s, HandKeyboard handKeyboard){
+        switch (s){
+            case FU_DISPLAY:
+                isEditable = false;
+                includeWinningTile = true;
+                separateClosedMelds = false;
+                separateWinningTile = false;
+                break;
+            case HAND_CALCULATOR:
+                if( handKeyboard==null ){
+                    Log.e("setHandDisplayState", "Attempted to set state to HAND_CALCULATOR without a keyboard.");
+                }
+                parentKeyboard = handKeyboard;
+                isEditable = true;
+                includeWinningTile = true;
+                separateClosedMelds = false;
+                separateWinningTile = false;
+                break;
+            case SPEED_QUIZ:
+                isEditable = false;
+                includeWinningTile = false;
+                separateClosedMelds = true;
+                separateWinningTile = true;
+                break;
+            case YAKU_DESCRIPTION:
+                isEditable = false;
+                includeWinningTile = true;
+                separateClosedMelds = true;
+                separateWinningTile = true;
+                break;
         }
+    }
+    public void setState(State s){
+        setState(s, null);
     }
 
     ///////////////////////////////////////////
@@ -66,7 +129,7 @@ public class HandDisplay extends LinearLayout implements View.OnClickListener {
     ///////////////////////////////////////////
     @Override
     public void onClick(View v) {
-        if( parentKeyboard!=null && v.getClass()==ImageView.class ){
+        if( isEditable && v.getClass()==ImageView.class ){
             TileDisplay td = getTileDisplay((ImageView) v);
             if( td!=null ){
                 deleteTile(td);
@@ -89,18 +152,6 @@ public class HandDisplay extends LinearLayout implements View.OnClickListener {
         parentKeyboard.setHand(hand);
     }
 
-    /**
-     * Change whether or not the HandDisplay will include the winning tile (only set to false
-     * if you intend to manually display the winning tile somewhere else). Defaults to true.
-     * @param bool Display winning tile
-     */
-    public void setIncludeWinningTile(boolean bool){
-        includeWinningTile = bool;
-    }
-    public void setParentKeyboard(HandKeyboard handKeyboard){
-        parentKeyboard = handKeyboard;
-    }
-
     public Hand getHand(){
         return hand;
     }
@@ -112,37 +163,41 @@ public class HandDisplay extends LinearLayout implements View.OnClickListener {
         if( hand==null ){
             return;
         }
-        // Only display complex hand if the hand is a valid winning hand of normal structure
-        if( hand.hasAbnormalStructure() || !hand.validateCompleteState() ){
-            displaySimpleHand();
-        } else {
-            displayComplexHand();
-        }
-    }
-    /**
-     * Adds the tiles to HandDisplay with no spacing or distinction for open/called/winning-tile
-     */
-    private void displaySimpleHand(){
         closedTilesContainer.removeAllViews();
         openTilesContainer.removeAllViews();
         winningTileContainer.removeAllViews();
 
+        if( separateClosedMelds ){
+            displayComplexHand();
+        } else {
+            displaySimpleHand();
+        }
+    }
+
+    private void displaySimpleHand(){
         List<Tile> usedTiles = new ArrayList<>();
-        if( hand.meld1.size()!=0 ){
+        if( hand.meld1.size()!=0 && !hand.meld1.isClosed() ){
             addSetComplex(hand.meld1);
             usedTiles.addAll(hand.meld1.getTiles());
         }
-        if( hand.meld2.size()!=0 ){
+        if( hand.meld2.size()!=0 && !hand.meld2.isClosed()  ){
             addSetComplex(hand.meld2);
             usedTiles.addAll(hand.meld2.getTiles());
         }
-        if( hand.meld3.size()!=0 ){
+        if( hand.meld3.size()!=0 && !hand.meld3.isClosed() ){
             addSetComplex(hand.meld3);
             usedTiles.addAll(hand.meld3.getTiles());
         }
-        if( hand.meld4.size()!=0 ){
+        if( hand.meld4.size()!=0 && !hand.meld4.isClosed() ){
             addSetComplex(hand.meld4);
             usedTiles.addAll(hand.meld4.getTiles());
+        }
+
+        if( includeWinningTile && separateWinningTile ){
+            usedTiles.add(hand.getWinningTile());
+            addTileWinningTile();
+        } else if( !includeWinningTile ){
+            usedTiles.add(hand.getWinningTile());
         }
 
         for( Tile t : hand.tiles ){
@@ -168,7 +223,6 @@ public class HandDisplay extends LinearLayout implements View.OnClickListener {
      *     <li> Closed Kans should show the back of the tile on tiles 1 and 4
      *     <li> AddedKan appear identical to OpenPon, with additional tile placed above called tile
      * </ul>
-     *
      */
     private void displayComplexHand() {
         addSetComplex(hand.meld1);
@@ -176,7 +230,7 @@ public class HandDisplay extends LinearLayout implements View.OnClickListener {
         addSetComplex(hand.meld3);
         addSetComplex(hand.meld4);
         addClosedSet( hand.pair);
-        if( includeWinningTile ){
+        if( includeWinningTile && separateWinningTile ){
             addTileWinningTile();
         }
     }
@@ -224,7 +278,14 @@ public class HandDisplay extends LinearLayout implements View.OnClickListener {
         if( closedTilesContainer.getChildCount()!=0 ){
             addSpacer(closedTilesContainer, 8);
         }
-        List<Tile> remainderSet = withoutTile(meld.getTiles(), hand.getWinningTile());
+
+        List<Tile> remainderSet;
+        if( separateWinningTile ){
+            remainderSet = withoutTile(meld.getTiles(), hand.getWinningTile());
+        } else {
+            remainderSet = meld.getTiles();
+        }
+
         for( Tile t : remainderSet ){
             addTileClosed(t);
         }
@@ -340,9 +401,12 @@ public class HandDisplay extends LinearLayout implements View.OnClickListener {
         openTilesContainer.addView(container);
     }
     private void addTileWinningTile(){
+        Tile winningTile = hand.getWinningTile();
+        if( winningTile==null ){
+            return;
+        }
         addSpacer(winningTileContainer, 25);
 
-        Tile winningTile = hand.getWinningTile();
         TileDisplay tileDisplay = new TileDisplay(winningTile, false);
         tileList.add(tileDisplay);
 

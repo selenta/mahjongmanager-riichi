@@ -36,7 +36,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textAppearance="?android:attr/textAppearanceSmall"
-                android:text="NOTE: Most of these configuration options have not been implemented yet"
+                android:text="NOTE: Many of these configuration options have not been fully implemented yet"
                 android:id="@+id/textView102"
                 android:layout_gravity="center_horizontal"
                 android:layout_marginLeft="40dp"
@@ -106,7 +106,8 @@
                 android:layout_marginLeft="50dp"
                 android:layout_marginRight="50dp"
                 android:layout_marginTop="20dp"
-                android:onClick="goToOptionsRuleset" />
+                android:onClick="goToOptionsRuleset"
+                android:enabled="false" />
 
         </TableLayout>
     </ScrollView>

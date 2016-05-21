@@ -90,7 +90,7 @@ public class SpeedQuizFragment_2ScoreHand extends Fragment implements View.OnCli
         fu = 30;
         ((MainActivity)getActivity()).setCurrentFuGuess(fu);
 
-        handDisplay.setIncludeWinningTile(false);
+        handDisplay.setState(HandDisplay.State.SPEED_QUIZ);
         handDisplay.setHand(fragHand);
 
         prevailingWindLabel.setText(fragHand.getString(fragHand.prevailingWind));

@@ -116,7 +116,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textAppearance="?android:attr/textAppearanceSmall"
-            android:text="v0.81"
+            android:text="v0.82"
             android:id="@+id/textView"
             android:layout_gravity="center_horizontal"
             android:longClickable="true"
@@ -135,30 +135,6 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textAppearance="?android:attr/textAppearanceSmall"
-            android:text="- Get UI/UX Review"
-            android:id="@+id/textView98"
-            android:layout_gravity="left|center_horizontal" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textAppearance="?android:attr/textAppearanceSmall"
-            android:text="- Add prettified romaji display names"
-            android:id="@+id/textView95"
-            android:layout_gravity="left|center_horizontal" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textAppearance="?android:attr/textAppearanceSmall"
-            android:text="- Click on Fu doesn&apos;t display winning tile"
-            android:id="@+id/textView99"
-            android:layout_gravity="left|center_horizontal" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textAppearance="?android:attr/textAppearanceSmall"
             android:text="- Banner Ads"
             android:id="@+id/textView97"
             android:layout_gravity="left|center_horizontal" />
@@ -167,8 +143,16 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textAppearance="?android:attr/textAppearanceSmall"
-            android:text="- Finish Glossary/i18n (v1.2?)"
+            android:text="- Implement Glossary (v1.2?)"
             android:id="@+id/textView96"
+            android:layout_gravity="left|center_horizontal" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:text="- Implement i18n (v1.4?)"
+            android:id="@+id/textView95"
             android:layout_gravity="left|center_horizontal" />
 
     </LinearLayout>
