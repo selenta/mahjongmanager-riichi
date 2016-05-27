@@ -32,17 +32,6 @@
                 android:id="@+id/textView101"
                 android:textAlignment="center" />
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textAppearance="?android:attr/textAppearanceSmall"
-                android:text="NOTE: Many of these configuration options have not been fully implemented yet"
-                android:id="@+id/textView102"
-                android:layout_gravity="center_horizontal"
-                android:layout_marginLeft="40dp"
-                android:layout_marginRight="40dp"
-                android:textStyle="italic" />
-
             <TableRow
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -96,6 +85,98 @@
                     android:text="Large UI"
                     android:id="@+id/tileKeyboadCheckbox"
                     android:checked="false" />
+            </TableRow>
+
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@android:color/darker_gray"/>
+
+            <TextView
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:text="Speed Quiz"
+                android:id="@+id/textView84"
+                android:textAlignment="center" />
+
+            <TableRow
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingBottom="15dp" >
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="?android:attr/textAppearanceMedium"
+                    android:text="Random Round/Seat Winds"
+                    android:id="@+id/textView102"
+                    android:textColor="#000000" />
+
+                <CheckBox
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Enabled"
+                    android:checked="false"
+                    android:id="@+id/randomWindsCheckbox" />
+            </TableRow>
+
+            <TableRow
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingBottom="15dp" >
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="?android:attr/textAppearanceMedium"
+                    android:text="Max Number of Hands"
+                    android:id="@+id/textView98"
+                    android:textColor="#000000" />
+
+                <RadioGroup
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/speedQuizMaxHands" >
+
+                    <RadioButton
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="10"
+                        android:id="@+id/speedQuizMaxHands10"
+                        android:checked="true" />
+
+                    <RadioButton
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="20"
+                        android:id="@+id/speedQuizMaxHands20"
+                        android:checked="false" />
+
+                </RadioGroup>
+            </TableRow>
+
+            <TableRow
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingBottom="15dp" >
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="?android:attr/textAppearanceMedium"
+                    android:text="Separate Closed Melds"
+                    android:id="@+id/textView99"
+                    android:textColor="#000000" />
+
+                <CheckBox
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Separated"
+                    android:checked="true"
+                    android:id="@+id/separateClosedMeldsCheckbox" />
+
             </TableRow>
 
             <Button

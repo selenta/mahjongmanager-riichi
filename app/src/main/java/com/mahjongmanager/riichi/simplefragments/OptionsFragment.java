@@ -16,11 +16,17 @@ import com.mahjongmanager.riichi.R;
 public class OptionsFragment extends Fragment implements View.OnClickListener {
 
     private CheckBox tileKeyboardCheckbox;
+    private CheckBox randomWindsCheckbox;
+    private CheckBox separateClosedMeldsCheckbox;
 
     private RadioGroup terminology;
+    private RadioGroup speedQuizMaxHands;
 
     private String TERMINOLOGY = "Terminology";
     private String KEYBOARD_TILE_SIZE = "KeyboardSmallTiles";
+    private String SQ_RANDOM_WINDS = "SQRandomWinds";
+    private String SQ_MAX_HANDS = "SQMaxHands";
+    private String SQ_SEPARATE_CLOSED_MELDS = "SQSeparateClosedMelds";
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -35,6 +41,9 @@ public class OptionsFragment extends Fragment implements View.OnClickListener {
     private void loadSavedSettings(){
         loadTerminology();
         loadSetting(tileKeyboardCheckbox, KEYBOARD_TILE_SIZE, false);
+        loadSetting(randomWindsCheckbox, SQ_RANDOM_WINDS, false);
+        loadMaxHands();
+        loadSetting(separateClosedMeldsCheckbox, SQ_SEPARATE_CLOSED_MELDS, true);
     }
     private void loadSetting( CheckBox cBox, String settingName, boolean def ){
         SharedPreferences sharedPref = getActivity().getPreferences(Context.MODE_PRIVATE);
@@ -51,6 +60,16 @@ public class OptionsFragment extends Fragment implements View.OnClickListener {
             child.setChecked(isCorrect);
         }
     }
+    private void loadMaxHands(){
+        SharedPreferences sharedPref = getActivity().getPreferences(Context.MODE_PRIVATE);
+        Integer val = sharedPref.getInt(SQ_MAX_HANDS, 10);
+
+        for( int i=0; i<speedQuizMaxHands.getChildCount(); i++ ){
+            RadioButton child = (RadioButton)speedQuizMaxHands.getChildAt(i);
+            boolean isCorrect = Integer.valueOf(child.getText().toString()).equals(val);
+            child.setChecked(isCorrect);
+        }
+    }
 
     ///////////////////////////////////////////////////////
     //////////////             Main          //////////////
@@ -60,6 +79,12 @@ public class OptionsFragment extends Fragment implements View.OnClickListener {
         switch(v.getId()){
             case R.id.tileKeyboadCheckbox:
                 savePreferenceBoolean(tileKeyboardCheckbox.isChecked(), KEYBOARD_TILE_SIZE);
+                break;
+            case R.id.randomWindsCheckbox:
+                savePreferenceBoolean(randomWindsCheckbox.isChecked(), SQ_RANDOM_WINDS);
+                break;
+            case R.id.separateClosedMeldsCheckbox:
+                savePreferenceBoolean(separateClosedMeldsCheckbox.isChecked(), SQ_SEPARATE_CLOSED_MELDS);
                 break;
         }
     }
@@ -77,6 +102,12 @@ public class OptionsFragment extends Fragment implements View.OnClickListener {
     private void registerCheckBoxes(View myInflatedView){
         tileKeyboardCheckbox = (CheckBox) myInflatedView.findViewById(R.id.tileKeyboadCheckbox);
         tileKeyboardCheckbox.setOnClickListener(this);
+
+        randomWindsCheckbox = (CheckBox) myInflatedView.findViewById(R.id.randomWindsCheckbox);
+        randomWindsCheckbox.setOnClickListener(this);
+
+        separateClosedMeldsCheckbox = (CheckBox) myInflatedView.findViewById(R.id.separateClosedMeldsCheckbox);
+        separateClosedMeldsCheckbox.setOnClickListener(this);
     }
     private void registerRadioGroups(View myInflatedView){
         terminology = (RadioGroup) myInflatedView.findViewById(R.id.terminology);
@@ -86,13 +117,16 @@ public class OptionsFragment extends Fragment implements View.OnClickListener {
                 saveTerminology(group, checkedId);
             }
         });
+
+        speedQuizMaxHands = (RadioGroup) myInflatedView.findViewById(R.id.speedQuizMaxHands);
+        speedQuizMaxHands.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(RadioGroup group, int checkedId) {
+                saveMaxHands(group, checkedId);
+            }
+        });
     }
     private void saveTerminology(RadioGroup group, int checkedId){
-        RadioButton rEnglish = (RadioButton) group.findViewById(R.id.terminologyEnglish);
-        RadioButton rRomaji  = (RadioButton) group.findViewById(R.id.terminologyRomaji);
-        RadioButton rKanji   = (RadioButton) group.findViewById(R.id.terminologyKanji);
-        RadioButton selected = (RadioButton) group.findViewById(checkedId);
-
         switch (checkedId){
             case R.id.terminologyEnglish:
                 savePreference(TERMINOLOGY, "English");
@@ -105,10 +139,26 @@ public class OptionsFragment extends Fragment implements View.OnClickListener {
                 break;
         }
     }
+    private void saveMaxHands(RadioGroup group, int checkedId){
+        switch (checkedId) {
+            case R.id.speedQuizMaxHands10:
+                savePreference(SQ_MAX_HANDS, 10);
+                break;
+            case R.id.speedQuizMaxHands20:
+                savePreference(SQ_MAX_HANDS, 20);
+                break;
+        }
+    }
     private void savePreference(String keyString, String value){
         SharedPreferences settings = getActivity().getPreferences(Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = settings.edit();
         editor.putString(keyString, value);
+        editor.apply();
+    }
+    private void savePreference(String keyString, Integer value){
+        SharedPreferences settings = getActivity().getPreferences(Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = settings.edit();
+        editor.putInt(keyString, value);
         editor.apply();
     }
 }

@@ -32,7 +32,7 @@ public class HandDisplay extends LinearLayout implements View.OnClickListener {
     private List<TileDisplay> tileList = new ArrayList<>();
 
     public enum State {
-        FU_DISPLAY, HAND_CALCULATOR, SPEED_QUIZ, YAKU_DESCRIPTION
+        FU_DISPLAY, HAND_CALCULATOR, SPEED_QUIZ, SPEED_QUIZ_UNSORTED, YAKU_DESCRIPTION
     }
     private State state;
 
@@ -112,6 +112,12 @@ public class HandDisplay extends LinearLayout implements View.OnClickListener {
                 separateClosedMelds = true;
                 separateWinningTile = true;
                 break;
+            case SPEED_QUIZ_UNSORTED:
+                isEditable = false;
+                includeWinningTile = false;
+                separateClosedMelds = false;
+                separateWinningTile = true;
+                break;
             case YAKU_DESCRIPTION:
                 isEditable = false;
                 includeWinningTile = true;
@@ -176,19 +182,19 @@ public class HandDisplay extends LinearLayout implements View.OnClickListener {
 
     private void displaySimpleHand(){
         List<Tile> usedTiles = new ArrayList<>();
-        if( hand.meld1.size()!=0 && !hand.meld1.isClosed() ){
+        if( checkShowMeld(hand.meld1) ){
             addSetComplex(hand.meld1);
             usedTiles.addAll(hand.meld1.getTiles());
         }
-        if( hand.meld2.size()!=0 && !hand.meld2.isClosed()  ){
+        if( checkShowMeld(hand.meld2)  ){
             addSetComplex(hand.meld2);
             usedTiles.addAll(hand.meld2.getTiles());
         }
-        if( hand.meld3.size()!=0 && !hand.meld3.isClosed() ){
+        if( checkShowMeld(hand.meld3) ){
             addSetComplex(hand.meld3);
             usedTiles.addAll(hand.meld3.getTiles());
         }
-        if( hand.meld4.size()!=0 && !hand.meld4.isClosed() ){
+        if( checkShowMeld(hand.meld4)  ){
             addSetComplex(hand.meld4);
             usedTiles.addAll(hand.meld4.getTiles());
         }
@@ -205,6 +211,9 @@ public class HandDisplay extends LinearLayout implements View.OnClickListener {
                 addTileClosed(t);
             }
         }
+    }
+    private boolean checkShowMeld(Meld m) {
+        return separateClosedMelds || m.isKan() || !m.isClosed() && !m.hasWinningTile();
     }
     /**
      * Displaying a completed hand in the most pretty format possible is a bit more complex

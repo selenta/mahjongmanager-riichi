@@ -1,5 +1,7 @@
 package com.mahjongmanager.riichi.speedquiz;
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -20,10 +22,12 @@ import com.mahjongmanager.riichi.Tile;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
+import java.util.Random;
 
 public class SpeedQuizFragment_2ScoreHand extends Fragment implements View.OnClickListener {
-    private List<Integer> hanValues = Arrays.asList(1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13);
+    private List<Integer> hanValues = Arrays.asList(1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 26);
     private List<Integer> fuValues = Arrays.asList( 20,25,30,40,50,60,70,80,90,100,110 );
 
     private TextView secondCounter;
@@ -54,6 +58,7 @@ public class SpeedQuizFragment_2ScoreHand extends Fragment implements View.OnCli
         sampleHand(myInflatedView);
         //generateRandomHand();
 
+        initSettings();
         initHand();
         updateUI();
         return myInflatedView;
@@ -86,11 +91,8 @@ public class SpeedQuizFragment_2ScoreHand extends Fragment implements View.OnCli
         Hand fragHand = ((MainActivity) getActivity()).getCurrentHand();
 
         han = 2;
-        ((MainActivity)getActivity()).setCurrentHanGuess(han);
         fu = 30;
-        ((MainActivity)getActivity()).setCurrentFuGuess(fu);
 
-        handDisplay.setState(HandDisplay.State.SPEED_QUIZ);
         handDisplay.setHand(fragHand);
 
         prevailingWindLabel.setText(fragHand.getString(fragHand.prevailingWind));
@@ -141,6 +143,19 @@ public class SpeedQuizFragment_2ScoreHand extends Fragment implements View.OnCli
         }
         b = b + add;
         return b;
+    }
+
+    private void initSettings(){
+        String SQ_SEPARATE_CLOSED_MELDS = "SQSeparateClosedMelds";
+
+        SharedPreferences sharedPref = getActivity().getPreferences(Context.MODE_PRIVATE);
+        boolean val = sharedPref.getBoolean(SQ_SEPARATE_CLOSED_MELDS, true);
+
+        if( val ){
+            handDisplay.setState(HandDisplay.State.SPEED_QUIZ);
+        } else {
+            handDisplay.setState(HandDisplay.State.SPEED_QUIZ_UNSORTED);
+        }
     }
 
     private void updateUI(){
@@ -197,13 +212,24 @@ public class SpeedQuizFragment_2ScoreHand extends Fragment implements View.OnCli
     }
 
     private void sampleHand(View myInflatedView){
-        if (((MainActivity)getActivity()).getScoredHands().size()<10) {
+        String SQ_MAX_HANDS = "SQMaxHands";
+        String SQ_RANDOM_WINDS = "SQRandomWinds";
+        SharedPreferences sharedPref = getActivity().getPreferences(Context.MODE_PRIVATE);
+        Integer maxHands = sharedPref.getInt(SQ_MAX_HANDS, 10);
+        Boolean randomWinds = sharedPref.getBoolean(SQ_RANDOM_WINDS, false);
+
+        if (((MainActivity)getActivity()).getScoredHands().size()<maxHands) {
             Hand h = new Hand(new ArrayList<Tile>());
 
             while( h.han==0 ){
                 HandGenerator hg = new HandGenerator();
                 Hand hTemp = hg.completelyRandomHand();
                 hg.addOtherYaku(hTemp);
+
+                if( randomWinds ){
+                    hTemp.prevailingWind = getRandomWind();
+                    hTemp.playerWind = getRandomWind();
+                }
 
                 ScoreCalculator sc = new ScoreCalculator(hTemp);
                 if( sc.validatedHand!=null ){
@@ -215,5 +241,9 @@ public class SpeedQuizFragment_2ScoreHand extends Fragment implements View.OnCli
         } else {
             ((MainActivity) getActivity()).speedQuizScoreScreen(myInflatedView);
         }
+    }
+    private Tile.Wind getRandomWind(){
+        List<Tile.Wind> values = Collections.unmodifiableList(Arrays.asList(Tile.Wind.values()));
+        return values.get(new Random().nextInt(Tile.Wind.values().length));
     }
 }
