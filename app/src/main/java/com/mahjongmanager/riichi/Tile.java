@@ -332,6 +332,33 @@ public class Tile {
         }
     }
 
+    public Tile getNextTile(){
+        if( suit==Suit.HONOR && wind!=null ) {
+            switch (wind){
+                case EAST:
+                    return new Tile("South", suit.toString());
+                case SOUTH:
+                    return new Tile("West", suit.toString());
+                case WEST:
+                    return new Tile("North", suit.toString());
+                case NORTH:
+                    return new Tile("East", suit.toString());
+            }
+        } else if( suit==Suit.HONOR ){
+            switch (dragon){
+                case WHITE:
+                    return new Tile("Green", suit.toString());
+                case GREEN:
+                    return new Tile("Red", suit.toString());
+                case RED:
+                    return new Tile("White", suit.toString());
+            }
+        } else if(number==9) {
+            return new Tile(1, suit.toString());
+        }
+        return new Tile(number+1, suit.toString());
+    }
+
     public Integer getImageInt(){
         if( faceDown ){
             return R.drawable.back;
@@ -457,6 +484,4 @@ public class Tile {
         }
         return s;
     }
-
-
 }

@@ -18,6 +18,7 @@ public class OptionsFragment extends Fragment implements View.OnClickListener {
     private CheckBox tileKeyboardCheckbox;
     private CheckBox randomWindsCheckbox;
     private CheckBox separateClosedMeldsCheckbox;
+    private CheckBox addSituationalYakuCheckbox;
 
     private RadioGroup terminology;
     private RadioGroup speedQuizMaxHands;
@@ -25,8 +26,9 @@ public class OptionsFragment extends Fragment implements View.OnClickListener {
     private String TERMINOLOGY = "Terminology";
     private String KEYBOARD_TILE_SIZE = "KeyboardSmallTiles";
     private String SQ_RANDOM_WINDS = "SQRandomWinds";
-    private String SQ_MAX_HANDS = "SQMaxHands";
     private String SQ_SEPARATE_CLOSED_MELDS = "SQSeparateClosedMelds";
+    private String SQ_SITUATIONAL_YAKU = "SQSituationalYaku";
+    private String SQ_MAX_HANDS = "SQMaxHands";
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -42,8 +44,9 @@ public class OptionsFragment extends Fragment implements View.OnClickListener {
         loadTerminology();
         loadSetting(tileKeyboardCheckbox, KEYBOARD_TILE_SIZE, false);
         loadSetting(randomWindsCheckbox, SQ_RANDOM_WINDS, false);
-        loadMaxHands();
         loadSetting(separateClosedMeldsCheckbox, SQ_SEPARATE_CLOSED_MELDS, true);
+        loadSetting(addSituationalYakuCheckbox, SQ_SITUATIONAL_YAKU, false);
+        loadMaxHands();
     }
     private void loadSetting( CheckBox cBox, String settingName, boolean def ){
         SharedPreferences sharedPref = getActivity().getPreferences(Context.MODE_PRIVATE);
@@ -86,6 +89,9 @@ public class OptionsFragment extends Fragment implements View.OnClickListener {
             case R.id.separateClosedMeldsCheckbox:
                 savePreferenceBoolean(separateClosedMeldsCheckbox.isChecked(), SQ_SEPARATE_CLOSED_MELDS);
                 break;
+            case R.id.addSituationalYakuCheckbox:
+                savePreferenceBoolean(addSituationalYakuCheckbox.isChecked(), SQ_SITUATIONAL_YAKU);
+                break;
         }
     }
     private void savePreferenceBoolean(boolean bool, String label){
@@ -108,6 +114,9 @@ public class OptionsFragment extends Fragment implements View.OnClickListener {
 
         separateClosedMeldsCheckbox = (CheckBox) myInflatedView.findViewById(R.id.separateClosedMeldsCheckbox);
         separateClosedMeldsCheckbox.setOnClickListener(this);
+
+        addSituationalYakuCheckbox = (CheckBox) myInflatedView.findViewById(R.id.addSituationalYakuCheckbox);
+        addSituationalYakuCheckbox.setOnClickListener(this);
     }
     private void registerRadioGroups(View myInflatedView){
         terminology = (RadioGroup) myInflatedView.findViewById(R.id.terminology);

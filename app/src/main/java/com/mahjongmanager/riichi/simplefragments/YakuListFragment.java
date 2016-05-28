@@ -135,11 +135,13 @@ public class YakuListFragment extends Fragment {
     private void populateYakuSortedByPattern(){
         List<Yaku> allYaku = ((MainActivity)getContext()).getExampleHands().allYaku;
         for( Yaku y : allYaku ){
-            YakuDescription yd = new YakuDescription(getContext());
-            yd.setYaku(y);
+            if( y.name!= Yaku.Name.DORA ){
+                YakuDescription yd = new YakuDescription(getContext());
+                yd.setYaku(y);
 
-            checkForCategoryByPattern(y, yd);
-            yakuListByPattern.addView(yd);
+                checkForCategoryByPattern(y, yd);
+                yakuListByPattern.addView(yd);
+            }
         }
     }
     private void checkForCategoryByPattern(Yaku y, YakuDescription yd){

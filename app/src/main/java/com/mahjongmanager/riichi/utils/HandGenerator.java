@@ -103,34 +103,34 @@ public class HandGenerator {
 
     public void addOtherYaku(Hand h){
         // Riichi, Ippatsu, Tsumo, Rinshan Haitei, Houtei
-        if( Math.random()<0.5 && !h.isOpen() ){
+        if( Math.random()<0.8 && !h.isOpen() ){
             addRiichi(h);
         }
-        if( Math.random()<0.1 && h.riichi ){
+        if( Math.random()<0.4 && h.riichi ){
             addIppatsu(h);
         }
         if( Math.random()<0.2 && !h.isOpen() ){
             addTsumo(h);
         }
-        boolean hasKan = (h.meld1.size()==4);
-        hasKan = (h.meld2.size() == 4) || hasKan;
-        hasKan = (h.meld3.size() == 4) || hasKan;
-        hasKan = (h.meld4.size() == 4) || hasKan;
-        if( Math.random()<0.003 && hasKan ){
+        if( Math.random()<0.3
+                && h.hasKan()
+                && h.countTile(h.getWinningTile())==1
+                && h.getWinningTile().calledFrom==Tile.CalledFrom.NONE){
             addRinshan(h);
         }
-        if( Math.random()<0.0035 && h.getWinningTile().calledFrom==Tile.CalledFrom.NONE ){
+        if( Math.random()<0.1 && h.getWinningTile().calledFrom==Tile.CalledFrom.NONE ){
             addHaitei(h);
         }
-        if( Math.random()<0.007 && h.getWinningTile().calledFrom!=Tile.CalledFrom.NONE ){
+        if( Math.random()<0.1 && h.getWinningTile().calledFrom!=Tile.CalledFrom.NONE ){
             addHoutei(h);
         }
 
         // Dora indicators
         Integer doraIndicators = 1;
-        doraIndicators = (h.meld1.size()==4) ? doraIndicators+1 : doraIndicators;
-        doraIndicators = (h.meld2.size()==4) ? doraIndicators+1 : doraIndicators;
-        doraIndicators = (h.meld3.size()==4) ? doraIndicators+1 : doraIndicators;
+        doraIndicators = (h.meld1.isKan()) ? doraIndicators+1 : doraIndicators;
+        doraIndicators = (h.meld2.isKan()) ? doraIndicators+1 : doraIndicators;
+        doraIndicators = (h.meld3.isKan()) ? doraIndicators+1 : doraIndicators;
+        doraIndicators = (h.meld4.isKan()) ? doraIndicators+1 : doraIndicators;
         doraIndicators = (Math.random()<0.2) ? doraIndicators+1 : doraIndicators;
         for(int i=0; i<doraIndicators ; i++){
             addDoraIndicator(h);
@@ -350,14 +350,19 @@ public class HandGenerator {
     }
     private void addDoraIndicator(Hand h){
         Tile dora = randomTile(h.getAllUsedTiles());
+        Tile uraDora = randomTile(h.getAllUsedTiles());
         if( h.doraIndicator1==null ){
-            h.doraIndicator1 = dora;
+            h.doraIndicator1    = dora;
+            h.uraDoraIndicator1 = uraDora;
         } else if( h.doraIndicator2==null ){
-            h.doraIndicator2 = dora;
+            h.doraIndicator2    = dora;
+            h.uraDoraIndicator2 = uraDora;
         } else if( h.doraIndicator3==null ){
-            h.doraIndicator3 = dora;
+            h.doraIndicator3    = dora;
+            h.uraDoraIndicator3 = uraDora;
         } else if( h.doraIndicator4==null ){
-            h.doraIndicator4 = dora;
+            h.doraIndicator4    = dora;
+            h.uraDoraIndicator4 = uraDora;
         }
     }
 
@@ -489,12 +494,24 @@ public class HandGenerator {
         h.sort();
     }
 
-    private void addRiichi(Hand h){}
-    private void addIppatsu(Hand h){}
-    private void addTsumo(Hand h){}
-    private void addHaitei(Hand h){}
-    private void addHoutei(Hand h){}
-    private void addRinshan(Hand h){}
+    private void addRiichi(Hand h){
+        h.riichi = true;
+    }
+    private void addIppatsu(Hand h){
+        h.ippatsu = true;
+    }
+    private void addTsumo(Hand h){
+        h.getWinningTile().calledFrom = Tile.CalledFrom.NONE;
+    }
+    private void addHaitei(Hand h){
+        h.haitei = true;
+    }
+    private void addHoutei(Hand h){
+        h.houtei = true;
+    }
+    private void addRinshan(Hand h){
+        h.rinshan = true;
+    }
     private void addChanKan(Hand h){}
     private void addDoubleRiichi(Hand h){}
 

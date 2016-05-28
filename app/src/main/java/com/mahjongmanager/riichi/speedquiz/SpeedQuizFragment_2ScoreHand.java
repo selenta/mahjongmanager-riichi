@@ -223,9 +223,12 @@ public class SpeedQuizFragment_2ScoreHand extends Fragment implements View.OnCli
     private void sampleHand(View myInflatedView){
         String SQ_MAX_HANDS = "SQMaxHands";
         String SQ_RANDOM_WINDS = "SQRandomWinds";
+        String SQ_SITUATIONAL_YAKU = "SQSituationalYaku";
         SharedPreferences sharedPref = getActivity().getPreferences(Context.MODE_PRIVATE);
+
         Integer maxHands = sharedPref.getInt(SQ_MAX_HANDS, 10);
         Boolean randomWinds = sharedPref.getBoolean(SQ_RANDOM_WINDS, false);
+        Boolean situationalYaku = sharedPref.getBoolean(SQ_SITUATIONAL_YAKU, false);
 
         if (((MainActivity)getActivity()).getScoredHands().size()<maxHands) {
             Hand h = new Hand(new ArrayList<Tile>());
@@ -233,7 +236,9 @@ public class SpeedQuizFragment_2ScoreHand extends Fragment implements View.OnCli
             while( h.han==0 ){
                 HandGenerator hg = new HandGenerator();
                 Hand hTemp = hg.completelyRandomHand();
-                hg.addOtherYaku(hTemp);
+                if( situationalYaku ){
+                    hg.addOtherYaku(hTemp);
+                }
 
                 if( randomWinds ){
                     hTemp.prevailingWind = getRandomWind();

@@ -274,6 +274,8 @@ public class ScoreCalculator {
         checkShiisanpuuta(h);
         checkShiisuupuuta(h);
         checkParenchan(h);
+
+        countDora(h);
     }
     private void countHan(Hand h){
         if( h.riichi ){
@@ -425,7 +427,7 @@ public class ScoreCalculator {
             h.hanList.put(Yaku.Name.NAGASHI, 5);
         }
 
-        if(h.dora!=0){
+        if( h.hanList.size()!=0 && h.dora!=0){
             h.hanList.put(Yaku.Name.DORA, h.dora);
         }
 
@@ -1124,6 +1126,35 @@ public class ScoreCalculator {
     private void checkShiisanpuuta(Hand h){}     // Thirteen unconnected tiles on first draw
     private void checkShiisuupuuta(Hand h){}     // Fourteen unconnected tiles (on first draw? wut)
     private void checkParenchan(Hand h){}        // Eight consecutive wins as dealer
+
+    private void countDora(Hand h){
+        int dora = 0;
+        if( h.doraIndicator1!=null ){
+            dora += h.countTile(h.doraIndicator1.getNextTile());
+            if( h.riichi ){
+                dora += h.countTile(h.uraDoraIndicator1.getNextTile());
+            }
+        }
+        if( h.doraIndicator2!=null ){
+            dora += h.countTile(h.doraIndicator2.getNextTile());
+            if( h.riichi ){
+                dora += h.countTile(h.uraDoraIndicator2.getNextTile());
+            }
+        }
+        if( h.doraIndicator3!=null ){
+            dora += h.countTile(h.doraIndicator3.getNextTile());
+            if( h.riichi ){
+                dora += h.countTile(h.uraDoraIndicator3.getNextTile());
+            }
+        }
+        if( h.doraIndicator4!=null ){
+            dora += h.countTile(h.doraIndicator4.getNextTile());
+            if( h.riichi ){
+                dora += h.countTile(h.uraDoraIndicator4.getNextTile());
+            }
+        }
+        h.dora = dora;
+    }
 
     private void scrubScore(Hand h){
         clearYakuman(h);

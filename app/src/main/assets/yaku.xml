@@ -8,6 +8,7 @@
         <closedValue>1</closedValue>
         <openValue>---</openValue>
         <description>This is a very common yaku, since it is rather easy to get. A no-points hand is just that—a hand that is worth no additional fu-points whatsoever. Specifically, the hand must have no triplets or quads, and must not contain any pair of dragons, player’s own wind, or wind of the round which is worth points, meaning the pair can be other winds.
+
 Furthermore, the hand must be waiting for multiple winning tiles that can make a sequence, such as having number 2 and 3 and waiting for 1 or 4; if the hand is in a closed, edge, or pair wait, it is worth two points, thus violating the no-points condition.
 
 When the hand is won by drawing from the wall, as an exception, in most rules the two fu for the self-drawing are not awarded.</description>
@@ -128,6 +129,7 @@ When the hand is won by drawing from the wall, as an exception, in most rules th
         <closedValue>2 (4*)</closedValue>
         <openValue>2 (4*)</openValue>
         <description>The hand consists of all terminals and honors.
+
  * The yaku separately counts the two han of an all triplet hand or seven pairs and therefore always has four han.</description>
     </yaku>
     <yaku>
@@ -138,6 +140,7 @@ When the hand is won by drawing from the wall, as an exception, in most rules th
         <closedValue>2 (4*)</closedValue>
         <openValue>2 (4*)</openValue>
         <description>Two triplets or quads of dragons, plus a pair of the third.
+
  * The hand consequently has four han since the two han for honor tiles yaku from the two sets of dragons are added separately.</description>
     </yaku>
     <yaku>
@@ -202,7 +205,8 @@ When the hand is won by drawing from the wall, as an exception, in most rules th
         <closedValue>1</closedValue>
         <openValue>1</openValue>
         <description>When a player declares a quad, they must draw a supplemental tile from the dead wall to keep the number of tiles in the hand consistent. If that tile completes the hand, it adds one han to the hand’s value. Rinshan kaihou means "a flower blooms on a ridge".
-            Sometimes the pao (包) rule is applied to this yaku, that is, if a player claims a discard to make an open quad and then completes their hand with a tile drawn from the dead wall, the player who discarded the tile is responsible for paying the entire amount for the hand.</description>
+
+Sometimes the pao (包) rule is applied to this yaku, that is, if a player claims a discard to make an open quad and then completes their hand with a tile drawn from the dead wall, the player who discarded the tile is responsible for paying the entire amount for the hand.</description>
     </yaku>
     <yaku>
         <name>CHANKAN</name>
@@ -212,6 +216,7 @@ When the hand is won by drawing from the wall, as an exception, in most rules th
         <closedValue>1</closedValue>
         <openValue>1</openValue>
         <description>If a player has an open triplet and draws the fourth tile, they can add it to the triplet to make a quad. At the time, another player can win on the tile, namely, they can "rob" that tile. Doing so increases the hand’s value by one han.
+
 Example: Player A has three 6’s of dots in an open triplet and draws the fourth 6, and added it to the triplet for a quad. If player B waits to win by having a 4-5 of dots left, they can win on that 6. Player A then has to pay the full value of the hand.</description>
     </yaku>
     <yaku>
@@ -480,5 +485,20 @@ Manzu (characters), dai suurin – 大数隣 or numerous neighbours</description
         <closedValue>Yakuman</closedValue>
         <openValue>---</openValue>
         <description>A player wins eight times consecutively. The conditions of the hand depend on rules. The ninth and following winnings are often yakuman again, while some rules say the sixteenth is the next yakuman. It has nothing to do with the number of counters because the number increases when a hand is a draw. In some rules, no other yaku is necessary in the eighth winning. Some say the player must be a dealer in order to start the streak (the player is always a dealer when the hand is accomplished, obviously). The hand is often optional.</description>
+    </yaku>
+    <yaku>
+        <name>DORA</name>
+        <english>Bonus Tiles</english>
+        <romaji>dora</romaji>
+        <kanji>ドラ</kanji>
+        <closedValue>1 per tile</closedValue>
+        <openValue>1 per tile</openValue>
+        <description>The total number of han in a hand is the sum of all its yaku and its dora. Dora are not regarded as yaku, and no hand can be won without a yaku even if there are some dora tiles. Methods of determining dora change greatly under different rulesets. Three of the more commonly allowed dora:
+
+Dora Indicator - For each dora indicator in the dead wall, all tiles that are "next" in tile order are counted as dora.
+
+UraDora Indicator - When a player who riichi'd wins, the tiles underneath each of the currently visible dora indicators are added as additional dora indicators when counting dora.
+
+Red Fives - A set of tiles may include one red five of each suit.</description>
     </yaku>
 </yakus>

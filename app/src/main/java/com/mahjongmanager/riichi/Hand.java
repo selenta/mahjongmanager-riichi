@@ -88,6 +88,11 @@ public class Hand {
     public Tile doraIndicator3 = null;
     public Tile doraIndicator4 = null;
 
+    public Tile uraDoraIndicator1 = null;
+    public Tile uraDoraIndicator2 = null;
+    public Tile uraDoraIndicator3 = null;
+    public Tile uraDoraIndicator4 = null;
+
     public Hand( List<Tile> h ){
         tiles.addAll(h);
         Utils.sort(tiles);
@@ -161,6 +166,16 @@ public class Hand {
         shiisuupuuta =   oldHand.shiisuupuuta;
         parenchan =      oldHand.parenchan;
         dora =           oldHand.dora;
+
+        doraIndicator1 = oldHand.doraIndicator1;
+        doraIndicator2 = oldHand.doraIndicator2;
+        doraIndicator3 = oldHand.doraIndicator3;
+        doraIndicator4 = oldHand.doraIndicator4;
+
+        uraDoraIndicator1 = oldHand.uraDoraIndicator1;
+        uraDoraIndicator2 = oldHand.uraDoraIndicator2;
+        uraDoraIndicator3 = oldHand.uraDoraIndicator3;
+        uraDoraIndicator4 = oldHand.uraDoraIndicator4;
     }
 
     public Tile findTile(String val, String suit){
