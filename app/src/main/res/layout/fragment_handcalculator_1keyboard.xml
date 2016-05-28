@@ -33,7 +33,8 @@
             android:text="Step 1: Enter each tile in the hand"
             android:id="@+id/subTitle"
             android:textSize="24sp"
-            android:layout_gravity="center_horizontal" />
+            android:layout_gravity="center_horizontal"
+            android:layout_weight="1" />
 
         <com.mahjongmanager.riichi.components.HandKeyboard
             android:layout_width="match_parent"

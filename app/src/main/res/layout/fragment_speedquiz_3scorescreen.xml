@@ -23,7 +23,7 @@
         android:layout_height="wrap_content"
         android:stretchColumns="*"
         android:shrinkColumns="*"
-        android:layout_margin="20dp">
+        android:layout_marginBottom="15dp">
 
         <TableRow
             android:layout_width="match_parent"
@@ -53,16 +53,16 @@
             android:textAppearance="?android:attr/textAppearanceMedium"
             android:text="New high score!"
             android:id="@+id/newHighScoreNotice"
-            android:layout_marginBottom="10dp"
+            android:layout_marginBottom="15dp"
             android:textStyle="italic"
-            android:layout_marginTop="10dp"
+            android:layout_marginTop="5dp"
             android:visibility="gone"
             android:layout_gravity="center_horizontal" />
 
         <TableRow
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_marginTop="20dp">
+            android:layout_marginTop="5dp">
 
             <TextView
                 android:layout_width="wrap_content"
@@ -106,7 +106,7 @@
                 android:textAppearance="?android:attr/textAppearanceMedium"
                 android:text="Review Incorrect Hands:"
                 android:id="@+id/textView34"
-                android:layout_margin="15dp"
+                android:layout_margin="10dp"
                 android:layout_gravity="center_horizontal" />
         </LinearLayout>
     </ScrollView>
