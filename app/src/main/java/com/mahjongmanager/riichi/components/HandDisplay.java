@@ -31,10 +31,11 @@ public class HandDisplay extends LinearLayout implements View.OnClickListener {
     private Hand hand;
     private List<TileDisplay> tileList = new ArrayList<>();
 
-    public enum State {
-        FU_DISPLAY, HAND_CALCULATOR, SPEED_QUIZ, SPEED_QUIZ_UNSORTED, YAKU_DESCRIPTION
-    }
-    private State state;
+    public static final int FU_DISPLAY = 1;
+    public static final int HAND_CALCULATOR = 2;
+    public static final int SPEED_QUIZ = 3;
+    public static final int SPEED_QUIZ_UNSORTED = 4;
+    public static final int YAKU_DESCRIPTION = 5;
 
     private Boolean isEditable;
     private Boolean separateClosedMelds;
@@ -64,7 +65,7 @@ public class HandDisplay extends LinearLayout implements View.OnClickListener {
         openTilesContainer   = (LinearLayout) findViewById(R.id.openTilesContainer);
         winningTileContainer = (LinearLayout) findViewById(R.id.winningTileContainer);
 
-        setState(State.YAKU_DESCRIPTION);
+        setState(YAKU_DESCRIPTION);
     }
 
     /**
@@ -88,8 +89,8 @@ public class HandDisplay extends LinearLayout implements View.OnClickListener {
      * Only editable during HAND_CALCULATOR
      * Always show open melds in their true form
      */
-    public void setState(State s, HandKeyboard handKeyboard){
-        switch (s){
+    public void setState(Integer state, HandKeyboard handKeyboard){
+        switch (state){
             case FU_DISPLAY:
                 isEditable = false;
                 includeWinningTile = true;
@@ -126,7 +127,7 @@ public class HandDisplay extends LinearLayout implements View.OnClickListener {
                 break;
         }
     }
-    public void setState(State s){
+    public void setState(int s){
         setState(s, null);
     }
 
@@ -173,7 +174,7 @@ public class HandDisplay extends LinearLayout implements View.OnClickListener {
         openTilesContainer.removeAllViews();
         winningTileContainer.removeAllViews();
 
-        if( separateClosedMelds ){
+        if( separateClosedMelds && !hand.hasAbnormalStructure() ){
             displayComplexHand();
         } else {
             displaySimpleHand();

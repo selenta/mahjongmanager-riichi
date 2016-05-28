@@ -19,6 +19,7 @@ import com.mahjongmanager.riichi.MainActivity;
 import com.mahjongmanager.riichi.R;
 import com.mahjongmanager.riichi.ScoreCalculator;
 import com.mahjongmanager.riichi.Tile;
+import com.mahjongmanager.riichi.utils.Utils;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -43,10 +44,10 @@ public class SpeedQuizFragment_2ScoreHand extends Fragment implements View.OnCli
     private Button decreaseFuButton;
 
     private HandDisplay handDisplay;
-    private TextView prevailingWindLabel;
-    private TextView playerWindLabel;
+    private LinearLayout prevailingWindTileContainer;
+    private LinearLayout playerWindTileContainer;
+    private LinearLayout winningTileContainer;
     private TextView selfDrawLabel;
-    private LinearLayout speedQuizWinningTile;
     private TextView otherYakuLabel;
 
     @Override
@@ -95,12 +96,20 @@ public class SpeedQuizFragment_2ScoreHand extends Fragment implements View.OnCli
 
         handDisplay.setHand(fragHand);
 
-        prevailingWindLabel.setText(fragHand.getString(fragHand.prevailingWind));
-        playerWindLabel.setText(fragHand.getString(fragHand.playerWind));
-        selfDrawLabel.setText((fragHand.selfDrawWinningTile)?"Yes":"No");
+        Utils utils = ((MainActivity)getContext()).getUtils();
 
-        ImageView winningTileImage = ((MainActivity)getContext()).getUtils().getHandDisplayTileView(fragHand.getWinningTile(), false);
-        speedQuizWinningTile.addView(winningTileImage);
+        Tile prevailingWindTile = new Tile(fragHand.prevailingWind.toString(), "HONOR");
+        ImageView prevailingWindTileImage = utils.getHandDisplayTileView(prevailingWindTile, false);
+        prevailingWindTileContainer.addView(prevailingWindTileImage);
+
+        Tile playerWindTile = new Tile(fragHand.playerWind.toString(), "HONOR");
+        ImageView playerWindTileImage = utils.getHandDisplayTileView(playerWindTile, false);
+        playerWindTileContainer.addView(playerWindTileImage);
+
+        ImageView winningTileImage = utils.getHandDisplayTileView(fragHand.getWinningTile(), false);
+        winningTileContainer.addView(winningTileImage);
+
+        selfDrawLabel.setText((fragHand.selfDrawWinningTile)?"Yes":"No");
 
         String oys = "Other Yaku: ";
         if( fragHand.nagashiMangan ){
@@ -152,9 +161,9 @@ public class SpeedQuizFragment_2ScoreHand extends Fragment implements View.OnCli
         boolean val = sharedPref.getBoolean(SQ_SEPARATE_CLOSED_MELDS, true);
 
         if( val ){
-            handDisplay.setState(HandDisplay.State.SPEED_QUIZ);
+            handDisplay.setState(HandDisplay.SPEED_QUIZ);
         } else {
-            handDisplay.setState(HandDisplay.State.SPEED_QUIZ_UNSORTED);
+            handDisplay.setState(HandDisplay.SPEED_QUIZ_UNSORTED);
         }
     }
 
@@ -204,10 +213,10 @@ public class SpeedQuizFragment_2ScoreHand extends Fragment implements View.OnCli
         decreaseFuButton = (Button) myInflatedView.findViewById(R.id.decreaseFuButton);
         decreaseFuButton.setOnClickListener(this);
 
-        prevailingWindLabel = (TextView) myInflatedView.findViewById(R.id.prevailingWindLabel);
-        playerWindLabel = (TextView) myInflatedView.findViewById(R.id.playerWindLabel);
+        prevailingWindTileContainer = (LinearLayout) myInflatedView.findViewById(R.id.prevailingWindTileContainer);
+        playerWindTileContainer = (LinearLayout) myInflatedView.findViewById(R.id.playerWindTileContainer);
+        winningTileContainer = (LinearLayout) myInflatedView.findViewById(R.id.speedQuizWinningTileContainer);
         selfDrawLabel = (TextView) myInflatedView.findViewById(R.id.selfDrawLabel);
-        speedQuizWinningTile = (LinearLayout) myInflatedView.findViewById(R.id.speedQuizWinningTile);
         otherYakuLabel = (TextView) myInflatedView.findViewById(R.id.otherYaku);
     }
 

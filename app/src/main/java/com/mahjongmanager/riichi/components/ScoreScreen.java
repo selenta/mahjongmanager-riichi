@@ -1,5 +1,6 @@
 package com.mahjongmanager.riichi.components;
 
+import android.app.Activity;
 import android.app.Dialog;
 import android.content.Context;
 import android.graphics.Paint;
@@ -126,7 +127,7 @@ public class ScoreScreen extends LinearLayout implements View.OnClickListener {
             hand.setMeld(scoreDetail.meld.getTiles());
             hand.tiles.addAll(scoreDetail.meld.getTiles());
             HandDisplay handDisplay = new HandDisplay(getContext());
-            handDisplay.setState(HandDisplay.State.FU_DISPLAY);
+            handDisplay.setState(HandDisplay.FU_DISPLAY);
             handDisplay.setHand(hand);
 
             container.addView(handDisplay);
@@ -328,7 +329,11 @@ public class ScoreScreen extends LinearLayout implements View.OnClickListener {
             } else if( name.contains("4") ){
                 meld = hand.meld4;
             }
-            fuName = name;
+            if( meld!=null ) {
+                fuName = FuHelper.getFuName(meld);
+            } else {
+                fuName = name;
+            }
             value = v;
             createTableRow();
         }
@@ -369,16 +374,12 @@ public class ScoreScreen extends LinearLayout implements View.OnClickListener {
         }
         public String toString(){
             String s;
-            if( meld!=null ) {
-                s = (meld.isClosed())                                      ? "Closed "   : "Open ";
-                s = (Utils.containsHonorsOrTerminalsOnly(meld.getTiles())) ? s+"Honors " : s+"Simples ";
-                s = (meld.isKan())                                         ? s+"Quad "   : s+"Triplet";
-            } else if(fuName!=null) {
+            if(fuName!=null) {
                 s = fuName;
             } else {
-                s = Utils.prettifyName(yaku.romaji);
+                s = yaku.getLocalizedString((Activity) context);
             }
-            return s;
+            return Utils.prettifyName(s);
         }
     }
 

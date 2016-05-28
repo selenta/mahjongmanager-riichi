@@ -1,5 +1,9 @@
 package com.mahjongmanager.riichi;
 
+import android.app.Activity;
+import android.content.Context;
+import android.content.SharedPreferences;
+
 public class Yaku {
     public enum Name {
         RIICHI, CHIITOITSU, NAGASHI, TSUMO, IPPATSU, HAITEI, HOUTEI, RINSHAN, CHANKAN, DOUBLERIICHI,
@@ -21,6 +25,22 @@ public class Yaku {
     public String description;
 
     public Hand exampleHand;
+
+    public String getLocalizedString(Activity activity){
+        String TERMINOLOGY = "Terminology";
+
+        SharedPreferences sharedPref = activity.getPreferences(Context.MODE_PRIVATE);
+        String val = sharedPref.getString(TERMINOLOGY, "Romaji");
+
+        switch (val) {
+            case "English":
+                return english;
+            case "Kanji":
+                return kanji;
+            default:
+                return romaji;
+        }
+    }
 
     public String toString(){
         return toStringVerbose();       // TODO simplify

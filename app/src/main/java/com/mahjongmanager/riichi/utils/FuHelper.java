@@ -5,19 +5,24 @@ import com.mahjongmanager.riichi.Meld;
 import com.mahjongmanager.riichi.Tile;
 
 public class FuHelper {
-    private static String FUUTEI = "Fuutei";
-    private static String CHIITOITSU = "Chiitoitsu";
-    private static String MENZEN_KAFU = "Menzen-Kafu";
-    private static String PINFU = "Pinfu";
-    private static String PINFU_OPEN = "Open Pinfu";
-    private static String SELF_DRAW = "Self Draw Winning Tile";
-    private static String DRAGON_PAIR = "Dragon Pair";
-    private static String PREVAILING_WIND = "Prevailing Wind";
-    private static String SEAT_WIND = "Seat Wind";
-    private static String PAIR_WAIT = "Pair Wait";
+    private static String FUUTEI            = "Fuutei";
+    private static String CHIITOITSU        = "Chiitoitsu";
+    private static String MENZEN_KAFU       = "Menzen-Kafu";
+    private static String PINFU             = "Pinfu";
+    private static String PINFU_OPEN        = "Open Pinfu";
+    private static String SELF_DRAW         = "Self Draw Winning Tile";
+    private static String DRAGON_PAIR       = "Dragon Pair";
+    private static String PREVAILING_WIND   = "Prevailing Wind";
+    private static String SEAT_WIND         = "Seat Wind";
+    private static String PAIR_WAIT         = "Pair Wait";
     private static String SINGLE_SIDED_WAIT = "Single-sided Wait";
-    private static String INSIDE_WAIT = "Inside Wait";
+    private static String INSIDE_WAIT       = "Inside Wait";
 
+    /**
+     * Examines the hand in depth, including its overall structure, meld structure, yaku, pair,
+     * and its winning tile. Adding an entry to the hand's fuList for each type of Fu present.
+     * @param h The fuList of this Hand will be populated
+     */
     public static void populateFuList(Hand h){
         if( h.hasYakuman() || h.nagashiMangan ){
             return;
@@ -57,7 +62,6 @@ public class FuHelper {
             h.fuList.put( PINFU_OPEN, 10);
         }
     }
-
     private static void fuFromClosedHand(Hand h){
         Boolean isOpen = false;
         for( Tile t : h.tiles ){
@@ -115,6 +119,39 @@ public class FuHelper {
         }
     }
 
+    /**
+     * Get the name of the Fu that describes the meld. Meld is expected to be a non-sequence meld
+     * or else will return an ugly value.
+     *
+     * Example: Closed Simples Triplet
+     */
+    public static String getFuName(Meld m){
+        if( m.isChii() ){
+            return "ERROR - Meld is sequence";
+        }
+        boolean isClosed = m.isClosed();
+        boolean isSimples = !Utils.containsHonorsOrTerminalsOnly(m.getTiles());
+        boolean isKan = m.isKan();
+
+        String s;
+        s = (isClosed) ? "Closed " : "Open ";
+        if( isSimples ){
+            s = s+"Simples ";
+        } else if(m.firstTile().suit== Tile.Suit.HONOR) {
+            s = s+"Honors ";
+        } else {
+            s = s+"Terminals ";
+        }
+        s = (isKan) ? s+"Quad " : s+"Triplet";
+        return s;
+    }
+
+    /**
+     * Determines whether or not the hand qualifies for Pinfu or not. The hand should have no
+     * triplets/quads, no valuable pair, and has a two-sided wait on a sequence.
+     * @param h Hand to be examined
+     * @return True if the hand qualifies for Pinfu
+     */
     public static boolean hasFu(Hand h){
         if( h.isOpen() ){
             return true;
@@ -124,6 +161,12 @@ public class FuHelper {
         return h.fuList.size()!=1 || !h.fuList.containsKey(PINFU);
     }
 
+    /**
+     * When provided a Fu name, will return a more detailed description of the Fu. Valid options
+     * include this class's public static strings.
+     * @param s The name of the Fu
+     * @return Description of the Fu
+     */
     public static String getDescription(String s){
         if( s.equals(FUUTEI) ){
             return "A standard winning hand consisting of four melds and a pair";
