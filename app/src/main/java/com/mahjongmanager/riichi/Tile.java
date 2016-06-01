@@ -1,6 +1,6 @@
 package com.mahjongmanager.riichi;
 
-import android.util.Log;
+import com.mahjongmanager.riichi.utils.Log;
 
 public class Tile {
     public enum Suit {

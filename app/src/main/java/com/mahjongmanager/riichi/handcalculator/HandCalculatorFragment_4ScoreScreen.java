@@ -1,20 +1,12 @@
 package com.mahjongmanager.riichi.handcalculator;
 
-import android.app.Dialog;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.ViewGroup.LayoutParams;
-import android.widget.ScrollView;
-import android.widget.TableLayout;
-import android.widget.TableRow;
-import android.widget.TextView;
 
 import com.mahjongmanager.riichi.Hand;
-import com.mahjongmanager.riichi.Yaku;
 import com.mahjongmanager.riichi.components.HandDisplay;
 import com.mahjongmanager.riichi.MainActivity;
 import com.mahjongmanager.riichi.Meld;
@@ -22,12 +14,9 @@ import com.mahjongmanager.riichi.R;
 import com.mahjongmanager.riichi.ScoreCalculator;
 import com.mahjongmanager.riichi.Tile;
 import com.mahjongmanager.riichi.components.ScoreScreen;
-import com.mahjongmanager.riichi.components.YakuDescription;
-import com.mahjongmanager.riichi.utils.Utils;
+import com.mahjongmanager.riichi.utils.Log;
 
-import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.List;
 
 public class HandCalculatorFragment_4ScoreScreen extends Fragment {
 

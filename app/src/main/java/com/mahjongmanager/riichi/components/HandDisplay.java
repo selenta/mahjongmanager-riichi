@@ -2,7 +2,6 @@ package com.mahjongmanager.riichi.components;
 
 import android.content.Context;
 import android.util.AttributeSet;
-import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -15,6 +14,7 @@ import com.mahjongmanager.riichi.MainActivity;
 import com.mahjongmanager.riichi.Meld;
 import com.mahjongmanager.riichi.R;
 import com.mahjongmanager.riichi.Tile;
+import com.mahjongmanager.riichi.utils.Log;
 import com.mahjongmanager.riichi.utils.Utils;
 
 import java.util.ArrayList;

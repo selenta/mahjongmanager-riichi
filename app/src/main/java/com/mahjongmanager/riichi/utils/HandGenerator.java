@@ -1,12 +1,10 @@
 package com.mahjongmanager.riichi.utils;
 
 import android.content.Context;
-import android.util.Log;
 
 import com.mahjongmanager.riichi.Hand;
 import com.mahjongmanager.riichi.Meld;
 import com.mahjongmanager.riichi.Tile;
-import com.mahjongmanager.riichi.utils.CSVFile;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -228,10 +226,6 @@ public class HandGenerator {
                 t.revealedState = Tile.RevealedState.OPENKAN;
             }
         }
-//        Log.d("GenerateKan", "Tile 1: "+meld.get(0)+" - "+meld.get(0).calledFrom+" - "+meld.get(0).revealedState);
-//        Log.d("GenerateKan", "Tile 2: "+meld.get(1)+" - "+meld.get(1).calledFrom+" - "+meld.get(1).revealedState);
-//        Log.d("GenerateKan", "Tile 3: "+meld.get(2)+" - "+meld.get(2).calledFrom+" - "+meld.get(2).revealedState);
-//        Log.d("GenerateKan", "Tile 4: "+meld.get(3)+" - "+meld.get(3).calledFrom+" - "+meld.get(3).revealedState);
     }
     private void expandChii(Meld meld){
         Tile founder = meld.firstTile();

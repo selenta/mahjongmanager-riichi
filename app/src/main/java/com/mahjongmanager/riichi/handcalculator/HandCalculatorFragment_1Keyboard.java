@@ -43,7 +43,6 @@ public class HandCalculatorFragment_1Keyboard extends Fragment implements View.O
                 fragHand = new Hand(new ArrayList<Tile>());
                 checkNextEnablement();
                 handKeyboard.setHand(fragHand);
-//                handKeyboard.checkAllButtonEnablement();
                 break;
         }
     }

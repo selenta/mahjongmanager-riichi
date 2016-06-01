@@ -161,39 +161,30 @@ public class HandKeyboard extends LinearLayout implements View.OnClickListener {
                 break;
             case R.id.placeholderButton1:
                 addTile(1);
-//                checkButtonEnablement(phButton1, 1);
                 break;
             case R.id.placeholderButton2:
                 addTile(2);
-//                checkButtonEnablement(phButton2, 2);
                 break;
             case R.id.placeholderButton3:
                 addTile(3);
-//                checkButtonEnablement(phButton3, 3);
                 break;
             case R.id.placeholderButton4:
                 addTile(4);
-//                checkButtonEnablement(phButton4, 4);
                 break;
             case R.id.placeholderButton5:
                 addTile(5);
-//                checkButtonEnablement(phButton5, 5);
                 break;
             case R.id.placeholderButton6:
                 addTile(6);
-//                checkButtonEnablement(phButton6, 6);
                 break;
             case R.id.placeholderButton7:
                 addTile(7);
-//                checkButtonEnablement(phButton7, 7);
                 break;
             case R.id.placeholderButton8:
                 addTile(8);
-//                checkButtonEnablement(phButton8, 8);
                 break;
             case R.id.placeholderButton9:
                 addTile(9);
-//                checkButtonEnablement(phButton9, 9);
                 break;
         }
     }
@@ -400,8 +391,6 @@ public class HandKeyboard extends LinearLayout implements View.OnClickListener {
         setButtonImage(phButton7, 7);
         setButtonImage(phButton8, 8);
         setButtonImage(phButton9, 9);
-
-//        checkAllButtonEnablement();
     }
     private void setButtonsToHonors(){
         phButton5.setVisibility(GONE);
@@ -416,27 +405,7 @@ public class HandKeyboard extends LinearLayout implements View.OnClickListener {
         setButtonImage(phButton6, 6);
         setButtonImage(phButton7, 7);
         setButtonImage(phButton8, 8);
-
-//        checkAllButtonEnablement();
     }
-
-//    public void checkAllButtonEnablement(){
-//        if(fragment==null){
-//            return;
-//        }
-//        checkButtonEnablement(phButton1, 1);
-//        checkButtonEnablement(phButton2, 2);
-//        checkButtonEnablement(phButton3, 3);
-//        checkButtonEnablement(phButton4, 4);
-//        checkButtonEnablement(phButton5, 5);
-//        checkButtonEnablement(phButton6, 6);
-//        checkButtonEnablement(phButton7, 7);
-//        checkButtonEnablement(phButton8, 8);
-//        checkButtonEnablement(phButton9, 9);
-//    }
-//    private void checkButtonEnablement(ImageButton b, int number){
-//        b.setEnabled(!hand.containsMaxOfTile(getTileForButton(number)));
-//    }
 
     private void addTile( int number ){
         Tile t = getTileForButton(number);

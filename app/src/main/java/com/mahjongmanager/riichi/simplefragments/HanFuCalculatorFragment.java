@@ -12,7 +12,6 @@ import android.widget.TextView;
 import com.mahjongmanager.riichi.R;
 import com.mahjongmanager.riichi.ScoreCalculator;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 

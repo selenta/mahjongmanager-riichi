@@ -3,7 +3,6 @@ package com.mahjongmanager.riichi.simplefragments;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -95,7 +94,6 @@ public class YakuListFragment extends Fragment {
             List<String[]> scoreList = csvFile.read();
 
             for( String[] yakuStat : scoreList ){
-                Log.i("readCsv", "yakuStat: " + Arrays.toString(yakuStat));
                 addRow(yakuStat[1], yakuStat[2], yakuFrequencyTable);
                 addRow(yakuStat[1], yakuStat[4], yakuByAverageHanTable);
             }

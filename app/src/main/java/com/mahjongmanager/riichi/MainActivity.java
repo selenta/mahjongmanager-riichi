@@ -109,7 +109,6 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onTick(long millisUntilFinished){
                 SpeedQuizFragment_2ScoreHand sq = (SpeedQuizFragment_2ScoreHand) getSupportFragmentManager().findFragmentById(R.id.fragment_container);
-                //Log.v("countdownTimer", "onTick - sq: " + sq );
                 if( sq!=null ){
                     sq.updateSecondCounter( String.valueOf( (int)millisUntilFinished/1000 ));
                 }
@@ -133,7 +132,9 @@ public class MainActivity extends AppCompatActivity {
         transaction.commit();
     }
     public void speedQuizScoreScreen(View view){
-        speedQuizTimer.cancel();
+        if( speedQuizTimer!=null ){
+            speedQuizTimer.cancel();
+        }
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
         transaction.replace(R.id.fragment_container, new SpeedQuizFragment_3ScoreScreen());
         transaction.commit();

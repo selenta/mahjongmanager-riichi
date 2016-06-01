@@ -1,7 +1,5 @@
 package com.mahjongmanager.riichi;
 
-import android.util.Log;
-
 import com.mahjongmanager.riichi.utils.FuHelper;
 import com.mahjongmanager.riichi.utils.Utils;
 
@@ -212,8 +210,6 @@ public class ScoreCalculator {
                     scoredHand = unscoredHand;
                 }
             }
-        } else {
-            Log.w("incompleteHand", "sortedHands list is empty, and scoredHand is null");
         }
     }
 
