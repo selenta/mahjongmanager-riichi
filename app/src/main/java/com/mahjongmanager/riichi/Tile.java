@@ -52,15 +52,17 @@ public class Tile {
     }
     public Tile( Tile oldTile ){
         suit          = oldTile.suit;
-        value         = oldTile.value;
-        sortId        = oldTile.sortId;
-        red           = oldTile.red;
         number        = oldTile.number;
         dragon        = oldTile.dragon;
         wind          = oldTile.wind;
+
+        red           = oldTile.red;
+        winningTile   = oldTile.winningTile;
         revealedState = oldTile.revealedState;
         calledFrom    = oldTile.calledFrom;
-        winningTile   = oldTile.winningTile;
+
+        value = getValue();
+        determineSortId();
     }
     private void initTile(){
         red = false;
