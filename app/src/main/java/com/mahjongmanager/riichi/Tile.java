@@ -35,47 +35,20 @@ public class Tile {
 
     public Boolean winningTile;
 
-    public Tile( String valueString, String suitString ){
-        suit = Suit.valueOf(suitString.toUpperCase());
-
-        //check for dragon
-        for( Dragon d : Dragon.values() ){
-            if(d.name().equalsIgnoreCase(valueString)){
-                dragon = Dragon.valueOf(valueString.toUpperCase());
-            }
-        }
-        //check for wind
-        for( Wind w : Wind.values() ){
-            if(w.name().equalsIgnoreCase(valueString)){
-                wind = Wind.valueOf(valueString.toUpperCase());
-            }
-        }
-        //check for number
-        if( dragon==null && wind==null ){
-            number = Integer.valueOf(valueString);
-        }
-
-        red = false;
-        winningTile = false;
-        revealedState = RevealedState.NONE;
-        calledFrom = CalledFrom.NONE;
-        value = getValue();
-        determineSortId();
-
-        validateConstructor(suitString, valueString);
-    }
-    public Tile( Integer valueInt, String suitString ){
-        suit = Suit.valueOf(suitString.toUpperCase());
+    public Tile( Integer valueInt, Suit suitVal ){
+        suit = suitVal;
         number = valueInt;
-
-        red = false;
-        winningTile = false;
-        revealedState = RevealedState.NONE;
-        calledFrom = CalledFrom.NONE;
-        value = getValue();
-        determineSortId();
-
-        validateConstructor(suitString, valueInt.toString());
+        initTile();
+    }
+    public Tile( Dragon dragonVal ){
+        suit = Suit.HONOR;
+        dragon = dragonVal;
+        initTile();
+    }
+    public Tile( Wind windVal ){
+        suit = Suit.HONOR;
+        wind = windVal;
+        initTile();
     }
     public Tile( Tile oldTile ){
         suit          = oldTile.suit;
@@ -88,6 +61,16 @@ public class Tile {
         revealedState = oldTile.revealedState;
         calledFrom    = oldTile.calledFrom;
         winningTile   = oldTile.winningTile;
+    }
+    private void initTile(){
+        red = false;
+        winningTile = false;
+        revealedState = RevealedState.NONE;
+        calledFrom = CalledFrom.NONE;
+        value = getValue();
+        determineSortId();
+
+        validateConstructor(value, suit);
     }
 
     public boolean isSame( Tile t ){
@@ -107,11 +90,11 @@ public class Tile {
         return suit==Suit.HONOR;
     }
 
-    private void validateConstructor(String specifiedSuit, String specifiedVal){
+    private void validateConstructor(String specifiedVal, Suit suitVal){
         if( number==null && dragon==null && wind==null ){
             Log.e("constructorValidation", "Tile has no value. Value given was: " + specifiedVal);
         } else if( suit==null ){
-            Log.e("constructorValidation", "Tile has no suit. Suit given was: " + specifiedSuit);
+            Log.e("constructorValidation", "Tile has no suit. Suit given was: " + suitVal.toString());
         }
     }
     public boolean validateTile(){
@@ -336,27 +319,27 @@ public class Tile {
         if( suit==Suit.HONOR && wind!=null ) {
             switch (wind){
                 case EAST:
-                    return new Tile("South", suit.toString());
+                    return new Tile(Wind.SOUTH);
                 case SOUTH:
-                    return new Tile("West", suit.toString());
+                    return new Tile(Wind.WEST);
                 case WEST:
-                    return new Tile("North", suit.toString());
+                    return new Tile(Wind.NORTH);
                 case NORTH:
-                    return new Tile("East", suit.toString());
+                    return new Tile(Wind.EAST);
             }
         } else if( suit==Suit.HONOR ){
             switch (dragon){
                 case WHITE:
-                    return new Tile("Green", suit.toString());
+                    return new Tile(Dragon.GREEN);
                 case GREEN:
-                    return new Tile("Red", suit.toString());
+                    return new Tile(Dragon.RED);
                 case RED:
-                    return new Tile("White", suit.toString());
+                    return new Tile(Dragon.WHITE);
             }
         } else if(number==9) {
-            return new Tile(1, suit.toString());
+            return new Tile(1, suit);
         }
-        return new Tile(number+1, suit.toString());
+        return new Tile(number+1, suit);
     }
 
     public Integer getImageInt(){

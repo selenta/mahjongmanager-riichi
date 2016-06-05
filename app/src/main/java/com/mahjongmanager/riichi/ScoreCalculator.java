@@ -923,8 +923,8 @@ public class ScoreCalculator {
     private void checkShousuushii(Hand h){
         List<Tile.Wind> winds = new ArrayList<>(Arrays.asList(Tile.Wind.values()));
         for( Tile.Wind w : Tile.Wind.values() ){
-            if( countTileInSet(new Tile(w.toString(), "HONOR"),h.tiles)==3
-                    || countTileInSet(new Tile(w.toString(), "HONOR"),h.tiles)==4 ){
+            if( countTileInSet(new Tile(w),h.tiles)==3
+                    || countTileInSet(new Tile(w),h.tiles)==4 ){
                 winds.remove(w);
             }
         }
@@ -932,7 +932,7 @@ public class ScoreCalculator {
             return;
         }
 
-        int fourthWindCount = countTileInSet(new Tile(winds.get(0).toString(), "HONOR"), h.tiles);
+        int fourthWindCount = countTileInSet(new Tile(winds.get(0)), h.tiles);
         if(winds.size()==1 && fourthWindCount==2 ){
             h.shousuushii = true;
         }
@@ -940,7 +940,7 @@ public class ScoreCalculator {
     private void checkDaisuushii(Hand h){
         List<Tile.Wind> winds = new ArrayList<>(Arrays.asList(Tile.Wind.values()));
         for( Tile.Wind w : Tile.Wind.values() ){
-            int tileCount = countTileInSet(new Tile(w.toString(), "HONOR"),h.tiles);
+            int tileCount = countTileInSet(new Tile(w),h.tiles);
             if( tileCount==3 || tileCount==4 ){
                 winds.remove(w);
             }
@@ -978,12 +978,12 @@ public class ScoreCalculator {
         Tile.Suit suit = h.tiles.get(0).suit;
         List<Tile> expectedTiles = new ArrayList<>();
         for(int i=1; i<10; i++){
-            expectedTiles.add(new Tile(i, suit.toString()));
+            expectedTiles.add(new Tile(i, suit));
         }
-        expectedTiles.add(new Tile(1, suit.toString()));
-        expectedTiles.add(new Tile(1, suit.toString()));
-        expectedTiles.add(new Tile(9, suit.toString()));
-        expectedTiles.add(new Tile(9, suit.toString()));
+        expectedTiles.add(new Tile(1, suit));
+        expectedTiles.add(new Tile(1, suit));
+        expectedTiles.add(new Tile(9, suit));
+        expectedTiles.add(new Tile(9, suit));
 
         List<Tile> usedTiles = new ArrayList<>();
         List<Tile> usedExpectedTiles = new ArrayList<>();

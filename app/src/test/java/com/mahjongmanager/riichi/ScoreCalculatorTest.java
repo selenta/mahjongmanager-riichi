@@ -39,20 +39,20 @@ public class ScoreCalculatorTest {
     public void handTest1() {
         // This hand should have: Ittsuu
         // Han: 2       Fu: 32 (40)
-        Tile t1 = new Tile(1, "SOUZU");
-        Tile t2 = new Tile(2, "SOUZU");
-        Tile t3 = new Tile(3, "SOUZU");
-        Tile t4 = new Tile(4, "SOUZU");
-        Tile t5 = new Tile(5, "SOUZU");
-        Tile t6 = new Tile(6, "SOUZU");
-        Tile t7 = new Tile(7, "SOUZU");
-        Tile t8 = new Tile(8, "SOUZU");
-        Tile t9 = new Tile(9, "SOUZU");
-        Tile t10 = new Tile(1, "MANZU");
-        Tile t11 = new Tile(2, "MANZU");
-        Tile t12 = new Tile(3, "MANZU");
-        Tile t13 = new Tile("RED", "HONOR");
-        Tile t14 = new Tile("RED", "HONOR");
+        Tile t1 = new Tile(1, Tile.Suit.SOUZU);
+        Tile t2 = new Tile(2, Tile.Suit.SOUZU);
+        Tile t3 = new Tile(3, Tile.Suit.SOUZU);
+        Tile t4 = new Tile(4, Tile.Suit.SOUZU);
+        Tile t5 = new Tile(5, Tile.Suit.SOUZU);
+        Tile t6 = new Tile(6, Tile.Suit.SOUZU);
+        Tile t7 = new Tile(7, Tile.Suit.SOUZU);
+        Tile t8 = new Tile(8, Tile.Suit.SOUZU);
+        Tile t9 = new Tile(9, Tile.Suit.SOUZU);
+        Tile t10 = new Tile(1, Tile.Suit.MANZU);
+        Tile t11 = new Tile(2, Tile.Suit.MANZU);
+        Tile t12 = new Tile(3, Tile.Suit.MANZU);
+        Tile t13 = new Tile(Tile.Dragon.RED);
+        Tile t14 = new Tile(Tile.Dragon.RED);
 
         t6.winningTile = true;
         t6.calledFrom = Tile.CalledFrom.CENTER;
@@ -70,20 +70,20 @@ public class ScoreCalculatorTest {
     public void handTest2() {
         // This hand should have: Riichi, Ippatsu, Tsumo, Pinfu
         // Han: 4       Fu: 20
-        Tile t1 = new Tile(3, "SOUZU");
-        Tile t2 = new Tile(4, "SOUZU");
-        Tile t3 = new Tile(4, "SOUZU");
-        Tile t4 = new Tile(5, "SOUZU");
-        Tile t5 = new Tile(5, "SOUZU");
-        Tile t6 = new Tile(6, "SOUZU");
-        Tile t7 = new Tile(7, "SOUZU");
-        Tile t8 = new Tile(8, "SOUZU");
-        Tile t9 = new Tile(9, "SOUZU");
-        Tile t10 = new Tile(1, "MANZU");
-        Tile t11 = new Tile(2, "MANZU");
-        Tile t12 = new Tile(3, "MANZU");
-        Tile t13 = new Tile(3, "PINZU");
-        Tile t14 = new Tile(3, "PINZU");
+        Tile t1 = new Tile(3, Tile.Suit.SOUZU);
+        Tile t2 = new Tile(4, Tile.Suit.SOUZU);
+        Tile t3 = new Tile(4, Tile.Suit.SOUZU);
+        Tile t4 = new Tile(5, Tile.Suit.SOUZU);
+        Tile t5 = new Tile(5, Tile.Suit.SOUZU);
+        Tile t6 = new Tile(6, Tile.Suit.SOUZU);
+        Tile t7 = new Tile(7, Tile.Suit.SOUZU);
+        Tile t8 = new Tile(8, Tile.Suit.SOUZU);
+        Tile t9 = new Tile(9, Tile.Suit.SOUZU);
+        Tile t10 = new Tile(1, Tile.Suit.MANZU);
+        Tile t11 = new Tile(2, Tile.Suit.MANZU);
+        Tile t12 = new Tile(3, Tile.Suit.MANZU);
+        Tile t13 = new Tile(3, Tile.Suit.PINZU);
+        Tile t14 = new Tile(3, Tile.Suit.PINZU);
 
         t6.winningTile = true;
 
@@ -102,20 +102,20 @@ public class ScoreCalculatorTest {
     public void handTest3() {
         // This hand should have: Riichi, Ippatsu, Iipeikou, Sanshoku Doujun, Tanyao, Pinfu
         // Han: 7       Fu: 20
-        Tile t1 = new Tile(3, "SOUZU");
-        Tile t2 = new Tile(3, "SOUZU");
-        Tile t3 = new Tile(4, "SOUZU");
-        Tile t4 = new Tile(4, "SOUZU");
-        Tile t5 = new Tile(5, "SOUZU");
-        Tile t6 = new Tile(5, "SOUZU");
-        Tile t7 = new Tile(3, "PINZU");
-        Tile t8 = new Tile(4, "PINZU");
-        Tile t9 = new Tile(5, "PINZU");
-        Tile t10 = new Tile(3, "MANZU");
-        Tile t11 = new Tile(4, "MANZU");
-        Tile t12 = new Tile(5, "MANZU");
-        Tile t13 = new Tile(3, "PINZU");
-        Tile t14 = new Tile(3, "PINZU");
+        Tile t1 = new Tile(3, Tile.Suit.SOUZU);
+        Tile t2 = new Tile(3, Tile.Suit.SOUZU);
+        Tile t3 = new Tile(4, Tile.Suit.SOUZU);
+        Tile t4 = new Tile(4, Tile.Suit.SOUZU);
+        Tile t5 = new Tile(5, Tile.Suit.SOUZU);
+        Tile t6 = new Tile(5, Tile.Suit.SOUZU);
+        Tile t7 = new Tile(3, Tile.Suit.PINZU);
+        Tile t8 = new Tile(4, Tile.Suit.PINZU);
+        Tile t9 = new Tile(5, Tile.Suit.PINZU);
+        Tile t10 = new Tile(3, Tile.Suit.MANZU);
+        Tile t11 = new Tile(4, Tile.Suit.MANZU);
+        Tile t12 = new Tile(5, Tile.Suit.MANZU);
+        Tile t13 = new Tile(3, Tile.Suit.PINZU);
+        Tile t14 = new Tile(3, Tile.Suit.PINZU);
 
         t6.winningTile = true;
         t6.calledFrom = Tile.CalledFrom.LEFT;
@@ -135,20 +135,20 @@ public class ScoreCalculatorTest {
     public void handTest4() {
         // This hand should have: Kokushi Musou
         // Han: 13       Fu: ---
-        Tile t1 = new Tile(1, "SOUZU");
-        Tile t2 = new Tile(9, "SOUZU");
-        Tile t3 = new Tile(1, "MANZU");
-        Tile t4 = new Tile(9, "MANZU");
-        Tile t5 = new Tile(1, "PINZU");
-        Tile t6 = new Tile(9, "PINZU");
-        Tile t7 = new Tile(9, "PINZU");
-        Tile t8 = new Tile("EAST", "HONOR");
-        Tile t9 = new Tile("SOUTH", "HONOR");
-        Tile t10 = new Tile("WEST", "HONOR");
-        Tile t11 = new Tile("NORTH", "HONOR");
-        Tile t12 = new Tile("WHITE", "HONOR");
-        Tile t13 = new Tile("GREEN", "HONOR");
-        Tile t14 = new Tile("RED", "HONOR");
+        Tile t1 = new Tile(1, Tile.Suit.SOUZU);
+        Tile t2 = new Tile(9, Tile.Suit.SOUZU);
+        Tile t3 = new Tile(1, Tile.Suit.MANZU);
+        Tile t4 = new Tile(9, Tile.Suit.MANZU);
+        Tile t5 = new Tile(1, Tile.Suit.PINZU);
+        Tile t6 = new Tile(9, Tile.Suit.PINZU);
+        Tile t7 = new Tile(9, Tile.Suit.PINZU);
+        Tile t8 = new Tile(Tile.Wind.EAST);
+        Tile t9 = new Tile(Tile.Wind.SOUTH);
+        Tile t10 = new Tile(Tile.Wind.WEST);
+        Tile t11 = new Tile(Tile.Wind.NORTH);
+        Tile t12 = new Tile(Tile.Dragon.WHITE);
+        Tile t13 = new Tile(Tile.Dragon.GREEN);
+        Tile t14 = new Tile(Tile.Dragon.RED);
 
         t6.winningTile = true;
         t6.calledFrom = Tile.CalledFrom.LEFT;
@@ -165,20 +165,20 @@ public class ScoreCalculatorTest {
     public void handTest5() {
         // This hand should have: Double Riichi, Chii Toitsu
         // Han: 4       Fu: 25
-        Tile t1 = new Tile(1, "SOUZU");
-        Tile t2 = new Tile(1, "SOUZU");
-        Tile t3 = new Tile(6, "MANZU");
-        Tile t4 = new Tile(6, "MANZU");
-        Tile t5 = new Tile(4, "PINZU");
-        Tile t6 = new Tile(4, "PINZU");
-        Tile t7 = new Tile("EAST", "HONOR");
-        Tile t8 = new Tile("EAST", "HONOR");
-        Tile t9 = new Tile("WEST", "HONOR");
-        Tile t10 = new Tile("WEST", "HONOR");
-        Tile t11 = new Tile("WHITE", "HONOR");
-        Tile t12 = new Tile("WHITE", "HONOR");
-        Tile t13 = new Tile("RED", "HONOR");
-        Tile t14 = new Tile("RED", "HONOR");
+        Tile t1 = new Tile(1, Tile.Suit.SOUZU);
+        Tile t2 = new Tile(1, Tile.Suit.SOUZU);
+        Tile t3 = new Tile(6, Tile.Suit.MANZU);
+        Tile t4 = new Tile(6, Tile.Suit.MANZU);
+        Tile t5 = new Tile(4, Tile.Suit.PINZU);
+        Tile t6 = new Tile(4, Tile.Suit.PINZU);
+        Tile t7 = new Tile(Tile.Wind.EAST);
+        Tile t8 = new Tile(Tile.Wind.EAST);
+        Tile t9 = new Tile(Tile.Wind.WEST);
+        Tile t10 = new Tile(Tile.Wind.WEST);
+        Tile t11 = new Tile(Tile.Dragon.WHITE);
+        Tile t12 = new Tile(Tile.Dragon.WHITE);
+        Tile t13 = new Tile(Tile.Dragon.RED);
+        Tile t14 = new Tile(Tile.Dragon.RED);
 
         t6.winningTile = true;
         t6.calledFrom = Tile.CalledFrom.LEFT;
@@ -197,20 +197,20 @@ public class ScoreCalculatorTest {
     public void handTest6() {
         // This hand should have: Toitoi, Shousangen, Red Dragon, Green Dragon
         // Han: 6       Fu: 44
-        Tile t1 = new Tile(1, "SOUZU");
-        Tile t2 = new Tile(1, "SOUZU");
-        Tile t3 = new Tile(1, "SOUZU");
-        Tile t4 = new Tile(4, "PINZU");
-        Tile t5 = new Tile(4, "PINZU");
-        Tile t6 = new Tile(4, "PINZU");
-        Tile t7 = new Tile( "WHITE", "HONOR");
-        Tile t8 = new Tile( "WHITE", "HONOR");
-        Tile t9 = new Tile( "GREEN", "HONOR");
-        Tile t10 = new Tile("GREEN", "HONOR");
-        Tile t11 = new Tile("GREEN", "HONOR");
-        Tile t12 = new Tile("RED", "HONOR");
-        Tile t13 = new Tile("RED", "HONOR");
-        Tile t14 = new Tile("RED", "HONOR");
+        Tile t1 = new Tile(1, Tile.Suit.SOUZU);
+        Tile t2 = new Tile(1, Tile.Suit.SOUZU);
+        Tile t3 = new Tile(1, Tile.Suit.SOUZU);
+        Tile t4 = new Tile(4, Tile.Suit.PINZU);
+        Tile t5 = new Tile(4, Tile.Suit.PINZU);
+        Tile t6 = new Tile(4, Tile.Suit.PINZU);
+        Tile t7 = new Tile( Tile.Dragon.WHITE);
+        Tile t8 = new Tile( Tile.Dragon.WHITE);
+        Tile t9 = new Tile(Tile.Dragon.GREEN);
+        Tile t10 = new Tile(Tile.Dragon.GREEN);
+        Tile t11 = new Tile(Tile.Dragon.GREEN);
+        Tile t12 = new Tile(Tile.Dragon.RED);
+        Tile t13 = new Tile(Tile.Dragon.RED);
+        Tile t14 = new Tile(Tile.Dragon.RED);
 
         t9.revealedState = t10.revealedState = t11.revealedState = Tile.RevealedState.PON;
         t9.calledFrom = Tile.CalledFrom.LEFT;
@@ -231,24 +231,24 @@ public class ScoreCalculatorTest {
     public void handTest7() {
         // This hand should have: San Kantsu, White Dragon, Honroutou, Rinshan, Toitoi
         // Han: 9       Fu: ??
-        Tile t1 = new Tile(1, "SOUZU");
-        Tile t2 = new Tile(1, "SOUZU");
-        Tile t3 = new Tile(1, "SOUZU");
-        Tile t4 = new Tile(9, "PINZU");
-        Tile t5 = new Tile(9, "PINZU");
-        Tile t6 = new Tile(9, "PINZU");
-        Tile t7 = new Tile( "NORTH", "HONOR");
-        Tile t8 = new Tile( "NORTH", "HONOR");
-        Tile t9 = new Tile( "NORTH", "HONOR");
-        Tile t10 = new Tile("GREEN", "HONOR");
-        Tile t11 = new Tile("GREEN", "HONOR");
-        Tile t12 = new Tile("GREEN", "HONOR");
-        Tile t13 = new Tile("RED", "HONOR");
-        Tile t14 = new Tile("RED", "HONOR");
+        Tile t1 = new Tile(1, Tile.Suit.SOUZU);
+        Tile t2 = new Tile(1, Tile.Suit.SOUZU);
+        Tile t3 = new Tile(1, Tile.Suit.SOUZU);
+        Tile t4 = new Tile(9, Tile.Suit.PINZU);
+        Tile t5 = new Tile(9, Tile.Suit.PINZU);
+        Tile t6 = new Tile(9, Tile.Suit.PINZU);
+        Tile t7 = new Tile( Tile.Wind.NORTH);
+        Tile t8 = new Tile( Tile.Wind.NORTH);
+        Tile t9 = new Tile( Tile.Wind.NORTH);
+        Tile t10 = new Tile(Tile.Dragon.GREEN);
+        Tile t11 = new Tile(Tile.Dragon.GREEN);
+        Tile t12 = new Tile(Tile.Dragon.GREEN);
+        Tile t13 = new Tile(Tile.Dragon.RED);
+        Tile t14 = new Tile(Tile.Dragon.RED);
 
-        Tile t15 = new Tile(1, "SOUZU");
-        Tile t16 = new Tile(9, "PINZU");
-        Tile t17 = new Tile("GREEN", "HONOR");
+        Tile t15 = new Tile(1, Tile.Suit.SOUZU);
+        Tile t16 = new Tile(9, Tile.Suit.PINZU);
+        Tile t17 = new Tile(Tile.Dragon.GREEN);
 
         t1.revealedState = t2.revealedState = t3.revealedState = t15.revealedState = Tile.RevealedState.CLOSEDKAN;
         t4.revealedState = t5.revealedState = t6.revealedState = t16.revealedState = Tile.RevealedState.OPENKAN;
@@ -271,20 +271,20 @@ public class ScoreCalculatorTest {
     public void handTest8() {
         // This hand should have: Chanta, Prevailing Wind, Seat Wind, San Ankou
         // Han: 5       Fu: 46  (50)
-        Tile t1 = new Tile(1, "SOUZU");
-        Tile t2 = new Tile(2, "SOUZU");
-        Tile t3 = new Tile(3, "SOUZU");
-        Tile t4 = new Tile(9, "PINZU");
-        Tile t5 = new Tile(9, "PINZU");
-        Tile t6 = new Tile("NORTH", "HONOR");
-        Tile t7 = new Tile("NORTH", "HONOR");
-        Tile t8 = new Tile("NORTH", "HONOR");
-        Tile t9 = new Tile( "EAST", "HONOR");
-        Tile t10 = new Tile("EAST", "HONOR");
-        Tile t11 = new Tile("EAST", "HONOR");
-        Tile t12 = new Tile("WEST", "HONOR");
-        Tile t13 = new Tile("WEST", "HONOR");
-        Tile t14 = new Tile("WEST", "HONOR");
+        Tile t1 = new Tile(1, Tile.Suit.SOUZU);
+        Tile t2 = new Tile(2, Tile.Suit.SOUZU);
+        Tile t3 = new Tile(3, Tile.Suit.SOUZU);
+        Tile t4 = new Tile(9, Tile.Suit.PINZU);
+        Tile t5 = new Tile(9, Tile.Suit.PINZU);
+        Tile t6 = new Tile(Tile.Wind.NORTH);
+        Tile t7 = new Tile(Tile.Wind.NORTH);
+        Tile t8 = new Tile(Tile.Wind.NORTH);
+        Tile t9 = new Tile( Tile.Wind.EAST);
+        Tile t10 = new Tile(Tile.Wind.EAST);
+        Tile t11 = new Tile(Tile.Wind.EAST);
+        Tile t12 = new Tile(Tile.Wind.WEST);
+        Tile t13 = new Tile(Tile.Wind.WEST);
+        Tile t14 = new Tile(Tile.Wind.WEST);
 
         t1.revealedState = t2.revealedState = t3.revealedState = Tile.RevealedState.CHI;
         t2.calledFrom = Tile.CalledFrom.LEFT;
@@ -305,20 +305,20 @@ public class ScoreCalculatorTest {
     public void handTest9() {
         // This hand should have: Sanshoku Doukou, Junchan, Houtei
         // Han: 5       Fu: 42
-        Tile t1 = new Tile(1, "SOUZU");
-        Tile t2 = new Tile(1, "SOUZU");
-        Tile t3 = new Tile(1, "SOUZU");
-        Tile t4 = new Tile(7, "PINZU");
-        Tile t5 = new Tile(8, "PINZU");
-        Tile t6 = new Tile(9, "PINZU");
-        Tile t7 = new Tile(1, "PINZU");
-        Tile t8 = new Tile(1, "PINZU");
-        Tile t9 = new Tile(1, "PINZU");
-        Tile t10 = new Tile(9, "MANZU");
-        Tile t11 = new Tile(9, "MANZU");
-        Tile t12 = new Tile(1, "MANZU");
-        Tile t13 = new Tile(1, "MANZU");
-        Tile t14 = new Tile(1, "MANZU");
+        Tile t1 = new Tile(1, Tile.Suit.SOUZU);
+        Tile t2 = new Tile(1, Tile.Suit.SOUZU);
+        Tile t3 = new Tile(1, Tile.Suit.SOUZU);
+        Tile t4 = new Tile(7, Tile.Suit.PINZU);
+        Tile t5 = new Tile(8, Tile.Suit.PINZU);
+        Tile t6 = new Tile(9, Tile.Suit.PINZU);
+        Tile t7 = new Tile(1, Tile.Suit.PINZU);
+        Tile t8 = new Tile(1, Tile.Suit.PINZU);
+        Tile t9 = new Tile(1, Tile.Suit.PINZU);
+        Tile t10 = new Tile(9, Tile.Suit.MANZU);
+        Tile t11 = new Tile(9, Tile.Suit.MANZU);
+        Tile t12 = new Tile(1, Tile.Suit.MANZU);
+        Tile t13 = new Tile(1, Tile.Suit.MANZU);
+        Tile t14 = new Tile(1, Tile.Suit.MANZU);
 
         t1.revealedState = t2.revealedState = t3.revealedState = Tile.RevealedState.PON;
         t2.calledFrom = Tile.CalledFrom.LEFT;
@@ -340,20 +340,20 @@ public class ScoreCalculatorTest {
     public void handTest10() {
         // This hand should have: Ryanpeikou, Honitsu
         // Han: 6       Fu: --
-        Tile t1 = new Tile(1, "SOUZU");
-        Tile t2 = new Tile(1, "SOUZU");
-        Tile t3 = new Tile(2, "SOUZU");
-        Tile t4 = new Tile(2, "SOUZU");
-        Tile t5 = new Tile(3, "SOUZU");
-        Tile t6 = new Tile(3, "SOUZU");
-        Tile t7 = new Tile(5, "SOUZU");
-        Tile t8 = new Tile(5, "SOUZU");
-        Tile t9 = new Tile(6, "SOUZU");
-        Tile t10 = new Tile(6, "SOUZU");
-        Tile t11 = new Tile(7, "SOUZU");
-        Tile t12 = new Tile(7, "SOUZU");
-        Tile t13 = new Tile("RED", "HONOR");
-        Tile t14 = new Tile("RED", "HONOR");
+        Tile t1 = new Tile(1, Tile.Suit.SOUZU);
+        Tile t2 = new Tile(1, Tile.Suit.SOUZU);
+        Tile t3 = new Tile(2, Tile.Suit.SOUZU);
+        Tile t4 = new Tile(2, Tile.Suit.SOUZU);
+        Tile t5 = new Tile(3, Tile.Suit.SOUZU);
+        Tile t6 = new Tile(3, Tile.Suit.SOUZU);
+        Tile t7 = new Tile(5, Tile.Suit.SOUZU);
+        Tile t8 = new Tile(5, Tile.Suit.SOUZU);
+        Tile t9 = new Tile(6, Tile.Suit.SOUZU);
+        Tile t10 = new Tile(6, Tile.Suit.SOUZU);
+        Tile t11 = new Tile(7, Tile.Suit.SOUZU);
+        Tile t12 = new Tile(7, Tile.Suit.SOUZU);
+        Tile t13 = new Tile(Tile.Dragon.RED);
+        Tile t14 = new Tile(Tile.Dragon.RED);
 
         t5.calledFrom = Tile.CalledFrom.CENTER;
         t5.winningTile = true;
@@ -370,21 +370,21 @@ public class ScoreCalculatorTest {
     public void handTest11() {
         // This hand should have: Chinitsu, Chan Kan
         // Han: 7       Fu: --
-        Tile t1 = new Tile(1, "SOUZU");
-        Tile t2 = new Tile(2, "SOUZU");
-        Tile t3 = new Tile(2, "SOUZU");
-        Tile t4 = new Tile(3, "SOUZU");
-        Tile t5 = new Tile(3, "SOUZU");
-        Tile t6 = new Tile(3, "SOUZU");
-        Tile t7 = new Tile(3, "SOUZU");
-        Tile t8 = new Tile(4, "SOUZU");
-        Tile t9 = new Tile(5, "SOUZU");
-        Tile t10 = new Tile(5, "SOUZU");
-        Tile t11 = new Tile(5, "SOUZU");
-        Tile t12 = new Tile(5, "SOUZU");
-        Tile t13 = new Tile(6, "SOUZU");
-        Tile t14 = new Tile(7, "SOUZU");
-        Tile t15 = new Tile(8, "SOUZU");
+        Tile t1 = new Tile(1, Tile.Suit.SOUZU);
+        Tile t2 = new Tile(2, Tile.Suit.SOUZU);
+        Tile t3 = new Tile(2, Tile.Suit.SOUZU);
+        Tile t4 = new Tile(3, Tile.Suit.SOUZU);
+        Tile t5 = new Tile(3, Tile.Suit.SOUZU);
+        Tile t6 = new Tile(3, Tile.Suit.SOUZU);
+        Tile t7 = new Tile(3, Tile.Suit.SOUZU);
+        Tile t8 = new Tile(4, Tile.Suit.SOUZU);
+        Tile t9 = new Tile(5, Tile.Suit.SOUZU);
+        Tile t10 = new Tile(5, Tile.Suit.SOUZU);
+        Tile t11 = new Tile(5, Tile.Suit.SOUZU);
+        Tile t12 = new Tile(5, Tile.Suit.SOUZU);
+        Tile t13 = new Tile(6, Tile.Suit.SOUZU);
+        Tile t14 = new Tile(7, Tile.Suit.SOUZU);
+        Tile t15 = new Tile(8, Tile.Suit.SOUZU);
 
         t9.revealedState = t10.revealedState = t11.revealedState = t12.revealedState = Tile.RevealedState.CLOSEDKAN;
 
@@ -404,22 +404,22 @@ public class ScoreCalculatorTest {
     public void handTest12() {
         // This hand should have: Nagashi Mangan
         // Han: 5       Fu: --
-        Tile t1 = new Tile(1, "SOUZU");
-        Tile t2 = new Tile(2, "SOUZU");
-        Tile t3 = new Tile(2, "SOUZU");
-        Tile t4 = new Tile(3, "SOUZU");
-        Tile t5 = new Tile(3, "SOUZU");
-        Tile t6 = new Tile(4, "SOUZU");
-        Tile t7 = new Tile(3, "SOUZU");
-        Tile t8 = new Tile(3, "SOUZU");
-        Tile t9 = new Tile(5, "SOUZU");
-        Tile t10 = new Tile(5, "SOUZU");
-        Tile t11 = new Tile(5, "SOUZU");
-        Tile t12 = new Tile(6, "SOUZU");
-        Tile t13 = new Tile(7, "SOUZU");
-        Tile t14 = new Tile(8, "SOUZU");
+        Tile t1 = new Tile(1, Tile.Suit.SOUZU);
+        Tile t2 = new Tile(2, Tile.Suit.SOUZU);
+        Tile t3 = new Tile(2, Tile.Suit.SOUZU);
+        Tile t4 = new Tile(3, Tile.Suit.SOUZU);
+        Tile t5 = new Tile(3, Tile.Suit.SOUZU);
+        Tile t6 = new Tile(4, Tile.Suit.SOUZU);
+        Tile t7 = new Tile(3, Tile.Suit.SOUZU);
+        Tile t8 = new Tile(3, Tile.Suit.SOUZU);
+        Tile t9 = new Tile(5, Tile.Suit.SOUZU);
+        Tile t10 = new Tile(5, Tile.Suit.SOUZU);
+        Tile t11 = new Tile(5, Tile.Suit.SOUZU);
+        Tile t12 = new Tile(6, Tile.Suit.SOUZU);
+        Tile t13 = new Tile(7, Tile.Suit.SOUZU);
+        Tile t14 = new Tile(8, Tile.Suit.SOUZU);
 
-        Tile t15 = new Tile(5, "SOUZU");
+        Tile t15 = new Tile(5, Tile.Suit.SOUZU);
 
         t9.revealedState = t10.revealedState = t11.revealedState = t15.revealedState = Tile.RevealedState.CLOSEDKAN;
 
@@ -436,23 +436,23 @@ public class ScoreCalculatorTest {
     public void handTest13() {
         // This hand should have: Extreme fu
         // Han: 1       Fu: 102 (110)
-        Tile t1 = new Tile("RED", "HONOR");
-        Tile t2 = new Tile("RED", "HONOR");
-        Tile t3 = new Tile("RED", "HONOR");
-        Tile t4 = new Tile("RED", "HONOR");
-        Tile t5 = new Tile(9, "SOUZU");
-        Tile t6 = new Tile(9, "SOUZU");
-        Tile t7 = new Tile(9, "SOUZU");
-        Tile t8 = new Tile(9, "SOUZU");
-        Tile t9 = new Tile( "NORTH", "HONOR");
-        Tile t10 = new Tile("NORTH", "HONOR");
-        Tile t11 = new Tile("NORTH", "HONOR");
-        Tile t12 = new Tile(6, "MANZU");
-        Tile t13 = new Tile(7, "MANZU");
-        Tile t14 = new Tile(8, "MANZU");
+        Tile t1 = new Tile(Tile.Dragon.RED);
+        Tile t2 = new Tile(Tile.Dragon.RED);
+        Tile t3 = new Tile(Tile.Dragon.RED);
+        Tile t4 = new Tile(Tile.Dragon.RED);
+        Tile t5 = new Tile(9, Tile.Suit.SOUZU);
+        Tile t6 = new Tile(9, Tile.Suit.SOUZU);
+        Tile t7 = new Tile(9, Tile.Suit.SOUZU);
+        Tile t8 = new Tile(9, Tile.Suit.SOUZU);
+        Tile t9 = new Tile( Tile.Wind.NORTH);
+        Tile t10 = new Tile(Tile.Wind.NORTH);
+        Tile t11 = new Tile(Tile.Wind.NORTH);
+        Tile t12 = new Tile(6, Tile.Suit.MANZU);
+        Tile t13 = new Tile(7, Tile.Suit.MANZU);
+        Tile t14 = new Tile(8, Tile.Suit.MANZU);
 
-        Tile t15 = new Tile("SOUTH", "HONOR");
-        Tile t16 = new Tile("SOUTH", "HONOR");
+        Tile t15 = new Tile(Tile.Wind.SOUTH);
+        Tile t16 = new Tile(Tile.Wind.SOUTH);
 
         t1.revealedState = t2.revealedState = t3.revealedState = t4.revealedState = Tile.RevealedState.CLOSEDKAN;
         t5.revealedState = t6.revealedState = t7.revealedState = t8.revealedState = Tile.RevealedState.CLOSEDKAN;
@@ -475,24 +475,24 @@ public class ScoreCalculatorTest {
     public void handTest14() {
         // This hand should have: Extreme fu
         // Han: 2       Fu: 108 (110)
-        Tile t1 = new Tile("EAST", "HONOR");
-        Tile t2 = new Tile("EAST", "HONOR");
-        Tile t3 = new Tile("EAST", "HONOR");
-        Tile t4 = new Tile("EAST", "HONOR");
-        Tile t5 = new Tile(9, "SOUZU");
-        Tile t6 = new Tile(9, "SOUZU");
-        Tile t7 = new Tile(9, "SOUZU");
-        Tile t8 = new Tile(9, "SOUZU");
-        Tile t9 = new Tile( "NORTH", "HONOR");
-        Tile t10 = new Tile("NORTH", "HONOR");
-        Tile t11 = new Tile("NORTH", "HONOR");
-        Tile t12 = new Tile("NORTH", "HONOR");
-        Tile t13 = new Tile(6, "MANZU");
-        Tile t14 = new Tile(7, "MANZU");
-        Tile t15 = new Tile(8, "MANZU");
+        Tile t1 = new Tile(Tile.Wind.EAST);
+        Tile t2 = new Tile(Tile.Wind.EAST);
+        Tile t3 = new Tile(Tile.Wind.EAST);
+        Tile t4 = new Tile(Tile.Wind.EAST);
+        Tile t5 = new Tile(9, Tile.Suit.SOUZU);
+        Tile t6 = new Tile(9, Tile.Suit.SOUZU);
+        Tile t7 = new Tile(9, Tile.Suit.SOUZU);
+        Tile t8 = new Tile(9, Tile.Suit.SOUZU);
+        Tile t9 = new Tile( Tile.Wind.NORTH);
+        Tile t10 = new Tile(Tile.Wind.NORTH);
+        Tile t11 = new Tile(Tile.Wind.NORTH);
+        Tile t12 = new Tile(Tile.Wind.NORTH);
+        Tile t13 = new Tile(6, Tile.Suit.MANZU);
+        Tile t14 = new Tile(7, Tile.Suit.MANZU);
+        Tile t15 = new Tile(8, Tile.Suit.MANZU);
 
-        Tile t16 = new Tile("SOUTH", "HONOR");
-        Tile t17 = new Tile("SOUTH", "HONOR");
+        Tile t16 = new Tile(Tile.Wind.SOUTH);
+        Tile t17 = new Tile(Tile.Wind.SOUTH);
 
         t1.revealedState = t2.revealedState = t3.revealedState = t4.revealedState = Tile.RevealedState.CLOSEDKAN;
         t5.revealedState = t6.revealedState = t7.revealedState = t8.revealedState = Tile.RevealedState.CLOSEDKAN;
@@ -516,20 +516,20 @@ public class ScoreCalculatorTest {
     public void handTest15() {
         // This hand is primarily testing the ability to sort this hand correctly
         // Han:        Fu:
-        Tile t1 = new Tile(1, "MANZU");
-        Tile t2 = new Tile(1, "MANZU");
-        Tile t3 = new Tile(1, "MANZU");
-        Tile t4 = new Tile(1, "MANZU");
-        Tile t5 = new Tile(2, "MANZU");
-        Tile t6 = new Tile(2, "MANZU");
-        Tile t7 = new Tile(2, "MANZU");
-        Tile t8 = new Tile(2, "MANZU");
-        Tile t9 = new Tile( 3, "MANZU");
-        Tile t10 = new Tile(3, "MANZU");
-        Tile t11 = new Tile(3, "MANZU");
-        Tile t12 = new Tile(3, "MANZU");
-        Tile t13 = new Tile(4, "MANZU");
-        Tile t14 = new Tile(4, "MANZU");
+        Tile t1 = new Tile(1, Tile.Suit.MANZU);
+        Tile t2 = new Tile(1, Tile.Suit.MANZU);
+        Tile t3 = new Tile(1, Tile.Suit.MANZU);
+        Tile t4 = new Tile(1, Tile.Suit.MANZU);
+        Tile t5 = new Tile(2, Tile.Suit.MANZU);
+        Tile t6 = new Tile(2, Tile.Suit.MANZU);
+        Tile t7 = new Tile(2, Tile.Suit.MANZU);
+        Tile t8 = new Tile(2, Tile.Suit.MANZU);
+        Tile t9 = new Tile( 3, Tile.Suit.MANZU);
+        Tile t10 = new Tile(3, Tile.Suit.MANZU);
+        Tile t11 = new Tile(3, Tile.Suit.MANZU);
+        Tile t12 = new Tile(3, Tile.Suit.MANZU);
+        Tile t13 = new Tile(4, Tile.Suit.MANZU);
+        Tile t14 = new Tile(4, Tile.Suit.MANZU);
 
         Hand h = new Hand(Arrays.asList(t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11, t12, t13, t14));
         h.prevailingWind = Tile.Wind.SOUTH;
@@ -547,21 +547,21 @@ public class ScoreCalculatorTest {
     public void handTest17() {
         // This hand is primarily testing the ability to sort this hand correctly
         // Value is less than theoretical, because closed kan was not terminal
-        Tile t1  = new Tile(1, "MANZU");
-        Tile t2  = new Tile(1, "MANZU");
-        Tile t3  = new Tile(1, "MANZU");
-        Tile t4  = new Tile(1, "MANZU");
-        Tile t5  = new Tile(2, "MANZU");
-        Tile t6  = new Tile(3, "MANZU");
-        Tile t7  = new Tile(4, "MANZU");
-        Tile t8  = new Tile(4, "MANZU");
-        Tile t9  = new Tile(4, "MANZU");
-        Tile t10 = new Tile(4, "MANZU");
-        Tile t11 = new Tile(5, "PINZU");
-        Tile t12 = new Tile(6, "PINZU");
-        Tile t13 = new Tile(7, "PINZU");
-        Tile t14 = new Tile(8, "PINZU");
-        Tile t15 = new Tile(8, "PINZU");
+        Tile t1  = new Tile(1, Tile.Suit.MANZU);
+        Tile t2  = new Tile(1, Tile.Suit.MANZU);
+        Tile t3  = new Tile(1, Tile.Suit.MANZU);
+        Tile t4  = new Tile(1, Tile.Suit.MANZU);
+        Tile t5  = new Tile(2, Tile.Suit.MANZU);
+        Tile t6  = new Tile(3, Tile.Suit.MANZU);
+        Tile t7  = new Tile(4, Tile.Suit.MANZU);
+        Tile t8  = new Tile(4, Tile.Suit.MANZU);
+        Tile t9  = new Tile(4, Tile.Suit.MANZU);
+        Tile t10 = new Tile(4, Tile.Suit.MANZU);
+        Tile t11 = new Tile(5, Tile.Suit.PINZU);
+        Tile t12 = new Tile(6, Tile.Suit.PINZU);
+        Tile t13 = new Tile(7, Tile.Suit.PINZU);
+        Tile t14 = new Tile(8, Tile.Suit.PINZU);
+        Tile t15 = new Tile(8, Tile.Suit.PINZU);
 
 //        t7.revealedState = t8.revealedState = t9.revealedState = t10.revealedState = Tile.RevealedState.CLOSEDKAN;
 
@@ -581,20 +581,20 @@ public class ScoreCalculatorTest {
     @Test
     public void problemHand1() {
         // Hand was not returning sanshoku doujun correctly
-        Tile t1  = new Tile(1, "MANZU");
-        Tile t2  = new Tile(2, "MANZU");
-        Tile t3  = new Tile(3, "MANZU");
-        Tile t4  = new Tile(4, "MANZU");
-        Tile t5  = new Tile(4, "MANZU");
-        Tile t6  = new Tile(6, "MANZU");
-        Tile t7  = new Tile(7, "MANZU");
-        Tile t8  = new Tile(8, "MANZU");
-        Tile t9  = new Tile(6, "PINZU");
-        Tile t10 = new Tile(7, "PINZU");
-        Tile t11 = new Tile(8, "PINZU");
-        Tile t12 = new Tile(6, "SOUZU");
-        Tile t13 = new Tile(7, "SOUZU");
-        Tile t14 = new Tile(8, "SOUZU");
+        Tile t1  = new Tile(1, Tile.Suit.MANZU);
+        Tile t2  = new Tile(2, Tile.Suit.MANZU);
+        Tile t3  = new Tile(3, Tile.Suit.MANZU);
+        Tile t4  = new Tile(4, Tile.Suit.MANZU);
+        Tile t5  = new Tile(4, Tile.Suit.MANZU);
+        Tile t6  = new Tile(6, Tile.Suit.MANZU);
+        Tile t7  = new Tile(7, Tile.Suit.MANZU);
+        Tile t8  = new Tile(8, Tile.Suit.MANZU);
+        Tile t9  = new Tile(6, Tile.Suit.PINZU);
+        Tile t10 = new Tile(7, Tile.Suit.PINZU);
+        Tile t11 = new Tile(8, Tile.Suit.PINZU);
+        Tile t12 = new Tile(6, Tile.Suit.SOUZU);
+        Tile t13 = new Tile(7, Tile.Suit.SOUZU);
+        Tile t14 = new Tile(8, Tile.Suit.SOUZU);
 
         t13.calledFrom = Tile.CalledFrom.CENTER;
         t13.winningTile = true;

@@ -98,11 +98,11 @@ public class SpeedQuizFragment_2ScoreHand extends Fragment implements View.OnCli
 
         Utils utils = ((MainActivity)getContext()).getUtils();
 
-        Tile prevailingWindTile = new Tile(fragHand.prevailingWind.toString(), "HONOR");
+        Tile prevailingWindTile = new Tile(fragHand.prevailingWind);
         ImageView prevailingWindTileImage = utils.getHandDisplayTileView(prevailingWindTile, false);
         prevailingWindTileContainer.addView(prevailingWindTileImage);
 
-        Tile playerWindTile = new Tile(fragHand.playerWind.toString(), "HONOR");
+        Tile playerWindTile = new Tile(fragHand.playerWind);
         ImageView playerWindTileImage = utils.getHandDisplayTileView(playerWindTile, false);
         playerWindTileContainer.addView(playerWindTileImage);
 

@@ -231,14 +231,14 @@ public class HandGenerator {
         Tile founder = meld.firstTile();
 
         if(founder.number==1){
-            meld.addTile(new Tile(2, founder.suit.toString()));
-            meld.addTile(new Tile(3, founder.suit.toString()));
+            meld.addTile(new Tile(2, founder.suit));
+            meld.addTile(new Tile(3, founder.suit));
         } else if(founder.number==9){
-            meld.addTile(new Tile(8, founder.suit.toString()));
-            meld.addTile(new Tile(7, founder.suit.toString()));
+            meld.addTile(new Tile(8, founder.suit));
+            meld.addTile(new Tile(7, founder.suit));
         } else {
-            meld.addTile(new Tile(founder.number-1, founder.suit.toString()));
-            meld.addTile(new Tile(founder.number+1, founder.suit.toString()));
+            meld.addTile(new Tile(founder.number-1, founder.suit));
+            meld.addTile(new Tile(founder.number+1, founder.suit));
         }
 
         if( Math.random()<0.3 ){
@@ -388,21 +388,13 @@ public class HandGenerator {
 
     public static List<Tile> allTiles(){
         List<Tile> tiles = new ArrayList<>();
-        for(int i=1; i<10; i++){
-            tiles.add(new Tile(i, "MANZU"));
-            tiles.add(new Tile(i, "PINZU"));
-            tiles.add(new Tile(i, "SOUZU"));
-        }
-        tiles.add(new Tile("East", "HONOR"));
-        tiles.add(new Tile("South", "HONOR"));
-        tiles.add(new Tile("West", "HONOR"));
-        tiles.add(new Tile("North", "HONOR"));
-        tiles.add(new Tile("White", "HONOR"));
-        tiles.add(new Tile("Green", "HONOR"));
-        tiles.add(new Tile("Red", "HONOR"));
+        tiles.addAll(allManzu());
+        tiles.addAll(allPinzu());
+        tiles.addAll(allSouzu());
+        tiles.addAll(allHonors());
         return tiles;
     }
-    private List<Tile> allOfSuit(Tile.Suit s){
+    private static List<Tile> allOfSuit(Tile.Suit s){
         if( s==Tile.Suit.MANZU ){
             return allManzu();
         } else if( s==Tile.Suit.PINZU ){
@@ -412,54 +404,54 @@ public class HandGenerator {
         }
         return allHonors();
     }
-    private List<Tile> allManzu(){
+    private static List<Tile> allManzu(){
         List<Tile> tiles = new ArrayList<>();
         for(int i=1; i<10; i++){
-            tiles.add(new Tile(i, "MANZU"));
+            tiles.add(new Tile(i, Tile.Suit.MANZU));
         }
         return tiles;
     }
-    private List<Tile> allPinzu(){
+    private static List<Tile> allPinzu(){
         List<Tile> tiles = new ArrayList<>();
         for(int i=1; i<10; i++){
-            tiles.add(new Tile(i, "PINZU"));
+            tiles.add(new Tile(i, Tile.Suit.PINZU));
         }
         return tiles;
     }
-    private List<Tile> allSouzu(){
+    private static List<Tile> allSouzu(){
         List<Tile> tiles = new ArrayList<>();
         for(int i=1; i<10; i++){
-            tiles.add(new Tile(i, "SOUZU"));
+            tiles.add(new Tile(i, Tile.Suit.SOUZU));
         }
         return tiles;
     }
-    private List<Tile> allHonors(){
+    private static List<Tile> allHonors(){
         List<Tile> tiles = new ArrayList<>();
-        tiles.add(new Tile("East", "HONOR"));
-        tiles.add(new Tile("South", "HONOR"));
-        tiles.add(new Tile("West", "HONOR"));
-        tiles.add(new Tile("North", "HONOR"));
-        tiles.add(new Tile("White", "HONOR"));
-        tiles.add(new Tile("Green", "HONOR"));
-        tiles.add(new Tile("Red", "HONOR"));
+        tiles.add(new Tile(Tile.Wind.EAST));
+        tiles.add(new Tile(Tile.Wind.SOUTH));
+        tiles.add(new Tile(Tile.Wind.WEST));
+        tiles.add(new Tile(Tile.Wind.NORTH));
+        tiles.add(new Tile(Tile.Dragon.WHITE));
+        tiles.add(new Tile(Tile.Dragon.GREEN));
+        tiles.add(new Tile(Tile.Dragon.RED));
         return tiles;
     }
-    private List<Tile> allTerminals(){
+    private static List<Tile> allTerminals(){
         List<Tile> tiles = new ArrayList<>();
-        tiles.add(new Tile(1, "MANZU"));
-        tiles.add(new Tile(9, "MANZU"));
-        tiles.add(new Tile(1, "PINZU"));
-        tiles.add(new Tile(9, "PINZU"));
-        tiles.add(new Tile(1, "SOUZU"));
-        tiles.add(new Tile(9, "SOUZU"));
+        tiles.add(new Tile(1, Tile.Suit.MANZU));
+        tiles.add(new Tile(9, Tile.Suit.MANZU));
+        tiles.add(new Tile(1, Tile.Suit.PINZU));
+        tiles.add(new Tile(9, Tile.Suit.PINZU));
+        tiles.add(new Tile(1, Tile.Suit.SOUZU));
+        tiles.add(new Tile(9, Tile.Suit.SOUZU));
         return tiles;
     }
-    private List<Tile> allSimples(){
+    private static List<Tile> allSimples(){
         List<Tile> tiles = new ArrayList<>();
         for(int i=2; i<9; i++){
-            tiles.add(new Tile(i, "MANZU"));
-            tiles.add(new Tile(i, "PINZU"));
-            tiles.add(new Tile(i, "SOUZU"));
+            tiles.add(new Tile(i, Tile.Suit.MANZU));
+            tiles.add(new Tile(i, Tile.Suit.PINZU));
+            tiles.add(new Tile(i, Tile.Suit.SOUZU));
         }
         return tiles;
     }

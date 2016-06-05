@@ -12,30 +12,28 @@ public class ImageCache {
     private LruCache<String, BitmapDrawable> mMemoryCache;
 
     public static String HAND_DISPLAY_KEY = "HandDisplay ";
-    public static int HAND_DISPLAY_TILE_WIDTH = 50;
-
     public static String KEYBOARD_KEY_LARGE = "KeyboardLarge ";
-    public static int KEYBOARD_TILE_WIDTH_LARGE = 110;
-
     public static String KEYBOARD_KEY_SMALL = "KeyboardSmall ";
-    public static int KEYBOARD_TILE_WIDTH_SMALL = 70;
 
     public ImageCache(MainActivity ma){
         activity = ma;
         init();
     }
 
-    public void init(){
+    private void init(){
         mMemoryCache = new LruCache<String, BitmapDrawable>(DEFAULT_MEM_CACHE_SIZE) {
             /**
              * Measure item size in kilobytes rather than units which is more practical
              * for a bitmap cache
              */
-            @Override
-            protected int sizeOf(String key, BitmapDrawable value) {
-                final int bitmapSize = getBitmapSize(value) / 1024;
-                return bitmapSize == 0 ? 1 : bitmapSize;
-            }
+            // NOTE for some reason, this makes the Large button version of the HandCalculator
+            //      fail to load its button images correctly on tablets with
+            //      larger than standard resolutions ... wth?
+//            @Override
+//            protected int sizeOf(String key, BitmapDrawable value) {
+//                final int bitmapSize = getBitmapSize(value) / 1024;
+//                return bitmapSize == 0 ? 1 : bitmapSize;
+//            }
         };
     }
 
@@ -50,6 +48,8 @@ public class ImageCache {
         }
 
         if (mMemoryCache != null) {
+//            Log.wtf("wtfIsCacheDoing", "keyString: "+keyString);
+//            Log.wtf("wtfIsCacheDoing", "wtf cache, size? "+mMemoryCache.size());
             mMemoryCache.put(keyString, value);
         }
     }
@@ -62,6 +62,11 @@ public class ImageCache {
      */
     public BitmapDrawable getBitmapFromCache(String keyString) {
         BitmapDrawable memValue = null;
+//        Log.wtf("wtfIsCacheDoing", "keyString: "+keyString);
+//        Log.wtf("wtfIsCacheDoing", "wtf cache, size? "+mMemoryCache.size());
+//        Log.wtf("wtfIsCacheDoing", "wtf cache, max size? "+mMemoryCache.maxSize());
+//        Log.wtf("wtfIsCacheDoing", "wtf cache, miss count? "+mMemoryCache.missCount());
+//        Log.wtf("wtfIsCacheDoing", "wtf cache, put count? "+mMemoryCache.putCount());
 
         if (mMemoryCache != null) {
             memValue = mMemoryCache.get(keyString);
@@ -71,18 +76,14 @@ public class ImageCache {
             activity.getUtils().populateImageCacheForHandDisplay();
             memValue = mMemoryCache.get(keyString);
         } else if( memValue==null && keyString.contains(KEYBOARD_KEY_LARGE) ){
-            activity.getUtils().populateImageCacheForKeyboard(KEYBOARD_KEY_LARGE, KEYBOARD_TILE_WIDTH_LARGE);
+            activity.getUtils().populateImageCacheForKeyboard(KEYBOARD_KEY_LARGE);
             memValue = mMemoryCache.get(keyString);
         } else if( memValue==null && keyString.contains(KEYBOARD_KEY_SMALL) ){
-            activity.getUtils().populateImageCacheForKeyboard(KEYBOARD_KEY_SMALL, KEYBOARD_TILE_WIDTH_SMALL);
+            activity.getUtils().populateImageCacheForKeyboard(KEYBOARD_KEY_SMALL);
             memValue = mMemoryCache.get(keyString);
         }
 
         return memValue;
-    }
-
-    public static int getTileHeight(int width){
-        return (int) ((double)width * Utils.TILE_RATIO);
     }
 
     public void clearCache() {

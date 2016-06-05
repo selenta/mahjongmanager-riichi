@@ -14,6 +14,7 @@ import com.mahjongmanager.riichi.MainActivity;
 import com.mahjongmanager.riichi.Meld;
 import com.mahjongmanager.riichi.R;
 import com.mahjongmanager.riichi.Tile;
+import com.mahjongmanager.riichi.utils.ImageCache;
 import com.mahjongmanager.riichi.utils.Log;
 import com.mahjongmanager.riichi.utils.Utils;
 
@@ -21,7 +22,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class HandDisplay extends LinearLayout implements View.OnClickListener {
-    private Context context;
+    private Context activity;
     private HandKeyboard parentKeyboard = null;
 
     private LinearLayout closedTilesContainer;
@@ -53,18 +54,19 @@ public class HandDisplay extends LinearLayout implements View.OnClickListener {
     }
     public HandDisplay(Context ctx, AttributeSet attrs, int defStyle ){
         super(ctx, attrs, defStyle);
-        context = ctx;
+        activity = ctx;
         initializeView();
     }
 
     private void initializeView(){
-        LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        LayoutInflater inflater = (LayoutInflater) activity.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         inflater.inflate(R.layout.component_handdisplay, this);
 
         closedTilesContainer = (LinearLayout) findViewById(R.id.closedTilesContainer);
         openTilesContainer   = (LinearLayout) findViewById(R.id.openTilesContainer);
         winningTileContainer = (LinearLayout) findViewById(R.id.winningTileContainer);
 
+        calcHeight();
         setState(YAKU_DESCRIPTION);
     }
 
@@ -79,6 +81,10 @@ public class HandDisplay extends LinearLayout implements View.OnClickListener {
      *
      * SPEED_QUIZ
      *     SeparateClosedMelds - yes
+     *     Separate WinningTile - yes
+     *
+     * SPEED_QUIZ_UNSORTED
+     *     SeparateClosedMelds - no
      *     Separate WinningTile - yes
      *
      * YAKU_DESCRIPTION
@@ -131,6 +137,22 @@ public class HandDisplay extends LinearLayout implements View.OnClickListener {
         setState(s, null);
     }
 
+    private void calcHeight(){
+        if( isInEditMode() ){
+            return;
+        }
+
+        int size = getUtils().getActualTileWidth(ImageCache.HAND_DISPLAY_KEY);
+
+        if( hand!=null && hand.hasAddedKan() ){
+            size = size * 17/10 + 10;
+            closedTilesContainer.setMinimumHeight(size);
+        } else if( hand!=null && hand.isOpen() ){
+            size = size * 14/10 + 10;
+            closedTilesContainer.setMinimumHeight(size);
+        }
+    }
+
     ///////////////////////////////////////////
     /////////////     Main     ////////////////
     ///////////////////////////////////////////
@@ -170,6 +192,8 @@ public class HandDisplay extends LinearLayout implements View.OnClickListener {
         if( hand==null ){
             return;
         }
+        calcHeight();
+
         closedTilesContainer.removeAllViews();
         openTilesContainer.removeAllViews();
         winningTileContainer.removeAllViews();
@@ -390,7 +414,7 @@ public class HandDisplay extends LinearLayout implements View.OnClickListener {
         openTilesContainer.addView(tileDisplay.view);
     }
     private void addTileCalled(Tile calledTile, Tile addedTile){
-        LinearLayout container = new LinearLayout(context);
+        LinearLayout container = new LinearLayout(activity);
         container.setOrientation(VERTICAL);
         container.setLayoutParams(new LinearLayout.LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT));
         container.setGravity(Gravity.BOTTOM);
@@ -459,8 +483,8 @@ public class HandDisplay extends LinearLayout implements View.OnClickListener {
 
     Utils _utils;
     private Utils getUtils(){
-        if( _utils==null ){
-            _utils = ((MainActivity)context).getUtils();
+        if( _utils==null && !isInEditMode() ){
+            _utils = ((MainActivity) activity).getUtils();
         }
         return _utils;
     }

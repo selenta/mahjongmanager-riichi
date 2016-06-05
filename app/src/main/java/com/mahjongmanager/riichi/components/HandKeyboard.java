@@ -22,6 +22,7 @@ import com.mahjongmanager.riichi.Tile;
 import com.mahjongmanager.riichi.handcalculator.HandCalculatorFragment_1Keyboard;
 import com.mahjongmanager.riichi.utils.HandGenerator;
 import com.mahjongmanager.riichi.utils.ImageCache;
+import com.mahjongmanager.riichi.utils.Utils;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -271,8 +272,8 @@ public class HandKeyboard extends LinearLayout implements View.OnClickListener {
             return;
         }
 
-        Tile secondTile = new Tile(tile.number + 1, tile.suit.toString());
-        Tile thirdTile = new Tile(tile.number + 2, tile.suit.toString());
+        Tile secondTile = new Tile(tile.number + 1, tile.suit);
+        Tile thirdTile = new Tile(tile.number + 2, tile.suit);
 
         tile.calledFrom = Tile.CalledFrom.LEFT;
         tile.revealedState = secondTile.revealedState = thirdTile.revealedState = Tile.RevealedState.CHI;
@@ -415,22 +416,22 @@ public class HandKeyboard extends LinearLayout implements View.OnClickListener {
         if( currentSuit==Tile.Suit.HONOR ){
             switch (i){
                 case 1:
-                    return new Tile("East", "HONOR");
+                    return new Tile(Tile.Wind.EAST);
                 case 2:
-                    return new Tile("South", "HONOR");
+                    return new Tile(Tile.Wind.SOUTH);
                 case 3:
-                    return new Tile("West", "HONOR");
+                    return new Tile(Tile.Wind.WEST);
                 case 4:
-                    return new Tile("North", "HONOR");
+                    return new Tile(Tile.Wind.NORTH);
                 case 6:
-                    return new Tile("White", "HONOR");
+                    return new Tile(Tile.Dragon.WHITE);
                 case 7:
-                    return new Tile("Green", "HONOR");
+                    return new Tile(Tile.Dragon.GREEN);
                 case 8:
-                    return new Tile("Red", "HONOR");
+                    return new Tile(Tile.Dragon.RED);
             }
         }
-        return new Tile(i, currentSuit.toString());
+        return new Tile(i, currentSuit);
     }
     private void setButtonImage(ImageButton b, int i){
         Tile t = getTileForButton(i);
@@ -477,7 +478,9 @@ public class HandKeyboard extends LinearLayout implements View.OnClickListener {
                 ImageButton honorButton = tileButton.button;
                 fourthButtonContainer.addView(honorButton);
                 if( tileButton.tile.toString().equals("North") ){
-                    int spacerSize = ImageCache.KEYBOARD_TILE_WIDTH_SMALL + 2*smallTileMargin + 2*smallTilePadding;
+                    int smallKeyboardTileWidth = getUtils().KEYBOARD_TILE_WIDTH_SMALL;
+
+                    int spacerSize = smallKeyboardTileWidth + 2*smallTileMargin + 2*smallTilePadding;
                     Space spacer = new Space(context);
                     spacer.setMinimumWidth(spacerSize);
                     fourthButtonContainer.addView(spacer);
@@ -616,5 +619,13 @@ public class HandKeyboard extends LinearLayout implements View.OnClickListener {
             _imageCache = ((MainActivity)context).getImageCache();
         }
         return _imageCache;
+    }
+
+    Utils _utils;
+    private Utils getUtils(){
+        if( _utils==null ){
+            _utils = ((MainActivity)context).getUtils();
+        }
+        return _utils;
     }
 }

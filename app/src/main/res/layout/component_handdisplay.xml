@@ -17,20 +17,18 @@
             <LinearLayout
                 android:orientation="horizontal"
                 android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:gravity="center">
+                android:layout_height="match_parent">
 
                 <LinearLayout
                     android:orientation="horizontal"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:id="@+id/closedTilesContainer"
-                    android:paddingBottom="10dp" />
+                    android:id="@+id/closedTilesContainer" />
 
                 <LinearLayout
                     android:orientation="horizontal"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_height="match_parent"
                     android:id="@+id/openTilesContainer"
                     android:gravity="left|bottom" />
 
@@ -38,8 +36,7 @@
                     android:orientation="horizontal"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:id="@+id/winningTileContainer"
-                    android:paddingBottom="10dp" />
+                    android:id="@+id/winningTileContainer" />
             </LinearLayout>
         </HorizontalScrollView>
     </LinearLayout>

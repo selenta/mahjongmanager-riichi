@@ -504,6 +504,12 @@ public class Hand {
     public boolean hasKan(){
         return meld1.isKan() || meld2.isKan() || meld3.isKan() || meld4.isKan();
     }
+    public boolean hasAddedKan(){
+        return Utils.getMeldState(meld1) == Utils.MeldState.ADDEDKAN
+                || Utils.getMeldState(meld2) == Utils.MeldState.ADDEDKAN
+                || Utils.getMeldState(meld3) == Utils.MeldState.ADDEDKAN
+                || Utils.getMeldState(meld4) == Utils.MeldState.ADDEDKAN;
+    }
     public boolean hasYakuman(){
         return ( kokushiMusou || suuAnkou      || daisangen || shousuushii
                 || daisuushii || tsuuiisou     || daichisei || chinroutou
@@ -518,19 +524,19 @@ public class Hand {
                 || hasPlayerWindSet();
     }
     public boolean hasDragonWhiteSet(){
-        return countTile(new Tile("White", "HONOR"))>=3;
+        return countTile(new Tile(Tile.Dragon.WHITE))>=3;
     }
     public boolean hasDragonGreenSet(){
-        return countTile(new Tile("Green", "HONOR"))>=3;
+        return countTile(new Tile(Tile.Dragon.GREEN))>=3;
     }
     public boolean hasDragonRedSet(){
-        return countTile(new Tile("Red", "HONOR"))>=3;
+        return countTile(new Tile(Tile.Dragon.RED))>=3;
     }
     public boolean hasPrevailingWindSet(){
-        return countTile(new Tile(prevailingWind.toString(), "HONOR"))>=3;
+        return countTile(new Tile(prevailingWind))>=3;
     }
     public boolean hasPlayerWindSet(){
-        return countTile(new Tile(playerWind.toString(), "HONOR"))>=3;
+        return countTile(new Tile(playerWind))>=3;
     }
 
     public boolean hasAbnormalStructure(){

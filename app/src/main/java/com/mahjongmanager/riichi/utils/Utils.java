@@ -10,6 +10,7 @@ import android.graphics.drawable.LayerDrawable;
 import android.graphics.drawable.ShapeDrawable;
 import android.graphics.drawable.shapes.RoundRectShape;
 import android.graphics.drawable.shapes.Shape;
+import android.util.DisplayMetrics;
 import android.widget.ImageView;
 
 import com.mahjongmanager.riichi.MainActivity;
@@ -28,15 +29,44 @@ public class Utils {
     private ImageCache imageCache;
     public Utils(MainActivity ma){
         activity = ma;
+        setConstants();
         imageCache = ma.getImageCache();
+    }
+
+    private void setConstants(){
+        DisplayMetrics metrics = new DisplayMetrics();
+        activity.getWindowManager().getDefaultDisplay().getMetrics(metrics);
+        int screenSize = metrics.widthPixels;
+        if( metrics.heightPixels < screenSize ){
+            screenSize = metrics.heightPixels;
+        }
+        Log.i("screenSize", "Screen size in pixels: "+ screenSize);
+
+        tilePadding      = screenSize / 128;
+        tileCornerRadius = screenSize / 128;
+
+        HAND_DISPLAY_TILE_WIDTH   = calcTileWidth(screenSize, 16, 230);
+        KEYBOARD_TILE_WIDTH_LARGE = calcTileWidth(screenSize, 5, 400);
+        KEYBOARD_TILE_WIDTH_SMALL = calcTileWidth(screenSize, 9, 400);
+    }
+    private int calcTileWidth(int screenSize, int tileNumber, int padding){
+        // Account for padding on the sides, and in the middle
+        screenSize -= padding;
+
+        // A hand is 14 tiles at minimum, but can be larger, and called tiles require extra room
+        return screenSize/tileNumber;
     }
 
     ///////////////////////////////////////////////////////////////
     /////////////////        Hand Display         /////////////////
     ///////////////////////////////////////////////////////////////
     public static Double TILE_RATIO = 1.36;
-    private int tilePadding = 8;
-    private int tileCornerRadius = 8;
+    private int tilePadding;
+    private int tileCornerRadius;
+
+    public int HAND_DISPLAY_TILE_WIDTH;
+    public int KEYBOARD_TILE_WIDTH_LARGE;
+    public int KEYBOARD_TILE_WIDTH_SMALL;
 
     public ImageView getHandDisplayTileView(Tile t, boolean rotated){
         if( activity==null ){
@@ -60,8 +90,8 @@ public class Utils {
             return new LayerDrawable(layers);
         }
         String frontTileKey = ImageCache.HAND_DISPLAY_KEY + "Front";
-        int width  = ImageCache.HAND_DISPLAY_TILE_WIDTH;
-        int height = ImageCache.getTileHeight(width);
+        int width  = HAND_DISPLAY_TILE_WIDTH;
+        int height = (int) ((double)width * TILE_RATIO);
         ShapeDrawable tileOutline = getTileOutline(width, height);
 
         if( isRotated ){
@@ -88,20 +118,30 @@ public class Utils {
         return new ShapeDrawable(tileOutline);
     }
 
+    public int getActualTileWidth( String s ){
+        Tile example = new Tile(1, Tile.Suit.MANZU);
+        if( s.equals(ImageCache.KEYBOARD_KEY_LARGE) ){
+            return imageCache.getBitmapFromCache(example.getImageCacheKey(ImageCache.KEYBOARD_KEY_LARGE)).getIntrinsicWidth();
+        } else if( s.equals(ImageCache.KEYBOARD_KEY_SMALL) ){
+            return imageCache.getBitmapFromCache(example.getImageCacheKey(ImageCache.KEYBOARD_KEY_SMALL)).getIntrinsicWidth();
+        } else if( s.equals(ImageCache.HAND_DISPLAY_KEY) ){
+            return imageCache.getBitmapFromCache(example.getImageCacheKey(ImageCache.KEYBOARD_KEY_SMALL)).getIntrinsicWidth();
+        }
+        return 0;
+    }
+
     //////////////////////////////////////////////////////////////////////////
     ////////////////////     Populate ImageCache      ////////////////////////
     //////////////////////////////////////////////////////////////////////////
     public void populateImageCacheForHandDisplay(){
-        int width = ImageCache.HAND_DISPLAY_TILE_WIDTH;
-
         // First, do the normal (vertical) version of the tiles
         List<Tile> allTiles = getAllTilesWithImages();
         for(Tile t : allTiles){
-            BitmapDrawable dBmap = getBitmapDrawableFromFile(t.getImageInt(), width, null, t.faceDown);
+            BitmapDrawable dBmap = getBitmapDrawableFromFile(t.getImageInt(), HAND_DISPLAY_TILE_WIDTH, null, t.faceDown);
             String keyString = t.getImageCacheKey(ImageCache.HAND_DISPLAY_KEY);
             imageCache.addBitmapToCache(keyString, dBmap);
         }
-        BitmapDrawable frontDBmap = getBitmapDrawableFromFile(R.drawable.front, width);
+        BitmapDrawable frontDBmap = getBitmapDrawableFromFile(R.drawable.front, HAND_DISPLAY_TILE_WIDTH);
         String frontKeyString = ImageCache.HAND_DISPLAY_KEY + "Front";
         imageCache.addBitmapToCache(frontKeyString, frontDBmap);
 
@@ -109,15 +149,22 @@ public class Utils {
         Matrix matrix = new Matrix();
         matrix.postRotate(270);
         for(Tile t : allTiles){
-            BitmapDrawable dBmap = getBitmapDrawableFromFile(t.getImageInt(), width, matrix, false);
+            BitmapDrawable dBmap = getBitmapDrawableFromFile(t.getImageInt(), HAND_DISPLAY_TILE_WIDTH, matrix, false);
             String keyString = t.getImageCacheKey(ImageCache.HAND_DISPLAY_KEY, true);
             imageCache.addBitmapToCache(keyString, dBmap);
         }
-        BitmapDrawable rotatedFrontDBmap = getBitmapDrawableFromFile(R.drawable.front, width, matrix, false);
+        BitmapDrawable rotatedFrontDBmap = getBitmapDrawableFromFile(R.drawable.front, HAND_DISPLAY_TILE_WIDTH, matrix, false);
         String rotatedFrontKeyString = ImageCache.HAND_DISPLAY_KEY + "Front Rotated";
         imageCache.addBitmapToCache(rotatedFrontKeyString, rotatedFrontDBmap);
     }
-    public void populateImageCacheForKeyboard(String keyboardKey, int width){
+    public void populateImageCacheForKeyboard(String keyboardKey){
+        int width = 0;
+        if( keyboardKey.equals(ImageCache.KEYBOARD_KEY_LARGE) ){
+            width = KEYBOARD_TILE_WIDTH_LARGE;
+        } else if( keyboardKey.equals(ImageCache.KEYBOARD_KEY_SMALL) ){
+            width = KEYBOARD_TILE_WIDTH_SMALL;
+        }
+
         List<Tile> allTiles = getAllTilesWithImages();
         for(Tile t : allTiles){
             BitmapDrawable dBmap = getBitmapDrawableFromFile(t.getImageInt(), width);
@@ -150,30 +197,18 @@ public class Utils {
         return new BitmapDrawable(activity.getResources(), rotatedBitmap);
     }
     private List<Tile> getAllTilesWithImages(){
-        List<Tile> tiles = new ArrayList<>();
-        for(int i=1; i<10; i++){
-            tiles.add(new Tile(i, "MANZU"));
-            tiles.add(new Tile(i, "PINZU"));
-            tiles.add(new Tile(i, "SOUZU"));
-        }
-        tiles.add(new Tile("East", "HONOR"));
-        tiles.add(new Tile("South", "HONOR"));
-        tiles.add(new Tile("West", "HONOR"));
-        tiles.add(new Tile("North", "HONOR"));
-        tiles.add(new Tile("White", "HONOR"));
-        tiles.add(new Tile("Green", "HONOR"));
-        tiles.add(new Tile("Red", "HONOR"));
+        List<Tile> tiles = HandGenerator.allTiles();
 
         for(Tile.Suit suit : Arrays.asList(Tile.Suit.MANZU, Tile.Suit.PINZU, Tile.Suit.SOUZU)){
-            Tile red5 = new Tile(5, suit.toString());
+            Tile red5 = new Tile(5, suit);
             red5.red = true;
             tiles.add(red5);
         }
-        Tile facedownTile = new Tile(1, "MANZU");
+        Tile facedownTile = new Tile(1, Tile.Suit.MANZU);
         facedownTile.faceDown = true;
         tiles.add(facedownTile);
 
-        Tile blankTile = new Tile(0, "MANZU");
+        Tile blankTile = new Tile(0, Tile.Suit.MANZU);
         tiles.add(blankTile);
 
         return tiles;
@@ -195,6 +230,10 @@ public class Utils {
      */
     public static MeldState getMeldState(Meld meld){ return getMeldState(meld.getTiles()); }
     private static MeldState getMeldState(List<Tile> tiles){
+        if( tiles.size()==0 ){
+            return null;
+        }
+
         Tile firstTile = tiles.get(0);
         if( firstTile.revealedState==Tile.RevealedState.CHI ){
             return MeldState.OPENCHII;

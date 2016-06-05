@@ -214,20 +214,20 @@ public class ExampleHands {
 
     // Exception hands
     public static Hand getChiitoitsuHand(){
-        Tile t1  = new Tile(3, "MANZU");
-        Tile t2  = new Tile(3, "MANZU");
-        Tile t3  = new Tile(1, "PINZU");
-        Tile t4  = new Tile(1, "PINZU");
-        Tile t5  = new Tile(5, "PINZU");
-        Tile t6  = new Tile(5, "PINZU");
-        Tile t7  = new Tile(1, "SOUZU");
-        Tile t8  = new Tile(1, "SOUZU");
-        Tile t9  = new Tile(8, "SOUZU");
-        Tile t10 = new Tile(8, "SOUZU");
-        Tile t11 = new Tile("EAST", "HONOR");
-        Tile t12 = new Tile("EAST", "HONOR");
-        Tile t13 = new Tile("RED", "HONOR");
-        Tile t14 = new Tile("RED", "HONOR");
+        Tile t1  = new Tile(3, Tile.Suit.MANZU);
+        Tile t2  = new Tile(3, Tile.Suit.MANZU);
+        Tile t3  = new Tile(1, Tile.Suit.PINZU);
+        Tile t4  = new Tile(1, Tile.Suit.PINZU);
+        Tile t5  = new Tile(5, Tile.Suit.PINZU);
+        Tile t6  = new Tile(5, Tile.Suit.PINZU);
+        Tile t7  = new Tile(1, Tile.Suit.SOUZU);
+        Tile t8  = new Tile(1, Tile.Suit.SOUZU);
+        Tile t9  = new Tile(8, Tile.Suit.SOUZU);
+        Tile t10 = new Tile(8, Tile.Suit.SOUZU);
+        Tile t11 = new Tile(Tile.Wind.EAST);
+        Tile t12 = new Tile(Tile.Wind.EAST);
+        Tile t13 = new Tile(Tile.Dragon.RED);
+        Tile t14 = new Tile(Tile.Dragon.RED);
 
         t8.winningTile = true;
         t8.calledFrom = Tile.CalledFrom.CENTER;
@@ -240,20 +240,20 @@ public class ExampleHands {
 
     // Run-based hands
     public static Hand getPinfuHand(){
-        Tile t1  = new Tile(1, "MANZU");
-        Tile t2  = new Tile(2, "MANZU");
-        Tile t3  = new Tile(3, "MANZU");
-        Tile t4  = new Tile(5, "MANZU");
-        Tile t5  = new Tile(5, "MANZU");
-        Tile t6  = new Tile(2, "PINZU");
-        Tile t7  = new Tile(3, "PINZU");
-        Tile t8  = new Tile(4, "PINZU");
-        Tile t9  = new Tile(7, "PINZU");
-        Tile t10 = new Tile(8, "PINZU");
-        Tile t11 = new Tile(9, "PINZU");
-        Tile t12 = new Tile(4, "SOUZU");
-        Tile t13 = new Tile(5, "SOUZU");
-        Tile t14 = new Tile(6, "SOUZU");
+        Tile t1  = new Tile(1, Tile.Suit.MANZU);
+        Tile t2  = new Tile(2, Tile.Suit.MANZU);
+        Tile t3  = new Tile(3, Tile.Suit.MANZU);
+        Tile t4  = new Tile(5, Tile.Suit.MANZU);
+        Tile t5  = new Tile(5, Tile.Suit.MANZU);
+        Tile t6  = new Tile(2, Tile.Suit.PINZU);
+        Tile t7  = new Tile(3, Tile.Suit.PINZU);
+        Tile t8  = new Tile(4, Tile.Suit.PINZU);
+        Tile t9  = new Tile(7, Tile.Suit.PINZU);
+        Tile t10 = new Tile(8, Tile.Suit.PINZU);
+        Tile t11 = new Tile(9, Tile.Suit.PINZU);
+        Tile t12 = new Tile(4, Tile.Suit.SOUZU);
+        Tile t13 = new Tile(5, Tile.Suit.SOUZU);
+        Tile t14 = new Tile(6, Tile.Suit.SOUZU);
 
         t6.winningTile = true;
         t6.calledFrom = Tile.CalledFrom.CENTER;
@@ -264,20 +264,20 @@ public class ExampleHands {
         return sc.validatedHand;
     }
     public static Hand getIipeikouHand(){
-        Tile t1  = new Tile(2, "MANZU");
-        Tile t2  = new Tile(3, "MANZU");
-        Tile t3  = new Tile(4, "MANZU");
-        Tile t4  = new Tile(5, "PINZU");
-        Tile t5  = new Tile(5, "PINZU");
-        Tile t6  = new Tile(6, "PINZU");
-        Tile t7  = new Tile(6, "PINZU");
-        Tile t8  = new Tile(7, "PINZU");
-        Tile t9  = new Tile(7, "PINZU");
-        Tile t10 = new Tile(9, "SOUZU");
-        Tile t11 = new Tile(9, "SOUZU");
-        Tile t12 = new Tile(9, "SOUZU");
-        Tile t13 = new Tile("GREEN", "HONOR");
-        Tile t14 = new Tile("GREEN", "HONOR");
+        Tile t1  = new Tile(2, Tile.Suit.MANZU);
+        Tile t2  = new Tile(3, Tile.Suit.MANZU);
+        Tile t3  = new Tile(4, Tile.Suit.MANZU);
+        Tile t4  = new Tile(5, Tile.Suit.PINZU);
+        Tile t5  = new Tile(5, Tile.Suit.PINZU);
+        Tile t6  = new Tile(6, Tile.Suit.PINZU);
+        Tile t7  = new Tile(6, Tile.Suit.PINZU);
+        Tile t8  = new Tile(7, Tile.Suit.PINZU);
+        Tile t9  = new Tile(7, Tile.Suit.PINZU);
+        Tile t10 = new Tile(9, Tile.Suit.SOUZU);
+        Tile t11 = new Tile(9, Tile.Suit.SOUZU);
+        Tile t12 = new Tile(9, Tile.Suit.SOUZU);
+        Tile t13 = new Tile(Tile.Dragon.GREEN);
+        Tile t14 = new Tile(Tile.Dragon.GREEN);
 
         t2.winningTile = true;
         t2.calledFrom = Tile.CalledFrom.CENTER;
@@ -288,20 +288,20 @@ public class ExampleHands {
         return sc.validatedHand;
     }
     public static Hand getSanshokuDoujunHand(){
-        Tile t1  = new Tile(2, "MANZU");
-        Tile t2  = new Tile(3, "MANZU");
-        Tile t3  = new Tile(4, "MANZU");
-        Tile t4  = new Tile(1, "PINZU");
-        Tile t5  = new Tile(1, "PINZU");
-        Tile t6  = new Tile(1, "PINZU");
-        Tile t7  = new Tile(2, "PINZU");
-        Tile t8  = new Tile(3, "PINZU");
-        Tile t9  = new Tile(4, "PINZU");
-        Tile t10 = new Tile(2, "SOUZU");
-        Tile t11 = new Tile(3, "SOUZU");
-        Tile t12 = new Tile(4, "SOUZU");
-        Tile t13 = new Tile("SOUTH", "HONOR");
-        Tile t14 = new Tile("SOUTH", "HONOR");
+        Tile t1  = new Tile(2, Tile.Suit.MANZU);
+        Tile t2  = new Tile(3, Tile.Suit.MANZU);
+        Tile t3  = new Tile(4, Tile.Suit.MANZU);
+        Tile t4  = new Tile(1, Tile.Suit.PINZU);
+        Tile t5  = new Tile(1, Tile.Suit.PINZU);
+        Tile t6  = new Tile(1, Tile.Suit.PINZU);
+        Tile t7  = new Tile(2, Tile.Suit.PINZU);
+        Tile t8  = new Tile(3, Tile.Suit.PINZU);
+        Tile t9  = new Tile(4, Tile.Suit.PINZU);
+        Tile t10 = new Tile(2, Tile.Suit.SOUZU);
+        Tile t11 = new Tile(3, Tile.Suit.SOUZU);
+        Tile t12 = new Tile(4, Tile.Suit.SOUZU);
+        Tile t13 = new Tile(Tile.Wind.SOUTH);
+        Tile t14 = new Tile(Tile.Wind.SOUTH);
 
         t1.revealedState = t2.revealedState = t3.revealedState = Tile.RevealedState.CHI;
         t1.calledFrom = Tile.CalledFrom.LEFT;
@@ -317,20 +317,20 @@ public class ExampleHands {
         return sc.validatedHand;
     }
     public static Hand getIttsuuHand(){
-        Tile t1  = new Tile(9, "MANZU");
-        Tile t2  = new Tile(9, "MANZU");
-        Tile t3  = new Tile(9, "MANZU");
-        Tile t4  = new Tile(1, "SOUZU");
-        Tile t5  = new Tile(2, "SOUZU");
-        Tile t6  = new Tile(3, "SOUZU");
-        Tile t7  = new Tile(4, "SOUZU");
-        Tile t8  = new Tile(5, "SOUZU");
-        Tile t9  = new Tile(6, "SOUZU");
-        Tile t10 = new Tile(7, "SOUZU");
-        Tile t11 = new Tile(8, "SOUZU");
-        Tile t12 = new Tile(9, "SOUZU");
-        Tile t13 = new Tile("WHITE", "HONOR");
-        Tile t14 = new Tile("WHITE", "HONOR");
+        Tile t1  = new Tile(9, Tile.Suit.MANZU);
+        Tile t2  = new Tile(9, Tile.Suit.MANZU);
+        Tile t3  = new Tile(9, Tile.Suit.MANZU);
+        Tile t4  = new Tile(1, Tile.Suit.SOUZU);
+        Tile t5  = new Tile(2, Tile.Suit.SOUZU);
+        Tile t6  = new Tile(3, Tile.Suit.SOUZU);
+        Tile t7  = new Tile(4, Tile.Suit.SOUZU);
+        Tile t8  = new Tile(5, Tile.Suit.SOUZU);
+        Tile t9  = new Tile(6, Tile.Suit.SOUZU);
+        Tile t10 = new Tile(7, Tile.Suit.SOUZU);
+        Tile t11 = new Tile(8, Tile.Suit.SOUZU);
+        Tile t12 = new Tile(9, Tile.Suit.SOUZU);
+        Tile t13 = new Tile(Tile.Dragon.WHITE);
+        Tile t14 = new Tile(Tile.Dragon.WHITE);
 
         t4.winningTile = true;
         t4.calledFrom = Tile.CalledFrom.CENTER;
@@ -341,20 +341,20 @@ public class ExampleHands {
         return sc.validatedHand;
     }
     public static Hand getRyanpeikouHand(){
-        Tile t1  = new Tile(5, "MANZU");
-        Tile t2  = new Tile(5, "MANZU");
-        Tile t3  = new Tile(7, "PINZU");
-        Tile t4  = new Tile(7, "PINZU");
-        Tile t5  = new Tile(8, "PINZU");
-        Tile t6  = new Tile(8, "PINZU");
-        Tile t7  = new Tile(9, "PINZU");
-        Tile t8  = new Tile(9, "PINZU");
-        Tile t9  = new Tile(7, "SOUZU");
-        Tile t10 = new Tile(7, "SOUZU");
-        Tile t11 = new Tile(8, "SOUZU");
-        Tile t12 = new Tile(8, "SOUZU");
-        Tile t13 = new Tile(9, "SOUZU");
-        Tile t14 = new Tile(9, "SOUZU");
+        Tile t1  = new Tile(5, Tile.Suit.MANZU);
+        Tile t2  = new Tile(5, Tile.Suit.MANZU);
+        Tile t3  = new Tile(7, Tile.Suit.PINZU);
+        Tile t4  = new Tile(7, Tile.Suit.PINZU);
+        Tile t5  = new Tile(8, Tile.Suit.PINZU);
+        Tile t6  = new Tile(8, Tile.Suit.PINZU);
+        Tile t7  = new Tile(9, Tile.Suit.PINZU);
+        Tile t8  = new Tile(9, Tile.Suit.PINZU);
+        Tile t9  = new Tile(7, Tile.Suit.SOUZU);
+        Tile t10 = new Tile(7, Tile.Suit.SOUZU);
+        Tile t11 = new Tile(8, Tile.Suit.SOUZU);
+        Tile t12 = new Tile(8, Tile.Suit.SOUZU);
+        Tile t13 = new Tile(9, Tile.Suit.SOUZU);
+        Tile t14 = new Tile(9, Tile.Suit.SOUZU);
 
         t5.winningTile = true;
         t5.calledFrom = Tile.CalledFrom.CENTER;
@@ -367,20 +367,20 @@ public class ExampleHands {
 
     // Triplet/Quad-based hands
     public static Hand getToitoiHand(){
-        Tile t1  = new Tile(8, "MANZU");
-        Tile t2  = new Tile(8, "MANZU");
-        Tile t3  = new Tile(8, "MANZU");
-        Tile t4  = new Tile(3, "PINZU");
-        Tile t5  = new Tile(3, "PINZU");
-        Tile t6  = new Tile(3, "PINZU");
-        Tile t7  = new Tile(1, "SOUZU");
-        Tile t8  = new Tile(1, "SOUZU");
-        Tile t9  = new Tile(1, "SOUZU");
-        Tile t10 = new Tile(7, "SOUZU");
-        Tile t11 = new Tile(7, "SOUZU");
-        Tile t12 = new Tile(7, "SOUZU");
-        Tile t13 = new Tile("NORTH", "HONOR");
-        Tile t14 = new Tile("NORTH", "HONOR");
+        Tile t1  = new Tile(8, Tile.Suit.MANZU);
+        Tile t2  = new Tile(8, Tile.Suit.MANZU);
+        Tile t3  = new Tile(8, Tile.Suit.MANZU);
+        Tile t4  = new Tile(3, Tile.Suit.PINZU);
+        Tile t5  = new Tile(3, Tile.Suit.PINZU);
+        Tile t6  = new Tile(3, Tile.Suit.PINZU);
+        Tile t7  = new Tile(1, Tile.Suit.SOUZU);
+        Tile t8  = new Tile(1, Tile.Suit.SOUZU);
+        Tile t9  = new Tile(1, Tile.Suit.SOUZU);
+        Tile t10 = new Tile(7, Tile.Suit.SOUZU);
+        Tile t11 = new Tile(7, Tile.Suit.SOUZU);
+        Tile t12 = new Tile(7, Tile.Suit.SOUZU);
+        Tile t13 = new Tile(Tile.Wind.NORTH);
+        Tile t14 = new Tile(Tile.Wind.NORTH);
 
         t1.revealedState = t2.revealedState = t3.revealedState = Tile.RevealedState.PON;
         t2.calledFrom = Tile.CalledFrom.CENTER;
@@ -395,20 +395,20 @@ public class ExampleHands {
         return sc.validatedHand;
     }
     public static Hand getSanAnkouHand(){
-        Tile t1  = new Tile(1, "MANZU");
-        Tile t2  = new Tile(1, "MANZU");
-        Tile t3  = new Tile(4, "MANZU");
-        Tile t4  = new Tile(4, "MANZU");
-        Tile t5  = new Tile(4, "MANZU");
-        Tile t6  = new Tile(1, "PINZU");
-        Tile t7  = new Tile(2, "PINZU");
-        Tile t8  = new Tile(3, "PINZU");
-        Tile t9  = new Tile(9, "PINZU");
-        Tile t10 = new Tile(9, "PINZU");
-        Tile t11 = new Tile(9, "PINZU");
-        Tile t12 = new Tile(2, "SOUZU");
-        Tile t13 = new Tile(2, "SOUZU");
-        Tile t14 = new Tile(2, "SOUZU");
+        Tile t1  = new Tile(1, Tile.Suit.MANZU);
+        Tile t2  = new Tile(1, Tile.Suit.MANZU);
+        Tile t3  = new Tile(4, Tile.Suit.MANZU);
+        Tile t4  = new Tile(4, Tile.Suit.MANZU);
+        Tile t5  = new Tile(4, Tile.Suit.MANZU);
+        Tile t6  = new Tile(1, Tile.Suit.PINZU);
+        Tile t7  = new Tile(2, Tile.Suit.PINZU);
+        Tile t8  = new Tile(3, Tile.Suit.PINZU);
+        Tile t9  = new Tile(9, Tile.Suit.PINZU);
+        Tile t10 = new Tile(9, Tile.Suit.PINZU);
+        Tile t11 = new Tile(9, Tile.Suit.PINZU);
+        Tile t12 = new Tile(2, Tile.Suit.SOUZU);
+        Tile t13 = new Tile(2, Tile.Suit.SOUZU);
+        Tile t14 = new Tile(2, Tile.Suit.SOUZU);
 
         t1.winningTile = true;
         t1.calledFrom = Tile.CalledFrom.CENTER;
@@ -419,20 +419,20 @@ public class ExampleHands {
         return sc.validatedHand;
     }
     public static Hand getSanshokuDoukouHand(){
-        Tile t1  = new Tile(3, "MANZU");
-        Tile t2  = new Tile(3, "MANZU");
-        Tile t3  = new Tile(3, "MANZU");
-        Tile t4  = new Tile(3, "PINZU");
-        Tile t5  = new Tile(3, "PINZU");
-        Tile t6  = new Tile(3, "PINZU");
-        Tile t7  = new Tile(6, "PINZU");
-        Tile t8  = new Tile(7, "PINZU");
-        Tile t9  = new Tile(8, "PINZU");
-        Tile t10 = new Tile(3, "SOUZU");
-        Tile t11 = new Tile(3, "SOUZU");
-        Tile t12 = new Tile(3, "SOUZU");
-        Tile t13 = new Tile("WEST", "HONOR");
-        Tile t14 = new Tile("WEST", "HONOR");
+        Tile t1  = new Tile(3, Tile.Suit.MANZU);
+        Tile t2  = new Tile(3, Tile.Suit.MANZU);
+        Tile t3  = new Tile(3, Tile.Suit.MANZU);
+        Tile t4  = new Tile(3, Tile.Suit.PINZU);
+        Tile t5  = new Tile(3, Tile.Suit.PINZU);
+        Tile t6  = new Tile(3, Tile.Suit.PINZU);
+        Tile t7  = new Tile(6, Tile.Suit.PINZU);
+        Tile t8  = new Tile(7, Tile.Suit.PINZU);
+        Tile t9  = new Tile(8, Tile.Suit.PINZU);
+        Tile t10 = new Tile(3, Tile.Suit.SOUZU);
+        Tile t11 = new Tile(3, Tile.Suit.SOUZU);
+        Tile t12 = new Tile(3, Tile.Suit.SOUZU);
+        Tile t13 = new Tile(Tile.Wind.WEST);
+        Tile t14 = new Tile(Tile.Wind.WEST);
 
         t4.revealedState = t5.revealedState = t6.revealedState = Tile.RevealedState.PON;
         t5.calledFrom = Tile.CalledFrom.CENTER;
@@ -445,23 +445,23 @@ public class ExampleHands {
         return sc.validatedHand;
     }
     public static Hand getSanKantsuHand(){
-        Tile t1  = new Tile(9, "MANZU");
-        Tile t2  = new Tile(9, "MANZU");
-        Tile t3  = new Tile(9, "MANZU");
-        Tile t4  = new Tile(9, "MANZU");
-        Tile t5  = new Tile(2, "SOUZU");
-        Tile t6  = new Tile(3, "SOUZU");
-        Tile t7  = new Tile(4, "SOUZU");
-        Tile t8  = new Tile(5, "SOUZU");
-        Tile t9  = new Tile(5, "SOUZU");
-        Tile t10 = new Tile(8, "PINZU");
-        Tile t11 = new Tile(8, "PINZU");
-        Tile t12 = new Tile(8, "PINZU");
-        Tile t13 = new Tile(8, "PINZU");
-        Tile t14 = new Tile("NORTH", "HONOR");
-        Tile t15 = new Tile("NORTH", "HONOR");
-        Tile t16 = new Tile("NORTH", "HONOR");
-        Tile t17 = new Tile("NORTH", "HONOR");
+        Tile t1  = new Tile(9, Tile.Suit.MANZU);
+        Tile t2  = new Tile(9, Tile.Suit.MANZU);
+        Tile t3  = new Tile(9, Tile.Suit.MANZU);
+        Tile t4  = new Tile(9, Tile.Suit.MANZU);
+        Tile t5  = new Tile(2, Tile.Suit.SOUZU);
+        Tile t6  = new Tile(3, Tile.Suit.SOUZU);
+        Tile t7  = new Tile(4, Tile.Suit.SOUZU);
+        Tile t8  = new Tile(5, Tile.Suit.SOUZU);
+        Tile t9  = new Tile(5, Tile.Suit.SOUZU);
+        Tile t10 = new Tile(8, Tile.Suit.PINZU);
+        Tile t11 = new Tile(8, Tile.Suit.PINZU);
+        Tile t12 = new Tile(8, Tile.Suit.PINZU);
+        Tile t13 = new Tile(8, Tile.Suit.PINZU);
+        Tile t14 = new Tile(Tile.Wind.NORTH);
+        Tile t15 = new Tile(Tile.Wind.NORTH);
+        Tile t16 = new Tile(Tile.Wind.NORTH);
+        Tile t17 = new Tile(Tile.Wind.NORTH);
 
         t1.revealedState = t2.revealedState = t3.revealedState = t4.revealedState = Tile.RevealedState.CLOSEDKAN;
         t10.revealedState = t11.revealedState = t12.revealedState = Tile.RevealedState.PON;
@@ -482,20 +482,20 @@ public class ExampleHands {
 
     // Honor/Terminal-based hands
     public static Hand getTanyaoHand(){
-        Tile t1  = new Tile(2, "MANZU");
-        Tile t2  = new Tile(3, "MANZU");
-        Tile t3  = new Tile(4, "MANZU");
-        Tile t4  = new Tile(2, "PINZU");
-        Tile t5  = new Tile(2, "PINZU");
-        Tile t6  = new Tile(2, "PINZU");
-        Tile t7  = new Tile(6, "PINZU");
-        Tile t8  = new Tile(7, "PINZU");
-        Tile t9  = new Tile(8, "PINZU");
-        Tile t10 = new Tile(5, "SOUZU");
-        Tile t11 = new Tile(5, "SOUZU");
-        Tile t12 = new Tile(6, "SOUZU");
-        Tile t13 = new Tile(7, "SOUZU");
-        Tile t14 = new Tile(8, "SOUZU");
+        Tile t1  = new Tile(2, Tile.Suit.MANZU);
+        Tile t2  = new Tile(3, Tile.Suit.MANZU);
+        Tile t3  = new Tile(4, Tile.Suit.MANZU);
+        Tile t4  = new Tile(2, Tile.Suit.PINZU);
+        Tile t5  = new Tile(2, Tile.Suit.PINZU);
+        Tile t6  = new Tile(2, Tile.Suit.PINZU);
+        Tile t7  = new Tile(6, Tile.Suit.PINZU);
+        Tile t8  = new Tile(7, Tile.Suit.PINZU);
+        Tile t9  = new Tile(8, Tile.Suit.PINZU);
+        Tile t10 = new Tile(5, Tile.Suit.SOUZU);
+        Tile t11 = new Tile(5, Tile.Suit.SOUZU);
+        Tile t12 = new Tile(6, Tile.Suit.SOUZU);
+        Tile t13 = new Tile(7, Tile.Suit.SOUZU);
+        Tile t14 = new Tile(8, Tile.Suit.SOUZU);
 
         t10.winningTile = true;
         t10.calledFrom = Tile.CalledFrom.CENTER;
@@ -506,20 +506,20 @@ public class ExampleHands {
         return sc.validatedHand;
     }
     public static Hand getYakuhaiHand(){
-        Tile t1  = new Tile(5, "MANZU");
-        Tile t2  = new Tile(5, "MANZU");
-        Tile t3  = new Tile(1, "PINZU");
-        Tile t4  = new Tile(2, "PINZU");
-        Tile t5  = new Tile(3, "PINZU");
-        Tile t6  = new Tile(5, "PINZU");
-        Tile t7  = new Tile(6, "PINZU");
-        Tile t8  = new Tile(7, "PINZU");
-        Tile t9  = new Tile(8, "SOUZU");
-        Tile t10 = new Tile(8, "SOUZU");
-        Tile t11 = new Tile(8, "SOUZU");
-        Tile t12 = new Tile("RED", "HONOR");
-        Tile t13 = new Tile("RED", "HONOR");
-        Tile t14 = new Tile("RED", "HONOR");
+        Tile t1  = new Tile(5, Tile.Suit.MANZU);
+        Tile t2  = new Tile(5, Tile.Suit.MANZU);
+        Tile t3  = new Tile(1, Tile.Suit.PINZU);
+        Tile t4  = new Tile(2, Tile.Suit.PINZU);
+        Tile t5  = new Tile(3, Tile.Suit.PINZU);
+        Tile t6  = new Tile(5, Tile.Suit.PINZU);
+        Tile t7  = new Tile(6, Tile.Suit.PINZU);
+        Tile t8  = new Tile(7, Tile.Suit.PINZU);
+        Tile t9  = new Tile(8, Tile.Suit.SOUZU);
+        Tile t10 = new Tile(8, Tile.Suit.SOUZU);
+        Tile t11 = new Tile(8, Tile.Suit.SOUZU);
+        Tile t12 = new Tile(Tile.Dragon.RED);
+        Tile t13 = new Tile(Tile.Dragon.RED);
+        Tile t14 = new Tile(Tile.Dragon.RED);
 
         t14.winningTile = true;
         t14.calledFrom = Tile.CalledFrom.CENTER;
@@ -530,20 +530,20 @@ public class ExampleHands {
         return sc.validatedHand;
     }
     public static Hand getChantaHand(){
-        Tile t1  = new Tile(7, "MANZU");
-        Tile t2  = new Tile(8, "MANZU");
-        Tile t3  = new Tile(9, "MANZU");
-        Tile t4  = new Tile(1, "PINZU");
-        Tile t5  = new Tile(1, "PINZU");
-        Tile t6  = new Tile(1, "PINZU");
-        Tile t7  = new Tile(7, "PINZU");
-        Tile t8  = new Tile(8, "PINZU");
-        Tile t9  = new Tile(9, "PINZU");
-        Tile t10 = new Tile(9, "SOUZU");
-        Tile t11 = new Tile(9, "SOUZU");
-        Tile t12 = new Tile(9, "SOUZU");
-        Tile t13 = new Tile("WHITE", "HONOR");
-        Tile t14 = new Tile("WHITE", "HONOR");
+        Tile t1  = new Tile(7, Tile.Suit.MANZU);
+        Tile t2  = new Tile(8, Tile.Suit.MANZU);
+        Tile t3  = new Tile(9, Tile.Suit.MANZU);
+        Tile t4  = new Tile(1, Tile.Suit.PINZU);
+        Tile t5  = new Tile(1, Tile.Suit.PINZU);
+        Tile t6  = new Tile(1, Tile.Suit.PINZU);
+        Tile t7  = new Tile(7, Tile.Suit.PINZU);
+        Tile t8  = new Tile(8, Tile.Suit.PINZU);
+        Tile t9  = new Tile(9, Tile.Suit.PINZU);
+        Tile t10 = new Tile(9, Tile.Suit.SOUZU);
+        Tile t11 = new Tile(9, Tile.Suit.SOUZU);
+        Tile t12 = new Tile(9, Tile.Suit.SOUZU);
+        Tile t13 = new Tile(Tile.Dragon.WHITE);
+        Tile t14 = new Tile(Tile.Dragon.WHITE);
 
         t9.winningTile = true;
         t9.calledFrom = Tile.CalledFrom.CENTER;
@@ -554,20 +554,20 @@ public class ExampleHands {
         return sc.validatedHand;
     }
     public static Hand getJunchanHand(){
-        Tile t1  = new Tile(1, "MANZU");
-        Tile t2  = new Tile(2, "MANZU");
-        Tile t3  = new Tile(3, "MANZU");
-        Tile t4  = new Tile(9, "MANZU");
-        Tile t5  = new Tile(9, "MANZU");
-        Tile t6  = new Tile(9, "MANZU");
-        Tile t7  = new Tile(9, "PINZU");
-        Tile t8  = new Tile(9, "PINZU");
-        Tile t9  = new Tile(1, "SOUZU");
-        Tile t10 = new Tile(2, "SOUZU");
-        Tile t11 = new Tile(3, "SOUZU");
-        Tile t12 = new Tile(7, "SOUZU");
-        Tile t13 = new Tile(8, "SOUZU");
-        Tile t14 = new Tile(9, "SOUZU");
+        Tile t1  = new Tile(1, Tile.Suit.MANZU);
+        Tile t2  = new Tile(2, Tile.Suit.MANZU);
+        Tile t3  = new Tile(3, Tile.Suit.MANZU);
+        Tile t4  = new Tile(9, Tile.Suit.MANZU);
+        Tile t5  = new Tile(9, Tile.Suit.MANZU);
+        Tile t6  = new Tile(9, Tile.Suit.MANZU);
+        Tile t7  = new Tile(9, Tile.Suit.PINZU);
+        Tile t8  = new Tile(9, Tile.Suit.PINZU);
+        Tile t9  = new Tile(1, Tile.Suit.SOUZU);
+        Tile t10 = new Tile(2, Tile.Suit.SOUZU);
+        Tile t11 = new Tile(3, Tile.Suit.SOUZU);
+        Tile t12 = new Tile(7, Tile.Suit.SOUZU);
+        Tile t13 = new Tile(8, Tile.Suit.SOUZU);
+        Tile t14 = new Tile(9, Tile.Suit.SOUZU);
 
         t11.winningTile = true;
         t11.calledFrom = Tile.CalledFrom.CENTER;
@@ -578,20 +578,20 @@ public class ExampleHands {
         return sc.validatedHand;
     }
     public static Hand getHonroutouHand(){
-        Tile t1  = new Tile(1, "MANZU");
-        Tile t2  = new Tile(1, "MANZU");
-        Tile t3  = new Tile(1, "MANZU");
-        Tile t4  = new Tile(9, "PINZU");
-        Tile t5  = new Tile(9, "PINZU");
-        Tile t6  = new Tile(9, "PINZU");
-        Tile t7  = new Tile(1, "SOUZU");
-        Tile t8  = new Tile(1, "SOUZU");
-        Tile t9  = new Tile(1, "SOUZU");
-        Tile t10 = new Tile(9, "SOUZU");
-        Tile t11 = new Tile(9, "SOUZU");
-        Tile t12 = new Tile(9, "SOUZU");
-        Tile t13 = new Tile("GREEN", "HONOR");
-        Tile t14 = new Tile("GREEN", "HONOR");
+        Tile t1  = new Tile(1, Tile.Suit.MANZU);
+        Tile t2  = new Tile(1, Tile.Suit.MANZU);
+        Tile t3  = new Tile(1, Tile.Suit.MANZU);
+        Tile t4  = new Tile(9, Tile.Suit.PINZU);
+        Tile t5  = new Tile(9, Tile.Suit.PINZU);
+        Tile t6  = new Tile(9, Tile.Suit.PINZU);
+        Tile t7  = new Tile(1, Tile.Suit.SOUZU);
+        Tile t8  = new Tile(1, Tile.Suit.SOUZU);
+        Tile t9  = new Tile(1, Tile.Suit.SOUZU);
+        Tile t10 = new Tile(9, Tile.Suit.SOUZU);
+        Tile t11 = new Tile(9, Tile.Suit.SOUZU);
+        Tile t12 = new Tile(9, Tile.Suit.SOUZU);
+        Tile t13 = new Tile(Tile.Dragon.GREEN);
+        Tile t14 = new Tile(Tile.Dragon.GREEN);
 
         t1.revealedState = t2.revealedState = t3.revealedState = Tile.RevealedState.PON;
         t2.calledFrom = Tile.CalledFrom.RIGHT;
@@ -607,20 +607,20 @@ public class ExampleHands {
         return sc.validatedHand;
     }
     public static Hand getHonroutouChiitoitsuHand(){
-        Tile t1  = new Tile(1, "MANZU");
-        Tile t2  = new Tile(1, "MANZU");
-        Tile t3  = new Tile(1, "PINZU");
-        Tile t4  = new Tile(1, "PINZU");
-        Tile t5  = new Tile(9, "SOUZU");
-        Tile t6  = new Tile(9, "SOUZU");
-        Tile t7  = new Tile("EAST", "HONOR");
-        Tile t8  = new Tile("EAST", "HONOR");
-        Tile t9  = new Tile("SOUTH", "HONOR");
-        Tile t10 = new Tile("SOUTH", "HONOR");
-        Tile t11 = new Tile("WHITE", "HONOR");
-        Tile t12 = new Tile("WHITE", "HONOR");
-        Tile t13 = new Tile("NORTH", "HONOR");
-        Tile t14 = new Tile("NORTH", "HONOR");
+        Tile t1  = new Tile(1, Tile.Suit.MANZU);
+        Tile t2  = new Tile(1, Tile.Suit.MANZU);
+        Tile t3  = new Tile(1, Tile.Suit.PINZU);
+        Tile t4  = new Tile(1, Tile.Suit.PINZU);
+        Tile t5  = new Tile(9, Tile.Suit.SOUZU);
+        Tile t6  = new Tile(9, Tile.Suit.SOUZU);
+        Tile t7  = new Tile(Tile.Wind.EAST);
+        Tile t8  = new Tile(Tile.Wind.EAST);
+        Tile t9  = new Tile(Tile.Wind.SOUTH);
+        Tile t10 = new Tile(Tile.Wind.SOUTH);
+        Tile t11 = new Tile(Tile.Dragon.WHITE);
+        Tile t12 = new Tile(Tile.Dragon.WHITE);
+        Tile t13 = new Tile(Tile.Wind.NORTH);
+        Tile t14 = new Tile(Tile.Wind.NORTH);
 
         t8.winningTile = true;
         t8.calledFrom = Tile.CalledFrom.CENTER;
@@ -631,20 +631,20 @@ public class ExampleHands {
         return sc.validatedHand;
     }
     public static Hand getShousangenHand(){
-        Tile t1  = new Tile(2, "MANZU");
-        Tile t2  = new Tile(3, "MANZU");
-        Tile t3  = new Tile(4, "MANZU");
-        Tile t4  = new Tile(6, "SOUZU");
-        Tile t5  = new Tile(7, "SOUZU");
-        Tile t6  = new Tile(8, "SOUZU");
-        Tile t7  = new Tile("WHITE", "HONOR");
-        Tile t8  = new Tile("WHITE", "HONOR");
-        Tile t9  = new Tile("WHITE", "HONOR");
-        Tile t10 = new Tile("GREEN", "HONOR");
-        Tile t11 = new Tile("GREEN", "HONOR");
-        Tile t12 = new Tile("GREEN", "HONOR");
-        Tile t13 = new Tile("RED", "HONOR");
-        Tile t14 = new Tile("RED", "HONOR");
+        Tile t1  = new Tile(2, Tile.Suit.MANZU);
+        Tile t2  = new Tile(3, Tile.Suit.MANZU);
+        Tile t3  = new Tile(4, Tile.Suit.MANZU);
+        Tile t4  = new Tile(6, Tile.Suit.SOUZU);
+        Tile t5  = new Tile(7, Tile.Suit.SOUZU);
+        Tile t6  = new Tile(8, Tile.Suit.SOUZU);
+        Tile t7  = new Tile(Tile.Dragon.WHITE);
+        Tile t8  = new Tile(Tile.Dragon.WHITE);
+        Tile t9  = new Tile(Tile.Dragon.WHITE);
+        Tile t10 = new Tile(Tile.Dragon.GREEN);
+        Tile t11 = new Tile(Tile.Dragon.GREEN);
+        Tile t12 = new Tile(Tile.Dragon.GREEN);
+        Tile t13 = new Tile(Tile.Dragon.RED);
+        Tile t14 = new Tile(Tile.Dragon.RED);
 
         t1.revealedState = t2.revealedState = t3.revealedState = Tile.RevealedState.CHI;
         t2.calledFrom = Tile.CalledFrom.LEFT;
@@ -662,20 +662,20 @@ public class ExampleHands {
 
     // Suit-based
     public static Hand getHonitsuHand(){
-        Tile t1  = new Tile(1, "PINZU");
-        Tile t2  = new Tile(1, "PINZU");
-        Tile t3  = new Tile(1, "PINZU");
-        Tile t4  = new Tile(3, "PINZU");
-        Tile t5  = new Tile(4, "PINZU");
-        Tile t6  = new Tile(5, "PINZU");
-        Tile t7  = new Tile(7, "PINZU");
-        Tile t8  = new Tile(8, "PINZU");
-        Tile t9  = new Tile(9, "PINZU");
-        Tile t10 = new Tile("SOUTH", "HONOR");
-        Tile t11 = new Tile("SOUTH", "HONOR");
-        Tile t12 = new Tile("SOUTH", "HONOR");
-        Tile t13 = new Tile("WHITE", "HONOR");
-        Tile t14 = new Tile("WHITE", "HONOR");
+        Tile t1  = new Tile(1, Tile.Suit.PINZU);
+        Tile t2  = new Tile(1, Tile.Suit.PINZU);
+        Tile t3  = new Tile(1, Tile.Suit.PINZU);
+        Tile t4  = new Tile(3, Tile.Suit.PINZU);
+        Tile t5  = new Tile(4, Tile.Suit.PINZU);
+        Tile t6  = new Tile(5, Tile.Suit.PINZU);
+        Tile t7  = new Tile(7, Tile.Suit.PINZU);
+        Tile t8  = new Tile(8, Tile.Suit.PINZU);
+        Tile t9  = new Tile(9, Tile.Suit.PINZU);
+        Tile t10 = new Tile(Tile.Wind.SOUTH);
+        Tile t11 = new Tile(Tile.Wind.SOUTH);
+        Tile t12 = new Tile(Tile.Wind.SOUTH);
+        Tile t13 = new Tile(Tile.Dragon.WHITE);
+        Tile t14 = new Tile(Tile.Dragon.WHITE);
 
         t6.winningTile = true;
         t6.calledFrom = Tile.CalledFrom.CENTER;
@@ -686,20 +686,20 @@ public class ExampleHands {
         return sc.validatedHand;
     }
     public static Hand getChinitsuHand(){
-        Tile t1  = new Tile(1, "SOUZU");
-        Tile t2  = new Tile(2, "SOUZU");
-        Tile t3  = new Tile(3, "SOUZU");
-        Tile t4  = new Tile(4, "SOUZU");
-        Tile t5  = new Tile(4, "SOUZU");
-        Tile t6  = new Tile(4, "SOUZU");
-        Tile t7  = new Tile(5, "SOUZU");
-        Tile t8  = new Tile(5, "SOUZU");
-        Tile t9  = new Tile(6, "SOUZU");
-        Tile t10 = new Tile(6, "SOUZU");
-        Tile t11 = new Tile(6, "SOUZU");
-        Tile t12 = new Tile(7, "SOUZU");
-        Tile t13 = new Tile(8, "SOUZU");
-        Tile t14 = new Tile(9, "SOUZU");
+        Tile t1  = new Tile(1, Tile.Suit.SOUZU);
+        Tile t2  = new Tile(2, Tile.Suit.SOUZU);
+        Tile t3  = new Tile(3, Tile.Suit.SOUZU);
+        Tile t4  = new Tile(4, Tile.Suit.SOUZU);
+        Tile t5  = new Tile(4, Tile.Suit.SOUZU);
+        Tile t6  = new Tile(4, Tile.Suit.SOUZU);
+        Tile t7  = new Tile(5, Tile.Suit.SOUZU);
+        Tile t8  = new Tile(5, Tile.Suit.SOUZU);
+        Tile t9  = new Tile(6, Tile.Suit.SOUZU);
+        Tile t10 = new Tile(6, Tile.Suit.SOUZU);
+        Tile t11 = new Tile(6, Tile.Suit.SOUZU);
+        Tile t12 = new Tile(7, Tile.Suit.SOUZU);
+        Tile t13 = new Tile(8, Tile.Suit.SOUZU);
+        Tile t14 = new Tile(9, Tile.Suit.SOUZU);
 
         t4.revealedState = t5.revealedState = t6.revealedState = Tile.RevealedState.PON;
         t4.calledFrom = Tile.CalledFrom.CENTER;
@@ -717,20 +717,20 @@ public class ExampleHands {
 
     // Yakuman
     public static Hand getKokushiMusouHand(){
-        Tile t1  = new Tile(1, "MANZU");
-        Tile t2  = new Tile(9, "MANZU");
-        Tile t3  = new Tile(1, "PINZU");
-        Tile t4  = new Tile(9, "PINZU");
-        Tile t5  = new Tile(1, "SOUZU");
-        Tile t6  = new Tile(9, "SOUZU");
-        Tile t7  = new Tile("EAST", "HONOR");
-        Tile t8  = new Tile("SOUTH", "HONOR");
-        Tile t9  = new Tile("WEST", "HONOR");
-        Tile t10 = new Tile("NORTH", "HONOR");
-        Tile t11 = new Tile("WHITE", "HONOR");
-        Tile t12 = new Tile("WHITE", "HONOR");
-        Tile t13 = new Tile("GREEN", "HONOR");
-        Tile t14 = new Tile("RED", "HONOR");
+        Tile t1  = new Tile(1, Tile.Suit.MANZU);
+        Tile t2  = new Tile(9, Tile.Suit.MANZU);
+        Tile t3  = new Tile(1, Tile.Suit.PINZU);
+        Tile t4  = new Tile(9, Tile.Suit.PINZU);
+        Tile t5  = new Tile(1, Tile.Suit.SOUZU);
+        Tile t6  = new Tile(9, Tile.Suit.SOUZU);
+        Tile t7  = new Tile(Tile.Wind.EAST);
+        Tile t8  = new Tile(Tile.Wind.SOUTH);
+        Tile t9  = new Tile(Tile.Wind.WEST);
+        Tile t10 = new Tile(Tile.Wind.NORTH);
+        Tile t11 = new Tile(Tile.Dragon.WHITE);
+        Tile t12 = new Tile(Tile.Dragon.WHITE);
+        Tile t13 = new Tile(Tile.Dragon.GREEN);
+        Tile t14 = new Tile(Tile.Dragon.RED);
 
         t2.winningTile = true;
         t2.calledFrom = Tile.CalledFrom.CENTER;
@@ -741,20 +741,20 @@ public class ExampleHands {
         return sc.validatedHand;
     }
     public static Hand getKokushiMusou13SidedHand(){
-        Tile t1  = new Tile(1, "MANZU");
-        Tile t2  = new Tile(9, "MANZU");
-        Tile t3  = new Tile(1, "PINZU");
-        Tile t4  = new Tile(9, "PINZU");
-        Tile t5  = new Tile(1, "SOUZU");
-        Tile t6  = new Tile(9, "SOUZU");
-        Tile t7  = new Tile("EAST", "HONOR");
-        Tile t8  = new Tile("SOUTH", "HONOR");
-        Tile t9  = new Tile("WEST", "HONOR");
-        Tile t10 = new Tile("NORTH", "HONOR");
-        Tile t11 = new Tile("WHITE", "HONOR");
-        Tile t12 = new Tile("WHITE", "HONOR");
-        Tile t13 = new Tile("GREEN", "HONOR");
-        Tile t14 = new Tile("RED", "HONOR");
+        Tile t1  = new Tile(1, Tile.Suit.MANZU);
+        Tile t2  = new Tile(9, Tile.Suit.MANZU);
+        Tile t3  = new Tile(1, Tile.Suit.PINZU);
+        Tile t4  = new Tile(9, Tile.Suit.PINZU);
+        Tile t5  = new Tile(1, Tile.Suit.SOUZU);
+        Tile t6  = new Tile(9, Tile.Suit.SOUZU);
+        Tile t7  = new Tile(Tile.Wind.EAST);
+        Tile t8  = new Tile(Tile.Wind.SOUTH);
+        Tile t9  = new Tile(Tile.Wind.WEST);
+        Tile t10 = new Tile(Tile.Wind.NORTH);
+        Tile t11 = new Tile(Tile.Dragon.WHITE);
+        Tile t12 = new Tile(Tile.Dragon.WHITE);
+        Tile t13 = new Tile(Tile.Dragon.GREEN);
+        Tile t14 = new Tile(Tile.Dragon.RED);
 
         t12.winningTile = true;
         t12.calledFrom = Tile.CalledFrom.CENTER;
@@ -765,20 +765,20 @@ public class ExampleHands {
         return sc.validatedHand;
     }
     public static Hand getSuuAnkouHand(){
-        Tile t1  = new Tile(4, "MANZU");
-        Tile t2  = new Tile(4, "MANZU");
-        Tile t3  = new Tile(4, "MANZU");
-        Tile t4  = new Tile(8, "MANZU");
-        Tile t5  = new Tile(8, "MANZU");
-        Tile t6  = new Tile(8, "MANZU");
-        Tile t7  = new Tile(9, "PINZU");
-        Tile t8  = new Tile(9, "PINZU");
-        Tile t9  = new Tile(9, "PINZU");
-        Tile t10 = new Tile(2, "SOUZU");
-        Tile t11 = new Tile(2, "SOUZU");
-        Tile t12 = new Tile(2, "SOUZU");
-        Tile t13 = new Tile("EAST", "HONOR");
-        Tile t14 = new Tile("EAST", "HONOR");
+        Tile t1  = new Tile(4, Tile.Suit.MANZU);
+        Tile t2  = new Tile(4, Tile.Suit.MANZU);
+        Tile t3  = new Tile(4, Tile.Suit.MANZU);
+        Tile t4  = new Tile(8, Tile.Suit.MANZU);
+        Tile t5  = new Tile(8, Tile.Suit.MANZU);
+        Tile t6  = new Tile(8, Tile.Suit.MANZU);
+        Tile t7  = new Tile(9, Tile.Suit.PINZU);
+        Tile t8  = new Tile(9, Tile.Suit.PINZU);
+        Tile t9  = new Tile(9, Tile.Suit.PINZU);
+        Tile t10 = new Tile(2, Tile.Suit.SOUZU);
+        Tile t11 = new Tile(2, Tile.Suit.SOUZU);
+        Tile t12 = new Tile(2, Tile.Suit.SOUZU);
+        Tile t13 = new Tile(Tile.Wind.EAST);
+        Tile t14 = new Tile(Tile.Wind.EAST);
 
         t6.winningTile = true;
 
@@ -788,20 +788,20 @@ public class ExampleHands {
         return sc.validatedHand;
     }
     public static Hand getSuuAnkouTankiHand(){
-        Tile t1  = new Tile(5, "MANZU");
-        Tile t2  = new Tile(5, "MANZU");
-        Tile t3  = new Tile(5, "MANZU");
-        Tile t4  = new Tile(2, "PINZU");
-        Tile t5  = new Tile(2, "PINZU");
-        Tile t6  = new Tile(2, "PINZU");
-        Tile t7  = new Tile(9, "PINZU");
-        Tile t8  = new Tile(9, "PINZU");
-        Tile t9  = new Tile(9, "PINZU");
-        Tile t10 = new Tile("NORTH", "HONOR");
-        Tile t11 = new Tile("NORTH", "HONOR");
-        Tile t12 = new Tile("NORTH", "HONOR");
-        Tile t13 = new Tile("GREEN", "HONOR");
-        Tile t14 = new Tile("GREEN", "HONOR");
+        Tile t1  = new Tile(5, Tile.Suit.MANZU);
+        Tile t2  = new Tile(5, Tile.Suit.MANZU);
+        Tile t3  = new Tile(5, Tile.Suit.MANZU);
+        Tile t4  = new Tile(2, Tile.Suit.PINZU);
+        Tile t5  = new Tile(2, Tile.Suit.PINZU);
+        Tile t6  = new Tile(2, Tile.Suit.PINZU);
+        Tile t7  = new Tile(9, Tile.Suit.PINZU);
+        Tile t8  = new Tile(9, Tile.Suit.PINZU);
+        Tile t9  = new Tile(9, Tile.Suit.PINZU);
+        Tile t10 = new Tile(Tile.Wind.NORTH);
+        Tile t11 = new Tile(Tile.Wind.NORTH);
+        Tile t12 = new Tile(Tile.Wind.NORTH);
+        Tile t13 = new Tile(Tile.Dragon.GREEN);
+        Tile t14 = new Tile(Tile.Dragon.GREEN);
 
         t14.winningTile = true;
         t14.calledFrom = Tile.CalledFrom.CENTER;
@@ -812,20 +812,20 @@ public class ExampleHands {
         return sc.validatedHand;
     }
     public static Hand getDaisangenHand(){
-        Tile t1  = new Tile(5, "MANZU");
-        Tile t2  = new Tile(6, "MANZU");
-        Tile t3  = new Tile(7, "MANZU");
-        Tile t4  = new Tile(4, "PINZU");
-        Tile t5  = new Tile(4, "PINZU");
-        Tile t6  = new Tile("WHITE", "HONOR");
-        Tile t7  = new Tile("WHITE", "HONOR");
-        Tile t8  = new Tile("WHITE", "HONOR");
-        Tile t9  = new Tile("GREEN", "HONOR");
-        Tile t10 = new Tile("GREEN", "HONOR");
-        Tile t11 = new Tile("GREEN", "HONOR");
-        Tile t12 = new Tile("RED", "HONOR");
-        Tile t13 = new Tile("RED", "HONOR");
-        Tile t14 = new Tile("RED", "HONOR");
+        Tile t1  = new Tile(5, Tile.Suit.MANZU);
+        Tile t2  = new Tile(6, Tile.Suit.MANZU);
+        Tile t3  = new Tile(7, Tile.Suit.MANZU);
+        Tile t4  = new Tile(4, Tile.Suit.PINZU);
+        Tile t5  = new Tile(4, Tile.Suit.PINZU);
+        Tile t6  = new Tile(Tile.Dragon.WHITE);
+        Tile t7  = new Tile(Tile.Dragon.WHITE);
+        Tile t8  = new Tile(Tile.Dragon.WHITE);
+        Tile t9  = new Tile(Tile.Dragon.GREEN);
+        Tile t10 = new Tile(Tile.Dragon.GREEN);
+        Tile t11 = new Tile(Tile.Dragon.GREEN);
+        Tile t12 = new Tile(Tile.Dragon.RED);
+        Tile t13 = new Tile(Tile.Dragon.RED);
+        Tile t14 = new Tile(Tile.Dragon.RED);
 
         t10.winningTile = true;
         t10.calledFrom = Tile.CalledFrom.CENTER;
@@ -836,20 +836,20 @@ public class ExampleHands {
         return sc.validatedHand;
     }
     public static Hand getShousuushiiHand(){
-        Tile t1  = new Tile(6, "SOUZU");
-        Tile t2  = new Tile(7, "SOUZU");
-        Tile t3  = new Tile(8, "SOUZU");
-        Tile t4  = new Tile("EAST", "HONOR");
-        Tile t5  = new Tile("EAST", "HONOR");
-        Tile t6  = new Tile("EAST", "HONOR");
-        Tile t7  = new Tile("SOUTH", "HONOR");
-        Tile t8  = new Tile("SOUTH", "HONOR");
-        Tile t9  = new Tile("SOUTH", "HONOR");
-        Tile t10 = new Tile("WEST", "HONOR");
-        Tile t11 = new Tile("WEST", "HONOR");
-        Tile t12 = new Tile("WEST", "HONOR");
-        Tile t13 = new Tile("NORTH", "HONOR");
-        Tile t14 = new Tile("NORTH", "HONOR");
+        Tile t1  = new Tile(6, Tile.Suit.SOUZU);
+        Tile t2  = new Tile(7, Tile.Suit.SOUZU);
+        Tile t3  = new Tile(8, Tile.Suit.SOUZU);
+        Tile t4  = new Tile(Tile.Wind.EAST);
+        Tile t5  = new Tile(Tile.Wind.EAST);
+        Tile t6  = new Tile(Tile.Wind.EAST);
+        Tile t7  = new Tile(Tile.Wind.SOUTH);
+        Tile t8  = new Tile(Tile.Wind.SOUTH);
+        Tile t9  = new Tile(Tile.Wind.SOUTH);
+        Tile t10 = new Tile(Tile.Wind.WEST);
+        Tile t11 = new Tile(Tile.Wind.WEST);
+        Tile t12 = new Tile(Tile.Wind.WEST);
+        Tile t13 = new Tile(Tile.Wind.NORTH);
+        Tile t14 = new Tile(Tile.Wind.NORTH);
 
         t11.winningTile = true;
         t11.calledFrom = Tile.CalledFrom.CENTER;
@@ -860,20 +860,20 @@ public class ExampleHands {
         return sc.validatedHand;
     }
     public static Hand getDaisuushiiHand(){
-        Tile t1  = new Tile(3, "PINZU");
-        Tile t2  = new Tile(3, "PINZU");
-        Tile t3  = new Tile("EAST", "HONOR");
-        Tile t4  = new Tile("EAST", "HONOR");
-        Tile t5  = new Tile("EAST", "HONOR");
-        Tile t6  = new Tile("SOUTH", "HONOR");
-        Tile t7  = new Tile("SOUTH", "HONOR");
-        Tile t8  = new Tile("SOUTH", "HONOR");
-        Tile t9  = new Tile("WEST", "HONOR");
-        Tile t10 = new Tile("WEST", "HONOR");
-        Tile t11 = new Tile("WEST", "HONOR");
-        Tile t12 = new Tile("NORTH", "HONOR");
-        Tile t13 = new Tile("NORTH", "HONOR");
-        Tile t14 = new Tile("NORTH", "HONOR");
+        Tile t1  = new Tile(3, Tile.Suit.PINZU);
+        Tile t2  = new Tile(3, Tile.Suit.PINZU);
+        Tile t3  = new Tile(Tile.Wind.EAST);
+        Tile t4  = new Tile(Tile.Wind.EAST);
+        Tile t5  = new Tile(Tile.Wind.EAST);
+        Tile t6  = new Tile(Tile.Wind.SOUTH);
+        Tile t7  = new Tile(Tile.Wind.SOUTH);
+        Tile t8  = new Tile(Tile.Wind.SOUTH);
+        Tile t9  = new Tile(Tile.Wind.WEST);
+        Tile t10 = new Tile(Tile.Wind.WEST);
+        Tile t11 = new Tile(Tile.Wind.WEST);
+        Tile t12 = new Tile(Tile.Wind.NORTH);
+        Tile t13 = new Tile(Tile.Wind.NORTH);
+        Tile t14 = new Tile(Tile.Wind.NORTH);
 
         t13.winningTile = true;
         t13.calledFrom = Tile.CalledFrom.CENTER;
@@ -884,20 +884,20 @@ public class ExampleHands {
         return sc.validatedHand;
     }
     public static Hand getTsuuiisouHand(){
-        Tile t1  = new Tile("EAST", "HONOR");
-        Tile t2  = new Tile("EAST", "HONOR");
-        Tile t3  = new Tile("EAST", "HONOR");
-        Tile t4  = new Tile("SOUTH", "HONOR");
-        Tile t5  = new Tile("SOUTH", "HONOR");
-        Tile t6  = new Tile("SOUTH", "HONOR");
-        Tile t7  = new Tile("WEST", "HONOR");
-        Tile t8  = new Tile("WEST", "HONOR");
-        Tile t9  = new Tile("WHITE", "HONOR");
-        Tile t10 = new Tile("WHITE", "HONOR");
-        Tile t11 = new Tile("WHITE", "HONOR");
-        Tile t12 = new Tile("GREEN", "HONOR");
-        Tile t13 = new Tile("GREEN", "HONOR");
-        Tile t14 = new Tile("GREEN", "HONOR");
+        Tile t1  = new Tile(Tile.Wind.EAST);
+        Tile t2  = new Tile(Tile.Wind.EAST);
+        Tile t3  = new Tile(Tile.Wind.EAST);
+        Tile t4  = new Tile(Tile.Wind.SOUTH);
+        Tile t5  = new Tile(Tile.Wind.SOUTH);
+        Tile t6  = new Tile(Tile.Wind.SOUTH);
+        Tile t7  = new Tile(Tile.Wind.WEST);
+        Tile t8  = new Tile(Tile.Wind.WEST);
+        Tile t9  = new Tile(Tile.Dragon.WHITE);
+        Tile t10 = new Tile(Tile.Dragon.WHITE);
+        Tile t11 = new Tile(Tile.Dragon.WHITE);
+        Tile t12 = new Tile(Tile.Dragon.GREEN);
+        Tile t13 = new Tile(Tile.Dragon.GREEN);
+        Tile t14 = new Tile(Tile.Dragon.GREEN);
 
         t3.winningTile = true;
         t3.calledFrom = Tile.CalledFrom.CENTER;
@@ -908,20 +908,20 @@ public class ExampleHands {
         return sc.validatedHand;
     }
     public static Hand getDaichiseiHand(){
-        Tile t1  = new Tile("EAST", "HONOR");
-        Tile t2  = new Tile("EAST", "HONOR");
-        Tile t3  = new Tile("SOUTH", "HONOR");
-        Tile t4  = new Tile("SOUTH", "HONOR");
-        Tile t5  = new Tile("WEST", "HONOR");
-        Tile t6  = new Tile("WEST", "HONOR");
-        Tile t7  = new Tile("NORTH", "HONOR");
-        Tile t8  = new Tile("NORTH", "HONOR");
-        Tile t9  = new Tile("WHITE", "HONOR");
-        Tile t10 = new Tile("WHITE", "HONOR");
-        Tile t11 = new Tile("GREEN", "HONOR");
-        Tile t12 = new Tile("GREEN", "HONOR");
-        Tile t13 = new Tile("RED", "HONOR");
-        Tile t14 = new Tile("RED", "HONOR");
+        Tile t1  = new Tile(Tile.Wind.EAST);
+        Tile t2  = new Tile(Tile.Wind.EAST);
+        Tile t3  = new Tile(Tile.Wind.SOUTH);
+        Tile t4  = new Tile(Tile.Wind.SOUTH);
+        Tile t5  = new Tile(Tile.Wind.WEST);
+        Tile t6  = new Tile(Tile.Wind.WEST);
+        Tile t7  = new Tile(Tile.Wind.NORTH);
+        Tile t8  = new Tile(Tile.Wind.NORTH);
+        Tile t9  = new Tile(Tile.Dragon.WHITE);
+        Tile t10 = new Tile(Tile.Dragon.WHITE);
+        Tile t11 = new Tile(Tile.Dragon.GREEN);
+        Tile t12 = new Tile(Tile.Dragon.GREEN);
+        Tile t13 = new Tile(Tile.Dragon.RED);
+        Tile t14 = new Tile(Tile.Dragon.RED);
 
         t9.winningTile = true;
         t9.calledFrom = Tile.CalledFrom.CENTER;
@@ -932,20 +932,20 @@ public class ExampleHands {
         return sc.validatedHand;
     }
     public static Hand getChinroutouHand(){
-        Tile t1  = new Tile(1, "MANZU");
-        Tile t2  = new Tile(1, "MANZU");
-        Tile t3  = new Tile(1, "MANZU");
-        Tile t4  = new Tile(1, "PINZU");
-        Tile t5  = new Tile(1, "PINZU");
-        Tile t6  = new Tile(1, "PINZU");
-        Tile t7  = new Tile(9, "PINZU");
-        Tile t8  = new Tile(9, "PINZU");
-        Tile t9  = new Tile(9, "PINZU");
-        Tile t10 = new Tile(1, "SOUZU");
-        Tile t11 = new Tile(1, "SOUZU");
-        Tile t12 = new Tile(9, "SOUZU");
-        Tile t13 = new Tile(9, "SOUZU");
-        Tile t14 = new Tile(9, "SOUZU");
+        Tile t1  = new Tile(1, Tile.Suit.MANZU);
+        Tile t2  = new Tile(1, Tile.Suit.MANZU);
+        Tile t3  = new Tile(1, Tile.Suit.MANZU);
+        Tile t4  = new Tile(1, Tile.Suit.PINZU);
+        Tile t5  = new Tile(1, Tile.Suit.PINZU);
+        Tile t6  = new Tile(1, Tile.Suit.PINZU);
+        Tile t7  = new Tile(9, Tile.Suit.PINZU);
+        Tile t8  = new Tile(9, Tile.Suit.PINZU);
+        Tile t9  = new Tile(9, Tile.Suit.PINZU);
+        Tile t10 = new Tile(1, Tile.Suit.SOUZU);
+        Tile t11 = new Tile(1, Tile.Suit.SOUZU);
+        Tile t12 = new Tile(9, Tile.Suit.SOUZU);
+        Tile t13 = new Tile(9, Tile.Suit.SOUZU);
+        Tile t14 = new Tile(9, Tile.Suit.SOUZU);
 
         t7.revealedState = t8.revealedState = t9.revealedState = Tile.RevealedState.PON;
         t7.calledFrom = Tile.CalledFrom.RIGHT;
@@ -959,20 +959,20 @@ public class ExampleHands {
         return sc.validatedHand;
     }
     public static Hand getRyuuiisouHand(){
-        Tile t1  = new Tile(2, "SOUZU");
-        Tile t2  = new Tile(2, "SOUZU");
-        Tile t3  = new Tile(3, "SOUZU");
-        Tile t4  = new Tile(3, "SOUZU");
-        Tile t5  = new Tile(4, "SOUZU");
-        Tile t6  = new Tile(4, "SOUZU");
-        Tile t7  = new Tile(6, "SOUZU");
-        Tile t8  = new Tile(6, "SOUZU");
-        Tile t9  = new Tile(6, "SOUZU");
-        Tile t10 = new Tile(8, "SOUZU");
-        Tile t11 = new Tile(8, "SOUZU");
-        Tile t12 = new Tile("GREEN", "HONOR");
-        Tile t13 = new Tile("GREEN", "HONOR");
-        Tile t14 = new Tile("GREEN", "HONOR");
+        Tile t1  = new Tile(2, Tile.Suit.SOUZU);
+        Tile t2  = new Tile(2, Tile.Suit.SOUZU);
+        Tile t3  = new Tile(3, Tile.Suit.SOUZU);
+        Tile t4  = new Tile(3, Tile.Suit.SOUZU);
+        Tile t5  = new Tile(4, Tile.Suit.SOUZU);
+        Tile t6  = new Tile(4, Tile.Suit.SOUZU);
+        Tile t7  = new Tile(6, Tile.Suit.SOUZU);
+        Tile t8  = new Tile(6, Tile.Suit.SOUZU);
+        Tile t9  = new Tile(6, Tile.Suit.SOUZU);
+        Tile t10 = new Tile(8, Tile.Suit.SOUZU);
+        Tile t11 = new Tile(8, Tile.Suit.SOUZU);
+        Tile t12 = new Tile(Tile.Dragon.GREEN);
+        Tile t13 = new Tile(Tile.Dragon.GREEN);
+        Tile t14 = new Tile(Tile.Dragon.GREEN);
 
         t8.winningTile = true;
         t8.calledFrom = Tile.CalledFrom.CENTER;
@@ -983,20 +983,20 @@ public class ExampleHands {
         return sc.validatedHand;
     }
     public static Hand getChuurenPoutouHand(){
-        Tile t1  = new Tile(1, "MANZU");
-        Tile t2  = new Tile(1, "MANZU");
-        Tile t3  = new Tile(1, "MANZU");
-        Tile t4  = new Tile(2, "MANZU");
-        Tile t5  = new Tile(3, "MANZU");
-        Tile t6  = new Tile(4, "MANZU");
-        Tile t7  = new Tile(4, "MANZU");
-        Tile t8  = new Tile(5, "MANZU");
-        Tile t9  = new Tile(6, "MANZU");
-        Tile t10 = new Tile(7, "MANZU");
-        Tile t11 = new Tile(8, "MANZU");
-        Tile t12 = new Tile(9, "MANZU");
-        Tile t13 = new Tile(9, "MANZU");
-        Tile t14 = new Tile(9, "MANZU");
+        Tile t1  = new Tile(1, Tile.Suit.MANZU);
+        Tile t2  = new Tile(1, Tile.Suit.MANZU);
+        Tile t3  = new Tile(1, Tile.Suit.MANZU);
+        Tile t4  = new Tile(2, Tile.Suit.MANZU);
+        Tile t5  = new Tile(3, Tile.Suit.MANZU);
+        Tile t6  = new Tile(4, Tile.Suit.MANZU);
+        Tile t7  = new Tile(4, Tile.Suit.MANZU);
+        Tile t8  = new Tile(5, Tile.Suit.MANZU);
+        Tile t9  = new Tile(6, Tile.Suit.MANZU);
+        Tile t10 = new Tile(7, Tile.Suit.MANZU);
+        Tile t11 = new Tile(8, Tile.Suit.MANZU);
+        Tile t12 = new Tile(9, Tile.Suit.MANZU);
+        Tile t13 = new Tile(9, Tile.Suit.MANZU);
+        Tile t14 = new Tile(9, Tile.Suit.MANZU);
 
         t11.winningTile = true;
         t11.calledFrom = Tile.CalledFrom.CENTER;
@@ -1007,20 +1007,20 @@ public class ExampleHands {
         return sc.validatedHand;
     }
     public static Hand getChuurenPoutou9SidedHand(){
-        Tile t1  = new Tile(1, "MANZU");
-        Tile t2  = new Tile(1, "MANZU");
-        Tile t3  = new Tile(1, "MANZU");
-        Tile t4  = new Tile(2, "MANZU");
-        Tile t5  = new Tile(3, "MANZU");
-        Tile t6  = new Tile(4, "MANZU");
-        Tile t7  = new Tile(5, "MANZU");
-        Tile t8  = new Tile(6, "MANZU");
-        Tile t9  = new Tile(7, "MANZU");
-        Tile t10 = new Tile(8, "MANZU");
-        Tile t11 = new Tile(8, "MANZU");
-        Tile t12 = new Tile(9, "MANZU");
-        Tile t13 = new Tile(9, "MANZU");
-        Tile t14 = new Tile(9, "MANZU");
+        Tile t1  = new Tile(1, Tile.Suit.MANZU);
+        Tile t2  = new Tile(1, Tile.Suit.MANZU);
+        Tile t3  = new Tile(1, Tile.Suit.MANZU);
+        Tile t4  = new Tile(2, Tile.Suit.MANZU);
+        Tile t5  = new Tile(3, Tile.Suit.MANZU);
+        Tile t6  = new Tile(4, Tile.Suit.MANZU);
+        Tile t7  = new Tile(5, Tile.Suit.MANZU);
+        Tile t8  = new Tile(6, Tile.Suit.MANZU);
+        Tile t9  = new Tile(7, Tile.Suit.MANZU);
+        Tile t10 = new Tile(8, Tile.Suit.MANZU);
+        Tile t11 = new Tile(8, Tile.Suit.MANZU);
+        Tile t12 = new Tile(9, Tile.Suit.MANZU);
+        Tile t13 = new Tile(9, Tile.Suit.MANZU);
+        Tile t14 = new Tile(9, Tile.Suit.MANZU);
 
         t10.winningTile = true;
         t10.calledFrom = Tile.CalledFrom.CENTER;
@@ -1031,24 +1031,24 @@ public class ExampleHands {
         return sc.validatedHand;
     }
     public static Hand getSuuKantsuHand(){
-        Tile t1  = new Tile(1, "MANZU");
-        Tile t2  = new Tile(1, "MANZU");
-        Tile t3  = new Tile(1, "MANZU");
-        Tile t4  = new Tile(1, "MANZU");
-        Tile t5  = new Tile(4, "PINZU");
-        Tile t6  = new Tile(4, "PINZU");
-        Tile t7  = new Tile(4, "PINZU");
-        Tile t8  = new Tile(4, "PINZU");
-        Tile t9  = new Tile(9, "PINZU");
-        Tile t10 = new Tile(9, "PINZU");
-        Tile t11 = new Tile("WHITE", "HONOR");
-        Tile t12 = new Tile("WHITE", "HONOR");
-        Tile t13 = new Tile("WHITE", "HONOR");
-        Tile t14 = new Tile("WHITE", "HONOR");
-        Tile t15 = new Tile("NORTH", "HONOR");
-        Tile t16 = new Tile("NORTH", "HONOR");
-        Tile t17 = new Tile("NORTH", "HONOR");
-        Tile t18 = new Tile("NORTH", "HONOR");
+        Tile t1  = new Tile(1, Tile.Suit.MANZU);
+        Tile t2  = new Tile(1, Tile.Suit.MANZU);
+        Tile t3  = new Tile(1, Tile.Suit.MANZU);
+        Tile t4  = new Tile(1, Tile.Suit.MANZU);
+        Tile t5  = new Tile(4, Tile.Suit.PINZU);
+        Tile t6  = new Tile(4, Tile.Suit.PINZU);
+        Tile t7  = new Tile(4, Tile.Suit.PINZU);
+        Tile t8  = new Tile(4, Tile.Suit.PINZU);
+        Tile t9  = new Tile(9, Tile.Suit.PINZU);
+        Tile t10 = new Tile(9, Tile.Suit.PINZU);
+        Tile t11 = new Tile(Tile.Dragon.WHITE);
+        Tile t12 = new Tile(Tile.Dragon.WHITE);
+        Tile t13 = new Tile(Tile.Dragon.WHITE);
+        Tile t14 = new Tile(Tile.Dragon.WHITE);
+        Tile t15 = new Tile(Tile.Wind.NORTH);
+        Tile t16 = new Tile(Tile.Wind.NORTH);
+        Tile t17 = new Tile(Tile.Wind.NORTH);
+        Tile t18 = new Tile(Tile.Wind.NORTH);
 
         t1.revealedState = t2.revealedState = t3.revealedState = t4.revealedState = Tile.RevealedState.CLOSEDKAN;
         t5.revealedState = t6.revealedState = t7.revealedState = Tile.RevealedState.PON;
