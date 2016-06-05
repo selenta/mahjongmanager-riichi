@@ -19,7 +19,7 @@ import com.mahjongmanager.riichi.MainActivity;
 import com.mahjongmanager.riichi.R;
 import com.mahjongmanager.riichi.ScoreCalculator;
 import com.mahjongmanager.riichi.Tile;
-import com.mahjongmanager.riichi.handcalculator.HandCalculatorFragment_1Keyboard;
+import com.mahjongmanager.riichi.handcalculator.InputHand;
 import com.mahjongmanager.riichi.utils.HandGenerator;
 import com.mahjongmanager.riichi.utils.ImageCache;
 import com.mahjongmanager.riichi.utils.Utils;
@@ -543,7 +543,7 @@ public class HandKeyboard extends LinearLayout implements View.OnClickListener {
     private void checkValidCurrentHand(){
         ScoreCalculator sc = new ScoreCalculator(hand);
         validCurrentHand = (sc.scoredHand != null);
-        ((HandCalculatorFragment_1Keyboard)fragment).checkNextEnablement(); // TODO whatever, clean later
+        ((InputHand)fragment).checkNextEnablement(); // TODO whatever, clean later
     }
     public boolean isValidCurrentHand(){
         return validCurrentHand;

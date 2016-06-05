@@ -17,7 +17,7 @@ import com.mahjongmanager.riichi.utils.Log;
 
 import java.util.HashSet;
 
-public class HandCalculatorFragment_2WinningTile extends Fragment implements View.OnClickListener {
+public class WinningTile extends Fragment implements View.OnClickListener {
 
     private Hand actHand;
 

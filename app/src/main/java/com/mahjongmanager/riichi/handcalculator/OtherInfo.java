@@ -22,7 +22,7 @@ import com.mahjongmanager.riichi.utils.Log;
 import java.util.ArrayList;
 import java.util.List;
 
-public class HandCalculatorFragment_3OtherInfo extends Fragment implements View.OnClickListener {
+public class OtherInfo extends Fragment implements View.OnClickListener {
 
     private Hand actHand;
     private Hand tempScoredHand;

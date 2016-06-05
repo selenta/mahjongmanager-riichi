@@ -257,6 +257,6 @@
         android:layout_gravity="center"
         android:paddingEnd="30dp"
         android:paddingStart="30dp"
-        android:onClick="speedQuizHanFuNext" />
+        android:onClick="goToSpeedQuizScoreHandNext" />
 
 </LinearLayout>

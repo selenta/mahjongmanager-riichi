@@ -27,7 +27,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Random;
 
-public class SpeedQuizFragment_2ScoreHand extends Fragment implements View.OnClickListener {
+public class ScoreHand extends Fragment implements View.OnClickListener {
     private List<Integer> hanValues = Arrays.asList(1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 26);
     private List<Integer> fuValues = Arrays.asList( 20,25,30,40,50,60,70,80,90,100,110 );
 
@@ -253,7 +253,7 @@ public class SpeedQuizFragment_2ScoreHand extends Fragment implements View.OnCli
 
             ((MainActivity) getActivity()).setCurrentHand(h);
         } else {
-            ((MainActivity) getActivity()).speedQuizScoreScreen(myInflatedView);
+            ((MainActivity) getActivity()).goToSpeedQuizResultsScreen(myInflatedView);
         }
     }
     private Tile.Wind getRandomWind(){

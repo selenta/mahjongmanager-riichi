@@ -6,20 +6,20 @@ import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 
-import com.mahjongmanager.riichi.handcalculator.HandCalculatorFragment_1Keyboard;
-import com.mahjongmanager.riichi.handcalculator.HandCalculatorFragment_2WinningTile;
-import com.mahjongmanager.riichi.handcalculator.HandCalculatorFragment_3OtherInfo;
-import com.mahjongmanager.riichi.handcalculator.HandCalculatorFragment_4ScoreScreen;
+import com.mahjongmanager.riichi.handcalculator.InputHand;
+import com.mahjongmanager.riichi.handcalculator.WinningTile;
+import com.mahjongmanager.riichi.handcalculator.OtherInfo;
+import com.mahjongmanager.riichi.handcalculator.FinalScore;
 import com.mahjongmanager.riichi.simplefragments.HanFuCalculatorFragment;
 import com.mahjongmanager.riichi.simplefragments.MainMenuFragment;
 import com.mahjongmanager.riichi.simplefragments.OptionsFragment;
 import com.mahjongmanager.riichi.simplefragments.OptionsRulesetFragment;
 import com.mahjongmanager.riichi.simplefragments.ScoreTableFragment;
 import com.mahjongmanager.riichi.simplefragments.YakuListFragment;
-import com.mahjongmanager.riichi.speedquiz.SpeedQuizFragment_1Start;
-import com.mahjongmanager.riichi.speedquiz.SpeedQuizFragment_2ScoreHand;
-import com.mahjongmanager.riichi.speedquiz.SpeedQuizFragment_3ScoreScreen;
-import com.mahjongmanager.riichi.speedquiz.SpeedQuizFragment_4ReviewHandHanFu;
+import com.mahjongmanager.riichi.speedquiz.Start;
+import com.mahjongmanager.riichi.speedquiz.ScoreHand;
+import com.mahjongmanager.riichi.speedquiz.ResultsScreen;
+import com.mahjongmanager.riichi.speedquiz.ReviewHand;
 import com.mahjongmanager.riichi.utils.ExampleHands;
 import com.mahjongmanager.riichi.utils.ImageCache;
 import com.mahjongmanager.riichi.utils.Utils;
@@ -74,41 +74,41 @@ public class MainActivity extends AppCompatActivity {
         transaction.commit();
     }
 
-    public void gotoHandCalculator(View view){
+    public void gotoHandCalculatorStart(View view){
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-        transaction.replace(R.id.fragment_container, new HandCalculatorFragment_1Keyboard());
+        transaction.replace(R.id.fragment_container, new InputHand());
         transaction.commit();
     }
     public void gotoHandCalculatorWinningTile(View view){
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-        transaction.replace(R.id.fragment_container, new HandCalculatorFragment_2WinningTile());
+        transaction.replace(R.id.fragment_container, new WinningTile());
         transaction.commit();
     }
     public void goToHandCalculatorOtherInfo(View view){
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-        transaction.replace(R.id.fragment_container, new HandCalculatorFragment_3OtherInfo());
+        transaction.replace(R.id.fragment_container, new OtherInfo());
         transaction.commit();
     }
-    public void goToHandCalculatorScoreScreen(View view){
+    public void goToHandCalculatorFinalScore(View view){
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-        transaction.replace(R.id.fragment_container, new HandCalculatorFragment_4ScoreScreen());
+        transaction.replace(R.id.fragment_container, new FinalScore());
         transaction.commit();
     }
 
     public void goToSpeedQuizStart(View view){
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-        transaction.replace(R.id.fragment_container, new SpeedQuizFragment_1Start());
+        transaction.replace(R.id.fragment_container, new Start());
         transaction.commit();
     }
-    public void speedQuizHanFu(View view){
+    public void goToSpeedQuizScoreHand(View view){
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-        transaction.replace(R.id.fragment_container, new SpeedQuizFragment_2ScoreHand());
+        transaction.replace(R.id.fragment_container, new ScoreHand());
         transaction.commit();
 
         speedQuizTimer = new CountDownTimer(90000, 100){
             @Override
             public void onTick(long millisUntilFinished){
-                SpeedQuizFragment_2ScoreHand sq = (SpeedQuizFragment_2ScoreHand) getSupportFragmentManager().findFragmentById(R.id.fragment_container);
+                ScoreHand sq = (ScoreHand) getSupportFragmentManager().findFragmentById(R.id.fragment_container);
                 if( sq!=null ){
                     sq.updateSecondCounter( String.valueOf( (int)millisUntilFinished/1000 ));
                 }
@@ -116,11 +116,11 @@ public class MainActivity extends AppCompatActivity {
 
             @Override
             public void onFinish(){
-                speedQuizScoreScreen(getCurrentFocus());
+                goToSpeedQuizResultsScreen(getCurrentFocus());
             }
         }.start();
     }
-    public void speedQuizHanFuNext(View view){
+    public void goToSpeedQuizScoreHandNext(View view){
         scoredHands.add(currentHand);
         int[] guess = new int[2];
         guess[0] = currentHanGuess;
@@ -128,20 +128,20 @@ public class MainActivity extends AppCompatActivity {
         hanFuGuesses.add(guess);
 
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-        transaction.replace(R.id.fragment_container, new SpeedQuizFragment_2ScoreHand());
+        transaction.replace(R.id.fragment_container, new ScoreHand());
         transaction.commit();
     }
-    public void speedQuizScoreScreen(View view){
+    public void goToSpeedQuizResultsScreen(View view){
         if( speedQuizTimer!=null ){
             speedQuizTimer.cancel();
         }
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-        transaction.replace(R.id.fragment_container, new SpeedQuizFragment_3ScoreScreen());
+        transaction.replace(R.id.fragment_container, new ResultsScreen());
         transaction.commit();
     }
-    public void speedQuizReviewHand(View view){
+    public void goToSpeedQuizReviewHand(View view){
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-        transaction.replace(R.id.fragment_container, new SpeedQuizFragment_4ReviewHandHanFu());
+        transaction.replace(R.id.fragment_container, new ReviewHand());
         transaction.commit();
     }
 

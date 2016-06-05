@@ -67,7 +67,7 @@
         android:layout_gravity="center"
         android:paddingEnd="20dp"
         android:paddingStart="20dp"
-        android:onClick="speedQuizScoreScreen" />
+        android:onClick="goToSpeedQuizResultsScreen" />
 
 
 </LinearLayout>

@@ -18,7 +18,7 @@ import com.mahjongmanager.riichi.utils.Log;
 
 import java.util.Arrays;
 
-public class HandCalculatorFragment_4ScoreScreen extends Fragment {
+public class FinalScore extends Fragment {
 
     private Hand actHand;
 

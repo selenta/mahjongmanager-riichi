@@ -20,7 +20,7 @@ import com.mahjongmanager.riichi.ScoreCalculator;
 import java.util.ArrayList;
 import java.util.List;
 
-public class SpeedQuizFragment_3ScoreScreen extends Fragment implements View.OnClickListener {
+public class ResultsScreen extends Fragment implements View.OnClickListener {
     private TextView correctScoreLabel;
     private TextView newHighScore;
     private TextView incorrectScoreLabel;
@@ -107,7 +107,7 @@ public class SpeedQuizFragment_3ScoreScreen extends Fragment implements View.OnC
     public void onClick(View v) {
         if( v.getId() < completeList.size() ){
             ((MainActivity)getActivity()).setCurrentHand(completeList.get(v.getId()));
-            ((MainActivity)getActivity()).speedQuizReviewHand(v);
+            ((MainActivity)getActivity()).goToSpeedQuizReviewHand(v);
         }
     }
 

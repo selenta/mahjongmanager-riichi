@@ -15,7 +15,7 @@ import com.mahjongmanager.riichi.components.HandKeyboard;
 
 import java.util.ArrayList;
 
-public class HandCalculatorFragment_1Keyboard extends Fragment implements View.OnClickListener {
+public class InputHand extends Fragment implements View.OnClickListener {
     private Hand fragHand;
 
     private HandKeyboard handKeyboard;

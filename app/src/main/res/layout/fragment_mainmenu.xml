@@ -58,7 +58,7 @@
             android:id="@+id/button6"
             android:layout_gravity="center_horizontal"
             android:enabled="true"
-            android:onClick="gotoHandCalculator"/>
+            android:onClick="gotoHandCalculatorStart"/>
 
         <LinearLayout
             android:orientation="horizontal"

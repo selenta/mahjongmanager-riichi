@@ -17,7 +17,7 @@ import com.mahjongmanager.riichi.utils.Log;
 
 import java.util.Arrays;
 
-public class SpeedQuizFragment_4ReviewHandHanFu extends Fragment {
+public class ReviewHand extends Fragment {
 
     private Hand actHand;
     private Integer actHandIdx;

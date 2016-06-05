@@ -265,7 +265,7 @@
             android:layout_gravity="center_vertical|right"
             android:paddingEnd="30dp"
             android:paddingStart="30dp"
-            android:onClick="goToHandCalculatorScoreScreen"
+            android:onClick="goToHandCalculatorFinalScore"
             android:layout_marginRight="15dp"
             android:enabled="true" />
     </LinearLayout>
