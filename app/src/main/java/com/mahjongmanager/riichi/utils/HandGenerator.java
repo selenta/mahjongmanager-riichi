@@ -14,14 +14,22 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Random;
 
-/*
- * This class is a mess... can't seem to get it all in my head at once
- *      The problem is creating interesting hands with realish yaku
- *      For now, stick to using h=completelyRandomHand() followed by addOtherYaku(h)
- *      Generating hands from yaku is probably more effort than it's worth, tbh
+/**
+ * Used to generate completely random hands. There is some massaging to make them slightly
+ * more interesting, but the only thing can currently be determined before generating the hand are:
+ * <ul>
+ *     <li>Number of Suits (default - 3)</li>
+ *     <li>Allow Honors (default - true)</li>
+ * </ul>
+ * For now, stick to using h=completelyRandomHand() followed by addOtherYaku(h) (optional).
+ * Generating yaku first and then a hands from that is probably more effort than it's worth, tbh
  */
 public class HandGenerator {
     private Context context;
+
+    private int numberOfSuits = 3;
+    private boolean allowHonors = true;
+    List<Tile> foundingTileOptions = new ArrayList<>();
 
     HashMap<String, Double> yakuOdds = new HashMap<>();
 
@@ -35,119 +43,52 @@ public class HandGenerator {
 
 
     public HandGenerator(){
-        yakuOdds.put("Chiitoitsu", 10D);
-        yakuOdds.put("Honroutou", 20D);
-        yakuOdds.put("Tanyao", 40D);
-        yakuOdds.put("Chinitsu", 15D);
-        yakuOdds.put("Honitsu", 30D);
+        yakuOdds.put("Chiitoitsu", 0.1);
+        yakuOdds.put("Honroutou", 0.2);
+        yakuOdds.put("Tanyao", 0.4);
+        yakuOdds.put("Chinitsu", 0.15);
+        yakuOdds.put("Honitsu", 0.2);
+        setFoundingTileOptions();
     }
     public HandGenerator(Context current){
         this.context = current;
         populateYakuOdds();
+        setFoundingTileOptions();
     }
 
-    public Hand generateHand(){
-        cleanup();
-        Hand h = addStandardYaku();
-        addOtherYaku(h);
-        return h;
+    public void setNumberOfSuits(int i){
+        if( i<1 || i>3 ){
+            Log.e("setNumberOfSuits", "Number of suits is invalid: "+i);
+            return;
+        }
+
+        numberOfSuits = i;
+        setFoundingTileOptions();
     }
-
-    private Hand addStandardYaku(){
-        Hand h = new Hand(new ArrayList<Tile>());
-
-        //Decide if special hand structure (chiitoitsu) first
-        if( Math.random()<yakuOdds.get("Chiitoitsu") ){
-            addChiitoitsu(h);
-
-            if( Math.random()<yakuOdds.get("Honroutou") ){
-                //honroutou
-                addHonroutouToChiitoitsu(h);
-            } else if( Math.random()<yakuOdds.get("Tanyao") ){
-                //tanyao
-                addTanyaoToChiitoitsu(h);
-            }
-            if( Math.random()<yakuOdds.get("Chinitsu") ){
-                //chinitsu
-                addChinitsuToChiitoitsu(h);
-            } else if( Math.random()<yakuOdds.get("Honitsu") ){
-                //honitsu
-                addHonitsuToChiitoitsu(h);
-            }
-            //daichisei
-            // end early (retry if get a ryanpeikou hand?)
-            return h;
-        }
-
-        //Sequence Yaku
-        if( meldsRemaining()==4 ){
-            if( Math.random()<yakuOdds.get("Ryanpeikou") ){
-                addRyanpeikou(h);
-            }
-            if( Math.random()<yakuOdds.get("Ryanpeikou") ){
-                addRyanpeikou(h);
-            }
-        }
-
-        //Triplet Yaku
-
-        //Honor/Terminal Yaku
-
-        //Suit Yaku
-
-
-        return h;
-    }
-
-    public void addOtherYaku(Hand h){
-        // Riichi, Ippatsu, Tsumo, Rinshan Haitei, Houtei
-        if( Math.random()<0.8 && !h.isOpen() ){
-            addRiichi(h);
-        }
-        if( Math.random()<0.4 && h.riichi ){
-            addIppatsu(h);
-        }
-        if( Math.random()<0.2 && !h.isOpen() ){
-            addTsumo(h);
-        }
-        if( Math.random()<0.3
-                && h.hasKan()
-                && h.countTile(h.getWinningTile())==1
-                && h.getWinningTile().calledFrom==Tile.CalledFrom.NONE){
-            addRinshan(h);
-        }
-        if( Math.random()<0.1 && h.getWinningTile().calledFrom==Tile.CalledFrom.NONE ){
-            addHaitei(h);
-        }
-        if( Math.random()<0.1 && h.getWinningTile().calledFrom!=Tile.CalledFrom.NONE ){
-            addHoutei(h);
-        }
-
-        // Dora indicators
-        Integer doraIndicators = 1;
-        doraIndicators = (h.meld1.isKan()) ? doraIndicators+1 : doraIndicators;
-        doraIndicators = (h.meld2.isKan()) ? doraIndicators+1 : doraIndicators;
-        doraIndicators = (h.meld3.isKan()) ? doraIndicators+1 : doraIndicators;
-        doraIndicators = (h.meld4.isKan()) ? doraIndicators+1 : doraIndicators;
-        doraIndicators = (Math.random()<0.2) ? doraIndicators+1 : doraIndicators;
-        for(int i=0; i<doraIndicators ; i++){
-            addDoraIndicator(h);
-        }
+    public void setAllowHonors(boolean bool){
+        allowHonors = bool;
+        setFoundingTileOptions();
     }
 
     public Hand completelyRandomHand(){
         cleanup();
+
+        //Decide if special hand structure (chiitoitsu) first
+        if( Math.random()<yakuOdds.get("Chiitoitsu") ){
+            return generateChiitoitsu();
+        }
+
         List<Tile> foundingTiles = new ArrayList<>();
-        foundingTiles.add(randomTile());
+        foundingTiles.add(randomFoundingTile());
 
         pair.addTile(foundingTiles.get(0));
-        foundingTiles.add(randomTile(foundingTiles));
+        foundingTiles.add(randomFoundingTile(foundingTiles));
         meld1.addTile(foundingTiles.get(foundingTiles.size() - 1));
-        foundingTiles.add(randomTile(foundingTiles));
+        foundingTiles.add(randomFoundingTile(foundingTiles));
         meld2.addTile(foundingTiles.get(foundingTiles.size() - 1));
-        foundingTiles.add(randomTile(foundingTiles));
+        foundingTiles.add(randomFoundingTile(foundingTiles));
         meld3.addTile(foundingTiles.get(foundingTiles.size() - 1));
-        foundingTiles.add(randomTile(foundingTiles));
+        foundingTiles.add(randomFoundingTile(foundingTiles));
         meld4.addTile(foundingTiles.get(foundingTiles.size() - 1));
 
         pair.addTile(new Tile(pair.firstTile()));
@@ -250,31 +191,61 @@ public class HandGenerator {
         }
     }
 
+    /**
+     * This method will randomly add situational yaku and dora that are possible
+     * based on the state of the hand. This must be called separately, as this is a
+     * configurable option for the Speed Quiz.
+     * @param h Hand to be modified
+     */
+    public void addOtherYaku(Hand h){
+        // Riichi, Ippatsu, Tsumo, Rinshan Haitei, Houtei
+        if( Math.random()<0.8 && !h.isOpen() ){
+            addRiichi(h);
+        }
+        if( Math.random()<0.4 && h.riichi ){
+            addIppatsu(h);
+        }
+        if( Math.random()<0.2 && !h.isOpen() ){
+            addTsumo(h);
+        }
+        if( Math.random()<0.3
+                && h.hasKan()
+                && h.countTile(h.getWinningTile())==1
+                && h.getWinningTile().calledFrom==Tile.CalledFrom.NONE){
+            addRinshan(h);
+        }
+        if( Math.random()<0.1 && h.getWinningTile().calledFrom==Tile.CalledFrom.NONE ){
+            addHaitei(h);
+        }
+        if( Math.random()<0.1 && h.getWinningTile().calledFrom!=Tile.CalledFrom.NONE ){
+            addHoutei(h);
+        }
+
+        // Dora indicators
+        Integer doraIndicators = 1;
+        doraIndicators = (h.meld1.isKan()) ? doraIndicators+1 : doraIndicators;
+        doraIndicators = (h.meld2.isKan()) ? doraIndicators+1 : doraIndicators;
+        doraIndicators = (h.meld3.isKan()) ? doraIndicators+1 : doraIndicators;
+        doraIndicators = (h.meld4.isKan()) ? doraIndicators+1 : doraIndicators;
+        doraIndicators = (Math.random()<0.2) ? doraIndicators+1 : doraIndicators;
+        for(int i=0; i<doraIndicators ; i++){
+            addDoraIndicator(h);
+        }
+    }
+
 
     /////////////////////////////////////////////////////////////////////////
     ///////////////       Convenience Methods        ////////////////////////
     /////////////////////////////////////////////////////////////////////////
-    private Integer meldsRemaining(){
-        Integer openMelds = 0;
-        if(meld1.size()==0){
-            openMelds++;
-        }
-        if(meld2.size()==0){
-            openMelds++;
-        }
-        if(meld3.size()==0){
-            openMelds++;
-        }
-        if(meld4.size()==0){
-            openMelds++;
-        }
-        return openMelds;
+    private Tile randomFoundingTile(){
+        return randomFoundingTile(new ArrayList<Tile>());
     }
-    private Tile randomNewTile(Hand h){
-        return randomTile(h.tiles);
-    }
-    private Tile randomTile(){
-        return randomTile(new ArrayList<Tile>());
+    private Tile randomFoundingTile(List<Tile> exclusions){
+        List<Tile> nonFoundingTileOptions = allTiles();
+        removeTilesFromList(nonFoundingTileOptions, foundingTileOptions);
+
+        nonFoundingTileOptions.addAll(exclusions);
+        return randomTile(nonFoundingTileOptions);
     }
     private Tile randomTile(List<Tile> exclusions){
         List<Tile> tiles = allTiles();
@@ -331,7 +302,10 @@ public class HandGenerator {
 
         Tile wTile = candidates.get(new Random().nextInt(candidates.size()));
 
-        wTile.winningTile = true;
+        setWinningTileState(wTile);
+    }
+    private void setWinningTileState(Tile t){
+        t.winningTile = true;
 
         List<Tile.CalledFrom> calledFroms = new ArrayList<>();
         calledFroms.add(Tile.CalledFrom.NONE);
@@ -340,7 +314,7 @@ public class HandGenerator {
         calledFroms.add(Tile.CalledFrom.LEFT);
         calledFroms.add(Tile.CalledFrom.CENTER);
         calledFroms.add(Tile.CalledFrom.RIGHT);
-        wTile.calledFrom = calledFroms.get(new Random().nextInt(calledFroms.size()));
+        t.calledFrom = calledFroms.get(new Random().nextInt(calledFroms.size()));
     }
     private void addDoraIndicator(Hand h){
         Tile dora = randomTile(h.getAllUsedTiles());
@@ -471,11 +445,109 @@ public class HandGenerator {
     ////////////////////////////////////////////////////////////////////////
     ///////////////          Yaku Methods           ////////////////////////
     ////////////////////////////////////////////////////////////////////////
+    public Hand generateChiitoitsu(){
+        Hand h = new Hand(new ArrayList<Tile>());
+
+        addChiitoitsu(h);
+
+        if( Math.random()<yakuOdds.get("Honroutou") ){
+            //honroutou
+            addHonroutouToChiitoitsu(h);
+        } else if( Math.random()<yakuOdds.get("Tanyao") ){
+            //tanyao
+            addTanyaoToChiitoitsu(h);
+        }
+        if( Math.random()<yakuOdds.get("Chinitsu") ){
+            //chinitsu
+            addChinitsuToChiitoitsu(h);
+        } else if( Math.random()<yakuOdds.get("Honitsu") ){
+            //honitsu
+            addHonitsuToChiitoitsu(h);
+        }
+        //daichisei
+        // end early (retry if get a ryanpeikou hand?)
+
+        Tile wTile = h.tiles.get(new Random().nextInt(h.tiles.size()));
+        setWinningTileState(wTile);
+
+        return h;
+    }
+
     public void addChiitoitsu(Hand h){
         for(int i=0; i<7; i++ ){
-            Tile t1 = randomNewTile(h);
+            Tile t1 = randomFoundingTile(h.tiles);
             h.addTile(t1);
             h.addTile(new Tile(t1));
+        }
+        h.sort();
+    }
+    public void addTanyaoToChiitoitsu(Hand h){
+        for(Tile t : h.tiles){
+            if( !t.isSimple() ){
+                String str = t.toString();
+
+                List<Tile> exclusions = combineTileList(h.tiles, allHonors());
+                exclusions.addAll(allTerminals());
+                transformTileInto(t, randomTile(exclusions));
+
+                Tile otherTile = h.findTile(str);
+                transformTileInto(otherTile, t);
+            }
+        }
+        h.sort();
+    }
+    public void addHonroutouToChiitoitsu(Hand h){
+        for(Tile t : h.tiles){
+            if( t.isSimple() ){
+                String str = t.toString();
+
+                List<Tile> exclusions = combineTileList(h.tiles, allSimples());
+                transformTileInto(t, randomTile(exclusions));
+
+                Tile otherTile = h.findTile(str);
+                transformTileInto(otherTile, t);
+            }
+        }
+        h.sort();
+    }
+    public void addHonitsuToChiitoitsu(Hand h){
+        Tile.Suit honitsuSuit = randomSuit();
+
+        for(Tile t : h.tiles){
+            if( t.suit!=Tile.Suit.HONOR && t.suit!=honitsuSuit ){
+                String str = t.toString();
+
+                List<Tile> exclusions = allTiles();
+                List<Tile> options = combineTileList(allHonors(), allOfSuit(honitsuSuit) );
+                removeTilesFromList(options, h.tiles);
+                removeTilesFromList(exclusions, options);
+
+                //Goal=exclusions has all honor/suited EXCEPT for tiles already in hand
+                transformTileInto(t, randomTile(exclusions));
+
+                Tile otherTile = h.findTile(str);
+                transformTileInto(otherTile, t);
+            }
+        }
+        h.sort();
+    }
+    public void addChinitsuToChiitoitsu(Hand h){
+        Tile.Suit chinitsuSuit = randomSuit();
+
+        for(Tile t : h.tiles){
+            if( t.suit!=chinitsuSuit ){
+                String str = t.toString();
+
+                List<Tile> exclusions = allTiles();
+                List<Tile> options = allOfSuit(chinitsuSuit);
+                removeTilesFromList(options, h.tiles);
+                removeTilesFromList(exclusions, options);
+
+                transformTileInto(t, randomTile(exclusions));
+
+                Tile otherTile = h.findTile(str);
+                transformTileInto(otherTile, t);
+            }
         }
         h.sort();
     }
@@ -498,97 +570,19 @@ public class HandGenerator {
     private void addRinshan(Hand h){
         h.rinshan = true;
     }
-    private void addChanKan(Hand h){}
-    private void addDoubleRiichi(Hand h){}
 
-    private void addPinfu(Hand h){}
-    private void addIipeikou(Hand h){}
-    private void addSanshokuDoujun(Hand h){}
-    private void addIttsuu(Hand h){}
-    private void addRyanpeikou(Hand h){}
-
-    private void addToitoi(Hand h){}
-    private void addSanAnkou(Hand h){}
-    private void addSanshokuDoukou(Hand h){}
-    private void addSanKantsu(Hand h){}
-
-    public void addTanyaoToChiitoitsu(Hand h){
-        for(Tile t : h.tiles){
-            if( !t.isSimple() ){
-                String str = t.toString();
-
-                List<Tile> exclusions = combineTileList(h.tiles, allHonors());
-                exclusions.addAll(allTerminals());
-                transformTileInto(t, randomTile(exclusions));
-
-                Tile otherTile = h.findTile(str);
-                transformTileInto(otherTile, t);
+    private void setFoundingTileOptions(){
+        List<String> usedSuits = new ArrayList<>();
+        while( usedSuits.size() < numberOfSuits ){
+            Tile.Suit suit = randomSuit();
+            if( !usedSuits.contains(suit.toString()) ){
+                foundingTileOptions.addAll(allOfSuit(suit));
+                usedSuits.add(suit.toString());
             }
         }
-        h.sort();
-    }
-    private void addYakuhai(Hand h){}
-    private void addJunchan(Hand h){}
-    private void addHonroutou(Hand h){}
-    public void addHonroutouToChiitoitsu(Hand h){
-        for(Tile t : h.tiles){
-            if( t.isSimple() ){
-                String str = t.toString();
-
-                List<Tile> exclusions = combineTileList(h.tiles, allSimples());
-                transformTileInto(t, randomTile(exclusions));
-
-                Tile otherTile = h.findTile(str);
-                transformTileInto(otherTile, t);
-            }
+        if( allowHonors ){
+            foundingTileOptions.addAll(allHonors());
         }
-        h.sort();
-    }
-    private void addChanta(Hand h){}
-    private void addShousangen(Hand h){}
-
-    private void addHonitsu(Hand h){}
-    public void addHonitsuToChiitoitsu(Hand h){
-        Tile.Suit honitsuSuit = randomSuit();
-
-        for(Tile t : h.tiles){
-            if( t.suit!=Tile.Suit.HONOR && t.suit!=honitsuSuit ){
-                String str = t.toString();
-
-                List<Tile> exclusions = allTiles();
-                List<Tile> options = combineTileList(allHonors(), allOfSuit(honitsuSuit) );
-                removeTilesFromList(options, h.tiles);
-                removeTilesFromList(exclusions, options);
-
-                //Goal=exclusions has all honor/suited EXCEPT for tiles already in hand
-                transformTileInto(t, randomTile(exclusions));
-
-                Tile otherTile = h.findTile(str);
-                transformTileInto(otherTile, t);
-            }
-        }
-        h.sort();
-    }
-    private void addChinitsu(Hand h){}
-    public void addChinitsuToChiitoitsu(Hand h){
-        Tile.Suit chinitsuSuit = randomSuit();
-
-        for(Tile t : h.tiles){
-            if( t.suit!=chinitsuSuit ){
-                String str = t.toString();
-
-                List<Tile> exclusions = allTiles();
-                List<Tile> options = allOfSuit(chinitsuSuit);
-                removeTilesFromList(options, h.tiles);
-                removeTilesFromList(exclusions, options);
-
-                transformTileInto(t, randomTile(exclusions));
-
-                Tile otherTile = h.findTile(str);
-                transformTileInto(otherTile, t);
-            }
-        }
-        h.sort();
     }
 
     private void populateYakuOdds(){
