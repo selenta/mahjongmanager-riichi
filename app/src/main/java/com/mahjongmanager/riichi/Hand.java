@@ -262,6 +262,7 @@ public class Hand {
     // Verify hand consistency, including:
     //TODO consider other inherently contradictory yaku conditions
     //TODO Chiitoitsu/kokushi/nagashi don't work with most things
+    //TODO validate that none of the tiles are duplicate objects
     // Good spreadsheet to use as reference: http://arcturus.su/wiki/Yaku_compatability
     public boolean validateCompleteState(){
         if( unsortedTiles.size()!=0 ){
@@ -373,9 +374,8 @@ public class Hand {
         return true;
     }
     private boolean validateNoMissingTiles(){
-        if( tiles.size()!=(pair.size()+meld1.size()+meld2.size()+meld3.size()+meld4.size()) ){
-            Log.e("validateCompleteState", "(1/2) Tile counts don't match! tiles: "+unsortedTiles.toString());
-            Log.e("validateCompleteState", "(2/2) Tile counts don't match! melds: "+ printAllMelds());
+        if( tilesSortedImproperly() ){
+            Log.e("validateCompleteState", "Tile counts don't match! tiles: "+ toStringVerbose());
             return false;
         }
         return true;
@@ -542,13 +542,9 @@ public class Hand {
     public boolean hasAbnormalStructure(){
         return kokushiMusou || kokushiMusou13wait || chiiToitsu || daichisei || nagashiMangan;
     }
-    public boolean tilesSortedProperly(){
+    public boolean tilesSortedImproperly(){
         int usedTiles = meld1.size() + meld2.size() + meld3.size() + meld4.size() + pair.size() + unsortedTiles.size();
-        if( usedTiles != tiles.size() ){
-            Log.wtf("InvalidHandState", "tiles list size does not match the number of tiles used in melds/unsortedTiles: "+usedTiles+" "+tiles.size()+"\n"+toStringVerbose());
-            return false;
-        }
-        return true;
+        return !hasAbnormalStructure() && usedTiles!=tiles.size();
     }
 
     public void sort(){

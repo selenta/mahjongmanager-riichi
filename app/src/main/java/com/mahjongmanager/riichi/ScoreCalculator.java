@@ -59,7 +59,7 @@ public class ScoreCalculator {
      * this step and be set as the scoredHand immediately.
      */
     private void processUnsortedHand(){
-        if( unsortedHand==null || unsortedHand.tiles.size()<14 || unsortedHand.tiles.size()>18 || !unsortedHand.tilesSortedProperly() ){
+        if( unsortedHand==null || unsortedHand.tiles.size()<14 || unsortedHand.tiles.size()>18 ){
             return;
         }
 
@@ -75,7 +75,9 @@ public class ScoreCalculator {
         }
 
         if( unsortedHand.unsortedTiles.size()==0 ){
-            scrubScore(unsortedHand);
+            if( !unsortedHand.hasAbnormalStructure() ){
+                scrubScore(unsortedHand);
+            }
             scoredHand = unsortedHand;
         }
 
@@ -333,7 +335,7 @@ public class ScoreCalculator {
         if(h.tanyao){
             h.hanList.put(Yaku.Name.TANYAO, 1);
         }
-        if( h.hasYakuhai() ){
+        if( h.hasYakuhai() && !h.hasYakuman() ){
             int han = 0;
             han = (h.whiteDragon) ? han+1 : han;
             han = (h.greenDragon) ? han+1 : han;
@@ -538,7 +540,8 @@ public class ScoreCalculator {
     // Unusually structed hands (must be handled seperately)
     private void checkChiitoitsu(Hand h){
         Set<Tile> tz = findDuplicateTiles(h.tiles);
-        if(tz.size()==7 && findDuplicateTiles(tz).size()==0 ) {
+        int moreThanTwoCopies = findDuplicateTiles(tz).size();
+        if(tz.size()==7 && moreThanTwoCopies==0 ) {
             Hand chiitoitsuHand = new Hand(h);
 
             checkTanyao(chiitoitsuHand);
@@ -549,7 +552,7 @@ public class ScoreCalculator {
             chiitoitsuHand.unsortedTiles.clear();
             chiitoitsuHand.chiiToitsu=true;
             countHan(chiitoitsuHand);
-            chiitoitsuHand.fu = 25;
+            countFu(chiitoitsuHand);
 
             sortedHands.add(chiitoitsuHand);
         }
@@ -892,7 +895,7 @@ public class ScoreCalculator {
     private void checkSuuAnkou(Hand h){
         int selfDrawnTriplets = 0;
         for(Meld m : Arrays.asList(h.meld1, h.meld2, h.meld3, h.meld4)){
-            if( !m.isPair() && !m.isChii() && m.isClosed() ){
+            if( !m.isPair() && !m.isChii() && m.isClosed() && m.size()>0 ){
                 selfDrawnTriplets++;
             }
         }
@@ -1156,6 +1159,9 @@ public class ScoreCalculator {
         clearYakuman(h);
         clearNormalYaku(h);
         h.hanList.clear();
+        h.fuList.clear();
+        h.han = 0;
+        h.fu = 0;
     }
     private void clearYakuman(Hand h){
         h.kokushiMusou = false;

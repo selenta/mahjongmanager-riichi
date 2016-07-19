@@ -46,7 +46,7 @@ public class FuHelper {
         fuFromWait(h);
 
         // (5) Add fu for tsumo (pinfu exception)
-        if( h.pinfu ){
+        if( !hasFu(h) ){
             boolean isClosed = h.fuList.containsKey(MENZEN_KAFU);
             h.fuList.clear();
             h.fuList.put( PINFU, 20);
@@ -153,12 +153,21 @@ public class FuHelper {
      * @return True if the hand qualifies for Pinfu
      */
     public static boolean hasFu(Hand h){
-        if( h.isOpen() ){
-            return true;
+        if(h.fuList.size()==0){
+            populateFuList(h);
         }
-        populateFuList(h);
 
-        return h.fuList.size()!=1 || !h.fuList.containsKey(PINFU);
+        return h.fuList.containsKey(CHIITOITSU)
+                || h.fuList.containsKey(DRAGON_PAIR)
+                || h.fuList.containsKey(PREVAILING_WIND)
+                || h.fuList.containsKey(SEAT_WIND)
+                || h.fuList.containsKey(PAIR_WAIT)
+                || h.fuList.containsKey(SINGLE_SIDED_WAIT)
+                || h.fuList.containsKey(INSIDE_WAIT)
+                || h.fuList.containsKey("Meld 1")
+                || h.fuList.containsKey("Meld 2")
+                || h.fuList.containsKey("Meld 3")
+                || h.fuList.containsKey("Meld 4");
     }
 
     /**

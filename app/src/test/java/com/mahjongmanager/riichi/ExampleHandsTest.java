@@ -143,7 +143,7 @@ public class ExampleHandsTest {
         Hand h = ExampleHands.getShousangenHand();
         Assert.assertNotNull(h);
         Assert.assertTrue(h.shousangen);
-        Assert.assertEquals(3, h.hanList.size());
+        Assert.assertEquals(2, h.hanList.size());
     }
 
     @Test
