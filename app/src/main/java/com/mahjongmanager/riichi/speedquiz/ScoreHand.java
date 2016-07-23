@@ -224,18 +224,26 @@ public class ScoreHand extends Fragment implements View.OnClickListener {
         String SQ_MAX_HANDS = "SQMaxHands";
         String SQ_RANDOM_WINDS = "SQRandomWinds";
         String SQ_SITUATIONAL_YAKU = "SQSituationalYaku";
+        String SQ_NUMBER_OF_SUITS = "SQNumberOfSuits";
+        String SQ_ALLOW_HONORS = "SQAllowHonors";
         SharedPreferences sharedPref = getActivity().getPreferences(Context.MODE_PRIVATE);
 
         Integer maxHands = sharedPref.getInt(SQ_MAX_HANDS, 10);
         Boolean randomWinds = sharedPref.getBoolean(SQ_RANDOM_WINDS, false);
         Boolean situationalYaku = sharedPref.getBoolean(SQ_SITUATIONAL_YAKU, false);
+        Integer numberOfSuits = sharedPref.getInt(SQ_NUMBER_OF_SUITS, 3);
+        Boolean allowHonors = sharedPref.getBoolean(SQ_ALLOW_HONORS, true);
 
         if (((MainActivity)getActivity()).getScoredHands().size()<maxHands) {
             Hand h = new Hand(new ArrayList<Tile>());
 
             while( h.han==0 ){
                 HandGenerator hg = new HandGenerator();
+                hg.setNumberOfSuits(numberOfSuits);
+                hg.setAllowHonors(allowHonors);
+                
                 Hand hTemp = hg.completelyRandomHand();
+
                 if( situationalYaku ){
                     hg.addOtherYaku(hTemp);
                 }

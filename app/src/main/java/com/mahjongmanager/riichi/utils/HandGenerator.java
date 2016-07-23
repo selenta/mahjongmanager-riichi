@@ -27,9 +27,14 @@ import java.util.Random;
 public class HandGenerator {
     private Context context;
 
+    /**
+     * When generating melds for a hand, each starts with a founding (aka seed) tile from which
+     * the rest of the meld is generated. The founding tile does not influence what kind of
+     * meld (pon, open kan, chi, etc) it will become when the rest of the tiles are added.
+     */
+    List<Tile> foundingTileOptions = new ArrayList<>();
     private int numberOfSuits = 3;
     private boolean allowHonors = true;
-    List<Tile> foundingTileOptions = new ArrayList<>();
 
     HashMap<String, Double> yakuOdds = new HashMap<>();
 
@@ -46,14 +51,12 @@ public class HandGenerator {
         yakuOdds.put("Chiitoitsu", 0.1);
         yakuOdds.put("Honroutou", 0.2);
         yakuOdds.put("Tanyao", 0.4);
+        yakuOdds.put("Honitsu", 0.25);
         yakuOdds.put("Chinitsu", 0.15);
-        yakuOdds.put("Honitsu", 0.2);
-        setFoundingTileOptions();
     }
     public HandGenerator(Context current){
         this.context = current;
         populateYakuOdds();
-        setFoundingTileOptions();
     }
 
     public void setNumberOfSuits(int i){
@@ -63,33 +66,29 @@ public class HandGenerator {
         }
 
         numberOfSuits = i;
-        setFoundingTileOptions();
     }
     public void setAllowHonors(boolean bool){
         allowHonors = bool;
-        setFoundingTileOptions();
     }
 
     public Hand completelyRandomHand(){
         cleanup();
+        setFoundingTileOptions();
+
+        Log.d("completelyRandomHand", "Number of suits: " + numberOfSuits);
+        Log.d("completelyRandomHand", "Allow honors: " + allowHonors);
 
         //Decide if special hand structure (chiitoitsu) first
         if( Math.random()<yakuOdds.get("Chiitoitsu") ){
             return generateChiitoitsu();
         }
 
-        List<Tile> foundingTiles = new ArrayList<>();
-        foundingTiles.add(randomFoundingTile());
-
-        pair.addTile(foundingTiles.get(0));
-        foundingTiles.add(randomFoundingTile(foundingTiles));
-        meld1.addTile(foundingTiles.get(foundingTiles.size() - 1));
-        foundingTiles.add(randomFoundingTile(foundingTiles));
-        meld2.addTile(foundingTiles.get(foundingTiles.size() - 1));
-        foundingTiles.add(randomFoundingTile(foundingTiles));
-        meld3.addTile(foundingTiles.get(foundingTiles.size() - 1));
-        foundingTiles.add(randomFoundingTile(foundingTiles));
-        meld4.addTile(foundingTiles.get(foundingTiles.size() - 1));
+        createMelds();
+        randomWinningTile();
+        return new Hand(usedTiles());
+    }
+    private void createMelds(){
+        createFounderTiles();
 
         pair.addTile(new Tile(pair.firstTile()));
 
@@ -97,17 +96,22 @@ public class HandGenerator {
         expandMeld(meld2);
         expandMeld(meld3);
         expandMeld(meld4);
+    }
+    //Never use the same founder tile twice... is this unnecessary?
+    private void createFounderTiles(){
+        List<Tile> usedFoundingTiles = new ArrayList<>();
 
-        List<Tile> allTiles = new ArrayList<>();
-        allTiles.addAll( pair.getTiles());
-        allTiles.addAll(meld1.getTiles());
-        allTiles.addAll(meld2.getTiles());
-        allTiles.addAll(meld3.getTiles());
-        allTiles.addAll(meld4.getTiles());
+        pair.addTile(randomFoundingTile());
+        usedFoundingTiles.add(pair.firstTile());
 
-        randomWinningTile();
-
-        return new Hand(allTiles);
+        meld1.addTile(randomFoundingTile(usedFoundingTiles));
+        usedFoundingTiles.add(meld1.firstTile());
+        meld2.addTile(randomFoundingTile(usedFoundingTiles));
+        usedFoundingTiles.add(meld2.firstTile());
+        meld3.addTile(randomFoundingTile(usedFoundingTiles));
+        usedFoundingTiles.add(meld3.firstTile());
+        meld4.addTile(randomFoundingTile(usedFoundingTiles));
+        usedFoundingTiles.add(meld4.firstTile());
     }
     private void expandMeld(Meld meld){
         Double roll = Math.random();
@@ -190,6 +194,16 @@ public class HandGenerator {
             }
         }
     }
+    private List<Tile> usedTiles(){
+        List<Tile> tilesInMelds = new ArrayList<>();
+        tilesInMelds.addAll( pair.getTiles());
+        tilesInMelds.addAll(meld1.getTiles());
+        tilesInMelds.addAll(meld2.getTiles());
+        tilesInMelds.addAll(meld3.getTiles());
+        tilesInMelds.addAll(meld4.getTiles());
+
+        return tilesInMelds;
+    }
 
     /**
      * This method will randomly add situational yaku and dora that are possible
@@ -245,6 +259,7 @@ public class HandGenerator {
         removeTilesFromList(nonFoundingTileOptions, foundingTileOptions);
 
         nonFoundingTileOptions.addAll(exclusions);
+        Log.v("randomFoundingTile", "Non-Options: " + nonFoundingTileOptions.toString());
         return randomTile(nonFoundingTileOptions);
     }
     private Tile randomTile(List<Tile> exclusions){
@@ -258,8 +273,10 @@ public class HandGenerator {
             }
         }
         tiles.removeAll(markedForRemoval);
-        int randIdx = new Random().nextInt(tiles.size());
-        return tiles.get(randIdx);
+        Log.v("randomTile", "Options: " + tiles.toString());
+        Tile randTile = tiles.get(new Random().nextInt(tiles.size()));
+        Log.v("randomTile", "Tile: " + randTile.toString());
+        return randTile;
     }
     private Tile.Suit randomSuit(){
         List<Tile.Suit> suits = new ArrayList<>();
@@ -450,7 +467,7 @@ public class HandGenerator {
 
         addChiitoitsu(h);
 
-        if( Math.random()<yakuOdds.get("Honroutou") ){
+        if( Math.random()<yakuOdds.get("Honroutou") && allowHonors ){
             //honroutou
             addHonroutouToChiitoitsu(h);
         } else if( Math.random()<yakuOdds.get("Tanyao") ){
@@ -460,7 +477,7 @@ public class HandGenerator {
         if( Math.random()<yakuOdds.get("Chinitsu") ){
             //chinitsu
             addChinitsuToChiitoitsu(h);
-        } else if( Math.random()<yakuOdds.get("Honitsu") ){
+        } else if( Math.random()<yakuOdds.get("Honitsu") && allowHonors ){
             //honitsu
             addHonitsuToChiitoitsu(h);
         }
@@ -482,13 +499,15 @@ public class HandGenerator {
         h.sort();
     }
     public void addTanyaoToChiitoitsu(Hand h){
+        removeTilesFromList(foundingTileOptions, allHonors());
+        removeTilesFromList(foundingTileOptions, allTerminals());
+        Log.d("addTanyaoToChiitoitsu", "foundingTileOptions: " + foundingTileOptions);
+
         for(Tile t : h.tiles){
             if( !t.isSimple() ){
                 String str = t.toString();
 
-                List<Tile> exclusions = combineTileList(h.tiles, allHonors());
-                exclusions.addAll(allTerminals());
-                transformTileInto(t, randomTile(exclusions));
+                transformTileInto(t, randomFoundingTile(h.tiles));
 
                 Tile otherTile = h.findTile(str);
                 transformTileInto(otherTile, t);
@@ -497,12 +516,14 @@ public class HandGenerator {
         h.sort();
     }
     public void addHonroutouToChiitoitsu(Hand h){
+        removeTilesFromList(foundingTileOptions, allSimples());
+        Log.d("addHonroutouToChiitoitsu", "foundingTileOptions: " + foundingTileOptions);
+
         for(Tile t : h.tiles){
             if( t.isSimple() ){
                 String str = t.toString();
 
-                List<Tile> exclusions = combineTileList(h.tiles, allSimples());
-                transformTileInto(t, randomTile(exclusions));
+                transformTileInto(t, randomFoundingTile(h.tiles));
 
                 Tile otherTile = h.findTile(str);
                 transformTileInto(otherTile, t);
@@ -511,19 +532,34 @@ public class HandGenerator {
         h.sort();
     }
     public void addHonitsuToChiitoitsu(Hand h){
-        Tile.Suit honitsuSuit = randomSuit();
+        Log.d("addHonitsuToChiitoitsu", "foundingTileOptions(1/2): " + foundingTileOptions );
+        //get a random non-honor suit from founding tiles
+        Tile.Suit honitsuSuit = null;
+        while( honitsuSuit==null ){
+            Tile randTile = foundingTileOptions.get(new Random().nextInt(foundingTileOptions.size()));
+            if( randTile.suit!= Tile.Suit.HONOR ){
+                honitsuSuit = randTile.suit;
+            }
+        }
 
+        //all tiles that are not of the chosen suit are no longer options for founding tiles
+        List<Tile> nonHonitsuTiles = allTiles();
+        removeTilesFromList(nonHonitsuTiles, allOfSuit(honitsuSuit));
+        removeTilesFromList(nonHonitsuTiles, allHonors());
+        removeTilesFromList(foundingTileOptions, nonHonitsuTiles);
+        //in case hand was set to honroutou first
+        if(foundingTileOptions.size()<7){
+            foundingTileOptions = allOfSuit(honitsuSuit);
+        }
+        Log.d("addHonitsuToChiitoitsu", "foundingTileOptions(2/2): " + foundingTileOptions );
+
+        //replace tiles that are not of the chosen suit
         for(Tile t : h.tiles){
             if( t.suit!=Tile.Suit.HONOR && t.suit!=honitsuSuit ){
                 String str = t.toString();
 
-                List<Tile> exclusions = allTiles();
-                List<Tile> options = combineTileList(allHonors(), allOfSuit(honitsuSuit) );
-                removeTilesFromList(options, h.tiles);
-                removeTilesFromList(exclusions, options);
-
                 //Goal=exclusions has all honor/suited EXCEPT for tiles already in hand
-                transformTileInto(t, randomTile(exclusions));
+                transformTileInto(t, randomFoundingTile(h.tiles));
 
                 Tile otherTile = h.findTile(str);
                 transformTileInto(otherTile, t);
@@ -532,18 +568,32 @@ public class HandGenerator {
         h.sort();
     }
     public void addChinitsuToChiitoitsu(Hand h){
-        Tile.Suit chinitsuSuit = randomSuit();
+        Log.d("addChinitsuToChiitoitsu", "foundingTileOptions(1/2): " + foundingTileOptions);
+        //get a random non-honor suit from founding tiles
+        Tile.Suit chinitsuSuit = null;
+        while( chinitsuSuit==null ){
+            Tile randTile = foundingTileOptions.get(new Random().nextInt(foundingTileOptions.size()));
+            if( randTile.suit!= Tile.Suit.HONOR ){
+                chinitsuSuit = randTile.suit;
+            }
+        }
 
+        //all tiles that are not of the chosen suit are no longer options for founding tiles
+        List<Tile> nonHonitsuTiles = allTiles();
+        removeTilesFromList(nonHonitsuTiles, allOfSuit(chinitsuSuit));
+        removeTilesFromList(foundingTileOptions, nonHonitsuTiles);
+        //in case hand was set to honroutou first
+        if(foundingTileOptions.size()<7){
+            foundingTileOptions = allOfSuit(chinitsuSuit);
+        }
+        Log.d("addChinitsuToChiitoitsu", "foundingTileOptions(2/2): " + foundingTileOptions);
+
+        //replace tiles that are not of the chosen suit
         for(Tile t : h.tiles){
             if( t.suit!=chinitsuSuit ){
                 String str = t.toString();
 
-                List<Tile> exclusions = allTiles();
-                List<Tile> options = allOfSuit(chinitsuSuit);
-                removeTilesFromList(options, h.tiles);
-                removeTilesFromList(exclusions, options);
-
-                transformTileInto(t, randomTile(exclusions));
+                transformTileInto(t, randomFoundingTile(h.tiles));
 
                 Tile otherTile = h.findTile(str);
                 transformTileInto(otherTile, t);
@@ -572,6 +622,8 @@ public class HandGenerator {
     }
 
     private void setFoundingTileOptions(){
+        foundingTileOptions.clear();
+
         List<String> usedSuits = new ArrayList<>();
         while( usedSuits.size() < numberOfSuits ){
             Tile.Suit suit = randomSuit();
@@ -603,6 +655,7 @@ public class HandGenerator {
         Log.i("readCsv", "yakuOdds: " + yakuOdds.toString());
     }
     private void cleanup(){
+        foundingTileOptions.clear();
         pair  = new Meld();
         meld1 = new Meld();
         meld2 = new Meld();

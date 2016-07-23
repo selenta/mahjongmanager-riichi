@@ -19,8 +19,10 @@ public class OptionsFragment extends Fragment implements View.OnClickListener {
     private CheckBox randomWindsCheckbox;
     private CheckBox separateClosedMeldsCheckbox;
     private CheckBox addSituationalYakuCheckbox;
+    private CheckBox allowHonorsCheckbox;
 
     private RadioGroup terminology;
+    private RadioGroup speedQuizNumberOfSuits;
     private RadioGroup speedQuizMaxHands;
 
     private String TERMINOLOGY = "Terminology";
@@ -28,6 +30,8 @@ public class OptionsFragment extends Fragment implements View.OnClickListener {
     private String SQ_RANDOM_WINDS = "SQRandomWinds";
     private String SQ_SEPARATE_CLOSED_MELDS = "SQSeparateClosedMelds";
     private String SQ_SITUATIONAL_YAKU = "SQSituationalYaku";
+    private String SQ_NUMBER_OF_SUITS = "SQNumberOfSuits";
+    private String SQ_ALLOW_HONORS = "SQAllowHonors";
     private String SQ_MAX_HANDS = "SQMaxHands";
 
     @Override
@@ -46,6 +50,8 @@ public class OptionsFragment extends Fragment implements View.OnClickListener {
         loadSetting(randomWindsCheckbox, SQ_RANDOM_WINDS, false);
         loadSetting(separateClosedMeldsCheckbox, SQ_SEPARATE_CLOSED_MELDS, true);
         loadSetting(addSituationalYakuCheckbox, SQ_SITUATIONAL_YAKU, false);
+        loadNumberOfSuits();
+        loadSetting(allowHonorsCheckbox, SQ_ALLOW_HONORS, true);
         loadMaxHands();
     }
     private void loadSetting( CheckBox cBox, String settingName, boolean def ){
@@ -60,6 +66,16 @@ public class OptionsFragment extends Fragment implements View.OnClickListener {
         for( int i=0; i<terminology.getChildCount(); i++ ){
             RadioButton child = (RadioButton)terminology.getChildAt(i);
             boolean isCorrect = child.getText().equals(val);
+            child.setChecked(isCorrect);
+        }
+    }
+    private void loadNumberOfSuits(){
+        SharedPreferences sharedPref = getActivity().getPreferences(Context.MODE_PRIVATE);
+        Integer val = sharedPref.getInt(SQ_NUMBER_OF_SUITS, 3);
+
+        for( int i=0; i<speedQuizNumberOfSuits.getChildCount(); i++ ){
+            RadioButton child = (RadioButton)speedQuizNumberOfSuits.getChildAt(i);
+            boolean isCorrect = Integer.valueOf(child.getText().toString()).equals(val);
             child.setChecked(isCorrect);
         }
     }
@@ -92,6 +108,9 @@ public class OptionsFragment extends Fragment implements View.OnClickListener {
             case R.id.addSituationalYakuCheckbox:
                 savePreferenceBoolean(addSituationalYakuCheckbox.isChecked(), SQ_SITUATIONAL_YAKU);
                 break;
+            case R.id.allowHonorsCheckbox:
+                savePreferenceBoolean(allowHonorsCheckbox.isChecked(), SQ_ALLOW_HONORS);
+                break;
         }
     }
     private void savePreferenceBoolean(boolean bool, String label){
@@ -117,6 +136,9 @@ public class OptionsFragment extends Fragment implements View.OnClickListener {
 
         addSituationalYakuCheckbox = (CheckBox) myInflatedView.findViewById(R.id.addSituationalYakuCheckbox);
         addSituationalYakuCheckbox.setOnClickListener(this);
+
+        allowHonorsCheckbox = (CheckBox) myInflatedView.findViewById(R.id.allowHonorsCheckbox);
+        allowHonorsCheckbox.setOnClickListener(this);
     }
     private void registerRadioGroups(View myInflatedView){
         terminology = (RadioGroup) myInflatedView.findViewById(R.id.terminology);
@@ -124,6 +146,14 @@ public class OptionsFragment extends Fragment implements View.OnClickListener {
             @Override
             public void onCheckedChanged(RadioGroup group, int checkedId) {
                 saveTerminology(group, checkedId);
+            }
+        });
+
+        speedQuizNumberOfSuits = (RadioGroup) myInflatedView.findViewById(R.id.speedQuizNumberOfSuits);
+        speedQuizNumberOfSuits.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(RadioGroup group, int checkedId) {
+                saveNumberOfSuits(group, checkedId);
             }
         });
 
@@ -145,6 +175,19 @@ public class OptionsFragment extends Fragment implements View.OnClickListener {
                 break;
             case R.id.terminologyKanji:
                 savePreference(TERMINOLOGY, "Kanji");
+                break;
+        }
+    }
+    private void saveNumberOfSuits(RadioGroup group, int checkedId){
+        switch (checkedId){
+            case R.id.speedQuizNumberOfSuits1:
+                savePreference(SQ_NUMBER_OF_SUITS, 1);
+                break;
+            case R.id.speedQuizNumberOfSuits2:
+                savePreference(SQ_NUMBER_OF_SUITS, 2);
+                break;
+            case R.id.speedQuizNumberOfSuits3:
+                savePreference(SQ_NUMBER_OF_SUITS, 3);
                 break;
         }
     }
