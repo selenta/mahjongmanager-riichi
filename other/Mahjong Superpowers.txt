@@ -1,0 +1,33 @@
+Number of tiles drawn
+	(Blue?)			Can draw either 1 or 2 tiles each turn
+	(Blue/Green)	May discard tile(s) early (face down) to draw/discard extra tile(s) next turn (tile is revealed at beginning of next turn)
+	(Blue)			May "suspend" tiles (face down, 1-3)(redrawing the same number) for one turn, and then discard prior to "un-suspending" them
+	(Red)			After discarding, may reveal up to one set (per turn)(counts as face down) to draw/discard extra tile (place with pon/chi with middle tile face down)
+Choice of tiles to draw
+	(White)			Can draw from any player's discard piles
+	(Blue)			Look at top 3 tiles and pick one
+	(Blue)			Look at top 4 tiles and pick one
+	(Blue)			Look at top 4 tiles and pick two
+	(Blue)			May look at 2 or 4 tiles, must draw half of the number of tiles looked at (and discard an equal number)
+Hand Composition
+	(White/Black)	Can rearrange winning hand with discard pile
+	(Red)			Can rearrange winning hand with called tiles
+	(Black)			May choose to replace draw with drawing (X? 1-3?) tiles from own discard and discarding appropriate number of (other) tiles (...should this have to be a set?)
+	(Red/Green)		Two sets are merged (bamboo/circles), and count as one set for all purposes (including kans/chinitsu/honitsu)(...reduced han to balance?)
+Calling
+	(Red)			Can call and remain closed
+	(Red)			Can call mismatched sets (can rearrange upon winning)
+	(Red/Blue)		Can call mismatched sets, keeping one face down (can rearrange upon winning)
+	(Red)			Can keep called tiles face down (can call Chi/Pon from anyone with generic "Bam")
+	(Red/White/Black)	Can call as though discard pile was in hand (must discard appropriate number of tiles)
+Number of tiles in hand
+	(Green)			4 Extra tiles in hand
+	(Green)			5 Extra tiles in hand
+	(ALL)			3 less tiles in hand, remaining set must be made from discard pile
+	(ALL)			6 less tiles in hand, remaining sets must be made from discard pile
+Increased winning hand value
+	(Blue/Black/Red)	Add extra Han to hand
+	(Black/Red/Green)	May stash a set to add X han to hand size
+Hateful
+	(Black/Red)		May discard a set (and redraw)to force all other non-reach players to discard/draw a tile immediately (doesn't work on Reached opponents)
+	(Black/Red)		May discard a pair/set to force target opponent to discard a pair/set (not related to OP's set) or discard 5 tiles (discarded tiles are immediately redrawn)

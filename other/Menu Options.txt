@@ -1,0 +1,150 @@
+League Tracker (v2.0)
+	Uh...
+
+Game Score Tracker (v1.5)
+	1) Asks for number of players
+	2) Allows user to change each player's name
+	3) Prompt user to manually or randomly assign seats
+	4) Waits for result of first game
+		Ron
+		Tsumo
+		Redeal
+		Ryuukyoku
+		Chombo
+	5) Asks for player(s) of interest
+		Ron (max 3 players)
+		Tsumo (max 1 player)
+		Ryuukyoku (max 4 players) - Is asking who is tenpai
+		Chombo (max 4 players)
+	6) In the case of a Ron/Tsumo, for each player
+		Input score via Han/Fu
+		Input score via typing the hand out with the Mahjong Keyboard
+	7) Return to game view with updated totals
+	8) Repeat steps 4-7 until game is over
+	9) Display special ending screen with placement bonuses
+
+Score Calculator
+	Han/Fu to Score Calculator (v0.2)
+		Player selects
+			- A Han/Fu value
+			- Checks a box if it was a Tsumo
+			- Selects round wind
+			- Selects winner's wind
+		The value of the hand is instantly updated upon any values being changed
+		
+	Hand to Han/Fu to Score Calculator (v1.0)
+		1) Player inputs a complete hand using the Mahjong Keyboard
+		2) Confirms hand
+		3) Select the winning tile
+		4) Add dora tiles (or should they specify the indicators?)
+		5) Asks for round wind (if applicable)
+		6) Asks for player wind (if applicable)
+		7) Ask about situational factors (reach, ippatsu, etc)
+
+Hand Scoring Mini-game (v1.2)
+	1) User selects GO!
+	2) Hand appears on screen
+	3) User selects Han/Fu and then NEXT as fast as possible
+	4) After 90(?) seconds, a victory screen with the number of correct/attempted hands is displayed
+	5) The user may review the hands they got wrong with the correct scoring and what they selected
+
+Yaku List (v0.3)
+	- Sorted by Han
+	- Sorted by practical frequency (Tenhou stats)
+	- Sorted by theoretical frequency (Combinatorics)
+	- Grouped by difficulty (arbitrary Beginner/Intermediate/Expert categories)
+	- Grouped by exclusion or build pattern
+
+Han/Fu score tables (v0.1)
+	(?) master/detail format for the tables
+
+Options (v0.5)
+	English/Romaji/Japanese terms
+	Default scoring ruleset
+
+	
+
+
+
+
+
+
+
+
+Mahjong Keyboard
+	Keyboard consists of two sections in a Master/Detail format
+		Master - Manzu/Souzu/Pinzu/Honors
+		Detail - 1-9 for the suited sets, winds and dragons for Honors
+	Can select and drag a tile upwards at any time to "delete" it from the hand
+	
+Ruleset Options
+	Preset Options
+		AriAri
+		NashiNashi
+	
+	Number of Players (multiselect)- 3/4/5
+	
+	Jokers - Y/N
+	Kan Dora - Y/N
+	Limit Ura Dora - Y/N		(Maximum of 1 Han from UraDora)
+	Red Dora - 0/1/3/4
+	Golden Dora - Y/N
+	Value of Golden Dora - +2/-1/+1(Until 5 han, then -1)
+	Open Tanyao - Y/N
+	Open Pinfu - Y/N
+	Nagashi Mangan Allowed - Y/N
+	Open Reach - N/2Han/Yakuman
+	West Round allowed - Y/N
+	Dora indicator revealed before discard on open Kan - Y/N
+	
+	Chombo Style - Pay-to-other-players/Loss-of-points
+	Chombo Loss-of-Points - 8000/9000/10000/12000/15000/16000/20000/25000
+	Starting Points (3p) - 25000/30000/35000
+	Placement Bonus/Penalty (3p) for 1st/3rd - +5/+10/+15
+	Chombo Payments (3p) - 3000/4000/5000/6000
+	Starting Points (4p) - 25000/30000/35000
+	Placement Bonus/Penalty (4p) for 1st/4th - +10/+15/+20
+	Placement Bonus/Penalty (4p) for 2nd/3rd - +5/+10/+15
+	Chombo Payments (4p) - 2000/3000/4000
+	Starting Points (5p) - 25000/30000/35000
+	Placement Bonus/Penalty (5p) for 1st/5th - +10/+15/+20
+	Placement Bonus/Penalty (5p) for 2nd/4th - +5/+10/+15
+	Chombo Payments (5p) - 1500/2000/2500
+
+	Final dealer may end game if in 1st and wins (Agari Yame) - Y/N
+	Game stops when a player drops below 0 (Buttobi/Tenbo) - Y/N
+	Can reach to go more negative - Y/N
+	Head Bump (Atamahane)(no double Ron) - Y/N
+	
+	Discarder responsible for finishing an open yakuman - Y/N
+	Allow Kans after Reach to change waits - Y/N
+	
+	Abortive Draws
+		4 Identical Winds - Y/N
+		All players have Reached - Y/N
+		9 different honors/terminals (Kyushukyuhai) - Y/N
+		4 Kans - Y/N
+	
+	
+	
+	
+Hand Display
+	Displays sorted tiles
+	Hand Status
+		INCOMPLETE 
+			Tiles are sorted with no spaces
+		COMPLETE 
+			Tiles are sorted by set (pair last), with winning tile removed and placed on right end
+			Each set/pair/winningTile has small blank space between them
+			Open sets are assumed to have been called by across player (unless chi)
+	Edit Mode
+		DISABLED
+			Unselectable. Nothing can be changed by user.
+		ENABLED
+			INCOMPLETE HAND
+				Drag tile upwards to delete
+			COMPLETE HAND
+				Drag tile upwards to delete (likely making hand INCOMPLETE)
+				Drag tile downwards to indicate open
+					Dragged tile is assumed to be called tile
+					Cannot be performed if hand is kokushi or can ONLY be scored as chiitoitsu
