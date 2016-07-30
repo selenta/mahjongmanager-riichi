@@ -15,6 +15,8 @@ import com.mahjongmanager.riichi.simplefragments.MainMenuFragment;
 import com.mahjongmanager.riichi.simplefragments.OptionsFragment;
 import com.mahjongmanager.riichi.simplefragments.OptionsRulesetFragment;
 import com.mahjongmanager.riichi.simplefragments.ScoreTableFragment;
+import com.mahjongmanager.riichi.simplefragments.ScoringFlowchartFragment;
+import com.mahjongmanager.riichi.simplefragments.ScoringOverviewFragment;
 import com.mahjongmanager.riichi.simplefragments.YakuListFragment;
 import com.mahjongmanager.riichi.speedquiz.Start;
 import com.mahjongmanager.riichi.speedquiz.ScoreHand;
@@ -154,6 +156,18 @@ public class MainActivity extends AppCompatActivity {
     public void goToYakuList(View view){
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
         transaction.replace(R.id.fragment_container, new YakuListFragment());
+        transaction.commit();
+    }
+
+    public void goToScoringOverview(View view){
+        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+        transaction.replace(R.id.fragment_container, new ScoringOverviewFragment());
+        transaction.commit();
+    }
+
+    public void goToScoringFlowchart(View view){
+        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+        transaction.replace(R.id.fragment_container, new ScoringFlowchartFragment());
         transaction.commit();
     }
 

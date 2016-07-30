@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <ScrollView
+        android:layout_width="fill_parent"
+        android:layout_height="0dp"
+        android:id="@+id/scrollView"
+        android:scrollIndicators="right"
+        android:nestedScrollingEnabled="true"
+        android:layout_weight="1"
+        android:outlineProvider="bounds"
+        android:fillViewport="false">
+
+        <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:scrollIndicators="right"
+            android:nestedScrollingEnabled="false">
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:src="@drawable/scoring_flowchart"
+                android:padding="10dp"
+                android:contentDescription="A flowchart to give a general idea of the scoring process and is most useful as a reminder of the overall process."
+                android:adjustViewBounds="true" />
+
+        </LinearLayout>
+    </ScrollView>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@android:color/darker_gray"/>
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Back to Main Menu"
+        android:id="@+id/backToMainMenuButton"
+        android:layout_gravity="center"
+        android:paddingEnd="20dp"
+        android:paddingStart="20dp"
+        android:onClick="backToMainMenu" />
+
+</LinearLayout>
