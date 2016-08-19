@@ -1,0 +1,951 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <ScrollView
+        android:layout_width="fill_parent"
+        android:layout_height="0dp"
+        android:scrollIndicators="right"
+        android:layout_weight="1"
+        android:outlineProvider="bounds"
+        android:fillViewport="false">
+
+        <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:text="Basic Play"
+                android:textSize="44sp"
+                android:textStyle="italic"
+                android:layout_gravity="center_horizontal" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:text="This will explain how a game is physically played, such as how the tiles are setup and what happens each turn."
+                android:textAlignment="center"
+                android:paddingLeft="20dp"
+                android:paddingRight="20dp"
+                android:textSize="13sp"
+                android:textStyle="italic" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:text="0) Overview"
+                android:paddingTop="10dp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:text="As a gambling game, there are a number of steps to ensure that the initial state of the game is randomized. The specifics are not overly important, so long as the amount of randomness is acceptable to your group."
+                android:textSize="14sp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:text="1) Setup"
+                android:paddingTop="10dp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:text="A) Pre-match"
+                android:paddingTop="10dp"
+                android:paddingLeft="15dp"
+                android:textSize="18sp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:text="The game begins with each player in possession of 25000 points, in the form of sticks of value: 1x 10,000, 2x 5,000, 4x 1,000, and 10x 100 (sometimes 5 of the 100 point sticks will be replaced with a single 500 point stick, to reduce clutter)."
+                android:textSize="14sp"
+                android:paddingLeft="15dp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:text="B) Determine seating"
+                android:paddingTop="10dp"
+                android:paddingLeft="15dp"
+                android:textSize="18sp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:text="To determine where each player sits, shuffle and place one of each of the wind tiles face-down on the table. The three players who did not shuffle the tiles each pick a tile, and the shuffler takes the remaining tile."
+                android:textSize="14sp"
+                android:paddingLeft="15dp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:text="The player who drew East (aka temp dealer) may pick any seat at the table, while the rest of the players seat themselves according to their tile's wind (East-South-West-North going counter-clockwise)."
+                android:textSize="14sp"
+                android:paddingLeft="15dp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:text="C) Determine first dealer"
+                android:paddingTop="10dp"
+                android:paddingLeft="15dp"
+                android:textSize="18sp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:text="The player who drew East now rolls a pair of dice and counts counter-clockwise, starting with themselves as 1, to determine the first dealer (aka true dealer). The first dealer becomes the East seat, and the rest of the winds are rotated accordingly (the seat wind order will ALWAYS be East/South/West/North going counter-clockwise). Example: A roll of 3 would indicate the player across from the temp dealer becomes the true dealer."
+                android:textSize="14sp"
+                android:paddingLeft="15dp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:text="2) Anatomy of a game"
+                android:paddingTop="10dp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:text="A) Shuffle tiles and build walls"
+                android:paddingTop="10dp"
+                android:paddingLeft="15dp"
+                android:textSize="18sp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:text="Put all the tiles in the center of the mat and shuffle them, keepin them face-down as best as possible. It is not a problem if a few are flipped up, just turn them back down as soon as convenient."
+                android:textSize="14sp"
+                android:paddingLeft="15dp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:text="Once shuffled, flip any remaining revealed tiles face-down and each player should build their own wall, 17 tiles wide and two tiles tall. Place these four walls in a square, leaving a small space in the corners."
+                android:textSize="14sp"
+                android:paddingLeft="15dp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:text="B) Draw hand"
+                android:paddingTop="10dp"
+                android:paddingLeft="15dp"
+                android:textSize="18sp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:text="The dealer will roll two dice, counting counter-clockwise from themselves, this player then counts the same number of tiles (from left to right) on their wall and separates their wall at that tile. This is where players will start drawing from (think of it like cutting a deck of cards, this separation is now the top of the deck)."
+                android:textSize="14sp"
+                android:paddingLeft="15dp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:text="Each player then takes four tiles at a time (CLOCKWISE this time) from the walls until each player has twelve tiles, then each player takes one tile, and finally the dealer takes one last tile (this extra tile is the dealer's draw for their first turn). When you reach the end of one player's wall while drawing, simply continue drawing from the closest end of the next clockwise wall."
+                android:textSize="14sp"
+                android:paddingLeft="15dp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:text="C) Create dead wall"
+                android:paddingTop="10dp"
+                android:paddingLeft="15dp"
+                android:textSize="18sp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:text="Take the 14 tiles that would be drawn last (the 14 to the right of the split, where drawing was started from) and separate them from the rest of the wall slightly. These tiles form the dead wall and will not normally be drawn."
+                android:textSize="14sp"
+                android:paddingLeft="15dp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:text="The dead wall must contain 14 tiles at all times, if a tile is ever drawn from the dead wall, an additional tile from the end of the normal walls must be added to the right end of the dead wall. If you cannot replace the tile (because it is the last turn and all other tiles have been drawn), you cannot draw from the dead wall when you would otherwise be able to."
+                android:textSize="14sp"
+                android:paddingLeft="15dp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:text="The dead wall performs a few functions, the primary two are: indicate bonus tiles and increase randomness (by ensuring that you are not guaranteed to see every tile every game)"
+                android:textSize="14sp"
+                android:paddingLeft="15dp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:text="Reveal the Dora indicator by flipping the third tile from the left on the top row face-up."
+                android:textSize="14sp"
+                android:paddingLeft="15dp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:text="Dora and the indicators"
+                android:paddingTop="10dp"
+                android:paddingLeft="20dp"
+                android:textSize="16sp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:text="Dora are bonus tiles that make a winning hand more valuable. Each copy of a Dora tile adds one to the han value of the hand. They are NOT counted as yaku, and a hand must contain at least one yaku to become a winning hand. The actual Dora for the hand is the NEXT tile after the indicator in sequence. An extra Dora indicator is revealed whenever a kan is declared (up to 4 total can be revealed)."
+                android:paddingLeft="20dp"
+                android:textSize="14sp"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:text="Example 1: If a 2 Souzu is the dora indicator, the 3 Souzu is the actual dora."
+                android:paddingLeft="20dp"
+                android:textSize="14sp"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:text="Example 2: If a North is the dora indicator, East is the actual dora."
+                android:paddingLeft="20dp"
+                android:textSize="14sp"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:text="D) Taking a turn"
+                android:paddingTop="10dp"
+                android:paddingLeft="15dp"
+                android:textSize="18sp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:text="Turn order goes counter-clockwise, with the dealer getting the first turn. Each player's turn consists of drawing and then discarding a tile. Discarded tiles are placed from left to right in front of the player in rows that are six tiles long, creating new rows as necessary."
+                android:textSize="14sp"
+                android:paddingLeft="15dp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:text="If the player started their turn by drawing normally (as opposed to by calling a tile, see below), then before discarding they have the option to either declare a closed kan or an added kan:"
+                android:textSize="14sp"
+                android:paddingLeft="15dp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:text="i) Closed Kan"
+                android:paddingTop="10dp"
+                android:paddingLeft="20dp"
+                android:textSize="16sp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:text="If the player's hand contains 4 of the same tile, they may declare a closed kan by calling 'kan' (槓 or カン), revealing the four tiles, and then placing them in the corner to their right. The player then draws a replacement tile from the dead wall (or their hand would have too few tiles) and discards as normal. A new dora indicator is revealed upon declaring a closed kan, before discarding."
+                android:paddingLeft="20dp"
+                android:textSize="14sp"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:text="ii) Added Open Kan"
+                android:paddingTop="10dp"
+                android:paddingLeft="20dp"
+                android:textSize="16sp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:text="If the player has a revealed triplet and their hand contains a 4th copy of the same triplet (it's not necessary that they drew the tile the same turn), they may form an open quad by calling 'kan' and adding the tile to triplet, placing it above the called tile. The player then draws a replacement tile from the dead wall (or their hand would have too few tiles) and discards as normal. A new dora indicator is revealed after discarding."
+                android:paddingLeft="20dp"
+                android:textSize="14sp"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:text="E) Calling tiles"
+                android:paddingTop="10dp"
+                android:paddingLeft="15dp"
+                android:textSize="18sp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:text="Whenever a player discards a tile, other players at the table have a few seconds to call the tile to complete a meld for their hand before the next player may take their turn (2-3 seconds is usually fine). Once the next player has looked at their tile, it is typically considered too late to call the tile. Calling for another player's discard makes the newly completed meld and the calling player's hand open; this is likely to lower the value of the player's hand significantly, but may increase their chances of winning with a smaller hand. When the winning tile of a closed hand is a discard, the meld including that discard is also considered open, while the hand is still regarded as closed."
+                android:textSize="14sp"
+                android:paddingLeft="15dp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:text="Upon calling a tile, it immediately becomes the calling player's turn (this may skip other player's turns!) and the called tile is effectively their draw for the turn; thus the calling player discards and the player to their right takes the next turn as normal."
+                android:textSize="14sp"
+                android:paddingLeft="15dp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:text="i) Chī"
+                android:paddingTop="10dp"
+                android:paddingLeft="20dp"
+                android:textSize="16sp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:text="Players can make an open sequential meld ONLY from a tile discarded by the player to their left by calling out 'chī' (吃 or チー). Sequences are very easy melds to make, thus players can only call open sequences from one player (the player to their left)."
+                android:paddingLeft="20dp"
+                android:textSize="14sp"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:text="ii) Pon"
+                android:paddingTop="10dp"
+                android:paddingLeft="20dp"
+                android:textSize="16sp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:text="Players can complete an open triplet of the same three tiles from a tile discarded by ANY other player by calling out 'pon' (碰 or ポン). The player must have at least two copies of the discarded tile concealed in their hand, whether to form a triplet or a quad (if they have three in their hand) is up to the player."
+                android:paddingLeft="20dp"
+                android:textSize="14sp"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:text="iii) Open Kan"
+                android:paddingTop="10dp"
+                android:paddingLeft="20dp"
+                android:textSize="16sp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:text="Players can complete an open quad of the same four tiles from a tile discarded by ANY other player by calling out 'kan'. The player must have three concealed copies of the tile in their hand. A new dora indicator is revealed after discarding."
+                android:paddingLeft="20dp"
+                android:textSize="14sp"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:text="NOTE: There is no functional difference between an Open Kan and an Open Added Kan other than the process by which they are formed and how the tiles are arranged when revealed."
+                android:paddingLeft="20dp"
+                android:textSize="14sp"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:text="Resolving conflicting calls"
+                android:paddingTop="10dp"
+                android:paddingLeft="20dp"
+                android:textSize="16sp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:text="Who gets priority to pick up a discard when two or more players call the same discard is firstly ron (winning), secondly kan or pon, and lastly chī. Kan and pon cannot happen at the same time since there are only four copies of each tile."
+                android:paddingLeft="20dp"
+                android:textSize="14sp"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:text="5) Ending a hand"
+                android:paddingTop="10dp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:text="Hands usually end in one of two ways: someone wins the hand, or a draw. If a player wins the hand via a self-draw, they should declare 'Tsumo'; when winning off of another player's discard they should declare 'Ron'. A hand is considered a draw (流局; ryūkyoku) if no one has won the hand by the time all tiles have been drawn (other than the 14 in the dead wall) ."
+                android:textSize="14sp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:text="When a draw occurs, any players who are ready to win (tenpai) may reveal their hand and a small payment of 3000 points is exchanged from players who were not in tenpai to those who were in tenpai (unless all players were in tenpai, or were not in tenpai, in either of these cases no points are exchanged). A continuance counter is added, and any riichi sticks remain in the middle until a player wins a hand. EXAMPLE: If two players were in tenpai, each player in tenpai would receive 1500 points from a player who was not in tenpai."
+                android:textSize="14sp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:text="Passing dealership"
+                android:paddingTop="10dp"
+                android:paddingLeft="15dp"
+                android:textSize="18sp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:text="At the end of every hand the seat winds and the dealership rotates counter-clockwise if the dealer does not win. Specifically, the dealership rotates if:"
+                android:textSize="14sp"
+                android:paddingLeft="15dp" />
+
+            <GridLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:columnCount="2" >
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="?android:attr/textAppearanceMedium"
+                    android:text="•"
+                    android:paddingLeft="15dp" />
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="?android:attr/textAppearanceMedium"
+                    android:text="A non-dealer wins via Ron or Tsumo (except in the case of a double/triple Ron where one of the winners is the dealer)"
+                    android:textSize="14sp"
+                    android:paddingLeft="5dp"
+                    android:layout_gravity="fill_horizontal" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="?android:attr/textAppearanceMedium"
+                    android:text="•"
+                    android:paddingLeft="15dp" />
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="?android:attr/textAppearanceMedium"
+                    android:text="The hand is a draw and the dealer is not in tenpai"
+                    android:textSize="14sp"
+                    android:paddingLeft="5dp"
+                    android:layout_gravity="fill_horizontal" />
+            </GridLayout>
+
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:text="Dealership does not rotate if:"
+                android:textSize="14sp"
+                android:paddingLeft="15dp" />
+
+            <GridLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:columnCount="2" >
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="?android:attr/textAppearanceMedium"
+                    android:text="•"
+                    android:paddingLeft="15dp" />
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="?android:attr/textAppearanceMedium"
+                    android:text="Chombo"
+                    android:textSize="14sp"
+                    android:paddingLeft="5dp"
+                    android:layout_gravity="fill_horizontal" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="?android:attr/textAppearanceMedium"
+                    android:text="•"
+                    android:paddingLeft="15dp" />
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="?android:attr/textAppearanceMedium"
+                    android:text="Abortive Draw"
+                    android:textSize="14sp"
+                    android:paddingLeft="5dp"
+                    android:layout_gravity="fill_horizontal" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="?android:attr/textAppearanceMedium"
+                    android:text="•"
+                    android:paddingLeft="15dp" />
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="?android:attr/textAppearanceMedium"
+                    android:text="The dealer wins via Ron or Tsumo"
+                    android:textSize="14sp"
+                    android:paddingLeft="5dp"
+                    android:layout_gravity="fill_horizontal" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="?android:attr/textAppearanceMedium"
+                    android:text="•"
+                    android:paddingLeft="15dp" />
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="?android:attr/textAppearanceMedium"
+                    android:text="The hand is a draw and the dealer is in tenpai"
+                    android:textSize="14sp"
+                    android:paddingLeft="5dp"
+                    android:layout_gravity="fill_horizontal" />
+            </GridLayout>
+
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:text="Sacred Discard"
+                android:paddingTop="10dp"
+                android:paddingLeft="15dp"
+                android:textSize="18sp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:text="Sacred discard (振聴 or フリテン; furiten) is when a player's hand is in a state where the player cannot win off of a discard from another player, though they can still self-draw their winning tile."
+                android:textSize="14sp"
+                android:paddingLeft="15dp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:text="NOTE: This is often a very confusing rule for beginners, so it may help to understand the purpose of this rule is to help players play defensively. It is harder to win points than it is to lose them, so it is usually more important in Riichi Mahjong to not throw another player's winning tile than it is to win your own hand. If the players at a table believe another player (let's say the dealer) is close to winning, the other players may decide that it is no longer worth attempting to complete their hand and to focus on avoiding throwing the dealer's winning tile. This rule helps tell these defensive players what tiles are definitely safe (the ones the dealer has discarded), which ones are likely to be safe, and which ones are extremely dangerous."
+                android:textSize="14sp"
+                android:paddingLeft="15dp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:text="A player is in the furiten state if:"
+                android:textSize="14sp"
+                android:paddingLeft="15dp" />
+
+
+            <GridLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:columnCount="2" >
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="?android:attr/textAppearanceMedium"
+                    android:text="•"
+                    android:paddingLeft="15dp" />
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="?android:attr/textAppearanceMedium"
+                    android:text="Any tile the player has discarded this game could be combined with their current hand to create a complete hand (regardless of whether or not the complete hand would actually contain a yaku). Tiles that were called by other players are still considered to have been discarded by the original player."
+                    android:textSize="14sp"
+                    android:paddingLeft="5dp"
+                    android:layout_gravity="fill_horizontal" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="?android:attr/textAppearanceMedium"
+                    android:text="•"
+                    android:paddingLeft="15dp" />
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="?android:attr/textAppearanceMedium"
+                    android:text="If another player discards a tile that could be combined with their current hand to create a complete hand (regardless of whether or not the complete hand would actually contain a yaku) and the player does NOT declare 'Ron', they player cannot declare 'Ron' on any other tile until they have had another turn."
+                    android:textSize="14sp"
+                    android:paddingLeft="5dp"
+                    android:layout_gravity="fill_horizontal" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="?android:attr/textAppearanceMedium"
+                    android:text="•"
+                    android:paddingLeft="15dp" />
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="?android:attr/textAppearanceMedium"
+                    android:text="After declaring riichi, a player has passed on a possible winning discard or winning self-draw."
+                    android:textSize="14sp"
+                    android:paddingLeft="5dp"
+                    android:layout_gravity="fill_horizontal" />
+            </GridLayout>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:text="Abortive Draws"
+                android:paddingTop="10dp"
+                android:paddingLeft="15dp"
+                android:textSize="18sp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:text="A redeal. If certain conditions are met, the hand is stopped, shuffled and restarted. A continuance counter is added for an abortive draw, the dealership is not passed, and riichi sticks are not returned."
+                android:textSize="14sp"
+                android:paddingLeft="15dp" />
+
+            <GridLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:columnCount="2" >
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="?android:attr/textAppearanceMedium"
+                    android:text="•"
+                    android:paddingLeft="15dp" />
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="?android:attr/textAppearanceMedium"
+                    android:text="Kyūshu kyūhai (九種九牌) - On a player's first turn, if no melds have been called by anyone and their hand contains at least nine different terminal or honor tiles, the player may reveal their hand and declare the hand to be drawn. NOTE: Most of the times that a player wins with the Kokushi Musou yakuman their hand started off eligible for this and intentionally passed on this option!"
+                    android:textSize="14sp"
+                    android:paddingLeft="5dp"
+                    android:layout_gravity="fill_horizontal" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="?android:attr/textAppearanceMedium"
+                    android:text="•"
+                    android:paddingLeft="15dp" />
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="?android:attr/textAppearanceMedium"
+                    android:text="Sūfontsu rentā (四風子連打) - On the first turn, if no melds have been called by anyone and all four players discard the same Wind tile, the hand is drawn"
+                    android:textSize="14sp"
+                    android:paddingLeft="5dp"
+                    android:layout_gravity="fill_horizontal" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="?android:attr/textAppearanceMedium"
+                    android:text="•"
+                    android:paddingLeft="15dp" />
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="?android:attr/textAppearanceMedium"
+                    android:text="Sūcha rīchi (四家立直) - If all four players declare rīchi, the hand is drawn."
+                    android:textSize="14sp"
+                    android:paddingLeft="5dp"
+                    android:layout_gravity="fill_horizontal" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="?android:attr/textAppearanceMedium"
+                    android:text="•"
+                    android:paddingLeft="15dp" />
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="?android:attr/textAppearanceMedium"
+                    android:text="Sūkan sanra (四槓算了) - The hand is drawn when a fourth quad is called, unless all the four quads were called by a single player. If all four quads were called by a single player, the hand continues."
+                    android:textSize="14sp"
+                    android:paddingLeft="5dp"
+                    android:layout_gravity="fill_horizontal" />
+            </GridLayout>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:text="Chombo"
+                android:paddingTop="10dp"
+                android:paddingLeft="15dp"
+                android:textSize="18sp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:text="A mistake or invalid play, usually ruining any chance for the hand to be played out reasonably. If a chombo occurs, the offending player pays the other players a penalty payment (typically the amount they would have won by self-drawing a Mangan), and the hand is replayed as though it had not happened. No continuances are added, and riichi sticks are returned."
+                android:textSize="14sp"
+                android:paddingLeft="15dp" />
+
+            <GridLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:columnCount="2" >
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="?android:attr/textAppearanceMedium"
+                    android:text="•"
+                    android:paddingLeft="15dp" />
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="?android:attr/textAppearanceMedium"
+                    android:text="Gotsumo - Invalidly claiming a winning hand"
+                    android:textSize="14sp"
+                    android:paddingLeft="5dp"
+                    android:layout_gravity="fill_horizontal" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="?android:attr/textAppearanceMedium"
+                    android:text="•"
+                    android:paddingLeft="15dp" />
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="?android:attr/textAppearanceMedium"
+                    android:text="Furiten Ron - Winning on a discard under the situation of sacred discard (furiten)."
+                    android:textSize="14sp"
+                    android:paddingLeft="5dp"
+                    android:layout_gravity="fill_horizontal" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="?android:attr/textAppearanceMedium"
+                    android:text="•"
+                    android:paddingLeft="15dp" />
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="?android:attr/textAppearanceMedium"
+                    android:text="Noten Riichi - Declared rīchi with a hand that is not in the state of tenpai"
+                    android:textSize="14sp"
+                    android:paddingLeft="5dp"
+                    android:layout_gravity="fill_horizontal" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="?android:attr/textAppearanceMedium"
+                    android:text="•"
+                    android:paddingLeft="15dp" />
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="?android:attr/textAppearanceMedium"
+                    android:text="が変わるリーチ後のカン - Closed kan after rīchi if the kan changes the player's waits"
+                    android:textSize="14sp"
+                    android:paddingLeft="5dp"
+                    android:layout_gravity="fill_horizontal" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="?android:attr/textAppearanceMedium"
+                    android:text="•"
+                    android:paddingLeft="15dp" />
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="?android:attr/textAppearanceMedium"
+                    android:text="多牌tahai - Having more tiles than allowed in hand. NOTE: Having too few tiles is usually not considered a chombo, the player is simply not capable of winning the hand and should play defensively for the remainder of the hand."
+                    android:textSize="14sp"
+                    android:paddingLeft="5dp"
+                    android:layout_gravity="fill_horizontal" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="?android:attr/textAppearanceMedium"
+                    android:text="•"
+                    android:paddingLeft="15dp" />
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="?android:attr/textAppearanceMedium"
+                    android:text="山崩し - Knocking over an excessive number of tiles from the wall so that too much information has been revealed"
+                    android:textSize="14sp"
+                    android:paddingLeft="5dp"
+                    android:layout_gravity="fill_horizontal" />
+            </GridLayout>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:text="NOTE: In the case of chombos where other players may not realize a mistake has been made because a hand is hidden, a player who realizes they have made this mistake is not obligated to share this information unless they are forced to reveal their hand (such as in ryūkyoku); should another player win the hand normally, because the player is not obligated to show their hand, it is not a chombo."
+                android:textSize="14sp"
+                android:paddingLeft="15dp" />
+
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:text="6) Ending the match"
+                android:paddingTop="10dp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:text="The match is over at the end of the South round after everyone has passed their dealership twice. There are a few other ways the game may or may not end:"
+                android:textSize="14sp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:text="Boxing"
+                android:paddingTop="10dp"
+                android:paddingLeft="15dp"
+                android:textSize="18sp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:text="The game ends immediately if any player's score drops below zero. In most rulesets, a player with less than 1000 points cannot Riichi."
+                android:textSize="14sp"
+                android:paddingLeft="15dp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:text="Win and finish"
+                android:paddingTop="10dp"
+                android:paddingLeft="15dp"
+                android:textSize="18sp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:text="In the rule of win and finish (あがりやめ; agari-yame), if the fourth dealer in the South round wins and they are in first, the game ends immediately. If the final dealer is not in first, the game continues until they are in first or their dealship passes."
+                android:textSize="14sp"
+                android:paddingLeft="15dp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:text="Continuing into West"
+                android:paddingTop="10dp"
+                android:paddingLeft="15dp"
+                android:textSize="18sp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:text="The game will not end at the end of the South round if no player has more than 30,000 points, in which case players continue to play hands as normal in West round (西場) until someone's point total is larger than 30,000."
+                android:textSize="14sp"
+                android:paddingLeft="15dp" />
+
+        </LinearLayout>
+    </ScrollView>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@android:color/darker_gray"/>
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Back to Overview"
+        android:layout_gravity="center"
+        android:paddingEnd="20dp"
+        android:paddingStart="20dp"
+        android:onClick="backToOverview" />
+</LinearLayout>

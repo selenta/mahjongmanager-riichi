@@ -31,7 +31,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="League Tracker (v3.0)"
-                android:id="@+id/button"
                 android:layout_gravity="center_horizontal"
                 android:maxWidth="800dp"
                 android:singleLine="true"
@@ -42,7 +41,6 @@
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:text="Game Score Tracker (v2.0)"
-                android:id="@+id/button2"
                 android:layout_gravity="center_horizontal"
                 android:enabled="false" />
 
@@ -50,7 +48,6 @@
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:text="Speed Quiz"
-                android:id="@+id/button4"
                 android:layout_gravity="center_horizontal"
                 android:enabled="true"
                 android:onClick="goToSpeedQuizStart" />
@@ -59,7 +56,6 @@
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:text="Hand Calculator"
-                android:id="@+id/button6"
                 android:layout_gravity="center_horizontal"
                 android:enabled="true"
                 android:onClick="gotoHandCalculatorStart"/>
@@ -96,7 +92,6 @@
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:text="Yaku Descriptions"
-                android:id="@+id/button7"
                 android:enabled="true"
                 android:onClick="goToYakuList" />
 
@@ -110,20 +105,11 @@
                 <Button
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Scoring Overview"
-                    android:id="@+id/button12"
+                    android:text="Rules Overview"
                     android:enabled="true"
                     android:layout_weight="1"
-                    android:onClick="goToScoringOverview" />
+                    android:onClick="goToOverview" />
 
-                <Button
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Flowchart"
-                    android:id="@+id/button13"
-                    android:enabled="true"
-                    android:onClick="goToScoringFlowchart"
-                    android:layout_weight="1" />
             </LinearLayout>
 
             <LinearLayout
@@ -155,7 +141,6 @@
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:text="Options"
-                android:id="@+id/button5"
                 android:layout_gravity="center_horizontal"
                 android:enabled="true"
                 android:onClick="goToOptions" />
@@ -164,8 +149,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textAppearance="?android:attr/textAppearanceSmall"
-                android:text="v0.85"
-                android:id="@+id/textView"
+                android:text="v0.86"
                 android:layout_gravity="center_horizontal"
                 android:longClickable="true"
                 android:layout_weight="1" />

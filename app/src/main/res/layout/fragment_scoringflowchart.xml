@@ -39,11 +39,10 @@
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Back to Main Menu"
-        android:id="@+id/backToMainMenuButton"
+        android:text="Back to Overview"
         android:layout_gravity="center"
         android:paddingEnd="20dp"
         android:paddingStart="20dp"
-        android:onClick="backToMainMenu" />
+        android:onClick="backToOverview" />
 
 </LinearLayout>

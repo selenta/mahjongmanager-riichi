@@ -6,25 +6,10 @@ import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 
-import com.mahjongmanager.riichi.handcalculator.InputHand;
-import com.mahjongmanager.riichi.handcalculator.WinningTile;
-import com.mahjongmanager.riichi.handcalculator.OtherInfo;
-import com.mahjongmanager.riichi.handcalculator.FinalScore;
-import com.mahjongmanager.riichi.simplefragments.HanFuCalculatorFragment;
-import com.mahjongmanager.riichi.simplefragments.MainMenuFragment;
-import com.mahjongmanager.riichi.simplefragments.OptionsFragment;
-import com.mahjongmanager.riichi.simplefragments.OptionsRulesetFragment;
-import com.mahjongmanager.riichi.simplefragments.ScoreTableFragment;
-import com.mahjongmanager.riichi.simplefragments.ScoringFlowchartFragment;
-import com.mahjongmanager.riichi.simplefragments.ScoringOverviewFragment;
-import com.mahjongmanager.riichi.simplefragments.YakuListFragment;
-import com.mahjongmanager.riichi.speedquiz.Start;
-import com.mahjongmanager.riichi.speedquiz.ScoreHand;
-import com.mahjongmanager.riichi.speedquiz.ResultsScreen;
-import com.mahjongmanager.riichi.speedquiz.ReviewHand;
-import com.mahjongmanager.riichi.utils.ExampleHands;
-import com.mahjongmanager.riichi.utils.ImageCache;
-import com.mahjongmanager.riichi.utils.Utils;
+import com.mahjongmanager.riichi.handcalculator.*;
+import com.mahjongmanager.riichi.simplefragments.*;
+import com.mahjongmanager.riichi.speedquiz.*;
+import com.mahjongmanager.riichi.utils.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -159,9 +144,21 @@ public class MainActivity extends AppCompatActivity {
         transaction.commit();
     }
 
-    public void goToScoringOverview(View view){
+    public void goToOverview(View view){
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-        transaction.replace(R.id.fragment_container, new ScoringOverviewFragment());
+        transaction.replace(R.id.fragment_container, new OverviewFragment());
+        transaction.commit();
+    }
+
+    public void goToPlayOverview(View view){
+        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+        transaction.replace(R.id.fragment_container, new OverviewPlayFragment());
+        transaction.commit();
+    }
+
+    public void goToOverviewScoring(View view){
+        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+        transaction.replace(R.id.fragment_container, new OverviewScoringFragment());
         transaction.commit();
     }
 
@@ -179,6 +176,12 @@ public class MainActivity extends AppCompatActivity {
     public void goToOptionsRuleset(View view){
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
         transaction.replace(R.id.fragment_container, new OptionsRulesetFragment());
+        transaction.commit();
+    }
+
+    public void backToOverview(View view){
+        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+        transaction.replace(R.id.fragment_container, new OverviewFragment());
         transaction.commit();
     }
 
