@@ -16,7 +16,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:paddingLeft="10dp"
-            android:paddingRight="10dp">
+            android:paddingRight="10dp"
+            android:measureWithLargestChild="true">
 
             <TextView
                 android:layout_width="wrap_content"
@@ -31,11 +32,11 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textAppearance="?android:attr/textAppearanceMedium"
-                android:text="The information included in this app is intended as an overview/reminder of the rules for Riichi Mahjong. For more detailed explanations, check out the articles linked below."
+                android:text="The information included in this app is intended as an overview/reminder of the rules for Riichi Mahjong, it is a description of one set of fairly standard rules."
                 android:textAlignment="center"
                 android:paddingLeft="20dp"
                 android:paddingRight="20dp"
-                android:textSize="13dp"
+                android:textSize="13sp"
                 android:textStyle="italic" />
 
             <LinearLayout
@@ -67,6 +68,47 @@
                     android:enabled="true"
                     android:onClick="goToScoringFlowchart"
                     android:layout_weight="1" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:orientation="vertical"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginTop="75dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="?android:attr/textAppearanceMedium"
+                    android:text="For more detailed explanations, check out the web articles linked below (this will leave the app)."
+                    android:textAlignment="center"
+                    android:paddingLeft="20dp"
+                    android:paddingRight="20dp"
+                    android:textSize="13sp"
+                    android:textStyle="italic"
+                    android:id="@+id/textView" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Wiki: Japanese Mahjong"
+                    android:id="@+id/japaneseMahjongLink"
+                    android:textColor="@color/colorPrimaryDark"
+                    android:layout_gravity="center"
+                    android:textSize="18sp"
+                    android:layout_marginTop="10dp" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Wiki: Japanese Mahjong Scoring"
+                    android:id="@+id/japaneseMahjongScoringLink"
+                    android:textColor="@color/colorPrimaryDark"
+                    android:layout_gravity="center"
+                    android:textSize="18sp"
+                    android:layout_marginTop="10dp" />
             </LinearLayout>
 
 
