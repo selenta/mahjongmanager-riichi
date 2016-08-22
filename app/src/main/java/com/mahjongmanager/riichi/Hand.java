@@ -510,6 +510,12 @@ public class Hand {
                 || Utils.getMeldState(meld3) == Utils.MeldState.ADDEDKAN
                 || Utils.getMeldState(meld4) == Utils.MeldState.ADDEDKAN;
     }
+    public boolean hasClosedKan(){
+        return Utils.getMeldState(meld1) == Utils.MeldState.CLOSEDKAN
+                || Utils.getMeldState(meld2) == Utils.MeldState.CLOSEDKAN
+                || Utils.getMeldState(meld3) == Utils.MeldState.CLOSEDKAN
+                || Utils.getMeldState(meld4) == Utils.MeldState.CLOSEDKAN;
+    }
     public boolean hasYakuman(){
         return ( kokushiMusou || suuAnkou      || daisangen || shousuushii
                 || daisuushii || tsuuiisou     || daichisei || chinroutou

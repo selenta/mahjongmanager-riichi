@@ -46,12 +46,20 @@
                 android:layout_gravity="center">
 
                 <Button
-                    android:layout_width="fill_parent"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Basic Gameplay"
+                    android:text="Basics: Look and Feel"
                     android:paddingEnd="20dp"
                     android:paddingStart="20dp"
-                    android:onClick="goToPlayOverview" />
+                    android:onClick="goToOverviewBasics" />
+
+                <Button
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Gameplay"
+                    android:paddingEnd="20dp"
+                    android:paddingStart="20dp"
+                    android:onClick="goToOverviewPlay" />
 
                 <Button
                     android:layout_width="fill_parent"
@@ -62,7 +70,7 @@
                     android:onClick="goToOverviewScoring" />
 
                 <Button
-                    android:layout_width="wrap_content"
+                    android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
                     android:text="Scoring Flowchart"
                     android:enabled="true"
@@ -76,7 +84,7 @@
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:layout_marginTop="75dp">
+                android:layout_marginTop="40dp">
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -87,8 +95,7 @@
                     android:paddingLeft="20dp"
                     android:paddingRight="20dp"
                     android:textSize="13sp"
-                    android:textStyle="italic"
-                    android:id="@+id/textView" />
+                    android:textStyle="italic" />
 
                 <TextView
                     android:layout_width="wrap_content"

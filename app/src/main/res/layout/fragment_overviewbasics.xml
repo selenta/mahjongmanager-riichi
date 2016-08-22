@@ -1,0 +1,306 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <ScrollView
+        android:layout_width="fill_parent"
+        android:layout_height="0dp"
+        android:scrollIndicators="right"
+        android:layout_weight="1"
+        android:outlineProvider="bounds"
+        android:fillViewport="false">
+
+        <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:text="Look and Feel"
+                android:textSize="44sp"
+                android:textStyle="italic"
+                android:layout_gravity="center_horizontal" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:text="An explanation of the tiles, as well as various example pictures, to give examples of what real games might look like."
+                android:textAlignment="center"
+                android:paddingLeft="20dp"
+                android:paddingRight="20dp"
+                android:textSize="13sp"
+                android:textStyle="italic" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:text="1) Tiles"
+                android:paddingTop="10dp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:text="There are 34 tiles, with four copies of each tile, for a total of 136 tiles. There are three suits of tiles, wan (characters), pin (circles), and sou (bamboo), each numbered from one to nine; the remainder of the tiles are the unranked tsū (honour) tiles. Honour tiles are further divided between Wind tiles and Dragon tiles."
+                android:textSize="14sp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:text="Wan (萬子, wanzu, or manzu)"
+                android:paddingTop="10dp"
+                android:paddingLeft="15dp"
+                android:textSize="18sp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:text="Ordered from 1 to 9"
+                android:textSize="14sp"
+                android:paddingLeft="15dp" />
+
+            <com.mahjongmanager.riichi.components.HandDisplay
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/manzuTiles"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:text="Pin (筒子, pinzu)"
+                android:paddingTop="10dp"
+                android:paddingLeft="15dp"
+                android:textSize="18sp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:text="Ordered from 1 to 9"
+                android:textSize="14sp"
+                android:paddingLeft="15dp" />
+
+            <com.mahjongmanager.riichi.components.HandDisplay
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/pinzuTiles"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:text="Sou (索子, sōzu)"
+                android:paddingTop="10dp"
+                android:paddingLeft="15dp"
+                android:textSize="18sp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:text="Ordered from 1 to 9"
+                android:textSize="14sp"
+                android:paddingLeft="15dp" />
+
+            <com.mahjongmanager.riichi.components.HandDisplay
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/souzuTiles"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:text="Wind tiles (風牌, kazehai)"
+                android:paddingTop="10dp"
+                android:paddingLeft="15dp"
+                android:textSize="18sp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:text="Ordered as: East, South, West, North"
+                android:textSize="14sp"
+                android:paddingLeft="15dp" />
+
+            <com.mahjongmanager.riichi.components.HandDisplay
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/windTiles"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:text="Dragon tiles (三元牌, sangenpai)"
+                android:paddingTop="10dp"
+                android:paddingLeft="15dp"
+                android:textSize="18sp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:text="Ordered as: White (白, haku), Green (發, hatsu), and Red (中, chun). Often, the face of the White dragon tile is blank white."
+                android:textSize="14sp"
+                android:paddingLeft="15dp" />
+
+            <com.mahjongmanager.riichi.components.HandDisplay
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/dragonTiles"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:text="2) Revealed Melds"
+                android:paddingTop="10dp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:text="Any meld completed by calling a tile from another must be revealed and cannot be changed (though a Pon can be added to, to create an Added Open Kan). In addition, the meld must visually indicate which tile was called and which player it was called from. To indicate this, when placing the meld in the revealed zone turn the tile that was called sideways and place it on the side of the meld that is closest to the player that it was called from."
+                android:textSize="14sp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:text="NOTE: Open melds do NOT need to be placed in 'order' (1-2-3). If the 3 was called from the left player, the tiles should be arranged either 3-1-2, or 3-2-1, it does not matter which."
+                android:textSize="14sp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:text="Chī"
+                android:paddingTop="10dp"
+                android:paddingLeft="15dp"
+                android:textSize="18sp" />
+
+            <com.mahjongmanager.riichi.components.HandDisplay
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/chiiExample"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:text="Pon"
+                android:paddingTop="10dp"
+                android:paddingLeft="15dp"
+                android:textSize="18sp" />
+
+            <com.mahjongmanager.riichi.components.HandDisplay
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/ponExample"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:text="Closed Kan"
+                android:paddingTop="10dp"
+                android:paddingLeft="15dp"
+                android:textSize="18sp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:text="This revealed meld was not completed by calling a tile from another player, thus no tile is turned sideways."
+                android:textSize="14sp"
+                android:paddingLeft="15dp" />
+
+            <com.mahjongmanager.riichi.components.HandDisplay
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/closedKanExample"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:text="Open Kan"
+                android:paddingTop="10dp"
+                android:paddingLeft="15dp"
+                android:textSize="18sp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:text="The left three tiles are the three primary tiles in the meld, so if the meld is completed by calling a tile from the player to the right (see example), the third tile is turned. Similarly, if completed by calling from the player across, the second tile is turned."
+                android:textSize="14sp"
+                android:paddingLeft="15dp" />
+
+            <com.mahjongmanager.riichi.components.HandDisplay
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/openKanExample"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:text="Added Open Kan"
+                android:paddingTop="10dp"
+                android:paddingLeft="15dp"
+                android:textSize="18sp" />
+
+            <com.mahjongmanager.riichi.components.HandDisplay
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/addedKanExample"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:text="3) Dead Wall"
+                android:paddingTop="10dp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:text="This is what the dead wall looks like at the start of the game. Moving the tile down on the left side is merely a visual indicator, to help remind players when they draw their tiles not to draw from there."
+                android:textSize="14sp" />
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/deadWallExample"/>
+
+        </LinearLayout>
+    </ScrollView>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@android:color/darker_gray"/>
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Back to Overview"
+        android:layout_gravity="center"
+        android:paddingEnd="20dp"
+        android:paddingStart="20dp"
+        android:onClick="backToOverview" />
+</LinearLayout>

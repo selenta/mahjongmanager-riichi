@@ -1,5 +1,7 @@
 package com.mahjongmanager.riichi;
 
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.support.v4.app.FragmentTransaction;
@@ -150,7 +152,13 @@ public class MainActivity extends AppCompatActivity {
         transaction.commit();
     }
 
-    public void goToPlayOverview(View view){
+    public void goToOverviewBasics(View view){
+        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+        transaction.replace(R.id.fragment_container, new OverviewBasicsFragment());
+        transaction.commit();
+    }
+
+    public void goToOverviewPlay(View view){
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
         transaction.replace(R.id.fragment_container, new OverviewPlayFragment());
         transaction.commit();

@@ -395,28 +395,28 @@ public class HandGenerator {
         }
         return allHonors();
     }
-    private static List<Tile> allManzu(){
+    public static List<Tile> allManzu(){
         List<Tile> tiles = new ArrayList<>();
         for(int i=1; i<10; i++){
             tiles.add(new Tile(i, Tile.Suit.MANZU));
         }
         return tiles;
     }
-    private static List<Tile> allPinzu(){
+    public static List<Tile> allPinzu(){
         List<Tile> tiles = new ArrayList<>();
         for(int i=1; i<10; i++){
             tiles.add(new Tile(i, Tile.Suit.PINZU));
         }
         return tiles;
     }
-    private static List<Tile> allSouzu(){
+    public static List<Tile> allSouzu(){
         List<Tile> tiles = new ArrayList<>();
         for(int i=1; i<10; i++){
             tiles.add(new Tile(i, Tile.Suit.SOUZU));
         }
         return tiles;
     }
-    private static List<Tile> allHonors(){
+    public static List<Tile> allHonors(){
         List<Tile> tiles = new ArrayList<>();
         tiles.add(new Tile(Tile.Wind.EAST));
         tiles.add(new Tile(Tile.Wind.SOUTH));
@@ -427,7 +427,22 @@ public class HandGenerator {
         tiles.add(new Tile(Tile.Dragon.RED));
         return tiles;
     }
-    private static List<Tile> allTerminals(){
+    public static List<Tile> allWinds(){
+        List<Tile> tiles = new ArrayList<>();
+        tiles.add(new Tile(Tile.Wind.EAST));
+        tiles.add(new Tile(Tile.Wind.SOUTH));
+        tiles.add(new Tile(Tile.Wind.WEST));
+        tiles.add(new Tile(Tile.Wind.NORTH));
+        return tiles;
+    }
+    public static List<Tile> allDragons(){
+        List<Tile> tiles = new ArrayList<>();
+        tiles.add(new Tile(Tile.Dragon.WHITE));
+        tiles.add(new Tile(Tile.Dragon.GREEN));
+        tiles.add(new Tile(Tile.Dragon.RED));
+        return tiles;
+    }
+    public static List<Tile> allTerminals(){
         List<Tile> tiles = new ArrayList<>();
         tiles.add(new Tile(1, Tile.Suit.MANZU));
         tiles.add(new Tile(9, Tile.Suit.MANZU));
@@ -437,7 +452,7 @@ public class HandGenerator {
         tiles.add(new Tile(9, Tile.Suit.SOUZU));
         return tiles;
     }
-    private static List<Tile> allSimples(){
+    public static List<Tile> allSimples(){
         List<Tile> tiles = new ArrayList<>();
         for(int i=2; i<9; i++){
             tiles.add(new Tile(i, Tile.Suit.MANZU));
