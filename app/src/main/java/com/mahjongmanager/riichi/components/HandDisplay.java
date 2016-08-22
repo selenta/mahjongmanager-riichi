@@ -144,10 +144,16 @@ public class HandDisplay extends LinearLayout implements View.OnClickListener {
 
         int size = getUtils().getActualTileWidth(ImageCache.HAND_DISPLAY_KEY);
 
+        /* TODO Re-think this. Rather awkward, leaves lots of extra padding around, containers
+            are being set to arbitrary sizes, and some of the containers are sized relative
+            to other containers because that's "good enough".
+            Should consider: Closed Kan only, Added Kan only, Open Pon only, Hand with Added Kan,
+                Open Hand with no Added Kan
+            */
         if( hand!=null && hand.hasAddedKan() ){
             size = size * 17/10 + 10;
             closedTilesContainer.setMinimumHeight(size);
-        } else if( hand!=null && hand.isOpen() ){
+        } else if( hand!=null && (hand.isOpen()||hand.hasClosedKan()) ){
             size = size * 14/10 + 10;
             closedTilesContainer.setMinimumHeight(size);
         }
@@ -387,16 +393,16 @@ public class HandDisplay extends LinearLayout implements View.OnClickListener {
             }
         }
 
-        meld.getTiles().get(0).faceDown = true;
-        addTileOpen(meld.getTiles().get(0));
-        addTileOpen(meld.getTiles().get(1));
+        meld.firstTile().faceDown = true;
+        addTileOpen(meld.firstTile());
+        addTileOpen(meld.secondTile());
         if( redFiveTile!=null ){
             addTileOpen(redFiveTile);
         } else {
-            addTileOpen(meld.getTiles().get(2));
+            addTileOpen(meld.thirdTile());
         }
-        meld.getTiles().get(3).faceDown = true;
-        addTileOpen(meld.getTiles().get(3));
+        meld.fourthTile().faceDown = true;
+        addTileOpen(meld.fourthTile());
     }
 
     private void addTileClosed(Tile t){
@@ -415,6 +421,7 @@ public class HandDisplay extends LinearLayout implements View.OnClickListener {
     }
     private void addTileCalled(Tile calledTile, Tile addedTile){
         LinearLayout container = new LinearLayout(activity);
+        container.setBackgroundColor(0xffccb0d5);
         container.setOrientation(VERTICAL);
         container.setLayoutParams(new LinearLayout.LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT));
         container.setGravity(Gravity.BOTTOM);
@@ -448,6 +455,7 @@ public class HandDisplay extends LinearLayout implements View.OnClickListener {
         winningTileContainer.addView(tileDisplay.view);
     }
 
+    // TODO get rid of the left spacer if there's only open tiles (i.e. when displaying only a meld)
     /**
      * To visually separate sets/pair, a spacer really helps
      * @param view Add a spacer to the end of this view, in preparation to add a new set
