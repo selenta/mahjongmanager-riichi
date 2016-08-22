@@ -46,9 +46,9 @@
                 android:layout_gravity="center">
 
                 <Button
-                    android:layout_width="wrap_content"
+                    android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
-                    android:text="Basics: Look and Feel"
+                    android:text="Look and Feel"
                     android:paddingEnd="20dp"
                     android:paddingStart="20dp"
                     android:onClick="goToOverviewBasics" />
@@ -70,7 +70,7 @@
                     android:onClick="goToOverviewScoring" />
 
                 <Button
-                    android:layout_width="fill_parent"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Scoring Flowchart"
                     android:enabled="true"

@@ -29,7 +29,9 @@ public class OverviewBasicsFragment extends Fragment {
     HandDisplay openKanExample;
     HandDisplay addedOpenKanExample;
 
-    ImageView deadWallExample;
+    ImageView deadWallPicture;
+    ImageView beforeFirstTurnPicture;
+    ImageView winningHandPicture;
 
 
     @Override
@@ -147,6 +149,8 @@ public class OverviewBasicsFragment extends Fragment {
         addedOpenKanExample = (HandDisplay) myInflatedView.findViewById(R.id.addedKanExample);
         addedOpenKanExample.setState(HandDisplay.FU_DISPLAY);
 
-        deadWallExample = (ImageView) myInflatedView.findViewById(R.id.deadWallExample);
+        deadWallPicture = (ImageView) myInflatedView.findViewById(R.id.deadWallPicture);
+        beforeFirstTurnPicture = (ImageView) myInflatedView.findViewById(R.id.beforeFirstTurnPicture);
+        winningHandPicture = (ImageView) myInflatedView.findViewById(R.id.winningHandPicture);
     }
 }
