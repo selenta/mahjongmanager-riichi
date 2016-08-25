@@ -23,6 +23,7 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
+import java.util.Random;
 
 public class Utils {
     private MainActivity activity;
@@ -250,6 +251,11 @@ public class Utils {
         }
 
         return MeldState.CLOSEDSET;
+    }
+
+    public static Tile.Wind getRandomWind(){
+        List<Tile.Wind> values = Collections.unmodifiableList(Arrays.asList(Tile.Wind.values()));
+        return values.get(new Random().nextInt(Tile.Wind.values().length));
     }
 
     public static boolean containsHonorsOrTerminalsOnly(Meld meld){ return containsHonorsOrTerminalsOnly(meld.getTiles()); }

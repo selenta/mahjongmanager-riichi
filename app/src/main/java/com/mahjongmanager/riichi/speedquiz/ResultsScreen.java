@@ -28,33 +28,26 @@ public class ResultsScreen extends Fragment implements View.OnClickListener {
 
     private LinearLayout incorrectButtonContainer;
 
-    List<Hand> completeList = new ArrayList<>();
+    private List<Hand> completeList = new ArrayList<>();
     private int correctGuesses   = 0;
-    private int highScore        = 0;
     private int incorrectGuesses = 0;
     private List<Hand> handsToReview = new ArrayList<>();
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View myInflatedView = inflater.inflate(R.layout.fragment_speedquiz_3scorescreen, container, false);
+        registerUI(myInflatedView);
 
-        correctScoreLabel   = (TextView) myInflatedView.findViewById(R.id.correctScore);
-        newHighScore        = (TextView) myInflatedView.findViewById(R.id.newHighScoreNotice);
-        incorrectScoreLabel = (TextView) myInflatedView.findViewById(R.id.incorrectScore);
-        incorrectButtonContainer = (LinearLayout) myInflatedView.findViewById(R.id.incorrectHandButtonContainer);
-        mainMenuButton      = (Button) myInflatedView.findViewById(R.id.mainMenuButton);
-
-        loadHighScore();
-        scoreGuesses();
-        updateUI();
+        // If a user got here form pressing Back the variables are correct, just need to update UI
+        if( completeList.isEmpty() ) {
+            scoreGuesses();
+        }
+        updateDisplayedScores();
+        checkNewHighScore();
+        createButtonsForIncorrectHands();
         createMainMenuButtonTimer();
 
         return myInflatedView;
-    }
-
-    private void loadHighScore(){
-        SharedPreferences sharedPref = getActivity().getPreferences(Context.MODE_PRIVATE);
-        highScore = sharedPref.getInt("SpeedQuizHighScore", 0);
     }
 
     private void scoreGuesses(){
@@ -63,26 +56,31 @@ public class ResultsScreen extends Fragment implements View.OnClickListener {
 
         for(int i=0; i<completeList.size(); i++){
             ScoreCalculator sc = new ScoreCalculator(completeList.get(i));
-            if( judgeGuess(guessList.get(i), sc) ){
+            if( scoreGuess(guessList.get(i), sc) ){
                 correctGuesses++;
             } else {
                 incorrectGuesses++;
                 handsToReview.add(completeList.get(i));
             }
         }
-        checkNewHighScore();
-        createButtonsForIncorrectHands();
     }
-    private boolean judgeGuess( int[] guess, ScoreCalculator sc ){
+    private boolean scoreGuess(int[] guess, ScoreCalculator sc ){
         int hanGuess = guess[0];
         int fuGuess = guess[1];
-        boolean isManganOrMore = sc.scoreBasePoints(sc.validatedHand.han, sc.validatedHand.fu) >= 2000;
+        boolean isManganOrMore = ScoreCalculator.scoreBasePoints(sc.validatedHand.han, sc.validatedHand.fu) >= 2000;
         Integer roundedFu = (sc.validatedHand.fu==25) ? 25 : (int) Math.ceil(sc.validatedHand.fu/10.0)*10;
 
         return hanGuess==sc.validatedHand.han && ( isManganOrMore || fuGuess==roundedFu);
     }
+    private void updateDisplayedScores(){
+        correctScoreLabel.setText(String.valueOf(correctGuesses));
+        incorrectScoreLabel.setText(String.valueOf(incorrectGuesses));
+    }
     private void checkNewHighScore(){
-        if( correctGuesses>highScore ){
+        SharedPreferences sharedPref = getActivity().getPreferences(Context.MODE_PRIVATE);
+        int highScore = sharedPref.getInt("SpeedQuizHighScore", 0);
+
+        if( correctGuesses> highScore){
             newHighScore.setVisibility(View.VISIBLE);
             SharedPreferences settings = getActivity().getPreferences(Context.MODE_PRIVATE);
             SharedPreferences.Editor editor = settings.edit();
@@ -111,11 +109,6 @@ public class ResultsScreen extends Fragment implements View.OnClickListener {
         }
     }
 
-    private void updateUI(){
-        correctScoreLabel.setText(String.valueOf(correctGuesses));
-        incorrectScoreLabel.setText(String.valueOf(incorrectGuesses));
-    }
-
     private void createMainMenuButtonTimer(){
         new CountDownTimer(2000, 500){
             @Override
@@ -126,5 +119,13 @@ public class ResultsScreen extends Fragment implements View.OnClickListener {
                 mainMenuButton.setEnabled(true);
             }
         }.start();
+    }
+
+    private void registerUI(View myInflatedView){
+        correctScoreLabel   = (TextView) myInflatedView.findViewById(R.id.correctScore);
+        newHighScore        = (TextView) myInflatedView.findViewById(R.id.newHighScoreNotice);
+        incorrectScoreLabel = (TextView) myInflatedView.findViewById(R.id.incorrectScore);
+        incorrectButtonContainer = (LinearLayout) myInflatedView.findViewById(R.id.incorrectHandButtonContainer);
+        mainMenuButton      = (Button) myInflatedView.findViewById(R.id.mainMenuButton);
     }
 }

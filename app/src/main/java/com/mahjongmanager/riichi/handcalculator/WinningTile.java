@@ -29,23 +29,13 @@ public class WinningTile extends Fragment implements View.OnClickListener {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View myInflatedView = inflater.inflate(R.layout.fragment_handcalculator_2winningtile, container, false);
+        registerUI(myInflatedView);
 
         actHand = ((MainActivity)getActivity()).getCurrentHand();
         Log.i("actHand", "actHand: " + actHand.toString());
 
-
-        nextButton = (Button) myInflatedView.findViewById(R.id.nextButton);
-        nextButton.setOnClickListener(this);
-        winningTileOptions = (RadioGroup) myInflatedView.findViewById(R.id.winningTileOptions);
-        winningTileOptions.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(RadioGroup group, int checkedId) {
-                setWinningTile();
-            }
-        });
-        selfDrawOptions = (RadioGroup) myInflatedView.findViewById(R.id.selfDrawOptions);
-
         setWinningTileOptions();
+        checkHandState();
         return myInflatedView;
     }
 
@@ -165,6 +155,29 @@ public class WinningTile extends Fragment implements View.OnClickListener {
         return !(lowerTile==null && upperTile==null) ;
     }
 
+    /**
+     * The hand may already have a WinningTile or Ron/Tsumo chosen if the user reached this
+     * page by pressing the Back button. So select those options.
+     */
+    private void checkHandState(){
+        Tile wt = actHand.getWinningTile();
+        if( wt!=null ){
+            for(int i=1; i < winningTileOptions.getChildCount(); i++ ){
+                RadioButton rb = (RadioButton) winningTileOptions.getChildAt(i);
+                boolean isMatch = rb.getText().equals(wt.toString());
+                rb.setChecked(isMatch);
+            }
+        }
+
+        if(actHand.selfDrawWinningTile){
+            for(int i=1; i < selfDrawOptions.getChildCount(); i++ ){
+                RadioButton rb = (RadioButton) selfDrawOptions.getChildAt(i);
+                boolean isMatch = rb.getText().equals("True");
+                rb.setChecked(isMatch);
+            }
+        }
+    }
+
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
@@ -173,5 +186,18 @@ public class WinningTile extends Fragment implements View.OnClickListener {
                 ((MainActivity)getActivity()).goToHandCalculatorOtherInfo(v);
                 break;
         }
+    }
+
+    private void registerUI(View myInflatedView){
+        nextButton = (Button) myInflatedView.findViewById(R.id.nextButton);
+        nextButton.setOnClickListener(this);
+        winningTileOptions = (RadioGroup) myInflatedView.findViewById(R.id.winningTileOptions);
+        winningTileOptions.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(RadioGroup group, int checkedId) {
+                setWinningTile();
+            }
+        });
+        selfDrawOptions = (RadioGroup) myInflatedView.findViewById(R.id.selfDrawOptions);
     }
 }

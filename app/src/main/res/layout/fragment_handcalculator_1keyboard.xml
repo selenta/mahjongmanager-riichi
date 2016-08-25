@@ -56,33 +56,17 @@
         <Button
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Cancel"
-            android:id="@+id/backToMainMenuButton"
+            android:text="Clear"
+            android:id="@+id/clearHandButton"
             android:layout_gravity="center"
-            android:paddingEnd="30dp"
-            android:paddingStart="30dp"
-            android:onClick="backToMainMenu"
+            android:paddingEnd="15dp"
+            android:paddingStart="15dp"
             android:layout_marginLeft="15dp" />
 
         <View
             android:layout_width="fill_parent"
             android:layout_height="2dp"
             android:layout_weight="1" />
-
-        <Button
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Clear"
-            android:id="@+id/clearHandButton"
-            android:layout_gravity="center"
-            android:paddingEnd="15dp"
-            android:paddingStart="15dp" />
-
-        <View
-            android:layout_width="fill_parent"
-            android:layout_height="2dp"
-            android:layout_weight="1" />
-
 
         <Button
             android:layout_width="wrap_content"
@@ -95,6 +79,7 @@
             android:onClick="gotoHandCalculatorWinningTile"
             android:layout_marginRight="15dp"
             android:enabled="false" />
+
     </LinearLayout>
 
 </LinearLayout>

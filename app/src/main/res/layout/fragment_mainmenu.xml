@@ -42,7 +42,8 @@
                 android:layout_height="wrap_content"
                 android:text="Game Score Tracker (v2.0)"
                 android:layout_gravity="center_horizontal"
-                android:enabled="false" />
+                android:enabled="false"
+                android:visibility="gone" />
 
             <Button
                 android:layout_width="fill_parent"
@@ -132,8 +133,8 @@
                     android:layout_height="wrap_content"
                     android:text="About"
                     android:id="@+id/button14"
-                    android:enabled="false"
-                    android:layout_weight="1" />
+                    android:layout_weight="1"
+                    android:onClick="goToAbout" />
 
             </LinearLayout>
 
@@ -149,7 +150,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textAppearance="?android:attr/textAppearanceSmall"
-                android:text="v0.86"
+                android:text="v0.87"
                 android:layout_gravity="center_horizontal"
                 android:longClickable="true"
                 android:layout_weight="1" />

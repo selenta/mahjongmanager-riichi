@@ -25,10 +25,10 @@ import java.util.List;
 public class OtherInfo extends Fragment implements View.OnClickListener {
 
     private Hand actHand;
+    //Used only to determine which checkBoxes should be enabled
     private Hand tempScoredHand;
 
     private Spinner doraCount;
-
 
     private CheckBox doubleRiichiCheckBox;
     private CheckBox riichiCheckBox;
@@ -52,9 +52,8 @@ public class OtherInfo extends Fragment implements View.OnClickListener {
 
         registerControls(myInflatedView);
         initializeDoraCount();
+        checkHandState();
         setCheckBoxEnablement();
-
-        ((MainActivity)getActivity()).setCurrentHand(actHand);
         return myInflatedView;
     }
 
@@ -73,11 +72,40 @@ public class OtherInfo extends Fragment implements View.OnClickListener {
         doraCount.setAdapter(dataAdapter);
     }
 
+    /**
+     * The hand may already have a some of these options chosen if the user reached this
+     * page by pressing the Back button. So select those options.
+     */
+    private void checkHandState(){
+        doraCount.setSelection(actHand.dora);
+
+        doubleRiichiCheckBox.setChecked(actHand.doubleRiichi);
+        riichiCheckBox.setChecked(actHand.riichi);
+        ippatsuCheckBox.setChecked(actHand.ippatsu);
+        rinshanCheckBox.setChecked(actHand.rinshan);
+        chanKanCheckBox.setChecked(actHand.chanKan);
+        chanKanCheckBox.setChecked((actHand.haitei || actHand.houtei));
+
+        for(int i=1; i < prevailingWindOptions.getChildCount(); i++ ){
+            RadioButton rb = (RadioButton) prevailingWindOptions.getChildAt(i);
+            boolean isMatch = rb.getText().toString().equalsIgnoreCase(actHand.prevailingWind.toString());
+            if( isMatch ){
+                rb.setChecked(true);
+            }
+        }
+        for(int i=1; i < playerWindOptions.getChildCount(); i++ ){
+            RadioButton rb = (RadioButton) playerWindOptions.getChildAt(i);
+            boolean isMatch = rb.getText().toString().equalsIgnoreCase(actHand.playerWind.toString());
+            if( isMatch ){
+                rb.setChecked(true);
+            }
+        }
+    }
+
     private void setDoraCount(){
         actHand.dora = Integer.parseInt(doraCount.getSelectedItem().toString().trim());
         ((MainActivity)getActivity()).setCurrentHand(actHand);
     }
-
     private void setDoubleRiichi(){
         actHand.doubleRiichi = doubleRiichiCheckBox.isChecked();
         setCheckBoxEnablement();
@@ -111,6 +139,18 @@ public class OtherInfo extends Fragment implements View.OnClickListener {
         }
         ((MainActivity)getActivity()).setCurrentHand(actHand);
     }
+    private void setRoundWind(){
+        RadioButton rButt = (RadioButton)prevailingWindOptions.findViewById(prevailingWindOptions.getCheckedRadioButtonId());
+        String rButtTxt = rButt.getText().toString();
+        actHand.prevailingWind = Tile.Wind.valueOf(rButtTxt.toUpperCase());
+        ((MainActivity)getActivity()).setCurrentHand(actHand);
+    }
+    private void setPlayerWind(){
+        RadioButton rButt = (RadioButton)playerWindOptions.findViewById(playerWindOptions.getCheckedRadioButtonId());
+        String rButtTxt = rButt.getText().toString();
+        actHand.playerWind = Tile.Wind.valueOf(rButtTxt.toUpperCase());
+        ((MainActivity)getActivity()).setCurrentHand(actHand);
+    }
 
     private void setCheckBoxEnablement(){
         //ChanKan: WinningTile must be only tile of type in hand
@@ -126,7 +166,7 @@ public class OtherInfo extends Fragment implements View.OnClickListener {
         }
 
         //Rinshan: Must have at least one Kan in hand, tile must not be part of kan
-        if( !tempScoredHand.hasKan() || winningTileCount==4 || !tempScoredHand.selfDrawWinningTile ){
+        if( !tempScoredHand.hasKan() || !tempScoredHand.selfDrawWinningTile ){
             rinshanCheckBox.setEnabled(false);
         }
 
@@ -151,23 +191,6 @@ public class OtherInfo extends Fragment implements View.OnClickListener {
             doubleRiichiCheckBox.setEnabled(false);
         }
         setIppatsu();
-    }
-
-    private void setRoundWind(){
-        RadioButton rButt = (RadioButton)prevailingWindOptions.findViewById(prevailingWindOptions.getCheckedRadioButtonId());
-        String rButtTxt = rButt.getText().toString();
-        Log.d("setRoundWind", "rButtTxt: " + rButtTxt);
-
-        actHand.prevailingWind = Tile.Wind.valueOf(rButtTxt.toUpperCase());
-        ((MainActivity)getActivity()).setCurrentHand(actHand);
-    }
-    private void setPlayerWind(){
-        RadioButton rButt = (RadioButton)playerWindOptions.findViewById(playerWindOptions.getCheckedRadioButtonId());
-        String rButtTxt = rButt.getText().toString();
-        Log.d("setPlayerWind", "rButtTxt: " + rButtTxt);
-
-        actHand.playerWind = Tile.Wind.valueOf(rButtTxt.toUpperCase());
-        ((MainActivity)getActivity()).setCurrentHand(actHand);
     }
 
     @Override
@@ -201,12 +224,10 @@ public class OtherInfo extends Fragment implements View.OnClickListener {
             public void onItemSelected(AdapterView<?> parentView, View selectedItemView, int position, long id) {
                 setDoraCount();
             }
-
             @Override
             public void onNothingSelected(AdapterView<?> parentView) {
                 // your code here
             }
-
         });
 
         doubleRiichiCheckBox = (CheckBox) myInflatedView.findViewById(R.id.doubleRiichiCheckBox);
@@ -226,7 +247,6 @@ public class OtherInfo extends Fragment implements View.OnClickListener {
         } else {
             haiteiHouteiCheckBox.setText("Houtei");
         }
-
 
         prevailingWindOptions = (RadioGroup) myInflatedView.findViewById(R.id.prevailingWindOptions);
         prevailingWindOptions.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {

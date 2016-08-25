@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <ScrollView
+        android:layout_width="fill_parent"
+        android:layout_height="0dp"
+        android:scrollIndicators="right"
+        android:layout_weight="1"
+        android:outlineProvider="bounds"
+        android:fillViewport="false">
+
+        <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:text="About"
+                android:textSize="44sp"
+                android:textStyle="italic"
+                android:layout_gravity="center_horizontal" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:text="Hey! My name is Evan Nelson, I hope you've found the app to be useful. I've been a mahjong player for a number of years now and I've taught a bunch of people to play Riichi Mahjong. While the actual gameplay is fairly intuitive to anyone who's played a card game, everyone I've taught has found learning the yaku and the scoring process to be a barrier to getting comfortable with the game. Even a bunch of the veterans I know aren't particularly good at scoring."
+                android:textSize="14sp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:text="The primary purpose of this app is to help players of all skill levels learn how to score hands, improve their speed/accuracy, and to be available as a reference in the middle of a game. The app consists of several tables and tools to examine the scoring process from different perspectives and skill levels."
+                android:textSize="14sp" />
+
+            <GridLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:columnCount="2" >
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="?android:attr/textAppearanceMedium"
+                    android:text="•"
+                    android:paddingLeft="15dp" />
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="?android:attr/textAppearanceMedium"
+                    android:text="For beginners, there are explanations on the basics of gameplay, as well as the scoring process, and how to determine the Han/Fu in a hand. In addition to the definition of the different yaku, there is some other contextual information, such as the relative frequency of each yaku in actual winning hand to illustrate that although the list is long, as not all yaku are equally important to know when first learning."
+                    android:textSize="14sp"
+                    android:paddingLeft="5dp"
+                    android:layout_gravity="fill_horizontal" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="?android:attr/textAppearanceMedium"
+                    android:text="•"
+                    android:paddingLeft="15dp" />
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="?android:attr/textAppearanceMedium"
+                    android:text="For intermediate players, there is a hand keyboard where you can enter a hand as well as all of the circumstantial information (i.e. enter the tiles in the hand, specify the winning tile, was the winning tile self-drawn, etc) and the app will explain what Han/Fu are present in the hand and thus the resulting value of the hand. There are also tables/calculator to determine the value of a hand assuming the Han/Fu are known."
+                    android:textSize="14sp"
+                    android:paddingLeft="5dp"
+                    android:layout_gravity="fill_horizontal" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="?android:attr/textAppearanceMedium"
+                    android:text="•"
+                    android:paddingLeft="15dp" />
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="?android:attr/textAppearanceMedium"
+                    android:text="For advanced players, the app includes a speed quiz that allows the user to test themselves, and upon completing the quiz the user can review any incorrect answers with a detailed score breakdown. There are also a few options to alter/increase the difficulty of the quiz."
+                    android:textSize="14sp"
+                    android:paddingLeft="5dp"
+                    android:layout_gravity="fill_horizontal" />
+            </GridLayout>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:text="Contact Info"
+                android:paddingTop="10dp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:text="This is my first Android app, and the first item I've made from scratch that I'm putting out there. Let me know what you think! There's always more things to add, but let me know if you think the app is missing something important. I'm always open to feedback and suggestions, so feel free to send them to selentian@gmail.com"
+                android:textSize="14sp" />
+
+        </LinearLayout>
+    </ScrollView>
+</LinearLayout>

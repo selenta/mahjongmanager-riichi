@@ -1,9 +1,11 @@
 package com.mahjongmanager.riichi;
 
-import android.content.Intent;
-import android.net.Uri;
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.CountDownTimer;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
@@ -27,6 +29,8 @@ public class MainActivity extends AppCompatActivity {
     private int currentFuGuess  = 0;
     private CountDownTimer speedQuizTimer;
 
+    private boolean ignoreBack = false;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -37,62 +41,43 @@ public class MainActivity extends AppCompatActivity {
                 return;
             }
 
-            MainMenuFragment newFragment = new MainMenuFragment();
-            //Bundle args = new Bundle();
-            //args.putInt(MainMenuFragment.ARG_POSITION, position);
-            //newFragment.setArguments(args);
-
-            FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-            transaction.add(R.id.fragment_container, newFragment);
-            //transaction.addToBackStack(null);
-
-            transaction.commit();
+            replaceFragment(new MainMenuFragment(), false);
         }
 
         getExampleHands();
         getImageCache();
     }
 
+    @Override
+    public void onBackPressed(){
+        if( !ignoreBack ){
+            super.onBackPressed();
+        }
+    }
+
     ///////////////////////////////////////////////////
     /////////////    Navigating UIs     ///////////////
     ///////////////////////////////////////////////////
-    public void goToHanFuCalculator(View view){
-        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-        transaction.replace(R.id.fragment_container, new HanFuCalculatorFragment());
-        //transaction.addToBackStack("MainMenu");
-        transaction.commit();
-    }
-
     public void gotoHandCalculatorStart(View view){
-        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-        transaction.replace(R.id.fragment_container, new InputHand());
-        transaction.commit();
+        replaceFragment(new InputHand());
     }
     public void gotoHandCalculatorWinningTile(View view){
-        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-        transaction.replace(R.id.fragment_container, new WinningTile());
-        transaction.commit();
+        replaceFragment(new WinningTile());
     }
     public void goToHandCalculatorOtherInfo(View view){
-        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-        transaction.replace(R.id.fragment_container, new OtherInfo());
-        transaction.commit();
+        replaceFragment(new OtherInfo());
     }
     public void goToHandCalculatorFinalScore(View view){
-        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-        transaction.replace(R.id.fragment_container, new FinalScore());
-        transaction.commit();
+        replaceFragment(new FinalScore());
     }
 
     public void goToSpeedQuizStart(View view){
-        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-        transaction.replace(R.id.fragment_container, new Start());
-        transaction.commit();
+        replaceFragment(new Start(), false);
     }
     public void goToSpeedQuizScoreHand(View view){
-        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-        transaction.replace(R.id.fragment_container, new ScoreHand());
-        transaction.commit();
+        ignoreBack = true;
+        generateSpeedQuizHand();
+        replaceFragment(new ScoreHand(), false);
 
         speedQuizTimer = new CountDownTimer(90000, 100){
             @Override
@@ -102,7 +87,6 @@ public class MainActivity extends AppCompatActivity {
                     sq.updateSecondCounter( String.valueOf( (int)millisUntilFinished/1000 ));
                 }
             }
-
             @Override
             public void onFinish(){
                 goToSpeedQuizResultsScreen(getCurrentFocus());
@@ -116,93 +100,102 @@ public class MainActivity extends AppCompatActivity {
         guess[1] = currentFuGuess;
         hanFuGuesses.add(guess);
 
-        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-        transaction.replace(R.id.fragment_container, new ScoreHand());
-        transaction.commit();
+        if( proceedToQuizResults() ){
+            currentHand = null;
+            goToSpeedQuizResultsScreen(view);
+        } else {
+            generateSpeedQuizHand();
+            replaceFragment(new ScoreHand(), false);
+        }
     }
     public void goToSpeedQuizResultsScreen(View view){
+        ignoreBack = false;
         if( speedQuizTimer!=null ){
             speedQuizTimer.cancel();
         }
-        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-        transaction.replace(R.id.fragment_container, new ResultsScreen());
-        transaction.commit();
+        replaceFragment(new ResultsScreen(), false);
     }
     public void goToSpeedQuizReviewHand(View view){
-        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-        transaction.replace(R.id.fragment_container, new ReviewHand());
-        transaction.commit();
+        replaceFragment(new ReviewHand());
     }
 
     public void goToScoreTable(View view){
-        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-        transaction.replace(R.id.fragment_container, new ScoreTableFragment());
-        transaction.commit();
+        replaceFragment(new ScoreTableFragment());
     }
-
+    public void goToHanFuCalculator(View view){
+        replaceFragment(new HanFuCalculatorFragment());
+    }
     public void goToYakuList(View view){
-        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-        transaction.replace(R.id.fragment_container, new YakuListFragment());
-        transaction.commit();
+        replaceFragment(new YakuListFragment());
     }
 
     public void goToOverview(View view){
-        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-        transaction.replace(R.id.fragment_container, new OverviewFragment());
-        transaction.commit();
+        replaceFragment(new OverviewFragment());
     }
-
     public void goToOverviewBasics(View view){
-        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-        transaction.replace(R.id.fragment_container, new OverviewBasicsFragment());
-        transaction.commit();
+        replaceFragment(new OverviewBasicsFragment());
     }
-
     public void goToOverviewPlay(View view){
-        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-        transaction.replace(R.id.fragment_container, new OverviewPlayFragment());
-        transaction.commit();
+        replaceFragment(new OverviewPlayFragment());
     }
-
     public void goToOverviewScoring(View view){
-        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-        transaction.replace(R.id.fragment_container, new OverviewScoringFragment());
-        transaction.commit();
+        replaceFragment(new OverviewScoringFragment());
     }
-
     public void goToScoringFlowchart(View view){
-        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-        transaction.replace(R.id.fragment_container, new ScoringFlowchartFragment());
-        transaction.commit();
+        replaceFragment(new ScoringFlowchartFragment());
     }
 
+    public void goToAbout(View view){
+        replaceFragment(new AboutFragment());
+    }
     public void goToOptions(View view){
-        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-        transaction.replace(R.id.fragment_container, new OptionsFragment());
-        transaction.commit();
+        replaceFragment(new OptionsFragment());
     }
     public void goToOptionsRuleset(View view){
-        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-        transaction.replace(R.id.fragment_container, new OptionsRulesetFragment());
-        transaction.commit();
-    }
-
-    public void backToOverview(View view){
-        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-        transaction.replace(R.id.fragment_container, new OverviewFragment());
-        transaction.commit();
+        replaceFragment(new OptionsRulesetFragment());
     }
 
     public void backToMainMenu(View view){
-        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-        transaction.replace(R.id.fragment_container, new MainMenuFragment());
-
         currentHanGuess = 0;
         currentFuGuess = 0;
         currentHand = new Hand(new ArrayList<Tile>());
         scoredHands = new ArrayList<>();
         hanFuGuesses = new ArrayList<>();
-        transaction.commit();
+
+        replaceFragment(new MainMenuFragment(), false);
+        clearBackStack();
+    }
+
+    private void replaceFragment(Fragment fragment){
+        replaceFragment(fragment, true);
+    }
+    private void replaceFragment(Fragment fragment, boolean addToBackstack){
+        String backStateName = fragment.getClass().getName();
+        Log.d("replaceFragment", "backStateName:  "+ backStateName);
+
+        FragmentManager manager = getSupportFragmentManager();
+        Log.d("replaceFragment", "backStackCount: "+ manager.getBackStackEntryCount());
+        for( int i=0; i<manager.getBackStackEntryCount(); i++ ){
+            Log.d("replaceFragment", "backStack["+i+"]: "+ manager.getBackStackEntryAt(i).getName());
+        }
+
+        boolean fragmentPopped = manager.popBackStackImmediate (backStateName, 0);
+        Log.d("replaceFragment", "fragmentPopped: "+ fragmentPopped);
+
+        if (!fragmentPopped){ //fragment not in back stack, create it.
+            FragmentTransaction ft = manager.beginTransaction();
+            ft.replace(R.id.fragment_container, fragment);
+            if(addToBackstack){
+                ft.addToBackStack(backStateName);
+            }
+            ft.commit();
+        }
+    }
+    private void clearBackStack(){
+        FragmentManager manager = getSupportFragmentManager();
+        if( manager.getBackStackEntryCount() > 0 ){
+            getSupportFragmentManager().popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
+        }
     }
 
     /////////////////////////////////////////////////////////
@@ -210,35 +203,80 @@ public class MainActivity extends AppCompatActivity {
     /////////////////////////////////////////////////////////
     public Hand getCurrentHand(){ return currentHand; }
     public void setCurrentHand(Hand h){ currentHand = h; }
-    public int getCurrentHanGuess(){ return currentHanGuess; }
+    public int  getCurrentHanGuess(){ return currentHanGuess; }
     public void setCurrentHanGuess(int i){ currentHanGuess = i; }
-    public int getCurrentFuGuess(){ return currentFuGuess; }
+    public int  getCurrentFuGuess(){ return currentFuGuess; }
     public void setCurrentFuGuess(int i){ currentFuGuess = i; }
 
     public List<Hand> getScoredHands(){ return scoredHands; }
     public List<int[]> getHanFuGuesses(){ return hanFuGuesses; }
 
     public CountDownTimer getSpeedQuizTimer(){ return speedQuizTimer; }
+    public void generateSpeedQuizHand() {
+        String SQ_RANDOM_WINDS = "SQRandomWinds";
+        String SQ_SITUATIONAL_YAKU = "SQSituationalYaku";
+        String SQ_NUMBER_OF_SUITS = "SQNumberOfSuits";
+        String SQ_ALLOW_HONORS = "SQAllowHonors";
+        SharedPreferences sharedPref = getPreferences(Context.MODE_PRIVATE);
+
+        Boolean randomWinds = sharedPref.getBoolean(SQ_RANDOM_WINDS, false);
+        Boolean situationalYaku = sharedPref.getBoolean(SQ_SITUATIONAL_YAKU, false);
+        Integer numberOfSuits = sharedPref.getInt(SQ_NUMBER_OF_SUITS, 3);
+        Boolean allowHonors = sharedPref.getBoolean(SQ_ALLOW_HONORS, true);
+
+        Hand h = new Hand(new ArrayList<Tile>());
+
+        while (h.han == 0) {
+            HandGenerator hg = new HandGenerator();
+            hg.setNumberOfSuits(numberOfSuits);
+            hg.setAllowHonors(allowHonors);
+
+            Hand hTemp = hg.completelyRandomHand();
+
+            if (situationalYaku) {
+                hg.addOtherYaku(hTemp);
+            }
+
+            if (randomWinds) {
+                hTemp.prevailingWind = Utils.getRandomWind();
+                hTemp.playerWind = Utils.getRandomWind();
+            }
+
+            ScoreCalculator sc = new ScoreCalculator(hTemp);
+            if (sc.validatedHand != null) {
+                h = sc.validatedHand;
+            }
+        }
+        currentHand = h;
+    }
 
     //////////////////////////////////////////
     /////////////    Utils     ///////////////
     //////////////////////////////////////////
+    private boolean proceedToQuizResults(){
+        String SQ_MAX_HANDS = "SQMaxHands";
+        SharedPreferences sharedPref = getPreferences(Context.MODE_PRIVATE);
+
+        Integer maxHands = sharedPref.getInt(SQ_MAX_HANDS, 10);
+        return getScoredHands().size() >= maxHands;
+    }
+
     private Utils _utils;
-    public Utils getUtils(){
+    public  Utils getUtils(){
         if(_utils==null){
             _utils = new Utils(this);
         }
         return _utils;
     }
     private ExampleHands _exampleHands;
-    public ExampleHands getExampleHands(){
+    public  ExampleHands getExampleHands(){
         if(_exampleHands==null){
             _exampleHands = new ExampleHands(this);
         }
         return _exampleHands;
     }
     private ImageCache _imageCache;
-    public ImageCache getImageCache(){
+    public  ImageCache getImageCache(){
         if(_imageCache==null){
             _imageCache = new ImageCache(this);
             _imageCache.clearCache();
