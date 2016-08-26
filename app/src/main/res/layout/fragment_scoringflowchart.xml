@@ -1,24 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
     android:layout_height="match_parent">
 
     <ScrollView
-        android:layout_width="fill_parent"
-        android:layout_height="0dp"
+        android:layout_width="match_parent"
         android:id="@+id/scrollView"
         android:scrollIndicators="right"
-        android:nestedScrollingEnabled="true"
-        android:layout_weight="1"
-        android:outlineProvider="bounds"
-        android:fillViewport="false">
+        android:fillViewport="false"
+        android:layout_height="match_parent">
 
-        <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        <LinearLayout
             android:orientation="vertical"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:scrollIndicators="right"
-            android:nestedScrollingEnabled="false">
+            android:layout_height="wrap_content">
 
             <ImageView
                 android:layout_width="match_parent"

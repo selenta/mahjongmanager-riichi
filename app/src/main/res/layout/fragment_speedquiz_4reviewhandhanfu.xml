@@ -2,57 +2,63 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:orientation="vertical"
-    android:layout_width="fill_parent"
-    android:layout_height="fill_parent"
-    android:scrollIndicators="right"
-    android:id="@+id/step2Container"
-    tools:context=".simplefragments.HanFuCalculatorFragment"
-    android:nestedScrollingEnabled="false"
-    android:gravity="center_horizontal">
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceLarge"
-        android:text="Speed Quiz"
-        android:id="@+id/textView4"
-        android:textSize="44sp"
-        android:textStyle="italic" />
-
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceSmall"
-        android:text="Hand #Y"
-        android:id="@+id/handNumber"
-        android:textIsSelectable="true" />
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceMedium"
-        android:text="You guessed: Z Han XX Fu"
-        android:id="@+id/playerGuessReminder" />
-
-    <com.mahjongmanager.riichi.components.HandDisplay
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/handDisplay"
-        android:minHeight="60sp" />
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceMedium"
-        android:text="Actual hand score:"
-        android:id="@+id/textView36" />
-
-    <com.mahjongmanager.riichi.components.ScoreScreen
+    <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:id="@+id/scoreScreen"
-        android:layout_weight="1" />
+        android:scrollIndicators="right"
+        android:fillViewport="true">
 
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            tools:context=".simplefragments.HanFuCalculatorFragment"
+            android:gravity="center_horizontal">
 
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:text="Speed Quiz"
+                android:textSize="44sp"
+                android:textStyle="italic" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceSmall"
+                android:text="Hand #Y"
+                android:id="@+id/handNumber"
+                android:textIsSelectable="true" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:text="You guessed: Z Han XX Fu"
+                android:id="@+id/playerGuessReminder" />
+
+            <com.mahjongmanager.riichi.components.HandDisplay
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/handDisplay"
+                android:minHeight="60sp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:text="Actual hand score:" />
+
+            <com.mahjongmanager.riichi.components.ScoreScreen
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:id="@+id/scoreScreen"
+                android:layout_weight="1" />
+
+        </LinearLayout>
+    </ScrollView>
 </LinearLayout>

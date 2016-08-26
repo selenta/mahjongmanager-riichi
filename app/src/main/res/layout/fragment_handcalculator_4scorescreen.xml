@@ -4,49 +4,56 @@
     android:orientation="vertical"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
-    android:scrollIndicators="right"
-    android:id="@+id/step2Container"
-    tools:context=".simplefragments.HanFuCalculatorFragment"
-    android:nestedScrollingEnabled="false"
-    android:gravity="center_horizontal">
+    tools:context=".simplefragments.HanFuCalculatorFragment">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceLarge"
-        android:text="Hand Calculator"
-        android:id="@+id/textView4"
-        android:textSize="44sp"
-        android:textStyle="italic"
-        android:layout_gravity="center_horizontal" />
-
-
-    <com.mahjongmanager.riichi.components.HandDisplay
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/handDisplay"
-        android:minHeight="60dp" />
-
-    <com.mahjongmanager.riichi.components.ScoreScreen
-        android:layout_width="match_parent"
+    <ScrollView
+        android:layout_width="fill_parent"
         android:layout_height="0dp"
-        android:id="@+id/scoreScreen"
-        android:layout_weight="1" />
+        android:scrollIndicators="right"
+        android:layout_weight="1"
+        android:fillViewport="true">
 
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:background="@android:color/darker_gray" />
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_horizontal">
 
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Back to Main Menu"
-        android:id="@+id/backToMainMenuButton"
-        android:layout_gravity="center"
-        android:paddingEnd="20dp"
-        android:paddingStart="20dp"
-        android:onClick="backToMainMenu" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:text="Hand Calculator"
+                android:textSize="44sp"
+                android:textStyle="italic"
+                android:layout_gravity="center_horizontal" />
 
+            <com.mahjongmanager.riichi.components.HandDisplay
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/handDisplay"
+                android:minHeight="60dp" />
 
+            <com.mahjongmanager.riichi.components.ScoreScreen
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:id="@+id/scoreScreen"
+                android:layout_weight="1" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@android:color/darker_gray" />
+
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Back to Main Menu"
+                android:layout_gravity="center"
+                android:paddingEnd="20dp"
+                android:paddingStart="20dp"
+                android:onClick="backToMainMenu" />
+
+        </LinearLayout>
+    </ScrollView>
 </LinearLayout>

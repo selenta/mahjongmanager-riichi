@@ -2,7 +2,6 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:id="@+id/fragment_mainmenu"
     tools:context=".simplefragments.MainMenuFragment"
     android:orientation="vertical">
 
@@ -11,14 +10,14 @@
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceLarge"
         android:text="Mahjong Manager"
-        android:id="@+id/textView8"
         android:textSize="44sp"
         android:textStyle="italic"
         android:layout_gravity="center_horizontal" />
 
     <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:fillViewport="true">
 
         <LinearLayout
             android:orientation="vertical"
@@ -72,7 +71,6 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Score Table"
-                    android:id="@+id/ScoreTableButton"
                     android:layout_gravity="center_horizontal"
                     android:layout_weight="1"
                     android:onClick="goToScoreTable" />
@@ -81,7 +79,6 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Han/Fu"
-                    android:id="@+id/button3"
                     android:layout_gravity="center_horizontal"
                     android:enabled="true"
                     android:onClick="goToHanFuCalculator"
@@ -96,22 +93,12 @@
                 android:enabled="true"
                 android:onClick="goToYakuList" />
 
-            <LinearLayout
-                android:orientation="horizontal"
+            <Button
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal"
-                android:measureWithLargestChild="true" >
-
-                <Button
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Rules Overview"
-                    android:enabled="true"
-                    android:layout_weight="1"
-                    android:onClick="goToOverview" />
-
-            </LinearLayout>
+                android:text="Rules Overview"
+                android:enabled="true"
+                android:onClick="goToOverview" />
 
             <LinearLayout
                 android:orientation="horizontal"
@@ -124,7 +111,6 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Glossary"
-                    android:id="@+id/button11"
                     android:enabled="false"
                     android:layout_weight="1" />
 
@@ -132,7 +118,6 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="About"
-                    android:id="@+id/button14"
                     android:layout_weight="1"
                     android:onClick="goToAbout" />
 

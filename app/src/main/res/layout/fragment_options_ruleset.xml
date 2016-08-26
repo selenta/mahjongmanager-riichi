@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
     android:layout_height="match_parent">
 
     <ScrollView
@@ -8,15 +9,14 @@
         android:layout_height="fill_parent"
         android:id="@+id/scrollView"
         android:scrollIndicators="right"
-        android:nestedScrollingEnabled="true"
-        android:layout_weight="1"
         android:outlineProvider="bounds"
         android:layout_marginLeft="15dp"
-        android:layout_marginRight="15dp">
+        android:layout_marginRight="15dp"
+        android:fillViewport="true">
 
         <TableLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:shrinkColumns="1"
             android:stretchColumns="0">
 
@@ -25,7 +25,6 @@
                 android:layout_height="wrap_content"
                 android:textAppearance="?android:attr/textAppearanceLarge"
                 android:text="General"
-                android:id="@+id/textView83"
                 android:textAlignment="center" />
 
             <TableRow
@@ -38,7 +37,6 @@
                     android:layout_height="wrap_content"
                     android:textAppearance="?android:attr/textAppearanceMedium"
                     android:text="Kan Dora"
-                    android:id="@+id/textView37"
                     android:textColor="#000000" />
 
                 <CheckBox
@@ -59,7 +57,6 @@
                     android:layout_height="wrap_content"
                     android:textAppearance="?android:attr/textAppearanceMedium"
                     android:text="Red Dora"
-                    android:id="@+id/textView50"
                     android:textColor="#000000" />
 
                 <RadioGroup
@@ -108,7 +105,6 @@
                     android:layout_height="wrap_content"
                     android:textAppearance="?android:attr/textAppearanceMedium"
                     android:text="Limit Ura Dora"
-                    android:id="@+id/textView51"
                     android:textColor="#000000" />
 
                 <CheckBox
@@ -129,7 +125,6 @@
                     android:layout_height="wrap_content"
                     android:textAppearance="?android:attr/textAppearanceMedium"
                     android:text="Golden Dora"
-                    android:id="@+id/textView52"
                     android:textColor="#000000" />
 
                 <CheckBox
@@ -150,7 +145,6 @@
                     android:layout_height="wrap_content"
                     android:textAppearance="?android:attr/textAppearanceMedium"
                     android:text="West Round"
-                    android:id="@+id/textView57"
                     android:textColor="#000000" />
 
                 <CheckBox
@@ -171,7 +165,6 @@
                     android:layout_height="wrap_content"
                     android:textAppearance="?android:attr/textAppearanceMedium"
                     android:text="Dora indicator revealed before discard on Open Kan"
-                    android:id="@+id/textView58"
                     android:singleLine="false"
                     android:layout_weight="1"
                     android:maxWidth="200dp"
@@ -195,7 +188,6 @@
                     android:layout_height="wrap_content"
                     android:textAppearance="?android:attr/textAppearanceMedium"
                     android:text="Agari Yame"
-                    android:id="@+id/textView59"
                     android:singleLine="false"
                     android:layout_weight="1"
                     android:maxWidth="200dp"
@@ -219,7 +211,6 @@
                     android:layout_height="wrap_content"
                     android:textAppearance="?android:attr/textAppearanceMedium"
                     android:text="Game ends when player is boxed"
-                    android:id="@+id/textView62"
                     android:singleLine="false"
                     android:layout_weight="1"
                     android:maxWidth="200dp"
@@ -243,7 +234,6 @@
                     android:layout_height="wrap_content"
                     android:textAppearance="?android:attr/textAppearanceMedium"
                     android:text="Can Riichi at &lt;900 points"
-                    android:id="@+id/textView61"
                     android:singleLine="false"
                     android:layout_weight="1"
                     android:maxWidth="200dp"
@@ -267,7 +257,6 @@
                     android:layout_height="wrap_content"
                     android:textAppearance="?android:attr/textAppearanceMedium"
                     android:text="Double/Triple Ron"
-                    android:id="@+id/textView60"
                     android:singleLine="false"
                     android:layout_weight="1"
                     android:maxWidth="200dp"
@@ -291,7 +280,6 @@
                     android:layout_height="wrap_content"
                     android:textAppearance="?android:attr/textAppearanceMedium"
                     android:text="Kans after Riichi can change wait"
-                    android:id="@+id/textView63"
                     android:singleLine="false"
                     android:layout_weight="1"
                     android:maxWidth="200dp"
@@ -315,7 +303,6 @@
                     android:layout_height="wrap_content"
                     android:textAppearance="?android:attr/textAppearanceMedium"
                     android:text="Double Yakuman"
-                    android:id="@+id/textView85"
                     android:singleLine="false"
                     android:layout_weight="1"
                     android:maxWidth="200dp"
@@ -339,7 +326,6 @@
                 android:layout_height="wrap_content"
                 android:textAppearance="?android:attr/textAppearanceLarge"
                 android:text="Yaku"
-                android:id="@+id/textView84"
                 android:textAlignment="center" />
 
             <TableRow
@@ -352,7 +338,6 @@
                     android:layout_height="wrap_content"
                     android:textAppearance="?android:attr/textAppearanceMedium"
                     android:text="Open Tanyao"
-                    android:id="@+id/textView54"
                     android:textColor="#000000" />
 
                 <CheckBox
@@ -373,7 +358,6 @@
                     android:layout_height="wrap_content"
                     android:textAppearance="?android:attr/textAppearanceMedium"
                     android:text="Open Pinfu"
-                    android:id="@+id/textView53"
                     android:textColor="#000000" />
 
                 <CheckBox
@@ -394,7 +378,6 @@
                     android:layout_height="wrap_content"
                     android:textAppearance="?android:attr/textAppearanceMedium"
                     android:text="Open Riichi"
-                    android:id="@+id/textView55"
                     android:textColor="#000000" />
 
                 <CheckBox
@@ -415,7 +398,6 @@
                     android:layout_height="wrap_content"
                     android:textAppearance="?android:attr/textAppearanceMedium"
                     android:text="Nagashi Mangan"
-                    android:id="@+id/textView56"
                     android:textColor="#000000" />
 
                 <CheckBox
@@ -436,7 +418,6 @@
                     android:layout_height="wrap_content"
                     android:textAppearance="?android:attr/textAppearanceMedium"
                     android:text="Sanrenkou"
-                    android:id="@+id/textView86"
                     android:textColor="#000000" />
 
                 <CheckBox
@@ -457,7 +438,6 @@
                     android:layout_height="wrap_content"
                     android:textAppearance="?android:attr/textAppearanceMedium"
                     android:text="Suurenkou"
-                    android:id="@+id/textView87"
                     android:textColor="#000000" />
 
                 <CheckBox
@@ -478,7 +458,6 @@
                     android:layout_height="wrap_content"
                     android:textAppearance="?android:attr/textAppearanceMedium"
                     android:text="Daisharin"
-                    android:id="@+id/textView88"
                     android:textColor="#000000" />
 
                 <CheckBox
@@ -499,7 +478,6 @@
                     android:layout_height="wrap_content"
                     android:textAppearance="?android:attr/textAppearanceMedium"
                     android:text="Shiisanpuuta"
-                    android:id="@+id/textView89"
                     android:textColor="#000000" />
 
                 <CheckBox
@@ -520,7 +498,6 @@
                     android:layout_height="wrap_content"
                     android:textAppearance="?android:attr/textAppearanceMedium"
                     android:text="Shiisuupuuta"
-                    android:id="@+id/textView90"
                     android:textColor="#000000" />
 
                 <CheckBox
@@ -541,7 +518,6 @@
                     android:layout_height="wrap_content"
                     android:textAppearance="?android:attr/textAppearanceMedium"
                     android:text="Parenchan"
-                    android:id="@+id/textView91"
                     android:textColor="#000000" />
 
                 <CheckBox
@@ -562,7 +538,6 @@
                 android:layout_height="wrap_content"
                 android:textAppearance="?android:attr/textAppearanceLarge"
                 android:text="Abortive Draws"
-                android:id="@+id/textView68"
                 android:textAlignment="center" />
 
             <TableRow
@@ -575,7 +550,6 @@
                     android:layout_height="wrap_content"
                     android:textAppearance="?android:attr/textAppearanceMedium"
                     android:text="4 Identical Winds"
-                    android:id="@+id/textView64"
                     android:singleLine="false"
                     android:layout_weight="1"
                     android:maxWidth="200dp"
@@ -599,7 +573,6 @@
                     android:layout_height="wrap_content"
                     android:textAppearance="?android:attr/textAppearanceMedium"
                     android:text="4 Riichi"
-                    android:id="@+id/textView65"
                     android:singleLine="false"
                     android:layout_weight="1"
                     android:maxWidth="200dp"
@@ -623,7 +596,6 @@
                     android:layout_height="wrap_content"
                     android:textAppearance="?android:attr/textAppearanceMedium"
                     android:text="Kyushukyuhai"
-                    android:id="@+id/textView66"
                     android:singleLine="false"
                     android:layout_weight="1"
                     android:maxWidth="200dp"
@@ -647,7 +619,6 @@
                     android:layout_height="wrap_content"
                     android:textAppearance="?android:attr/textAppearanceMedium"
                     android:text="4 Kans (by more than one player)"
-                    android:id="@+id/textView67"
                     android:singleLine="false"
                     android:layout_weight="1"
                     android:maxWidth="200dp"
@@ -671,7 +642,6 @@
                 android:layout_height="wrap_content"
                 android:textAppearance="?android:attr/textAppearanceLarge"
                 android:text="3 Player"
-                android:id="@+id/textView69"
                 android:textAlignment="center" />
 
             <TableRow
@@ -684,7 +654,6 @@
                     android:layout_height="wrap_content"
                     android:textAppearance="?android:attr/textAppearanceMedium"
                     android:text="Starting Points"
-                    android:id="@+id/textView70"
                     android:singleLine="false"
                     android:layout_weight="1"
                     android:maxWidth="200dp"
@@ -729,7 +698,6 @@
                     android:layout_height="wrap_content"
                     android:textAppearance="?android:attr/textAppearanceMedium"
                     android:text="Placement Bonus for 1st"
-                    android:id="@+id/textView71"
                     android:singleLine="false"
                     android:layout_weight="1"
                     android:maxWidth="200dp"
@@ -774,7 +742,6 @@
                     android:layout_height="wrap_content"
                     android:textAppearance="?android:attr/textAppearanceMedium"
                     android:text="Chombo Payments"
-                    android:id="@+id/textView72"
                     android:singleLine="false"
                     android:layout_weight="1"
                     android:maxWidth="200dp"
@@ -825,7 +792,6 @@
                 android:layout_height="wrap_content"
                 android:textAppearance="?android:attr/textAppearanceLarge"
                 android:text="4 Player"
-                android:id="@+id/textView73"
                 android:textAlignment="center" />
 
             <TableRow
@@ -838,7 +804,6 @@
                     android:layout_height="wrap_content"
                     android:textAppearance="?android:attr/textAppearanceMedium"
                     android:text="Starting Points"
-                    android:id="@+id/textView74"
                     android:singleLine="false"
                     android:layout_weight="1"
                     android:maxWidth="200dp"
@@ -882,7 +847,6 @@
                     android:layout_height="wrap_content"
                     android:textAppearance="?android:attr/textAppearanceMedium"
                     android:text="Placement Bonus for 1st"
-                    android:id="@+id/textView75"
                     android:singleLine="false"
                     android:layout_weight="1"
                     android:maxWidth="200dp"
@@ -926,7 +890,6 @@
                     android:layout_height="wrap_content"
                     android:textAppearance="?android:attr/textAppearanceMedium"
                     android:text="Placement Bonus for 2nd"
-                    android:id="@+id/textView82"
                     android:singleLine="false"
                     android:layout_weight="1"
                     android:maxWidth="200dp"
@@ -970,7 +933,6 @@
                     android:layout_height="wrap_content"
                     android:textAppearance="?android:attr/textAppearanceMedium"
                     android:text="Chombo Payments"
-                    android:id="@+id/textView76"
                     android:singleLine="false"
                     android:layout_weight="1"
                     android:maxWidth="200dp"
@@ -1015,7 +977,6 @@
                 android:layout_height="wrap_content"
                 android:textAppearance="?android:attr/textAppearanceLarge"
                 android:text="5 Player"
-                android:id="@+id/textView77"
                 android:textAlignment="center" />
 
             <TableRow
@@ -1028,7 +989,6 @@
                     android:layout_height="wrap_content"
                     android:textAppearance="?android:attr/textAppearanceMedium"
                     android:text="Starting Points"
-                    android:id="@+id/textView78"
                     android:singleLine="false"
                     android:layout_weight="1"
                     android:maxWidth="200dp"
@@ -1072,7 +1032,6 @@
                     android:layout_height="wrap_content"
                     android:textAppearance="?android:attr/textAppearanceMedium"
                     android:text="Placement Bonus for 1st"
-                    android:id="@+id/textView79"
                     android:singleLine="false"
                     android:layout_weight="1"
                     android:maxWidth="200dp"
@@ -1116,7 +1075,6 @@
                     android:layout_height="wrap_content"
                     android:textAppearance="?android:attr/textAppearanceMedium"
                     android:text="Placement Bonus for 2nd"
-                    android:id="@+id/textView81"
                     android:singleLine="false"
                     android:layout_weight="1"
                     android:maxWidth="200dp"
@@ -1160,7 +1118,6 @@
                     android:layout_height="wrap_content"
                     android:textAppearance="?android:attr/textAppearanceMedium"
                     android:text="Chombo Payments"
-                    android:id="@+id/textView80"
                     android:singleLine="false"
                     android:layout_weight="1"
                     android:maxWidth="200dp"

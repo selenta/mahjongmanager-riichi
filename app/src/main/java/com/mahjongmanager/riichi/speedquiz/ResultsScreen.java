@@ -21,6 +21,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ResultsScreen extends Fragment implements View.OnClickListener {
+    MainActivity activity;
+
     private TextView correctScoreLabel;
     private TextView newHighScore;
     private TextView incorrectScoreLabel;
@@ -38,6 +40,9 @@ public class ResultsScreen extends Fragment implements View.OnClickListener {
         View myInflatedView = inflater.inflate(R.layout.fragment_speedquiz_3scorescreen, container, false);
         registerUI(myInflatedView);
 
+        activity = ((MainActivity)getActivity());
+        activity.setIgnoreBack(true);
+
         // If a user got here form pressing Back the variables are correct, just need to update UI
         if( completeList.isEmpty() ) {
             scoreGuesses();
@@ -51,8 +56,8 @@ public class ResultsScreen extends Fragment implements View.OnClickListener {
     }
 
     private void scoreGuesses(){
-        completeList = ((MainActivity)getActivity()).getScoredHands();
-        List<int[]> guessList = ((MainActivity)getActivity()).getHanFuGuesses();
+        completeList = activity.getScoredHands();
+        List<int[]> guessList = activity.getHanFuGuesses();
 
         for(int i=0; i<completeList.size(); i++){
             ScoreCalculator sc = new ScoreCalculator(completeList.get(i));
@@ -77,12 +82,12 @@ public class ResultsScreen extends Fragment implements View.OnClickListener {
         incorrectScoreLabel.setText(String.valueOf(incorrectGuesses));
     }
     private void checkNewHighScore(){
-        SharedPreferences sharedPref = getActivity().getPreferences(Context.MODE_PRIVATE);
+        SharedPreferences sharedPref = activity.getPreferences(Context.MODE_PRIVATE);
         int highScore = sharedPref.getInt("SpeedQuizHighScore", 0);
 
         if( correctGuesses> highScore){
             newHighScore.setVisibility(View.VISIBLE);
-            SharedPreferences settings = getActivity().getPreferences(Context.MODE_PRIVATE);
+            SharedPreferences settings = activity.getPreferences(Context.MODE_PRIVATE);
             SharedPreferences.Editor editor = settings.edit();
             editor.putInt("SpeedQuizHighScore", correctGuesses);
             editor.apply();
@@ -104,8 +109,8 @@ public class ResultsScreen extends Fragment implements View.OnClickListener {
     @Override
     public void onClick(View v) {
         if( v.getId() < completeList.size() ){
-            ((MainActivity)getActivity()).setCurrentHand(completeList.get(v.getId()));
-            ((MainActivity)getActivity()).goToSpeedQuizReviewHand(v);
+            activity.setCurrentHand(completeList.get(v.getId()));
+            activity.goToSpeedQuizReviewHand(v);
         }
     }
 

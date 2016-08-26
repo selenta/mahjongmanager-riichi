@@ -12,7 +12,6 @@
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceLarge"
         android:text="Speed Quiz"
-        android:id="@+id/textView28"
         android:textSize="44sp"
         android:textStyle="italic"
         android:textAlignment="center"
@@ -34,7 +33,6 @@
                 android:layout_height="wrap_content"
                 android:textAppearance="?android:attr/textAppearanceLarge"
                 android:text="Correct: "
-                android:id="@+id/textView32"
                 android:layout_marginRight="15dp"
                 android:layout_gravity="right" />
 
@@ -69,7 +67,6 @@
                 android:layout_height="wrap_content"
                 android:textAppearance="?android:attr/textAppearanceLarge"
                 android:text="Incorrect: "
-                android:id="@+id/textView35"
                 android:layout_marginRight="15dp"
                 android:layout_gravity="right" />
 
@@ -91,7 +88,6 @@
     <ScrollView
         android:layout_width="fill_parent"
         android:layout_height="0dp"
-        android:id="@+id/scrollView3"
         android:layout_weight="1" >
 
         <LinearLayout
@@ -105,7 +101,6 @@
                 android:layout_height="wrap_content"
                 android:textAppearance="?android:attr/textAppearanceMedium"
                 android:text="Review Incorrect Hands:"
-                android:id="@+id/textView34"
                 android:layout_margin="10dp"
                 android:layout_gravity="center_horizontal" />
         </LinearLayout>
@@ -120,11 +115,11 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Back to Main Menu"
-        android:id="@+id/mainMenuButton"
         android:layout_gravity="center"
         android:paddingEnd="20dp"
         android:paddingStart="20dp"
         android:onClick="backToMainMenu"
-        android:enabled="false" />
+        android:enabled="false"
+        android:id="@+id/mainMenuButton" />
 
 </LinearLayout>

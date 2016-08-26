@@ -2,84 +2,83 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:orientation="vertical"
-    android:layout_width="fill_parent"
-    android:layout_height="fill_parent"
-    android:scrollIndicators="right"
-    android:id="@+id/fragment_hanfucalculator"
-    tools:context=".simplefragments.HanFuCalculatorFragment"
-    android:nestedScrollingEnabled="false">
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".simplefragments.HanFuCalculatorFragment">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceLarge"
-        android:text="Hand Calculator"
-        android:id="@+id/title"
-        android:textSize="44sp"
-        android:textStyle="italic"
-        android:layout_gravity="center_horizontal" />
-
-    <LinearLayout
-        android:orientation="vertical"
-        android:layout_width="match_parent"
+    <ScrollView
+        android:layout_width="fill_parent"
         android:layout_height="0dp"
+        android:scrollIndicators="right"
         android:layout_weight="1"
-        android:id="@+id/step1Contianer">
+        android:fillViewport="true">
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textAppearance="?android:attr/textAppearanceMedium"
-            android:text="Step 1: Enter each tile in the hand"
-            android:id="@+id/subTitle"
-            android:textSize="24sp"
-            android:layout_gravity="center_horizontal"
-            android:layout_weight="1" />
-
-        <com.mahjongmanager.riichi.components.HandKeyboard
+        <LinearLayout
+            android:orientation="vertical"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/handKeyboard" />
+            android:layout_height="wrap_content">
 
-    </LinearLayout>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:text="Hand Calculator"
+                android:textSize="44sp"
+                android:textStyle="italic"
+                android:layout_gravity="center_horizontal" />
 
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:background="@android:color/darker_gray"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:text="Step 1: Enter each tile in the hand"
+                android:textSize="24sp"
+                android:layout_gravity="center_horizontal" />
 
-    <LinearLayout
-        android:orientation="horizontal"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+            <com.mahjongmanager.riichi.components.HandKeyboard
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:id="@+id/handKeyboard"
+                android:layout_weight="1" />
 
-        <Button
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Clear"
-            android:id="@+id/clearHandButton"
-            android:layout_gravity="center"
-            android:paddingEnd="15dp"
-            android:paddingStart="15dp"
-            android:layout_marginLeft="15dp" />
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@android:color/darker_gray"/>
 
-        <View
-            android:layout_width="fill_parent"
-            android:layout_height="2dp"
-            android:layout_weight="1" />
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
 
-        <Button
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Next"
-            android:id="@+id/nextButton"
-            android:layout_gravity="center_vertical|right"
-            android:paddingEnd="30dp"
-            android:paddingStart="30dp"
-            android:onClick="gotoHandCalculatorWinningTile"
-            android:layout_marginRight="15dp"
-            android:enabled="false" />
+                <Button
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Clear"
+                    android:id="@+id/clearHandButton"
+                    android:layout_gravity="center"
+                    android:paddingEnd="15dp"
+                    android:paddingStart="15dp"
+                    android:layout_marginLeft="15dp" />
 
-    </LinearLayout>
+                <View
+                    android:layout_width="fill_parent"
+                    android:layout_height="2dp"
+                    android:layout_weight="1" />
 
+                <Button
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Next"
+                    android:id="@+id/nextButton"
+                    android:layout_gravity="center_vertical|right"
+                    android:paddingEnd="30dp"
+                    android:paddingStart="30dp"
+                    android:onClick="gotoHandCalculatorWinningTile"
+                    android:layout_marginRight="15dp"
+                    android:enabled="false" />
+
+            </LinearLayout>
+        </LinearLayout>
+    </ScrollView>
 </LinearLayout>

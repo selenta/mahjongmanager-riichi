@@ -109,13 +109,13 @@ public class MainActivity extends AppCompatActivity {
         }
     }
     public void goToSpeedQuizResultsScreen(View view){
-        ignoreBack = false;
         if( speedQuizTimer!=null ){
             speedQuizTimer.cancel();
         }
         replaceFragment(new ResultsScreen(), false);
     }
     public void goToSpeedQuizReviewHand(View view){
+        ignoreBack = false;
         replaceFragment(new ReviewHand());
     }
 
@@ -156,6 +156,8 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void backToMainMenu(View view){
+        ignoreBack = false;
+
         currentHanGuess = 0;
         currentFuGuess = 0;
         currentHand = new Hand(new ArrayList<Tile>());
@@ -248,6 +250,10 @@ public class MainActivity extends AppCompatActivity {
             }
         }
         currentHand = h;
+    }
+
+    public void setIgnoreBack(boolean newState){
+        ignoreBack = newState;
     }
 
     //////////////////////////////////////////
