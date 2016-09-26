@@ -43,7 +43,7 @@ public class Yaku {
     }
 
     public String toString(){
-        return toStringVerbose();       // TODO simplify
+        return "romaji: "+romaji;
     }
     public String toStringVerbose(){
         String s = " name: " + name + "\n";

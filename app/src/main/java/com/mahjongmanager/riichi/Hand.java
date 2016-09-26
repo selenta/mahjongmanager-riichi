@@ -262,7 +262,6 @@ public class Hand {
     // Verify hand consistency, including:
     //TODO consider other inherently contradictory yaku conditions
     //TODO Chiitoitsu/kokushi/nagashi don't work with most things
-    //TODO validate that none of the tiles are duplicate objects
     // Good spreadsheet to use as reference: http://arcturus.su/wiki/Yaku_compatability
     public boolean validateCompleteState(){
         if( unsortedTiles.size()!=0 ){
@@ -276,6 +275,7 @@ public class Hand {
         if( !(validateNotTooManyTiles()
                 && validateOnlyOneWinningTile()
                 && validateEachTile()
+                && validateNoDuplicateTiles()
                 && validateRealScore()
                 && validateHaiteiHoutei()
                 && validateChanKan()
@@ -327,6 +327,17 @@ public class Hand {
                 Log.e("validateCompleteState", "Tile is in invalid state: "+t.toString());
                 return false;
             }
+        }
+        return true;
+    }
+    private boolean validateNoDuplicateTiles(){
+        List<Tile> temp = new ArrayList<>();
+        for(Tile t : tiles ){
+            if( temp.contains(t) ){
+                Log.e("validateNoDuplicateTiles", "Tiles list has duplicate instances of Tile object: "+t.toString());
+                return false;
+            }
+            temp.add(t);
         }
         return true;
     }

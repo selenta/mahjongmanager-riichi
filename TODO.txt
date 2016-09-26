@@ -1,7 +1,6 @@
 TODO list:
 
 - Create icon for app
-- Ensure dialogs are dismissed with Android Back button
 - Ability to zoom-in on pictures
 - Ability to change font text size or zoom-in
 - Ensure flowchart is high enough quality for horizontal mode
