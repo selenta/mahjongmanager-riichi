@@ -99,6 +99,21 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textAppearance="?android:attr/textAppearanceLarge"
+                android:text="Note about Terminology"
+                android:paddingTop="10dp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:text="The terminology used throughout the app is a mixture of English and Japanese. I tried to use the English descriptions when first introducing a concept, but tend to use the Japanese terms almost everywhere else. All players of the game should eventually learn the Japanese terminology, as veteren players you meet will rarely refer to English terminology."
+                android:textSize="14sp" />
+
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceLarge"
                 android:text="Contact Info"
                 android:paddingTop="10dp" />
 

@@ -48,7 +48,14 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textAppearance="?android:attr/textAppearanceMedium"
-                android:text="As a gambling game, there are a number of steps to ensure that the initial state of the game is randomized. The specifics are not overly important, so long as the amount of randomness is acceptable to your group."
+                android:text="At its core, Mahjong is very similar to many card games. Each player has a hand of 13 cards, and starting with the dealer, takes turns drawing and discarding tiles until they get a complete hand. A complete hand consists of 4 sets of 3, and a pair."
+                android:textSize="14sp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:text="NOTE: As a gambling game, there are a number of steps to ensure that the initial state of the game is randomized. These steps essentially serve the same function as shuffling and cutting the deck before starting a card game."
                 android:textSize="14sp" />
 
             <TextView
