@@ -32,19 +32,19 @@ public class HandGenerator {
      * the rest of the meld is generated. The founding tile does not influence what kind of
      * meld (pon, open kan, chi, etc) it will become when the rest of the tiles are added.
      */
-    List<Tile> foundingTileOptions = new ArrayList<>();
+    List<Tile> foundingTileOptions;
     private int numberOfSuits = 3;
     private boolean allowHonors = true;
 
     HashMap<String, Double> yakuOdds = new HashMap<>();
 
-    Meld pair  = new Meld();
-    Meld meld1 = new Meld();
-    Meld meld2 = new Meld();
-    Meld meld3 = new Meld();
-    Meld meld4 = new Meld();
+    Meld pair;
+    Meld meld1;
+    Meld meld2;
+    Meld meld3;
+    Meld meld4;
 
-    List<String> yakuList = new ArrayList<>();
+    List<String> yakuList;
 
 
     public HandGenerator(){
@@ -53,10 +53,12 @@ public class HandGenerator {
         yakuOdds.put("Tanyao", 0.4);
         yakuOdds.put("Honitsu", 0.25);
         yakuOdds.put("Chinitsu", 0.15);
+        cleanup();
     }
     public HandGenerator(Context current){
         this.context = current;
         populateYakuOdds();
+        cleanup();
     }
 
     public void setNumberOfSuits(int i){
@@ -72,9 +74,6 @@ public class HandGenerator {
     }
 
     public Hand completelyRandomHand(){
-        cleanup();
-        setFoundingTileOptions();
-
         Log.d("completelyRandomHand", "Number of suits: " + numberOfSuits);
         Log.d("completelyRandomHand", "Allow honors: " + allowHonors);
 
@@ -85,7 +84,10 @@ public class HandGenerator {
 
         createMelds();
         randomWinningTile();
-        return new Hand(usedTiles());
+
+        Hand h = new Hand(usedTiles());
+        cleanup();
+        return h;
     }
     private void createMelds(){
         createFounderTiles();
@@ -274,7 +276,8 @@ public class HandGenerator {
         }
         tiles.removeAll(markedForRemoval);
         Log.v("randomTile", "Options: " + tiles.toString());
-        Tile randTile = tiles.get(new Random().nextInt(tiles.size()));
+        int idx = new Random().nextInt(tiles.size());
+        Tile randTile = tiles.get(idx);
         Log.v("randomTile", "Tile: " + randTile.toString());
         return randTile;
     }
@@ -529,6 +532,7 @@ public class HandGenerator {
             }
         }
         h.sort();
+        cleanup();
     }
     public void addHonroutouToChiitoitsu(Hand h){
         removeTilesFromList(foundingTileOptions, allSimples());
@@ -545,6 +549,7 @@ public class HandGenerator {
             }
         }
         h.sort();
+        cleanup();
     }
     public void addHonitsuToChiitoitsu(Hand h){
         Log.d("addHonitsuToChiitoitsu", "foundingTileOptions(1/2): " + foundingTileOptions );
@@ -581,6 +586,7 @@ public class HandGenerator {
             }
         }
         h.sort();
+        cleanup();
     }
     public void addChinitsuToChiitoitsu(Hand h){
         Log.d("addChinitsuToChiitoitsu", "foundingTileOptions(1/2): " + foundingTileOptions);
@@ -615,6 +621,7 @@ public class HandGenerator {
             }
         }
         h.sort();
+        cleanup();
     }
 
     private void addRiichi(Hand h){
@@ -670,12 +677,13 @@ public class HandGenerator {
         Log.i("readCsv", "yakuOdds: " + yakuOdds.toString());
     }
     private void cleanup(){
-        foundingTileOptions.clear();
+        foundingTileOptions = new ArrayList<>();
         pair  = new Meld();
         meld1 = new Meld();
         meld2 = new Meld();
         meld3 = new Meld();
         meld4 = new Meld();
         yakuList = new ArrayList<>();
+        setFoundingTileOptions();
     }
 }

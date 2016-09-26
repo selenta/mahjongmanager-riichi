@@ -607,4 +607,46 @@ public class ScoreCalculatorTest {
         Assert.assertNotNull(validatedHand);
         Assert.assertTrue(validatedHand.sanshokuDoujun);
     }
+
+    @Test
+    public void doraIndicatorTest(){
+        // This hand should have: Extreme fu
+        // Han: 1       Fu: 102 (110)
+        Tile t1 = new Tile(Tile.Dragon.RED);
+        Tile t2 = new Tile(Tile.Dragon.RED);
+        Tile t3 = new Tile(Tile.Dragon.RED);
+        Tile t4 = new Tile(9, Tile.Suit.SOUZU);
+        Tile t5 = new Tile(9, Tile.Suit.SOUZU);
+        Tile t6 = new Tile(9, Tile.Suit.SOUZU);
+        Tile t7 = new Tile(9, Tile.Suit.SOUZU);
+        Tile t8 = new Tile( Tile.Wind.NORTH);
+        Tile t9 = new Tile( Tile.Wind.NORTH);
+        Tile t10 = new Tile(Tile.Wind.NORTH);
+        Tile t11 = new Tile(6, Tile.Suit.MANZU);
+        Tile t12 = new Tile(7, Tile.Suit.MANZU);
+        Tile t13 = new Tile(8, Tile.Suit.MANZU);
+
+        Tile t14 = new Tile(Tile.Wind.SOUTH);
+        Tile t15 = new Tile(Tile.Wind.SOUTH);
+
+        t4.revealedState = t5.revealedState = t6.revealedState = t7.revealedState = Tile.RevealedState.CLOSEDKAN;
+
+        t10.calledFrom = Tile.CalledFrom.CENTER;
+        t10.winningTile = true;
+
+        Hand h = new Hand(Arrays.asList(t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11, t12, t13, t14, t15));
+        h.prevailingWind = Tile.Wind.SOUTH;
+        h.playerWind = Tile.Wind.SOUTH;
+
+        h.doraIndicator1 = new Tile(Tile.Dragon.GREEN);
+        h.doraIndicator2 = new Tile(Tile.Wind.WEST);
+        h.doraIndicator3 = new Tile(6, Tile.Suit.MANZU);
+        h.doraIndicator4 = new Tile(7, Tile.Suit.MANZU);
+
+        ScoreCalculator sc = new ScoreCalculator(h);
+        Hand validatedHand = sc.validatedHand;
+
+        Assert.assertSame(  9, validatedHand.han);
+        Assert.assertSame(  8, validatedHand.dora);
+    }
 }
