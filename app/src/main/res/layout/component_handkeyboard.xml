@@ -13,14 +13,22 @@
         android:textStyle="bold|italic"
         android:textColor="#ff0000"
         android:layout_gravity="center_horizontal"
-        android:textAlignment="center" />
+        android:textAlignment="center"/>
+
+    <Space
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"/>
 
     <com.mahjongmanager.riichi.components.HandDisplay
         android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/handDisplay" />
+
+    <Space
+        android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:id="@+id/handDisplay"
-        android:layout_weight="1"
-        android:minHeight="60sp" />
+        android:layout_weight="1"/>
 
     <TextView
         android:layout_width="wrap_content"
@@ -60,11 +68,11 @@
 
         <CheckBox
             android:layout_width="wrap_content"
-            android:layout_height="fill_parent"
+            android:layout_height="wrap_content"
             android:text="Add Open Melds"
             android:id="@+id/openMeldsCheckbox"
             android:checked="false"
-            android:textSize="18dp"
+            android:textSize="18sp"
             android:paddingRight="5dp" />
 
         <Button

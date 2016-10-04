@@ -16,14 +16,14 @@
         <LinearLayout
             android:orientation="vertical"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:gravity="center_horizontal">
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textAppearance="?android:attr/textAppearanceLarge"
-                android:text="Hand Calculator"
+                android:text="Score Breakdown"
                 android:textSize="44sp"
                 android:textStyle="italic"
                 android:layout_gravity="center_horizontal" />
@@ -31,8 +31,7 @@
             <com.mahjongmanager.riichi.components.HandDisplay
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:id="@+id/handDisplay"
-                android:minHeight="60dp" />
+                android:id="@+id/handDisplay" />
 
             <com.mahjongmanager.riichi.components.ScoreScreen
                 android:layout_width="match_parent"
@@ -40,20 +39,21 @@
                 android:id="@+id/scoreScreen"
                 android:layout_weight="1" />
 
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:background="@android:color/darker_gray" />
-
-            <Button
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Back to Main Menu"
-                android:layout_gravity="center"
-                android:paddingEnd="20dp"
-                android:paddingStart="20dp"
-                android:onClick="backToMainMenu" />
-
         </LinearLayout>
     </ScrollView>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@android:color/darker_gray" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Back to Main Menu"
+        android:layout_gravity="center"
+        android:paddingEnd="20dp"
+        android:paddingStart="20dp"
+        android:onClick="backToMainMenu" />
+
 </LinearLayout>

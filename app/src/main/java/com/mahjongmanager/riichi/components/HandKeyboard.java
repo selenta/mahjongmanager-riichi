@@ -101,7 +101,6 @@ public class HandKeyboard extends LinearLayout implements View.OnClickListener {
 
         registerUIElements();
         checkKeyboardMode();
-        setErrorMessage(null);
     }
     private void checkKeyboardMode(){
         if(isInEditMode()){     // This is only here so that Android Studio will display component

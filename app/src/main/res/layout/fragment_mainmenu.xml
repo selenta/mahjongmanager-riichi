@@ -135,10 +135,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textAppearance="?android:attr/textAppearanceSmall"
-                android:text="v0.87"
-                android:layout_gravity="center_horizontal"
-                android:longClickable="true"
-                android:layout_weight="1" />
+                android:text="v0.88"
+                android:layout_gravity="center_horizontal" />
 
         </LinearLayout>
     </ScrollView>
