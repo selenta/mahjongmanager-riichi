@@ -10,6 +10,9 @@ import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.AdView;
+import com.google.android.gms.ads.MobileAds;
 import com.mahjongmanager.riichi.handcalculator.*;
 import com.mahjongmanager.riichi.simplefragments.*;
 import com.mahjongmanager.riichi.speedquiz.*;
@@ -19,6 +22,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
+    private AdView mAdView;
+
     // When a hand needs to be passed along between fragments (such as the HandCalculator)
     public Hand currentHand = new Hand(new ArrayList<Tile>());
 
@@ -28,6 +33,7 @@ public class MainActivity extends AppCompatActivity {
     private int currentHanGuess = 0;
     private int currentFuGuess  = 0;
     private CountDownTimer speedQuizTimer;
+    private long timerRemaining;
 
     private boolean ignoreBack = false;
 
@@ -36,6 +42,15 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        // Load banner ad
+        MobileAds.initialize(getApplicationContext(), "ca-app-pub-7864566452891143/4353535112");
+        mAdView = (AdView) findViewById(R.id.adView);
+        AdRequest adRequest = new AdRequest.Builder()
+                .addTestDevice(AdRequest.DEVICE_ID_EMULATOR)
+                .build();
+        mAdView.loadAd(adRequest);
+
+        // Load Main Menu
         if (findViewById(R.id.fragment_container) != null) {
             if (savedInstanceState != null) {
                 return;
@@ -55,6 +70,42 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+    @Override
+    public void onPause() {
+        if (mAdView != null) {
+            mAdView.pause();
+        }
+        if (speedQuizTimer!=null){
+            speedQuizTimer.cancel();
+        }
+        super.onPause();
+    }
+
+    /** Called when returning to the activity */
+    @Override
+    public void onResume() {
+        super.onResume();
+        if (mAdView != null) {
+            mAdView.resume();
+        }
+//        if( timerRemaining!=0){
+//            createSpeedQuizTimer(timerRemaining);
+//        }
+    }
+
+    /** Called before the activity is destroyed */
+    @Override
+    public void onDestroy() {
+        if (mAdView != null) {
+            mAdView.destroy();
+        }
+        if (speedQuizTimer!=null){
+            speedQuizTimer.cancel();
+            timerRemaining = 0;
+        }
+        super.onDestroy();
+    }
+
     ///////////////////////////////////////////////////
     /////////////    Navigating UIs     ///////////////
     ///////////////////////////////////////////////////
@@ -72,26 +123,14 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void goToSpeedQuizStart(View view){
-        replaceFragment(new Start(), false);
+        replaceFragment(new Start());
     }
     public void goToSpeedQuizScoreHand(View view){
         ignoreBack = true;
         generateSpeedQuizHand();
         replaceFragment(new ScoreHand(), false);
 
-        speedQuizTimer = new CountDownTimer(90000, 100){
-            @Override
-            public void onTick(long millisUntilFinished){
-                ScoreHand sq = (ScoreHand) getSupportFragmentManager().findFragmentById(R.id.fragment_container);
-                if( sq!=null ){
-                    sq.updateSecondCounter( String.valueOf( (int)millisUntilFinished/1000 ));
-                }
-            }
-            @Override
-            public void onFinish(){
-                goToSpeedQuizResultsScreen(getCurrentFocus());
-            }
-        }.start();
+        createSpeedQuizTimer(90000);
     }
     public void goToSpeedQuizScoreHandNext(View view){
         scoredHands.add(currentHand);
@@ -112,6 +151,7 @@ public class MainActivity extends AppCompatActivity {
         if( speedQuizTimer!=null ){
             speedQuizTimer.cancel();
         }
+        timerRemaining = 0;
         replaceFragment(new ResultsScreen(), false);
     }
     public void goToSpeedQuizReviewHand(View view){
@@ -259,6 +299,23 @@ public class MainActivity extends AppCompatActivity {
     //////////////////////////////////////////
     /////////////    Utils     ///////////////
     //////////////////////////////////////////
+    private void createSpeedQuizTimer(long durationMillis){
+        speedQuizTimer = new CountDownTimer(durationMillis, 100){
+            @Override
+            public void onTick(long millisUntilFinished){
+                Fragment frag = getSupportFragmentManager().findFragmentById(R.id.fragment_container);
+                if( frag!=null && frag.getClass()==ScoreHand.class ){
+                    ((ScoreHand)frag).updateSecondCounter( String.valueOf( (int)millisUntilFinished/1000 ));
+                }
+                timerRemaining = millisUntilFinished;
+            }
+            @Override
+            public void onFinish(){
+                goToSpeedQuizResultsScreen(getCurrentFocus());
+            }
+        }.start();
+    }
+
     private boolean proceedToQuizResults(){
         String SQ_MAX_HANDS = "SQMaxHands";
         SharedPreferences sharedPref = getPreferences(Context.MODE_PRIVATE);

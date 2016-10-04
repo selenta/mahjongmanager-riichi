@@ -1,0 +1,42 @@
+{
+  "project_info": {
+    "project_number": "1082996582916",
+    "firebase_url": "https://mahjong-manager.firebaseio.com",
+    "project_id": "mahjong-manager",
+    "storage_bucket": "mahjong-manager.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1082996582916:android:c06c69c34f4516d0",
+        "android_client_info": {
+          "package_name": "com.mahjongmanager.riichi"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1082996582916-2jasaql9pmv08k8h65sspb2f7d9bgbja.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDvuVvZ2Xg6kx3fnUh53ld7VSudcKD4aiw"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
