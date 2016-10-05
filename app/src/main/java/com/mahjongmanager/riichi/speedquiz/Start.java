@@ -9,6 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.mahjongmanager.riichi.MainActivity;
 import com.mahjongmanager.riichi.R;
 
 public class Start extends Fragment {
@@ -25,5 +26,13 @@ public class Start extends Fragment {
         currentHighScoreLabel.setText(highScoreLabel);
 
         return myInflatedView;
+    }
+
+    @Override
+    public void onStart(){
+        super.onStart();
+
+        //Load tile images now
+        ((MainActivity)getActivity()).getImageCache();
     }
 }
