@@ -17,7 +17,7 @@
             android:layout_height="wrap_content"
             android:paddingLeft="10dp"
             android:paddingRight="10dp"
-            android:measureWithLargestChild="true">
+            android:measureWithLargestChild="false">
 
             <TextView
                 android:layout_width="wrap_content"
@@ -29,7 +29,7 @@
                 android:layout_gravity="center_horizontal" />
 
             <TextView
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:textAppearance="?android:attr/textAppearanceMedium"
                 android:text="The information included in this app is intended as an overview/reminder of the rules for Riichi Mahjong, it is a description of one set of fairly standard rules."
@@ -42,7 +42,7 @@
             <LinearLayout
                 android:orientation="vertical"
                 android:layout_width="wrap_content"
-                android:layout_height="match_parent"
+                android:layout_height="wrap_content"
                 android:layout_gravity="center">
 
                 <Button
@@ -74,20 +74,18 @@
                     android:layout_height="wrap_content"
                     android:text="Scoring Flowchart"
                     android:enabled="true"
-                    android:onClick="goToScoringFlowchart"
-                    android:layout_weight="1" />
+                    android:onClick="goToScoringFlowchart" />
 
             </LinearLayout>
 
             <LinearLayout
                 android:orientation="vertical"
-                android:layout_width="fill_parent"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center"
                 android:layout_marginTop="40dp">
 
                 <TextView
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:textAppearance="?android:attr/textAppearanceMedium"
                     android:text="For more detailed explanations, check out the web articles linked below (this will leave the app)."

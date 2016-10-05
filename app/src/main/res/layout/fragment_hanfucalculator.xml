@@ -23,7 +23,8 @@
                 android:text="Han/Fu Calculator"
                 android:textSize="44sp"
                 android:textStyle="italic"
-                android:layout_gravity="center_horizontal" />
+                android:layout_gravity="center_horizontal"
+                android:id="@+id/hanFuTitleLabel" />
 
             <CheckBox
                 android:layout_width="wrap_content"

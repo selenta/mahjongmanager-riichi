@@ -2,9 +2,11 @@ package com.mahjongmanager.riichi.handcalculator;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.util.DisplayMetrics;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import com.mahjongmanager.riichi.Hand;
 import com.mahjongmanager.riichi.components.HandDisplay;
@@ -19,6 +21,7 @@ import com.mahjongmanager.riichi.utils.Log;
 import java.util.Arrays;
 
 public class FinalScore extends Fragment {
+    TextView scoreScreenTitleLabel;
 
     private Hand actHand;
 
@@ -28,6 +31,7 @@ public class FinalScore extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View myInflatedView = inflater.inflate(R.layout.fragment_handcalculator_4scorescreen, container, false);
+        scoreScreenTitleLabel = (TextView) myInflatedView.findViewById(R.id.scoreScreenTitleLabel);
         handDisplay = (HandDisplay) myInflatedView.findViewById(R.id.handDisplay);
         scoreScreen = (ScoreScreen) myInflatedView.findViewById(R.id.scoreScreen);
 
@@ -38,6 +42,7 @@ public class FinalScore extends Fragment {
         handDisplay.setHand(actHand);
         scoreScreen.setHand(actHand);
 
+        checkTitleTextSize();
         return myInflatedView;
     }
 
@@ -78,6 +83,17 @@ public class FinalScore extends Fragment {
             for(Tile t : m.getTiles()){
                 t.revealedState = newState;
             }
+        }
+    }
+
+    private void checkTitleTextSize(){
+
+        //Update title to fit smaller screens
+        DisplayMetrics metrics = new DisplayMetrics();
+        getActivity().getWindowManager().getDefaultDisplay().getMetrics(metrics);
+        int screenSize = metrics.widthPixels;
+        if( screenSize < 1024 ){
+            scoreScreenTitleLabel.setTextSize(scoreScreenTitleLabel.getTextSize()*0.55f);
         }
     }
 }

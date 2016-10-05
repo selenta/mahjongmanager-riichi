@@ -26,7 +26,8 @@
                 android:text="Score Breakdown"
                 android:textSize="44sp"
                 android:textStyle="italic"
-                android:layout_gravity="center_horizontal" />
+                android:layout_gravity="center_horizontal"
+                android:id="@+id/scoreScreenTitleLabel" />
 
             <com.mahjongmanager.riichi.components.HandDisplay
                 android:layout_width="match_parent"

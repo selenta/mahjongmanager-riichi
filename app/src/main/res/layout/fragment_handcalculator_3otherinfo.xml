@@ -226,47 +226,45 @@
                         android:textSize="18sp" />
                 </RadioGroup>
             </LinearLayout>
-
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:background="@android:color/darker_gray"/>
-
-            <LinearLayout
-                android:orientation="horizontal"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-
-                <Button
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Cancel"
-                    android:layout_gravity="center"
-                    android:paddingEnd="30dp"
-                    android:paddingStart="30dp"
-                    android:onClick="backToMainMenu"
-                    android:layout_marginLeft="15dp" />
-
-                <View
-                    android:layout_width="0dp"
-                    android:layout_height="2dp"
-                    android:layout_weight="1" />
-
-                <Button
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Next"
-                    android:id="@+id/nextButton"
-                    android:layout_gravity="center_vertical|right"
-                    android:paddingEnd="30dp"
-                    android:paddingStart="30dp"
-                    android:onClick="goToHandCalculatorFinalScore"
-                    android:layout_marginRight="15dp"
-                    android:enabled="true" />
-            </LinearLayout>
         </LinearLayout>
     </ScrollView>
 
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@android:color/darker_gray"/>
 
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Cancel"
+            android:layout_gravity="center"
+            android:paddingEnd="30dp"
+            android:paddingStart="30dp"
+            android:onClick="backToMainMenu"
+            android:layout_marginLeft="15dp" />
+
+        <View
+            android:layout_width="0dp"
+            android:layout_height="2dp"
+            android:layout_weight="1" />
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Next"
+            android:id="@+id/nextButton"
+            android:layout_gravity="center_vertical|right"
+            android:paddingEnd="30dp"
+            android:paddingStart="30dp"
+            android:onClick="goToHandCalculatorFinalScore"
+            android:layout_marginRight="15dp"
+            android:enabled="true" />
+    </LinearLayout>
 
 </LinearLayout>

@@ -472,7 +472,7 @@ public class HandDisplay extends LinearLayout implements View.OnClickListener {
         public Tile tile;
         public ImageView view;
 
-        public TileDisplay(Tile t, boolean rotated){
+        TileDisplay(Tile t, boolean rotated){
             tile = t;
             value = tile.value;
             suit = tile.suit.toString();

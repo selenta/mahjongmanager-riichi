@@ -12,7 +12,8 @@
         android:text="Mahjong Manager"
         android:textSize="44sp"
         android:textStyle="italic"
-        android:layout_gravity="center_horizontal" />
+        android:layout_gravity="center_horizontal"
+        android:id="@+id/appTitleLabel" />
 
     <ScrollView
         android:layout_width="match_parent"
@@ -27,24 +28,6 @@
             android:paddingRight="45dp">
 
             <Button
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="League Tracker (v3.0)"
-                android:layout_gravity="center_horizontal"
-                android:maxWidth="800dp"
-                android:singleLine="true"
-                android:enabled="false"
-                android:visibility="gone" />
-
-            <Button
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:text="Game Score Tracker (v2.0)"
-                android:layout_gravity="center_horizontal"
-                android:enabled="false"
-                android:visibility="gone" />
-
-            <Button
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:text="Speed Quiz"
@@ -55,10 +38,42 @@
             <Button
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
-                android:text="Hand Calculator"
+                android:text="Game Score Tracker (v2.0)"
                 android:layout_gravity="center_horizontal"
+                android:enabled="false"
+                android:visibility="gone" />
+
+            <Button
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="League Tracker (v3.0)"
+                android:layout_gravity="center_horizontal"
+                android:maxWidth="800dp"
+                android:enabled="false"
+                android:visibility="gone" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@android:color/darker_gray"
+                android:layout_marginLeft="30dp"
+                android:layout_marginRight="30dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="10dp" />
+
+            <Button
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:text="Rules Overview"
                 android:enabled="true"
-                android:onClick="gotoHandCalculatorStart"/>
+                android:onClick="goToOverview" />
+
+            <Button
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:text="Yaku Descriptions"
+                android:enabled="true"
+                android:onClick="goToYakuList" />
 
             <LinearLayout
                 android:orientation="horizontal"
@@ -68,7 +83,7 @@
                 android:measureWithLargestChild="true">
 
                 <Button
-                    android:layout_width="wrap_content"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:text="Score Table"
                     android:layout_gravity="center_horizontal"
@@ -76,7 +91,7 @@
                     android:onClick="goToScoreTable" />
 
                 <Button
-                    android:layout_width="wrap_content"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:text="Han/Fu"
                     android:layout_gravity="center_horizontal"
@@ -89,16 +104,19 @@
             <Button
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
-                android:text="Yaku Descriptions"
+                android:text="Hand Calculator"
+                android:layout_gravity="center_horizontal"
                 android:enabled="true"
-                android:onClick="goToYakuList" />
+                android:onClick="gotoHandCalculatorStart"/>
 
-            <Button
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:text="Rules Overview"
-                android:enabled="true"
-                android:onClick="goToOverview" />
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@android:color/darker_gray"
+                android:layout_marginLeft="30dp"
+                android:layout_marginRight="30dp"
+                android:layout_marginBottom="10dp"
+                android:layout_marginTop="10dp" />
 
             <LinearLayout
                 android:orientation="horizontal"
@@ -108,14 +126,14 @@
                 android:measureWithLargestChild="true">
 
                 <Button
-                    android:layout_width="wrap_content"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:text="Glossary"
                     android:enabled="false"
                     android:layout_weight="1" />
 
                 <Button
-                    android:layout_width="wrap_content"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:text="About"
                     android:layout_weight="1"

@@ -2,6 +2,7 @@ package com.mahjongmanager.riichi.simplefragments;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.util.DisplayMetrics;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,8 +17,10 @@ import java.util.Arrays;
 import java.util.List;
 
 public class HanFuCalculatorFragment extends Fragment implements View.OnClickListener {
-    private List<Integer> hanValues = Arrays.asList( 1,2,3,4,5,6,7,8,9,10,11,12,13 );
+    private List<Integer> hanValues = Arrays.asList( 1,2,3,4,5,6,7,8,9,10,11,12,13,26 );
     private List<Integer> fuValues = Arrays.asList( 20,25,30,40,50,60,70,80,90,100,110 );
+
+    private TextView hanFuTitleLabel;
 
     private int han;
     private TextView hanLabel;
@@ -41,25 +44,8 @@ public class HanFuCalculatorFragment extends Fragment implements View.OnClickLis
 
         View myInflatedView = inflater.inflate(R.layout.fragment_hanfucalculator, container, false);
 
-        hanLabel = (TextView) myInflatedView.findViewById(R.id.hanValue);
-        fuLabel = (TextView) myInflatedView.findViewById(R.id.fuValue);
-
-        dealerCheckbox = (CheckBox) myInflatedView.findViewById(R.id.dealerCheckbox);
-        dealerCheckbox.setOnClickListener(this);
-        tsumoCheckbox = (CheckBox) myInflatedView.findViewById(R.id.tsumoCheckbox);
-        tsumoCheckbox.setOnClickListener(this);
-
-        increaseHanButton = (Button) myInflatedView.findViewById(R.id.increaseHanButton);
-        increaseHanButton.setOnClickListener(this);
-        decreaseHanButton = (Button) myInflatedView.findViewById(R.id.decreaseHanButton);
-        decreaseHanButton.setOnClickListener(this);
-        increaseFuButton = (Button) myInflatedView.findViewById(R.id.increaseFuButton);
-        increaseFuButton.setOnClickListener(this);
-        decreaseFuButton = (Button) myInflatedView.findViewById(R.id.decreaseFuButton);
-        decreaseFuButton.setOnClickListener(this);
-
-        scoreValue = (TextView) myInflatedView.findViewById(R.id.scoreValue);
-
+        registerUIElements(myInflatedView);
+        checkTitleTextSize();
         updateScore();
         return myInflatedView;
     }
@@ -120,6 +106,39 @@ public class HanFuCalculatorFragment extends Fragment implements View.OnClickLis
         } else {
             increaseFuButton.setEnabled(true);
             decreaseFuButton.setEnabled(true);
+        }
+    }
+
+    private void registerUIElements(View myInflatedView){
+        hanFuTitleLabel = (TextView) myInflatedView.findViewById(R.id.hanFuTitleLabel);
+
+        hanLabel = (TextView) myInflatedView.findViewById(R.id.hanValue);
+        fuLabel = (TextView) myInflatedView.findViewById(R.id.fuValue);
+
+        dealerCheckbox = (CheckBox) myInflatedView.findViewById(R.id.dealerCheckbox);
+        dealerCheckbox.setOnClickListener(this);
+        tsumoCheckbox = (CheckBox) myInflatedView.findViewById(R.id.tsumoCheckbox);
+        tsumoCheckbox.setOnClickListener(this);
+
+        increaseHanButton = (Button) myInflatedView.findViewById(R.id.increaseHanButton);
+        increaseHanButton.setOnClickListener(this);
+        decreaseHanButton = (Button) myInflatedView.findViewById(R.id.decreaseHanButton);
+        decreaseHanButton.setOnClickListener(this);
+        increaseFuButton = (Button) myInflatedView.findViewById(R.id.increaseFuButton);
+        increaseFuButton.setOnClickListener(this);
+        decreaseFuButton = (Button) myInflatedView.findViewById(R.id.decreaseFuButton);
+        decreaseFuButton.setOnClickListener(this);
+
+        scoreValue = (TextView) myInflatedView.findViewById(R.id.scoreValue);
+    }
+
+    private void checkTitleTextSize(){
+        //Update title to fit smaller screens
+        DisplayMetrics metrics = new DisplayMetrics();
+        getActivity().getWindowManager().getDefaultDisplay().getMetrics(metrics);
+        int screenSize = metrics.widthPixels;
+        if( screenSize < 1024 ){
+            hanFuTitleLabel.setTextSize(hanFuTitleLabel.getTextSize()*0.55f);
         }
     }
 }
