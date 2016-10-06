@@ -48,14 +48,18 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
+            <Space
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1" />
+
             <GridLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:columnCount="2"
                 android:rowCount="2"
                 android:useDefaultMargins="false"
-                android:layout_gravity="center_horizontal"
-                android:layout_marginTop="10dp">
+                android:layout_gravity="center_horizontal">
 
                 <TextView
                     android:layout_width="match_parent"
@@ -179,7 +183,8 @@
                     android:textSize="24sp"
                     android:layout_gravity="center_horizontal"
                     android:layout_marginLeft="60dp"
-                    android:layout_marginRight="60dp" />
+                    android:layout_marginRight="60dp"
+                    android:id="@+id/hanLabel" />
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -189,7 +194,8 @@
                     android:textSize="24sp"
                     android:layout_gravity="center_horizontal"
                     android:layout_marginLeft="60dp"
-                    android:layout_marginRight="60dp" />
+                    android:layout_marginRight="60dp"
+                    android:id="@+id/fuLabel" />
 
                 <Button
                     android:layout_width="wrap_content"

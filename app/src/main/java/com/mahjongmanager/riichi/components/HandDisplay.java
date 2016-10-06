@@ -25,6 +25,7 @@ public class HandDisplay extends LinearLayout implements View.OnClickListener {
     private Context activity;
     private HandKeyboard parentKeyboard = null;
 
+    private LinearLayout handDisplayContainer;
     private LinearLayout closedTilesContainer;
     private LinearLayout openTilesContainer;
     private LinearLayout winningTileContainer;
@@ -42,6 +43,8 @@ public class HandDisplay extends LinearLayout implements View.OnClickListener {
     private Boolean separateClosedMelds;
     private Boolean includeWinningTile;
     private Boolean separateWinningTile;
+
+    private int spacerSize;             // 8 for standard screen size
 
     /////////////////////////////////////////
     ///////////   Constructors   ////////////
@@ -62,10 +65,13 @@ public class HandDisplay extends LinearLayout implements View.OnClickListener {
         LayoutInflater inflater = (LayoutInflater) activity.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         inflater.inflate(R.layout.component_handdisplay, this);
 
+        handDisplayContainer = (LinearLayout) findViewById(R.id.handDisplayContainer);
+
         closedTilesContainer = (LinearLayout) findViewById(R.id.closedTilesContainer);
         openTilesContainer   = (LinearLayout) findViewById(R.id.openTilesContainer);
         winningTileContainer = (LinearLayout) findViewById(R.id.winningTileContainer);
 
+        calcScreenSize();
         calcHeight();
         setState(YAKU_DESCRIPTION);
     }
@@ -137,6 +143,12 @@ public class HandDisplay extends LinearLayout implements View.OnClickListener {
         setState(s, null);
     }
 
+    private void calcScreenSize(){
+        int hdp = Utils.SCREEN_SIZE / 200 + 1;
+        handDisplayContainer.setPadding(hdp, hdp, hdp, hdp);
+
+        spacerSize = Utils.SCREEN_SIZE / 128;
+    }
     private void calcHeight(){
         if( isInEditMode() ){
             return;
@@ -147,8 +159,12 @@ public class HandDisplay extends LinearLayout implements View.OnClickListener {
         /* TODO Re-think this. Rather awkward, leaves lots of extra padding around, containers
             are being set to arbitrary sizes, and some of the containers are sized relative
             to other containers because that's "good enough".
-            Should consider: Closed Kan only, Added Kan only, Open Pon only, Hand with Added Kan,
-                Open Hand with no Added Kan
+            Should consider:
+                - Closed Kan only
+                - Added Kan only
+                - Open Pon only
+                - Hand with Added Kan
+                - Open Hand with no Added Kan
             */
         if( hand!=null && hand.hasAddedKan() ){
             size = size * 17/10 + 10;
@@ -316,7 +332,7 @@ public class HandDisplay extends LinearLayout implements View.OnClickListener {
     }
     private void addClosedSet(Meld meld) {
         if( closedTilesContainer.getChildCount()!=0 ){
-            addSpacer(closedTilesContainer, 8);
+            addSpacer(closedTilesContainer, spacerSize);
         }
 
         List<Tile> remainderSet;
@@ -341,9 +357,9 @@ public class HandDisplay extends LinearLayout implements View.OnClickListener {
     }
     private void addAddedKan(Meld meld) {
         if( openTilesContainer.getChildCount()==0 ){
-            addSpacer(openTilesContainer, 25);
+            addSpacer(openTilesContainer, 3*spacerSize);
         } else {
-            addSpacer(openTilesContainer, 8);
+            addSpacer(openTilesContainer, spacerSize);
         }
 
         Tile calledTile = meld.getCalledTile();
@@ -381,9 +397,9 @@ public class HandDisplay extends LinearLayout implements View.OnClickListener {
     }
     private void addClosedKan(Meld meld) {
         if( openTilesContainer.getChildCount()==0 ){
-            addSpacer(openTilesContainer, 25);
+            addSpacer(openTilesContainer, 3*spacerSize);
         } else {
-            addSpacer(openTilesContainer, 8);
+            addSpacer(openTilesContainer, spacerSize);
         }
 
         Tile redFiveTile = null;
@@ -446,7 +462,7 @@ public class HandDisplay extends LinearLayout implements View.OnClickListener {
         if( winningTile==null ){
             return;
         }
-        addSpacer(winningTileContainer, 25);
+        addSpacer(winningTileContainer, 3*spacerSize);
 
         TileDisplay tileDisplay = new TileDisplay(winningTile, false);
         tileList.add(tileDisplay);

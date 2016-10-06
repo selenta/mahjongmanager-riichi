@@ -8,7 +8,8 @@
 
     <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
         android:scrollIndicators="right"
         android:fillViewport="true">
 
@@ -20,6 +21,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:id="@+id/handCalculatorSubtitleLabel"
                 android:textAppearance="?android:attr/textAppearanceMedium"
                 android:text="Step 1: Enter each tile in the hand"
                 android:textSize="24sp"
@@ -31,45 +33,45 @@
                 android:layout_height="0dp"
                 android:id="@+id/handKeyboard"
                 android:layout_weight="1" />
-
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:background="@android:color/darker_gray"/>
-
-            <LinearLayout
-                android:orientation="horizontal"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-
-                <Button
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Clear"
-                    android:id="@+id/clearHandButton"
-                    android:layout_gravity="center"
-                    android:paddingEnd="15dp"
-                    android:paddingStart="15dp"
-                    android:layout_marginLeft="15dp" />
-
-                <View
-                    android:layout_width="fill_parent"
-                    android:layout_height="2dp"
-                    android:layout_weight="1" />
-
-                <Button
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Next"
-                    android:id="@+id/nextButton"
-                    android:layout_gravity="center_vertical|right"
-                    android:paddingEnd="30dp"
-                    android:paddingStart="30dp"
-                    android:onClick="gotoHandCalculatorWinningTile"
-                    android:layout_marginRight="15dp"
-                    android:enabled="false" />
-
-            </LinearLayout>
         </LinearLayout>
     </ScrollView>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@android:color/darker_gray"/>
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Clear"
+            android:id="@+id/clearHandButton"
+            android:layout_gravity="center"
+            android:paddingEnd="15dp"
+            android:paddingStart="15dp"
+            android:layout_marginLeft="15dp" />
+
+        <View
+            android:layout_width="0dp"
+            android:layout_height="2dp"
+            android:layout_weight="1" />
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Next"
+            android:id="@+id/nextButton"
+            android:layout_gravity="center_vertical|right"
+            android:paddingEnd="30dp"
+            android:paddingStart="30dp"
+            android:onClick="gotoHandCalculatorWinningTile"
+            android:layout_marginRight="15dp"
+            android:enabled="false" />
+
+    </LinearLayout>
 </LinearLayout>

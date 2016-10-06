@@ -18,7 +18,6 @@ import com.mahjongmanager.riichi.Meld;
 import com.mahjongmanager.riichi.R;
 import com.mahjongmanager.riichi.Tile;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.Comparator;
@@ -30,44 +29,60 @@ public class Utils {
     private ImageCache imageCache;
     public Utils(MainActivity ma){
         activity = ma;
-        setConstants();
+        setTileSizeConstants();
         imageCache = ma.getImageCache();
     }
 
-    private void setConstants(){
+    private void setTileSizeConstants(){
         DisplayMetrics metrics = new DisplayMetrics();
         activity.getWindowManager().getDefaultDisplay().getMetrics(metrics);
-        int screenSize = metrics.widthPixels;
-        if( metrics.heightPixels < screenSize ){
-            screenSize = metrics.heightPixels;
+        SCREEN_SIZE = metrics.widthPixels;
+        if( metrics.heightPixels < SCREEN_SIZE ){
+            SCREEN_SIZE = metrics.heightPixels;
         }
-        Log.i("screenSize", "Screen size in pixels: "+ screenSize);
+        Log.i("screenSize", "Screen size in pixels: "+ SCREEN_SIZE);
 
-        tilePadding      = screenSize / 128;
-        tileCornerRadius = screenSize / 128;
+        borderWidth      = 1+ SCREEN_SIZE / 512;
+        tilePadding      = SCREEN_SIZE / 128;
+        tileCornerRadius = SCREEN_SIZE / 128;
 
-        HAND_DISPLAY_TILE_WIDTH   = calcTileWidth(screenSize, 16, 230);
-        KEYBOARD_TILE_WIDTH_LARGE = calcTileWidth(screenSize, 5, 400);
-        KEYBOARD_TILE_WIDTH_SMALL = calcTileWidth(screenSize, 9, 400);
+        // TODO clean the keyboard float values, they seem to work, but are currently arbitrary
+        HAND_DISPLAY_TILE_WIDTH   = calcTileWidth(SCREEN_SIZE, 16, 0.02f, false);
+        KEYBOARD_TILE_WIDTH_LARGE = calcTileWidth(SCREEN_SIZE,  5, 0.3f, true);
+        KEYBOARD_TILE_WIDTH_SMALL = calcTileWidth(SCREEN_SIZE,  9, 0.2f, true);
+
+        KEYBOARD_SMALL_MARGIN  = SCREEN_SIZE / 100;
+        KEYBOARD_SMALL_PADDING = SCREEN_SIZE / 100;
     }
-    private int calcTileWidth(int screenSize, int tileNumber, int padding){
-        // Account for padding on the sides, and in the middle
-        screenSize -= padding;
+    private int calcTileWidth(int screenSize, int numberOfTiles, float edgePadding, boolean includeSpacers){
+        // Padding on the sides
+        int tileWidth = Math.round((float)screenSize*(1f-edgePadding));
 
-        // A hand is 14 tiles at minimum, but can be larger, and called tiles require extra room
-        return screenSize/tileNumber;
+        if( includeSpacers ){
+            // Padding between tiles
+            tileWidth -= screenSize/200 * (numberOfTiles-1);
+        }
+
+        // Divide the remaining space to get the size of each tile
+        tileWidth = tileWidth / numberOfTiles;
+
+        return tileWidth;
     }
 
     ///////////////////////////////////////////////////////////////
     /////////////////        Hand Display         /////////////////
     ///////////////////////////////////////////////////////////////
+    public static int SCREEN_SIZE;
     public static Double TILE_RATIO = 1.36;
+    private int borderWidth;
     private int tilePadding;
     private int tileCornerRadius;
 
     public int HAND_DISPLAY_TILE_WIDTH;
     public int KEYBOARD_TILE_WIDTH_LARGE;
     public int KEYBOARD_TILE_WIDTH_SMALL;
+    public int KEYBOARD_SMALL_MARGIN;
+    public int KEYBOARD_SMALL_PADDING;
 
     public ImageView getHandDisplayTileView(Tile t, boolean rotated){
         if( activity==null ){
@@ -105,7 +120,7 @@ public class Utils {
         layers[1] = imageCache.getBitmapFromCache(frontTileKey);
         layers[2] = bmp;
         LayerDrawable layerDrawable = new LayerDrawable(layers);
-        layerDrawable.setLayerInset(1, 3,3,3,3);
+        layerDrawable.setLayerInset(1, borderWidth,borderWidth,borderWidth,borderWidth);
         layerDrawable.setLayerInset(2, tilePadding,tilePadding,tilePadding,tilePadding);
         return layerDrawable;
     }
@@ -114,7 +129,7 @@ public class Utils {
         for(int i=0; i<8; i++ ){
             outerR[i] = tileCornerRadius;
         }
-        Shape tileOutline = new RoundRectShape(outerR, new RectF(3,3,3,3), null);
+        Shape tileOutline = new RoundRectShape(outerR, new RectF(borderWidth,borderWidth,borderWidth,borderWidth), null);
         tileOutline.resize((float)width, (float)height);
         return new ShapeDrawable(tileOutline);
     }
@@ -185,9 +200,10 @@ public class Utils {
         Bitmap origBmap = BitmapFactory.decodeResource(activity.getResources(), imageInt);
         Bitmap resizedBmap;
         if( isFacedown ){
-            resizedBmap = Bitmap.createScaledBitmap(origBmap, width+2*tilePadding, height+2*tilePadding, false);
-        } else {
             resizedBmap = Bitmap.createScaledBitmap(origBmap, width, height, false);
+        } else {
+            int padding = 2*tilePadding;
+            resizedBmap = Bitmap.createScaledBitmap(origBmap, width-padding, height-padding, false);
         }
         Bitmap rotatedBitmap;
         if( matrix==null ){

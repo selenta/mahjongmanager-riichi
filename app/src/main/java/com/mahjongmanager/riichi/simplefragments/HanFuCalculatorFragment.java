@@ -2,7 +2,6 @@ package com.mahjongmanager.riichi.simplefragments;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.util.DisplayMetrics;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,6 +11,7 @@ import android.widget.TextView;
 
 import com.mahjongmanager.riichi.R;
 import com.mahjongmanager.riichi.ScoreCalculator;
+import com.mahjongmanager.riichi.utils.Utils;
 
 import java.util.Arrays;
 import java.util.List;
@@ -45,7 +45,7 @@ public class HanFuCalculatorFragment extends Fragment implements View.OnClickLis
         View myInflatedView = inflater.inflate(R.layout.fragment_hanfucalculator, container, false);
 
         registerUIElements(myInflatedView);
-        checkTitleTextSize();
+        checkTextSize();
         updateScore();
         return myInflatedView;
     }
@@ -132,12 +132,9 @@ public class HanFuCalculatorFragment extends Fragment implements View.OnClickLis
         scoreValue = (TextView) myInflatedView.findViewById(R.id.scoreValue);
     }
 
-    private void checkTitleTextSize(){
-        //Update title to fit smaller screens
-        DisplayMetrics metrics = new DisplayMetrics();
-        getActivity().getWindowManager().getDefaultDisplay().getMetrics(metrics);
-        int screenSize = metrics.widthPixels;
-        if( screenSize < 1024 ){
+    //Update title to fit smaller screens
+    private void checkTextSize(){
+        if( Utils.SCREEN_SIZE < 1024 ){
             hanFuTitleLabel.setTextSize(hanFuTitleLabel.getTextSize()*0.55f);
         }
     }

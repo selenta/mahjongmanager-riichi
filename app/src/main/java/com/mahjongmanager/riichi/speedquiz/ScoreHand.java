@@ -1,6 +1,5 @@
 package com.mahjongmanager.riichi.speedquiz;
 
-import android.app.Activity;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -29,10 +28,12 @@ public class ScoreHand extends Fragment implements View.OnClickListener {
 
     private TextView secondCounter;
 
-    private int han;
     private TextView hanLabel;
-    private int fu;
+    private int han;
+    private TextView hanValueDisplay;
     private TextView fuLabel;
+    private int fu;
+    private TextView fuValudDisplay;
 
     private Button increaseHanButton;
     private Button decreaseHanButton;
@@ -49,7 +50,7 @@ public class ScoreHand extends Fragment implements View.OnClickListener {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View myInflatedView = inflater.inflate(R.layout.fragment_speedquiz_2scorehand, container, false);
-        assignComponents(myInflatedView);
+        assignUIElements(myInflatedView);
 
         han = 2;
         fu = 30;
@@ -57,6 +58,7 @@ public class ScoreHand extends Fragment implements View.OnClickListener {
         initHandDisplaySettings();
         initHand();
         updateUI();
+        checkTextSize();
         return myInflatedView;
     }
 
@@ -170,9 +172,9 @@ public class ScoreHand extends Fragment implements View.OnClickListener {
     }
 
     private void updateUI(){
-        hanLabel.setText(String.valueOf(han));
+        hanValueDisplay.setText(String.valueOf(han));
         ((MainActivity)getActivity()).setCurrentHanGuess(han);
-        fuLabel.setText(String.valueOf(fu));
+        fuValudDisplay.setText(String.valueOf(fu));
         ((MainActivity)getActivity()).setCurrentFuGuess(fu);
 
         if( han == hanValues.get(0) ){
@@ -198,13 +200,30 @@ public class ScoreHand extends Fragment implements View.OnClickListener {
         }
     }
 
-    private void assignComponents(View myInflatedView){
+    private void checkTextSize(){
+        if( Utils.SCREEN_SIZE < 1024 ){
+            otherYakuLabel.setTextSize( otherYakuLabel.getTextSize() *0.55f);
+            hanLabel.setTextSize( hanLabel.getTextSize() *0.55f);
+            fuLabel.setTextSize(  fuLabel.getTextSize()  *0.55f);
+            increaseHanButton.setTextSize( increaseHanButton.getTextSize() *0.55f);
+            increaseFuButton.setTextSize(  increaseFuButton.getTextSize()  *0.55f);
+            hanValueDisplay.setTextSize( hanValueDisplay.getTextSize() *0.55f);
+            fuValudDisplay.setTextSize(  fuValudDisplay.getTextSize()  *0.55f);
+            decreaseHanButton.setTextSize( decreaseHanButton.getTextSize() *0.55f);
+            decreaseFuButton.setTextSize(  decreaseFuButton.getTextSize()  *0.55f);
+        }
+    }
+
+    private void assignUIElements(View myInflatedView){
         handDisplay = (HandDisplay) myInflatedView.findViewById(R.id.handDisplay);
 
         secondCounter = (TextView) myInflatedView.findViewById(R.id.secondCounter);
 
-        hanLabel = (TextView) myInflatedView.findViewById(R.id.hanValue);
-        fuLabel = (TextView) myInflatedView.findViewById(R.id.fuValue);
+        hanLabel = (TextView) myInflatedView.findViewById(R.id.hanLabel);
+        fuLabel = (TextView) myInflatedView.findViewById(R.id.fuLabel);
+
+        hanValueDisplay = (TextView) myInflatedView.findViewById(R.id.hanValue);
+        fuValudDisplay = (TextView) myInflatedView.findViewById(R.id.fuValue);
 
         increaseHanButton = (Button) myInflatedView.findViewById(R.id.increaseHanButton);
         increaseHanButton.setOnClickListener(this);

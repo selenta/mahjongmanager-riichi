@@ -263,8 +263,7 @@
                     android:enabled="true"
                     android:backgroundTint="#d6d7d7"
                     android:textSize="20sp"
-                    android:maxWidth="50dp"
-                    android:minHeight="50dp"
+                    android:minHeight="30dp"
                     style="?android:attr/buttonStyleSmall" />
 
                 <ImageButton
@@ -275,8 +274,7 @@
                     android:enabled="true"
                     android:backgroundTint="#d6d7d7"
                     android:textSize="20sp"
-                    android:maxWidth="50dp"
-                    android:minHeight="50dp"
+                    android:minHeight="30dp"
                     style="?android:attr/buttonStyleSmall" />
 
                 <ImageButton
@@ -287,8 +285,7 @@
                     android:enabled="true"
                     android:backgroundTint="#d6d7d7"
                     android:textSize="20sp"
-                    android:maxWidth="50dp"
-                    android:minHeight="50dp"
+                    android:minHeight="30dp"
                     style="?android:attr/buttonStyleSmall" />
 
                 <ImageButton
@@ -299,8 +296,7 @@
                     android:enabled="true"
                     android:backgroundTint="#d6d7d7"
                     android:textSize="20sp"
-                    android:maxWidth="50dp"
-                    android:minHeight="50dp"
+                    android:minHeight="30dp"
                     style="?android:attr/buttonStyleSmall" />
 
                 <ImageButton
@@ -311,8 +307,7 @@
                     android:enabled="true"
                     android:backgroundTint="#d6d7d7"
                     android:textSize="20sp"
-                    android:maxWidth="50dp"
-                    android:minHeight="50dp"
+                    android:minHeight="30dp"
                     style="?android:attr/buttonStyleSmall" />
             </LinearLayout>
 
@@ -335,8 +330,7 @@
                     android:enabled="true"
                     android:backgroundTint="#d6d7d7"
                     android:textSize="20sp"
-                    android:maxWidth="50dp"
-                    android:minHeight="50dp"
+                    android:minHeight="30dp"
                     style="?android:attr/buttonStyleSmall" />
 
                 <ImageButton
@@ -347,8 +341,7 @@
                     android:enabled="true"
                     android:backgroundTint="#d6d7d7"
                     android:textSize="20sp"
-                    android:maxWidth="50dp"
-                    android:minHeight="50dp"
+                    android:minHeight="30dp"
                     style="?android:attr/buttonStyleSmall" />
 
                 <ImageButton
@@ -359,8 +352,7 @@
                     android:enabled="true"
                     android:backgroundTint="#d6d7d7"
                     android:textSize="20sp"
-                    android:maxWidth="50dp"
-                    android:minHeight="50dp"
+                    android:minHeight="30dp"
                     style="?android:attr/buttonStyleSmall" />
 
                 <ImageButton
@@ -371,8 +363,7 @@
                     android:enabled="true"
                     android:backgroundTint="#d6d7d7"
                     android:textSize="20sp"
-                    android:maxWidth="50dp"
-                    android:minHeight="50dp"
+                    android:minHeight="30dp"
                     style="?android:attr/buttonStyleSmall" />
             </LinearLayout>
 

@@ -2,7 +2,6 @@ package com.mahjongmanager.riichi.handcalculator;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.util.DisplayMetrics;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,6 +16,7 @@ import com.mahjongmanager.riichi.ScoreCalculator;
 import com.mahjongmanager.riichi.Tile;
 import com.mahjongmanager.riichi.components.ScoreScreen;
 import com.mahjongmanager.riichi.utils.Log;
+import com.mahjongmanager.riichi.utils.Utils;
 
 import java.util.Arrays;
 
@@ -42,7 +42,7 @@ public class FinalScore extends Fragment {
         handDisplay.setHand(actHand);
         scoreScreen.setHand(actHand);
 
-        checkTitleTextSize();
+        checkTextSize();
         return myInflatedView;
     }
 
@@ -86,13 +86,9 @@ public class FinalScore extends Fragment {
         }
     }
 
-    private void checkTitleTextSize(){
-
-        //Update title to fit smaller screens
-        DisplayMetrics metrics = new DisplayMetrics();
-        getActivity().getWindowManager().getDefaultDisplay().getMetrics(metrics);
-        int screenSize = metrics.widthPixels;
-        if( screenSize < 1024 ){
+    //Update title to fit smaller screens
+    private void checkTextSize(){
+        if(Utils.SCREEN_SIZE < 1024 ){
             scoreScreenTitleLabel.setTextSize(scoreScreenTitleLabel.getTextSize()*0.55f);
         }
     }

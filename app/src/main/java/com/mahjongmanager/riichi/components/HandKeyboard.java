@@ -29,7 +29,7 @@ import java.util.Arrays;
 import java.util.List;
 
 public class HandKeyboard extends LinearLayout implements View.OnClickListener {
-    Context context;
+    MainActivity activity;
 
     private Fragment fragment;
     private HandDisplay handDisplay;
@@ -76,8 +76,6 @@ public class HandKeyboard extends LinearLayout implements View.OnClickListener {
     private boolean isKeyboardSmallTilesMode = false;
 
     private String KEYBOARD_TILE_SIZE_SETTING = "KeyboardSmallTiles";
-    private int smallTilePadding = 10;
-    private int smallTileMargin  = 10;
 
     private List<TileButton> buttonList = new ArrayList<>();
 
@@ -92,12 +90,13 @@ public class HandKeyboard extends LinearLayout implements View.OnClickListener {
     }
     public HandKeyboard(Context ctx, AttributeSet attrs, int defStyle ){
         super(ctx, attrs, defStyle);
-        context = ctx;
+        activity = (MainActivity)ctx;
         init();
     }
     private void init(){
-        LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        LayoutInflater inflater = (LayoutInflater) activity.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         inflater.inflate(R.layout.component_handkeyboard, this);
+
 
         registerUIElements();
         checkKeyboardMode();
@@ -106,7 +105,7 @@ public class HandKeyboard extends LinearLayout implements View.OnClickListener {
         if(isInEditMode()){     // This is only here so that Android Studio will display component
             return;
         }
-        SharedPreferences sharedPref = ((MainActivity)context).getPreferences(Context.MODE_PRIVATE);
+        SharedPreferences sharedPref = activity.getPreferences(Context.MODE_PRIVATE);
         isKeyboardSmallTilesMode = sharedPref.getBoolean(KEYBOARD_TILE_SIZE_SETTING, false);
         if( isKeyboardSmallTilesMode ){
             largeTilesModeContainer.setVisibility(GONE);
@@ -479,8 +478,8 @@ public class HandKeyboard extends LinearLayout implements View.OnClickListener {
                 if( tileButton.tile.toString().equals("North") ){
                     int smallKeyboardTileWidth = getUtils().KEYBOARD_TILE_WIDTH_SMALL;
 
-                    int spacerSize = smallKeyboardTileWidth + 2*smallTileMargin + 2*smallTilePadding;
-                    Space spacer = new Space(context);
+                    int spacerSize = smallKeyboardTileWidth + 2*getUtils().KEYBOARD_SMALL_MARGIN;
+                    Space spacer = new Space(activity);
                     spacer.setMinimumWidth(spacerSize);
                     fourthButtonContainer.addView(spacer);
                 }
@@ -502,12 +501,14 @@ public class HandKeyboard extends LinearLayout implements View.OnClickListener {
         }
 
         private void createButtonWithImage(){
-            button = new ImageButton(context);
+            button = new ImageButton(activity);
             button.setBackgroundColor(0xFFD6D7D7);
 
-            button.setPadding(smallTilePadding,smallTilePadding,smallTilePadding,smallTilePadding);
+            int padding = getUtils().KEYBOARD_SMALL_PADDING;
+            int margin = getUtils().KEYBOARD_SMALL_MARGIN;
+            button.setPadding(padding,padding,padding,padding);
             LayoutParams params = new LayoutParams(LayoutParams.WRAP_CONTENT,LayoutParams.WRAP_CONTENT);
-            params.setMargins(smallTileMargin,smallTileMargin,smallTileMargin,smallTileMargin);
+            params.setMargins(margin,margin,margin,margin);
             button.setLayoutParams(params);
 
             String cacheKey = tile.getImageCacheKey(ImageCache.KEYBOARD_KEY_SMALL);
@@ -615,7 +616,7 @@ public class HandKeyboard extends LinearLayout implements View.OnClickListener {
     ImageCache _imageCache;
     private ImageCache getImageCache(){
         if( _imageCache==null ){
-            _imageCache = ((MainActivity)context).getImageCache();
+            _imageCache = activity.getImageCache();
         }
         return _imageCache;
     }
@@ -623,7 +624,7 @@ public class HandKeyboard extends LinearLayout implements View.OnClickListener {
     Utils _utils;
     private Utils getUtils(){
         if( _utils==null ){
-            _utils = ((MainActivity)context).getUtils();
+            _utils = activity.getUtils();
         }
         return _utils;
     }
