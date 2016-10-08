@@ -52,11 +52,6 @@ public class YakuDescription extends LinearLayout {
         handDisplay     = (HandDisplay) myInflatedView.findViewById(R.id.handDisplay);
 
         hideLabels();
-
-        //TODO If component is configured incorrectly, display error message, instead of blank
-        if(context==null){
-            return;
-        }
     }
 
     public void showLabels(){

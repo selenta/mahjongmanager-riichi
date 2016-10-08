@@ -3,7 +3,6 @@ package com.mahjongmanager.riichi.components;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.graphics.drawable.BitmapDrawable;
-import android.support.v4.app.Fragment;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -31,7 +30,7 @@ import java.util.List;
 public class HandKeyboard extends LinearLayout implements View.OnClickListener {
     MainActivity activity;
 
-    private Fragment fragment;
+    private InputHand fragment;
     private HandDisplay handDisplay;
 
     private Hand hand;
@@ -96,7 +95,6 @@ public class HandKeyboard extends LinearLayout implements View.OnClickListener {
     private void init(){
         LayoutInflater inflater = (LayoutInflater) activity.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         inflater.inflate(R.layout.component_handkeyboard, this);
-
 
         registerUIElements();
         checkKeyboardMode();
@@ -493,7 +491,7 @@ public class HandKeyboard extends LinearLayout implements View.OnClickListener {
         public Tile tile;
         public ImageButton button;
 
-        public TileButton(Tile t){
+        TileButton(Tile t){
             tile = t;
             value = tile.value;
             suit = tile.suit.toString();
@@ -516,14 +514,6 @@ public class HandKeyboard extends LinearLayout implements View.OnClickListener {
             button.setImageDrawable(tileDrawable);
         }
     }
-    private TileButton getButton(String v, String s){
-        for( TileButton tb : buttonList ){
-            if( tb.suit.equals(s) && tb.value.equals(v) ){
-                return tb;
-            }
-        }
-        return null;
-    }
     private TileButton getButton(ImageButton button){
         for( TileButton tb : buttonList ){
             if( tb.button==button ){
@@ -543,7 +533,7 @@ public class HandKeyboard extends LinearLayout implements View.OnClickListener {
     private void checkValidCurrentHand(){
         ScoreCalculator sc = new ScoreCalculator(hand);
         validCurrentHand = (sc.scoredHand != null);
-        ((InputHand)fragment).checkNextEnablement(); // TODO whatever, clean later
+        fragment.checkNextEnablement();
     }
     public boolean isValidCurrentHand(){
         return validCurrentHand;
@@ -601,7 +591,7 @@ public class HandKeyboard extends LinearLayout implements View.OnClickListener {
         thirdButtonContainer  = (LinearLayout) findViewById(R.id.thirdButtonContainer);
         fourthButtonContainer = (LinearLayout) findViewById(R.id.fourthButtonContainer);
     }
-    public void initialize(Fragment f){
+    public void initialize(InputHand f){
         fragment = f;
     }
 

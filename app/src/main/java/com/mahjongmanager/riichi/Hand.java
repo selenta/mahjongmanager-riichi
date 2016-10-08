@@ -261,7 +261,6 @@ public class Hand {
 
     // Verify hand consistency, including:
     //TODO consider other inherently contradictory yaku conditions
-    //TODO Chiitoitsu/kokushi/nagashi don't work with most things
     // Good spreadsheet to use as reference: http://arcturus.su/wiki/Yaku_compatability
     public boolean validateCompleteState(){
         if( unsortedTiles.size()!=0 ){
@@ -567,11 +566,6 @@ public class Hand {
     public void sort(){
         Utils.sort(tiles);
         Utils.sort(unsortedTiles);
-        pair.sort();
-        meld1.sort();
-        meld2.sort();
-        meld3.sort();
-        meld4.sort();
     }
 
     public String toString(){

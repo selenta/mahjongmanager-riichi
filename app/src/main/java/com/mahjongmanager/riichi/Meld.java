@@ -14,10 +14,6 @@ public class Meld {
         tiles.addAll(oldM.tiles);
         sort();
     }
-    public Meld(List<Tile> startingTiles){
-        tiles.addAll(startingTiles);
-        sort();
-    }
     public Meld(){}
 
     public void setTiles(List<Tile> newTiles){
@@ -25,10 +21,11 @@ public class Meld {
         for(Tile t : newTiles){
             addTile(t);
         }
+        sort();
     }
     public void addTile(Tile t){
         tiles.add(t);
-        Utils.sort(tiles);
+        sort();
     }
     public List<Tile> getTiles(){
         return tiles;
@@ -40,12 +37,12 @@ public class Meld {
      * <ul>
      *     <li> There are either 2(pair), 3, or 4 tiles
      *     <li> There is at most one called tile
+     *     <li> There is at most one added tile
      *     <li> All tiles have same revealedStatus (unless there is a called tile or an AddedKan)
      *     <li> calledFrom status is consistent with revealedStatus
      *     <li> All tiles have non-null revealedState and calledFrom values
      *     <li> Chiis are called from Left player
      * </ul>
-     * TODO verify that all the things I said are being done are being done
      *
      * @return Boolean that indicates whether the list of tiles is a valid meld in Mahjong
      */
@@ -55,9 +52,7 @@ public class Meld {
             return false;
         }
 
-        if( !validateUniqueCalledTile() ){
-            return false;
-        } else if( !validateUniqueAddedTile() ){
+        if( !validateUniqueCalledTile() || !validateUniqueAddedTile() ){
             return false;
         }
 
@@ -286,7 +281,7 @@ public class Meld {
     //////////////////////////////////////////////////////////////////////
     /////////////////////       Utility Methods      /////////////////////
     //////////////////////////////////////////////////////////////////////
-    public void sort(){
+    private void sort(){
         Utils.sort(tiles);
     }
     public int size(){ return tiles.size(); }

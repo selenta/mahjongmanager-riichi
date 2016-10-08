@@ -6,4 +6,3 @@ TODO list:
 - Ensure flowchart is high enough quality for horizontal mode
 - Update Flowchart to include Fu scoring steps
 - Test app with different "Android Accessibility: TextSize" settings
-- Test app with devices that have smaller screens

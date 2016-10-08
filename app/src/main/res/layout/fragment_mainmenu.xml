@@ -84,7 +84,7 @@
 
                 <Button
                     android:layout_width="0dp"
-                    android:layout_height="wrap_content"
+                    android:layout_height="match_parent"
                     android:text="Score Table"
                     android:layout_gravity="center_horizontal"
                     android:layout_weight="1"
@@ -92,7 +92,7 @@
 
                 <Button
                     android:layout_width="0dp"
-                    android:layout_height="wrap_content"
+                    android:layout_height="match_parent"
                     android:text="Han/Fu"
                     android:layout_gravity="center_horizontal"
                     android:enabled="true"

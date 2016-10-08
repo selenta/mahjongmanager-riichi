@@ -225,6 +225,10 @@ public class HandDisplay extends LinearLayout implements View.OnClickListener {
         } else {
             displaySimpleHand();
         }
+
+        if( closedTilesContainer.getChildCount()!=0 && openTilesContainer.getChildCount()!=0 ){
+            addSpacer(openTilesContainer, 3*spacerSize, true);
+        }
     }
 
     private void displaySimpleHand(){
@@ -301,7 +305,6 @@ public class HandDisplay extends LinearLayout implements View.OnClickListener {
 
     private void addSetComplex(Meld meld){
         if( meld.size()<3 || meld.size()>4 ){
-            //This should never happen
             return;
         }
 
@@ -356,9 +359,7 @@ public class HandDisplay extends LinearLayout implements View.OnClickListener {
         addAddedKan(meld);     // ... I guess these are all the same thing if in a valid state
     }
     private void addAddedKan(Meld meld) {
-        if( openTilesContainer.getChildCount()==0 ){
-            addSpacer(openTilesContainer, 3*spacerSize);
-        } else {
+        if( openTilesContainer.getChildCount()!=0 ){
             addSpacer(openTilesContainer, spacerSize);
         }
 
@@ -396,9 +397,7 @@ public class HandDisplay extends LinearLayout implements View.OnClickListener {
         }
     }
     private void addClosedKan(Meld meld) {
-        if( openTilesContainer.getChildCount()==0 ){
-            addSpacer(openTilesContainer, 3*spacerSize);
-        } else {
+        if( openTilesContainer.getChildCount()!=0 ){
             addSpacer(openTilesContainer, spacerSize);
         }
 
@@ -471,15 +470,21 @@ public class HandDisplay extends LinearLayout implements View.OnClickListener {
         winningTileContainer.addView(tileDisplay.view);
     }
 
-    // TODO get rid of the left spacer if there's only open tiles (i.e. when displaying only a meld)
     /**
      * To visually separate sets/pair, a spacer really helps
      * @param view Add a spacer to the end of this view, in preparation to add a new set
      */
-    private void addSpacer(LinearLayout view, int width){
+    private void addSpacer(LinearLayout view, int width, boolean insertAtBeginning){
         Space spacer = new Space(getContext());
         spacer.setMinimumWidth(width);
-        view.addView(spacer);
+        if( insertAtBeginning ){
+            view.addView(spacer, 0);
+        } else {
+            view.addView(spacer);
+        }
+    }
+    private void addSpacer(LinearLayout view, int width){
+        addSpacer(view, width, false);
     }
 
     class TileDisplay {
