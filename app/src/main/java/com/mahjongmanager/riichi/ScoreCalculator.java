@@ -207,12 +207,18 @@ public class ScoreCalculator {
                 scoreHand(unscoredHand);
                 countHan(unscoredHand);
                 countFu(unscoredHand);
-                if( scoredHand==null
-                        || scoreBasePoints(unscoredHand.han,unscoredHand.fu) > scoreBasePoints(scoredHand.han, scoredHand.fu) ){
+                if( scoredHand==null || handTwoIsLarger(scoredHand, unscoredHand) ){
                     scoredHand = unscoredHand;
                 }
             }
         }
+    }
+    private boolean handTwoIsLarger(Hand handOne, Hand handTwo ){
+        int handOneBasePoints = scoreBasePoints(handOne.han, handOne.fu);
+        int handTwoBasePoints = scoreBasePoints(handTwo.han, handTwo.fu);
+
+        return handTwoBasePoints > handOneBasePoints
+                || (handOneBasePoints==handTwoBasePoints && handTwo.han > handOne.han) ;
     }
 
     // Checks hand for all yaku that consist of normal melds (e.g. does NOT check for Chiitoitsu or Kokushi)

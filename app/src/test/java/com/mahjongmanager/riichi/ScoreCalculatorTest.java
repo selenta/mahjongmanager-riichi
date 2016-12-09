@@ -22,9 +22,9 @@ public class ScoreCalculatorTest {
     // (13)  Extreme fu (1 Han, 110 Fu)
     // (14)  Extreme fu (2 Han, 110 Fu)
     // (15)  Confusing structure (no score)
-    // (16)  TODO Value is less than theoretical, because of called tile (inferred for HC)
-    // (17)  TODO Value is less than theoretical, because closed kan was not terminal (inferred for HC)
-    // (18)  TODO Value is less than theoretical, because of winning tile (inferred for HC)
+    // ()  TODO Value is less than theoretical, because of called tile (inferred for HC)
+    // ()  TODO Value is less than theoretical, because closed kan was not terminal (inferred for HC)
+    // ()  TODO Value is less than theoretical, because of winning tile (inferred for HC)
 
     // Unaccounted Hands:
     // Sanrenkou
@@ -606,6 +606,38 @@ public class ScoreCalculatorTest {
         Hand validatedHand = sc.validatedHand;
         Assert.assertNotNull(validatedHand);
         Assert.assertTrue(validatedHand.sanshokuDoujun);
+    }
+
+    @Test
+    public void problemHand2() {
+        // This hand was observed (incorrectly) being scored as Chiitoitsu
+        // Han: 10       Fu: 30
+        Tile t1 = new Tile(1, Tile.Suit.MANZU);
+        Tile t2 = new Tile(1, Tile.Suit.MANZU);
+        Tile t3 = new Tile(4, Tile.Suit.MANZU);
+        Tile t4 = new Tile(4, Tile.Suit.MANZU);
+        Tile t5 = new Tile(5, Tile.Suit.MANZU);
+        Tile t6 = new Tile(5, Tile.Suit.MANZU);
+        Tile t7 = new Tile(6, Tile.Suit.MANZU);
+        Tile t8 = new Tile(6, Tile.Suit.MANZU);
+        Tile t9  = new Tile(7, Tile.Suit.MANZU);
+        Tile t10 = new Tile(7, Tile.Suit.MANZU);
+        Tile t11 = new Tile(8, Tile.Suit.MANZU);
+        Tile t12 = new Tile(8, Tile.Suit.MANZU);
+        Tile t13 = new Tile(9, Tile.Suit.MANZU);
+        Tile t14 = new Tile(9, Tile.Suit.MANZU);
+
+        t3.calledFrom = Tile.CalledFrom.CENTER;
+        t3.winningTile = true;
+
+        Hand h = new Hand(Arrays.asList(t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11, t12, t13, t14));
+
+        ScoreCalculator sc = new ScoreCalculator(h);
+        Hand validatedHand = sc.validatedHand;
+        Assert.assertTrue(validatedHand!=null);
+
+        Assert.assertSame( 10, validatedHand.han);
+        Assert.assertSame( 30, validatedHand.fu );
     }
 
     @Test
