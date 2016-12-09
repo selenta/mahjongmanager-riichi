@@ -47,6 +47,8 @@ public class MainActivity extends AppCompatActivity {
         mAdView = (AdView) findViewById(R.id.adView);
         AdRequest adRequest = new AdRequest.Builder()
                 .addTestDevice(AdRequest.DEVICE_ID_EMULATOR)
+                .addKeyword( "mahjong" )
+                .addKeyword( "Mahjong" )
                 .build();
         mAdView.loadAd(adRequest);
 
