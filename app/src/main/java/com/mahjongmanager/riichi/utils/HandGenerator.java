@@ -99,7 +99,7 @@ public class HandGenerator {
         expandMeld(meld3);
         expandMeld(meld4);
     }
-    //Never use the same founder tile twice... is this unnecessary?
+    //Never use the same founder tile twice... TODO is this unnecessary? it does lessen the chance of making a dead hand
     private void createFounderTiles(){
         List<Tile> usedFoundingTiles = new ArrayList<>();
 

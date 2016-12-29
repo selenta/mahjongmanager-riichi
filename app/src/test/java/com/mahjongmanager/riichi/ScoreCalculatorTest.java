@@ -25,6 +25,7 @@ public class ScoreCalculatorTest {
     // ()  TODO Value is less than theoretical, because of called tile (inferred for HC)
     // ()  TODO Value is less than theoretical, because closed kan was not terminal (inferred for HC)
     // ()  TODO Value is less than theoretical, because of winning tile (inferred for HC)
+    // ()  TODO Has too many of a tile (maybe in dora indicator)
 
     // Unaccounted Hands:
     // Sanrenkou

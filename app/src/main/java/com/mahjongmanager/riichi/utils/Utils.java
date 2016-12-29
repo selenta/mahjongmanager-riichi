@@ -153,7 +153,7 @@ public class Utils {
         // First, do the normal (vertical) version of the tiles
         List<Tile> allTiles = getAllTilesWithImages();
         for(Tile t : allTiles){
-            BitmapDrawable dBmap = getBitmapDrawableFromFile(t.getImageInt(), HAND_DISPLAY_TILE_WIDTH, null, t.faceDown);
+            BitmapDrawable dBmap = getBitmapDrawableFromFile(getTileImageInt(t), HAND_DISPLAY_TILE_WIDTH, null, t.faceDown);
             String keyString = t.getImageCacheKey(ImageCache.HAND_DISPLAY_KEY);
             imageCache.addBitmapToCache(keyString, dBmap);
         }
@@ -165,7 +165,7 @@ public class Utils {
         Matrix matrix = new Matrix();
         matrix.postRotate(270);
         for(Tile t : allTiles){
-            BitmapDrawable dBmap = getBitmapDrawableFromFile(t.getImageInt(), HAND_DISPLAY_TILE_WIDTH, matrix, false);
+            BitmapDrawable dBmap = getBitmapDrawableFromFile(getTileImageInt(t), HAND_DISPLAY_TILE_WIDTH, matrix, false);
             String keyString = t.getImageCacheKey(ImageCache.HAND_DISPLAY_KEY, true);
             imageCache.addBitmapToCache(keyString, dBmap);
         }
@@ -183,7 +183,7 @@ public class Utils {
 
         List<Tile> allTiles = getAllTilesWithImages();
         for(Tile t : allTiles){
-            BitmapDrawable dBmap = getBitmapDrawableFromFile(t.getImageInt(), width);
+            BitmapDrawable dBmap = getBitmapDrawableFromFile(getTileImageInt(t), width);
             String keyString = t.getImageCacheKey(keyboardKey);
             imageCache.addBitmapToCache(keyString, dBmap);
         }
@@ -229,6 +229,112 @@ public class Utils {
         tiles.add(blankTile);
 
         return tiles;
+    }
+
+    private static int getTileImageInt(Tile t){
+        if( t.faceDown ){
+            return R.drawable.back;
+        }
+
+        switch (t.suit){
+            case MANZU:
+                switch (t.number){
+                    case 1:
+                        return R.drawable.man1;
+                    case 2:
+                        return R.drawable.man2;
+                    case 3:
+                        return R.drawable.man3;
+                    case 4:
+                        return R.drawable.man4;
+                    case 5:
+                        if( !t.red ){
+                            return R.drawable.man5;
+                        } else {
+                            return R.drawable.man5_dora;
+                        }
+                    case 6:
+                        return R.drawable.man6;
+                    case 7:
+                        return R.drawable.man7;
+                    case 8:
+                        return R.drawable.man8;
+                    case 9:
+                        return R.drawable.man9;
+                }
+                break;
+            case PINZU:
+                switch (t.number){
+                    case 1:
+                        return R.drawable.pin1;
+                    case 2:
+                        return R.drawable.pin2;
+                    case 3:
+                        return R.drawable.pin3;
+                    case 4:
+                        return R.drawable.pin4;
+                    case 5:
+                        if( !t.red ){
+                            return R.drawable.pin5;
+                        } else {
+                            return R.drawable.pin5_dora;
+                        }
+                    case 6:
+                        return R.drawable.pin6;
+                    case 7:
+                        return R.drawable.pin7;
+                    case 8:
+                        return R.drawable.pin8;
+                    case 9:
+                        return R.drawable.pin9;
+                }
+                break;
+            case SOUZU:
+                switch (t.number){
+                    case 1:
+                        return R.drawable.sou1;
+                    case 2:
+                        return R.drawable.sou2;
+                    case 3:
+                        return R.drawable.sou3;
+                    case 4:
+                        return R.drawable.sou4;
+                    case 5:
+                        if( !t.red ){
+                            return R.drawable.sou5;
+                        } else {
+                            return R.drawable.sou5_dora;
+                        }
+                    case 6:
+                        return R.drawable.sou6;
+                    case 7:
+                        return R.drawable.sou7;
+                    case 8:
+                        return R.drawable.sou8;
+                    case 9:
+                        return R.drawable.sou9;
+                }
+                break;
+            case HONOR:
+                switch (t.value){
+                    case "East":
+                        return R.drawable.ton;
+                    case "South":
+                        return R.drawable.nan;
+                    case "West":
+                        return R.drawable.shaa;
+                    case "North":
+                        return R.drawable.pei;
+                    case "White":
+                        return R.drawable.haku;
+                    case "Green":
+                        return R.drawable.hatsu;
+                    case "Red":
+                        return R.drawable.chun;
+                }
+                break;
+        }
+        return R.drawable.blank;
     }
 
     //////////////////////////////////////////////////////////////////////////

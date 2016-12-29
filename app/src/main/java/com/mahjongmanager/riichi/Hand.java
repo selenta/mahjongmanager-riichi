@@ -259,159 +259,6 @@ public class Hand {
     }
 
 
-    // Verify hand consistency, including:
-    //TODO consider other inherently contradictory yaku conditions
-    // Good spreadsheet to use as reference: http://arcturus.su/wiki/Yaku_compatability
-    public boolean validateCompleteState(){
-        if( unsortedTiles.size()!=0 ){
-            Log.e("validateCompleteState", "unsortedTiles is not empty: "+unsortedTiles.toString());
-            return false;
-        } else if( tiles.size()<14 || tiles.size()>18 ){
-            Log.e("validateCompleteState", "too few (or too many) total number of tiles: "+tiles.toString());
-            return false;
-        }
-
-        if( !(validateNotTooManyTiles()
-                && validateOnlyOneWinningTile()
-                && validateEachTile()
-                && validateNoDuplicateTiles()
-                && validateRealScore()
-                && validateHaiteiHoutei()
-                && validateChanKan()
-                && validateRinshan()
-                && validateYakuWithOpenState()) ){
-            return false;
-        }
-
-        if( !hasAbnormalStructure() &&
-                (!validateNoMissingTiles()
-                        || !validateAllMelds()
-                        || !validateWinningTileNotInKan() )){
-            return false;
-        }
-        return true;
-    }
-    private boolean validateNotTooManyTiles(){
-        for( Tile t : tiles ){
-            int tCount = 0;
-            for( Tile tNested : tiles ){
-                if( t.toString().equals(tNested.toString()) ){
-                    tCount++;
-                }
-            }
-            if(tCount>4){
-                Log.e("validateCompleteState", "hand contains too many copies of this tile: "+tCount+"x "+t.toString());
-                return false;
-            }
-        }
-        return true;
-    }
-    private boolean validateOnlyOneWinningTile(){
-        //There is exactly one winning tile
-        Tile winningTile = null;
-        for( Tile t : tiles ){
-            if( winningTile==null && t.winningTile ){
-                winningTile = t;
-            } else if( winningTile!=null && t.winningTile ){
-                Log.e("validateCompleteState", "More than one winning tile present: "+winningTile.toString()+" + "+t.toString());
-                return false;
-            }
-        }
-        return true;
-    }
-    private boolean validateEachTile(){
-        //verify each tile
-        for(Tile t : tiles ){
-            if( !t.validateTile() ){
-                Log.e("validateCompleteState", "Tile is in invalid state: "+t.toString());
-                return false;
-            }
-        }
-        return true;
-    }
-    private boolean validateNoDuplicateTiles(){
-        List<Tile> temp = new ArrayList<>();
-        for(Tile t : tiles ){
-            if( temp.contains(t) ){
-                Log.e("validateNoDuplicateTiles", "Tiles list has duplicate instances of Tile object: "+t.toString());
-                return false;
-            }
-            temp.add(t);
-        }
-        return true;
-    }
-    private boolean validateRealScore(){
-        //validate that score is not impossible (e.g. 1 han 20 fu)
-        if( (han==1&&fu==20) || (han==1&&fu==25) || (han==2&&fu==25&&tsumo) ){
-            Log.e("validateCompleteState", "Impossible score: han-"+han.toString()+" fu-"+fu.toString()+" tsumo-"+tsumo.toString()+" - "+toStringVerbose());
-            return false;
-        }
-        return true;
-    }
-    private boolean validateHaiteiHoutei(){
-        if( haitei && (!selfDrawWinningTile || houtei || rinshan || chanKan ) ){
-            Log.e("validateHand", "Cannot have haitei without selfDraw or with houtei/rinshan/chankan: "+selfDrawWinningTile+" - "+houtei+" - "+rinshan+" - "+chanKan+" - "+toStringVerbose());
-            return false;
-        }
-        if( houtei && (selfDrawWinningTile || ippatsu || tsumo || rinshan || chanKan ) ){
-            Log.e("validateHand", "Cannot have houtei with selfDraw or ippatsu/tsumo/rinshan/chankan: "+selfDrawWinningTile+" - "+ippatsu+" - "+tsumo+" - "+rinshan+" - "+chanKan+" - "+toStringVerbose());
-            return false;
-        }
-        return true;
-    }
-    private boolean validateChanKan(){
-        if( chanKan ){
-            int wTileCount = (getWinningTile()==null) ? 0 : countTile(getWinningTile());
-            if( wTileCount!=1 || selfDrawWinningTile || tsumo || rinshan ){
-                Log.e("validateHand", "Cannot have chanKan with more than one copy of winning tile in hand (or with selfDraw/tsumo/rinshan): "+wTileCount+" "+getWinningTile()+" - "+selfDrawWinningTile+" - "+tsumo+" - "+rinshan+" - "+toStringVerbose());
-                return false;
-            }
-        }
-        return true;
-    }
-    private boolean validateRinshan(){
-        if( rinshan && (!hasKan() || !selfDrawWinningTile) ){
-            Log.e("validateCompleteState", "Hand must contain a Kan to win with rinshan: "+toStringVerbose());
-            return false;
-        }
-        return true;
-    }
-    private boolean validateYakuWithOpenState(){
-        if( isOpen() && (riichi || tsumo || ippatsu || doubleRiichi || pinfu || iipeikou ) ){
-            Log.e("validateCompleteState", "Open hand has a conflicting yaku: "+toStringVerbose());
-            return false;
-        }
-        return true;
-    }
-    private boolean validateNoMissingTiles(){
-        if( tilesSortedImproperly() ){
-            Log.e("validateCompleteState", "Tile counts don't match! tiles: "+ toStringVerbose());
-            return false;
-        }
-        return true;
-    }
-    private boolean validateAllMelds(){
-        //All tiles in each melds match states
-        if( !pair.validate()
-                || !meld1.validate()
-                || !meld2.validate()
-                || !meld3.validate()
-                || !meld4.validate() ){
-            Log.e("validateHand", "Something went wrong, here's the whole hand: "+toStringVerbose());
-            return false;
-        }
-        return true;
-    }
-    private boolean validateWinningTileNotInKan(){
-        Meld winningMeld = getWinningMeld();
-        if( winningMeld!=null && winningMeld.isKan() ){
-            Log.e("validateHand", "WinningTile cannot be part of a kan: "+toStringVerbose());
-            return false;
-        }
-        return true;
-    }
-
-
     public boolean isOpen(){
         return isOpen(tiles);
     }
@@ -511,6 +358,36 @@ public class Hand {
         }
         return count;
     }
+    public int countTileComplete(Tile t){
+        int count = countTile(t);
+
+        if( doraIndicator1!=null && doraIndicator1.toString().equals(t.toString()) ){
+            count++;
+        }
+        if( doraIndicator2!=null && doraIndicator2.toString().equals(t.toString()) ){
+            count++;
+        }
+        if( doraIndicator3!=null && doraIndicator3.toString().equals(t.toString()) ){
+            count++;
+        }
+        if( doraIndicator4!=null && doraIndicator4.toString().equals(t.toString()) ){
+            count++;
+        }
+        if( uraDoraIndicator1!=null && uraDoraIndicator1.toString().equals(t.toString()) ){
+            count++;
+        }
+        if( uraDoraIndicator2!=null && uraDoraIndicator2.toString().equals(t.toString()) ){
+            count++;
+        }
+        if( uraDoraIndicator3!=null && uraDoraIndicator3.toString().equals(t.toString()) ){
+            count++;
+        }
+        if( uraDoraIndicator4!=null && uraDoraIndicator4.toString().equals(t.toString()) ){
+            count++;
+        }
+
+        return count;
+    }
     public boolean hasKan(){
         return meld1.isKan() || meld2.isKan() || meld3.isKan() || meld4.isKan();
     }
@@ -557,10 +434,6 @@ public class Hand {
 
     public boolean hasAbnormalStructure(){
         return kokushiMusou || kokushiMusou13wait || chiiToitsu || daichisei || nagashiMangan;
-    }
-    public boolean tilesSortedImproperly(){
-        int usedTiles = meld1.size() + meld2.size() + meld3.size() + meld4.size() + pair.size() + unsortedTiles.size();
-        return !hasAbnormalStructure() && usedTiles!=tiles.size();
     }
 
     public void sort(){

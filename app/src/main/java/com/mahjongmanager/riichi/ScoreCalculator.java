@@ -38,7 +38,7 @@ public class ScoreCalculator {
         //      There is a method to validate a "complete" hand, but not a "processed" hand
 
         determineScoredHand();
-        if( scoredHand!=null && scoredHand.validateCompleteState() ){
+        if( scoredHand!=null && Validator.validate(scoredHand) ){
             validatedHand = scoredHand;
         }
     }
@@ -197,7 +197,7 @@ public class ScoreCalculator {
         } else if( sortedHands.size()>0 ){
             boolean anyHandValidated = false;
             for( Hand unscoredHand : sortedHands ){
-                boolean validated = unscoredHand.validateCompleteState();
+                boolean validated = Validator.validate(unscoredHand);
                 anyHandValidated = anyHandValidated || validated;
 
                 if( anyHandValidated && !validated ){
