@@ -7,13 +7,33 @@ import java.util.List;
 
 public class Validator {
 
+    /**
+     * Check whether the tile is valid and internally consistent according to the rules of Mahjong.
+     * Checks for the following:
+     * <ul>
+     *     <li> Tile has exactly one value
+     *     <li> The Value is appropriate for its Suit
+     *     <li> Only 5s can be red
+     *     <li> A tile that is Called cannot also be an Added tile
+     * </ul>
+     *
+     * @return Boolean that indicates whether the tile is valid
+     */
     public static boolean validate(Tile tile){
+        return tileIsNotNaked(tile)
+                && tileOnlyOneValue(tile)
+                && tileValueMatchesSuit(tile)
+                && tileRedIsFive(tile)
+                && tileCalledCannotBeAdded(tile);
+    }
+    private static boolean tileIsNotNaked(Tile tile){
         if( tile.suit==null ){
             Log.e("validateTile", "Tile is naked! It has no suit!");
             return false;
         }
-
-        //Has exactly one non-null number/dragon/wind value
+        return true;
+    }
+    private static boolean tileOnlyOneValue(Tile tile){
         boolean n = tile.number!=null;
         boolean d = tile.dragon!=null;
         boolean w = tile.wind!=null;
@@ -21,26 +41,30 @@ public class Validator {
             Log.e("validateTile", "Tile does not have exactly one non-null number/wind/dragon: " + tile.number + " " + tile.wind + " " + tile.dragon );
             return false;
         }
-
-        //Value matches suit
-        if( tile.suit==Tile.Suit.HONOR && n ){
+        return true;
+    }
+    private static boolean tileValueMatchesSuit(Tile tile){
+        if( tile.suit==Tile.Suit.HONOR && tile.number!=null ){
             Log.e("validateTile", "Honor tiles should not have a number: " + tile.number );
             return false;
-        } else if( tile.suit!=Tile.Suit.HONOR && (d || w) ){
+        } else if( tile.suit!=Tile.Suit.HONOR && (tile.dragon!=null || tile.wind!=null) ){
             Log.e("validateTile", "Suited tiles should not have a wind or dragon value: " + tile.wind + " " + tile.dragon);
             return false;
         }
-
+        return true;
+    }
+    private static boolean tileRedIsFive(Tile tile){
         if (tile.red && (tile.number==null || tile.number!=5)) {
             Log.e("validateTile", "Only 5s can be red: " + tile.toString());
             return false;
         }
-
+        return true;
+    }
+    private static boolean tileCalledCannotBeAdded(Tile tile){
         if( tile.calledFrom!=Tile.CalledFrom.NONE && tile.revealedState==Tile.RevealedState.ADDEDKAN ){
             Log.e("validateTile", "CalledTile cannot be an AddedKan: "+tile.toString());
             return false;
         }
-
         return true;
     }
 
@@ -58,7 +82,7 @@ public class Validator {
      *     <li> Chiis are called from Left player
      * </ul>
      *
-     * @return Boolean that indicates whether the list of tiles is a valid meld in Mahjong
+     * @return Boolean that indicates whether the list of tiles is a valid meld
      */
     public static boolean validate(Meld meld){
         if( meld.getTiles().size()<2 || meld.getTiles().size()>4 ){
@@ -243,7 +267,7 @@ public class Validator {
      * Does not check every theoretical conflict between yaku.
      * Good reference: http://arcturus.su/wiki/Yaku_compatability
      *
-     * @return Boolean that indicates whether the list of tiles is a valid meld in Mahjong
+     * @return Boolean that indicates whether the hand is perfectly valid
      */
     public static boolean validate(Hand hand){
         if( hand.unsortedTiles.size()!=0 ){

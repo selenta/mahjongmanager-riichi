@@ -458,9 +458,6 @@ public class Hand {
         s = s + " fuList: " + fuList.toString() + "\n";
         return s;
     }
-    public String printAllMelds(){
-        return "(pair:"+pair.toString()+") (meld1:"+meld1.toString()+") (meld2:"+meld2.toString()+") (meld3:"+meld3.toString()+") (meld4:"+meld4.toString()+")";
-    }
     public String getString(Tile.Wind w){
         switch (w){
             case EAST:

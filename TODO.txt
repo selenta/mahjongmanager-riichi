@@ -1,8 +1,11 @@
 TODO list:
 
 - Create icon for app
+- "Menzen-kafu" bug (on Fu Description?)
 - Ability to zoom-in on pictures
 - Ability to change font text size or zoom-in
 - Ensure flowchart is high enough quality for horizontal mode
 - Update Flowchart to include Fu scoring steps
 - Test app with different "Android Accessibility: TextSize" settings
+- Make ads optional
+- Add a HandCalculator clarifying step, should there be an ambiguous closed kan

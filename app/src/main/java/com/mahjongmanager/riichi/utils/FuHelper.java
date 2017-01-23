@@ -7,7 +7,7 @@ import com.mahjongmanager.riichi.Tile;
 public class FuHelper {
     private static String FUUTEI            = "Fuutei";
     private static String CHIITOITSU        = "Chiitoitsu";
-    private static String MENZEN_KAFU       = "Menzen-Kafu";
+    private static String MENZEN_KAFU       = "Menzen-Kafu";        //TODO this is appearing as "Menzen-kafu" in prod and is thus not matching
     private static String PINFU             = "Pinfu";
     private static String PINFU_OPEN        = "Open Pinfu";
     private static String SELF_DRAW         = "Self Draw Winning Tile";
@@ -133,16 +133,15 @@ public class FuHelper {
         boolean isSimples = !Utils.containsHonorsOrTerminalsOnly(m.getTiles());
         boolean isKan = m.isKan();
 
-        String s;
-        s = (isClosed) ? "Closed " : "Open ";
+        String s = (isClosed) ? "Closed " : "Open ";
         if( isSimples ){
-            s = s+"Simples ";
+            s += "Simples ";
         } else if(m.firstTile().suit== Tile.Suit.HONOR) {
-            s = s+"Honors ";
+            s += "Honors ";
         } else {
-            s = s+"Terminals ";
+            s += "Terminals ";
         }
-        s = (isKan) ? s+"Quad " : s+"Triplet";
+        s += (isKan) ? "Quad " : "Triplet";
         return s;
     }
 
