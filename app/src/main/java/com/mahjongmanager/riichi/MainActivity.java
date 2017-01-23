@@ -42,26 +42,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        // Load banner ad
-        MobileAds.initialize(getApplicationContext(), "ca-app-pub-7864566452891143/4353535112");
-        mAdView = (AdView) findViewById(R.id.adView);
-        AdRequest adRequest = new AdRequest.Builder()
-                .addTestDevice(AdRequest.DEVICE_ID_EMULATOR)
-                .addKeyword( "mahjong" )
-                .addKeyword( "Mahjong" )
-                .addKeyword( "scoring" )
-                .addKeyword( "mahjong scoring" )
-                .addKeyword( "scoring mahjong" )
-                .addKeyword( "learn mahjong" )
-                .addKeyword( "reach mahjong" )
-                .addKeyword( "riichi" )
-                .addKeyword( "richii mahjong" )
-                .addKeyword( "richi" )
-                .addKeyword( "richi mahjong" )
-                .addKeyword( "learn scoring" )
-                .addKeyword( "japanese mahjong" )
-                .build();
-        mAdView.loadAd(adRequest);
+        loadBannerAds();
 
         // Load Main Menu
         if (findViewById(R.id.fragment_container) != null) {
@@ -117,6 +98,40 @@ public class MainActivity extends AppCompatActivity {
             timerRemaining = 0;
         }
         super.onDestroy();
+    }
+
+    ///////////////////////////////////////////////////
+    /////////////      Banner Ads       ///////////////
+    ///////////////////////////////////////////////////
+    private void loadBannerAds(){
+        mAdView = (AdView) findViewById(R.id.adView);
+
+        String BANNER_ADS = "BannerAds";
+        SharedPreferences sharedPref = getPreferences(Context.MODE_PRIVATE);
+        Boolean adsEnabled = sharedPref.getBoolean(BANNER_ADS, true);
+
+        if( adsEnabled ){
+            MobileAds.initialize(getApplicationContext(), "ca-app-pub-7864566452891143/4353535112");
+            AdRequest adRequest = new AdRequest.Builder()
+                    .addTestDevice(AdRequest.DEVICE_ID_EMULATOR)
+                    .addKeyword( "mahjong" )
+                    .addKeyword( "Mahjong" )
+                    .addKeyword( "scoring" )
+                    .addKeyword( "mahjong scoring" )
+                    .addKeyword( "scoring mahjong" )
+                    .addKeyword( "learn mahjong" )
+                    .addKeyword( "reach mahjong" )
+                    .addKeyword( "riichi" )
+                    .addKeyword( "riichi mahjong" )
+                    .addKeyword( "richi" )
+                    .addKeyword( "richi mahjong" )
+                    .addKeyword( "learn scoring" )
+                    .addKeyword( "japanese mahjong" )
+                    .build();
+            mAdView.loadAd(adRequest);
+        } else {
+            mAdView.setVisibility(View.GONE);
+        }
     }
 
     ///////////////////////////////////////////////////

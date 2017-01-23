@@ -20,6 +20,7 @@ public class OptionsFragment extends Fragment implements View.OnClickListener {
     private CheckBox separateClosedMeldsCheckbox;
     private CheckBox addSituationalYakuCheckbox;
     private CheckBox allowHonorsCheckbox;
+    private CheckBox enableBannerAdsCheckbox;
 
     private RadioGroup terminology;
     private RadioGroup speedQuizNumberOfSuits;
@@ -33,6 +34,7 @@ public class OptionsFragment extends Fragment implements View.OnClickListener {
     private String SQ_NUMBER_OF_SUITS = "SQNumberOfSuits";
     private String SQ_ALLOW_HONORS = "SQAllowHonors";
     private String SQ_MAX_HANDS = "SQMaxHands";
+    private String BANNER_ADS = "BannerAds";
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -52,6 +54,7 @@ public class OptionsFragment extends Fragment implements View.OnClickListener {
         loadSetting(addSituationalYakuCheckbox, SQ_SITUATIONAL_YAKU, false);
         loadNumberOfSuits();
         loadSetting(allowHonorsCheckbox, SQ_ALLOW_HONORS, true);
+        loadSetting(enableBannerAdsCheckbox, BANNER_ADS, true);
         loadMaxHands();
     }
     private void loadSetting( CheckBox cBox, String settingName, boolean def ){
@@ -111,6 +114,9 @@ public class OptionsFragment extends Fragment implements View.OnClickListener {
             case R.id.allowHonorsCheckbox:
                 savePreferenceBoolean(allowHonorsCheckbox.isChecked(), SQ_ALLOW_HONORS);
                 break;
+            case R.id.enableBannerAdsCheckbox:
+                savePreferenceBoolean(enableBannerAdsCheckbox.isChecked(), BANNER_ADS);
+                break;
         }
     }
     private void savePreferenceBoolean(boolean bool, String label){
@@ -139,6 +145,9 @@ public class OptionsFragment extends Fragment implements View.OnClickListener {
 
         allowHonorsCheckbox = (CheckBox) myInflatedView.findViewById(R.id.allowHonorsCheckbox);
         allowHonorsCheckbox.setOnClickListener(this);
+
+        enableBannerAdsCheckbox = (CheckBox) myInflatedView.findViewById(R.id.enableBannerAdsCheckbox);
+        enableBannerAdsCheckbox.setOnClickListener(this);
     }
     private void registerRadioGroups(View myInflatedView){
         terminology = (RadioGroup) myInflatedView.findViewById(R.id.terminology);
