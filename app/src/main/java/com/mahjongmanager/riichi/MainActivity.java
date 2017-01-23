@@ -49,6 +49,17 @@ public class MainActivity extends AppCompatActivity {
                 .addTestDevice(AdRequest.DEVICE_ID_EMULATOR)
                 .addKeyword( "mahjong" )
                 .addKeyword( "Mahjong" )
+                .addKeyword( "scoring" )
+                .addKeyword( "mahjong scoring" )
+                .addKeyword( "scoring mahjong" )
+                .addKeyword( "learn mahjong" )
+                .addKeyword( "reach mahjong" )
+                .addKeyword( "riichi" )
+                .addKeyword( "richii mahjong" )
+                .addKeyword( "richi" )
+                .addKeyword( "richi mahjong" )
+                .addKeyword( "learn scoring" )
+                .addKeyword( "japanese mahjong" )
                 .build();
         mAdView.loadAd(adRequest);
 
