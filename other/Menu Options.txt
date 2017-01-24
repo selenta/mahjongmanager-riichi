@@ -148,3 +148,16 @@ Hand Display
 				Drag tile downwards to indicate open
 					Dragged tile is assumed to be called tile
 					Cannot be performed if hand is kokushi or can ONLY be scored as chiitoitsu
+
+
+
+
+Icons		(from https://material.io/icons)
+	Buttons
+		Start							AV > play circle filled
+		Next							Content > forward			Navigation > chevron right
+		Clear							Action > delete forever
+		Cancel (Back to Main Menu)		Navigation > cancel
+		Back to Main Menu				Action > home				Navigation > menu
+	Other
+		Time Remaining					Image > timer				Image > timelapse

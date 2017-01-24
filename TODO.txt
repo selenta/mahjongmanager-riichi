@@ -1,11 +1,19 @@
-TODO list:
+TODO list
 
-- Create icon for app
-- "Menzen-kafu" bug (on Fu Description?)
+Near-term Issues:
 - Ability to zoom-in on pictures
-- Ability to change font text size or zoom-in
 - Ensure flowchart is high enough quality for horizontal mode
 - Update Flowchart to include Fu scoring steps
 - Test app with different "Android Accessibility: TextSize" settings
-- Make ads optional
-- Add a HandCalculator clarifying step, should there be an ambiguous closed kan
+
+
+Known Issues:
+- "Menzen-kafu" bug (on Fu Description?)
+- Locking screen during quiz breaks timer
+
+
+Long-term Issues:
+- Ability to change font text size and/or zoom-in
+- Add a HandCalculator clarifying step, should there be an ambiguous closed kan (very rare)
+- Add glossary (that can be used throughout app)
+- Add Tutorial mode to Rules section (skipping over complicating details, such as determining seats/dealer/drawing order/etc)
