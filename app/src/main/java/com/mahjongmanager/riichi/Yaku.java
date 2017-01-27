@@ -1,8 +1,6 @@
 package com.mahjongmanager.riichi;
 
-import android.app.Activity;
-import android.content.Context;
-import android.content.SharedPreferences;
+import com.mahjongmanager.riichi.utils.AppSettings;
 
 public class Yaku {
     public enum Name {
@@ -26,11 +24,8 @@ public class Yaku {
 
     public Hand exampleHand;
 
-    public String getLocalizedString(Activity activity){
-        String TERMINOLOGY = "Terminology";
-
-        SharedPreferences sharedPref = activity.getPreferences(Context.MODE_PRIVATE);
-        String val = sharedPref.getString(TERMINOLOGY, "Romaji");
+    public String getLocalizedString(){
+        String val = AppSettings.getTerminology();
 
         switch (val) {
             case "English":

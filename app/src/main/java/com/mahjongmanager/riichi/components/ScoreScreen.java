@@ -377,7 +377,7 @@ public class ScoreScreen extends LinearLayout implements View.OnClickListener {
             if(fuName!=null) {
                 s = fuName;
             } else {
-                s = yaku.getLocalizedString((Activity) context);
+                s = yaku.getLocalizedString();
             }
             return Utils.prettifyName(s);
         }

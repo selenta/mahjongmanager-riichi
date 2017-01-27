@@ -1,7 +1,5 @@
 package com.mahjongmanager.riichi.simplefragments;
 
-import android.content.Context;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -12,6 +10,7 @@ import android.widget.RadioButton;
 import android.widget.RadioGroup;
 
 import com.mahjongmanager.riichi.R;
+import com.mahjongmanager.riichi.utils.AppSettings;
 
 public class OptionsFragment extends Fragment implements View.OnClickListener {
 
@@ -26,16 +25,6 @@ public class OptionsFragment extends Fragment implements View.OnClickListener {
     private RadioGroup speedQuizNumberOfSuits;
     private RadioGroup speedQuizMaxHands;
 
-    private String TERMINOLOGY = "Terminology";
-    private String KEYBOARD_TILE_SIZE = "KeyboardSmallTiles";
-    private String SQ_RANDOM_WINDS = "SQRandomWinds";
-    private String SQ_SEPARATE_CLOSED_MELDS = "SQSeparateClosedMelds";
-    private String SQ_SITUATIONAL_YAKU = "SQSituationalYaku";
-    private String SQ_NUMBER_OF_SUITS = "SQNumberOfSuits";
-    private String SQ_ALLOW_HONORS = "SQAllowHonors";
-    private String SQ_MAX_HANDS = "SQMaxHands";
-    private String BANNER_ADS = "BannerAds";
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View myInflatedView = inflater.inflate(R.layout.fragment_options, container, false);
@@ -48,23 +37,17 @@ public class OptionsFragment extends Fragment implements View.OnClickListener {
     }
     private void loadSavedSettings(){
         loadTerminology();
-        loadSetting(tileKeyboardCheckbox, KEYBOARD_TILE_SIZE, false);
-        loadSetting(randomWindsCheckbox, SQ_RANDOM_WINDS, false);
-        loadSetting(separateClosedMeldsCheckbox, SQ_SEPARATE_CLOSED_MELDS, true);
-        loadSetting(addSituationalYakuCheckbox, SQ_SITUATIONAL_YAKU, false);
+        tileKeyboardCheckbox.setChecked( AppSettings.getKeyboardTileSize() );
+        randomWindsCheckbox.setChecked( AppSettings.getSpeedQuizRandomWinds() );
+        separateClosedMeldsCheckbox.setChecked( AppSettings.getSpeedQuizSeparateClosedMelds() );
+        addSituationalYakuCheckbox.setChecked( AppSettings.getSpeedQuizSituationalYaku() );
         loadNumberOfSuits();
-        loadSetting(allowHonorsCheckbox, SQ_ALLOW_HONORS, true);
-        loadSetting(enableBannerAdsCheckbox, BANNER_ADS, true);
+        allowHonorsCheckbox.setChecked( AppSettings.getSpeedQuizAllowHonors() );
+        enableBannerAdsCheckbox.setChecked( AppSettings.getBannerAdsEnabled() );
         loadMaxHands();
     }
-    private void loadSetting( CheckBox cBox, String settingName, boolean def ){
-        SharedPreferences sharedPref = getActivity().getPreferences(Context.MODE_PRIVATE);
-        boolean val = sharedPref.getBoolean(settingName, def);
-        cBox.setChecked(val);
-    }
     private void loadTerminology(){
-        SharedPreferences sharedPref = getActivity().getPreferences(Context.MODE_PRIVATE);
-        String val = sharedPref.getString(TERMINOLOGY, "Romaji");
+        String val = AppSettings.getTerminology();
 
         for( int i=0; i<terminology.getChildCount(); i++ ){
             RadioButton child = (RadioButton)terminology.getChildAt(i);
@@ -73,22 +56,20 @@ public class OptionsFragment extends Fragment implements View.OnClickListener {
         }
     }
     private void loadNumberOfSuits(){
-        SharedPreferences sharedPref = getActivity().getPreferences(Context.MODE_PRIVATE);
-        Integer val = sharedPref.getInt(SQ_NUMBER_OF_SUITS, 3);
+        int val = AppSettings.getSpeedQuizNumberOfSuits();
 
         for( int i=0; i<speedQuizNumberOfSuits.getChildCount(); i++ ){
             RadioButton child = (RadioButton)speedQuizNumberOfSuits.getChildAt(i);
-            boolean isCorrect = Integer.valueOf(child.getText().toString()).equals(val);
+            boolean isCorrect = (val == Integer.parseInt(child.getText().toString()));
             child.setChecked(isCorrect);
         }
     }
     private void loadMaxHands(){
-        SharedPreferences sharedPref = getActivity().getPreferences(Context.MODE_PRIVATE);
-        Integer val = sharedPref.getInt(SQ_MAX_HANDS, 10);
+        Integer val = AppSettings.getSpeedQuizMaxHands();
 
         for( int i=0; i<speedQuizMaxHands.getChildCount(); i++ ){
             RadioButton child = (RadioButton)speedQuizMaxHands.getChildAt(i);
-            boolean isCorrect = Integer.valueOf(child.getText().toString()).equals(val);
+            boolean isCorrect = (val == Integer.parseInt(child.getText().toString()));
             child.setChecked(isCorrect);
         }
     }
@@ -100,30 +81,24 @@ public class OptionsFragment extends Fragment implements View.OnClickListener {
     public void onClick(View v) {
         switch(v.getId()){
             case R.id.tileKeyboadCheckbox:
-                savePreferenceBoolean(tileKeyboardCheckbox.isChecked(), KEYBOARD_TILE_SIZE);
+                AppSettings.setKeyboardTileSize(tileKeyboardCheckbox.isChecked());
                 break;
             case R.id.randomWindsCheckbox:
-                savePreferenceBoolean(randomWindsCheckbox.isChecked(), SQ_RANDOM_WINDS);
+                AppSettings.setSpeedQuizRandomWinds(randomWindsCheckbox.isChecked());
                 break;
             case R.id.separateClosedMeldsCheckbox:
-                savePreferenceBoolean(separateClosedMeldsCheckbox.isChecked(), SQ_SEPARATE_CLOSED_MELDS);
+                AppSettings.setSpeedQuizSeparateClosedMelds(separateClosedMeldsCheckbox.isChecked());
                 break;
             case R.id.addSituationalYakuCheckbox:
-                savePreferenceBoolean(addSituationalYakuCheckbox.isChecked(), SQ_SITUATIONAL_YAKU);
+                AppSettings.setSpeedQuizSituationalYaku(addSituationalYakuCheckbox.isChecked());
                 break;
             case R.id.allowHonorsCheckbox:
-                savePreferenceBoolean(allowHonorsCheckbox.isChecked(), SQ_ALLOW_HONORS);
+                AppSettings.setSpeedQuizAllowHonors(allowHonorsCheckbox.isChecked());
                 break;
             case R.id.enableBannerAdsCheckbox:
-                savePreferenceBoolean(enableBannerAdsCheckbox.isChecked(), BANNER_ADS);
+                AppSettings.setBannerAdsEnabled(enableBannerAdsCheckbox.isChecked());
                 break;
         }
-    }
-    private void savePreferenceBoolean(boolean bool, String label){
-        SharedPreferences settings = getActivity().getPreferences(Context.MODE_PRIVATE);
-        SharedPreferences.Editor editor = settings.edit();
-        editor.putBoolean(label, bool);
-        editor.apply();
     }
 
 
@@ -177,49 +152,37 @@ public class OptionsFragment extends Fragment implements View.OnClickListener {
     private void saveTerminology(RadioGroup group, int checkedId){
         switch (checkedId){
             case R.id.terminologyEnglish:
-                savePreference(TERMINOLOGY, "English");
+                AppSettings.setTerminology("English");
                 break;
             case R.id.terminologyRomaji:
-                savePreference(TERMINOLOGY, "Romaji");
+                AppSettings.setTerminology("Romaji");
                 break;
             case R.id.terminologyKanji:
-                savePreference(TERMINOLOGY, "Kanji");
+                AppSettings.setTerminology("Kanji");
                 break;
         }
     }
     private void saveNumberOfSuits(RadioGroup group, int checkedId){
         switch (checkedId){
             case R.id.speedQuizNumberOfSuits1:
-                savePreference(SQ_NUMBER_OF_SUITS, 1);
+                AppSettings.setSpeedQuizNumberOfSuits(1);
                 break;
             case R.id.speedQuizNumberOfSuits2:
-                savePreference(SQ_NUMBER_OF_SUITS, 2);
+                AppSettings.setSpeedQuizNumberOfSuits(2);
                 break;
             case R.id.speedQuizNumberOfSuits3:
-                savePreference(SQ_NUMBER_OF_SUITS, 3);
+                AppSettings.setSpeedQuizNumberOfSuits(3);
                 break;
         }
     }
     private void saveMaxHands(RadioGroup group, int checkedId){
         switch (checkedId) {
             case R.id.speedQuizMaxHands10:
-                savePreference(SQ_MAX_HANDS, 10);
+                AppSettings.setSpeedQuizMaxHands(10);
                 break;
             case R.id.speedQuizMaxHands20:
-                savePreference(SQ_MAX_HANDS, 20);
+                AppSettings.setSpeedQuizMaxHands(20);
                 break;
         }
-    }
-    private void savePreference(String keyString, String value){
-        SharedPreferences settings = getActivity().getPreferences(Context.MODE_PRIVATE);
-        SharedPreferences.Editor editor = settings.edit();
-        editor.putString(keyString, value);
-        editor.apply();
-    }
-    private void savePreference(String keyString, Integer value){
-        SharedPreferences settings = getActivity().getPreferences(Context.MODE_PRIVATE);
-        SharedPreferences.Editor editor = settings.edit();
-        editor.putInt(keyString, value);
-        editor.apply();
     }
 }

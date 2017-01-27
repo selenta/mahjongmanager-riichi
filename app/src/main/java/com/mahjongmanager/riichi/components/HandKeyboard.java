@@ -1,7 +1,6 @@
 package com.mahjongmanager.riichi.components;
 
 import android.content.Context;
-import android.content.SharedPreferences;
 import android.graphics.drawable.BitmapDrawable;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
@@ -19,6 +18,7 @@ import com.mahjongmanager.riichi.R;
 import com.mahjongmanager.riichi.ScoreCalculator;
 import com.mahjongmanager.riichi.Tile;
 import com.mahjongmanager.riichi.handcalculator.InputHand;
+import com.mahjongmanager.riichi.utils.AppSettings;
 import com.mahjongmanager.riichi.utils.HandGenerator;
 import com.mahjongmanager.riichi.utils.ImageCache;
 import com.mahjongmanager.riichi.utils.Utils;
@@ -74,8 +74,6 @@ public class HandKeyboard extends LinearLayout implements View.OnClickListener {
     private OpenTileMode openTileMode = OpenTileMode.NONE;
     private boolean isKeyboardSmallTilesMode = false;
 
-    private String KEYBOARD_TILE_SIZE_SETTING = "KeyboardSmallTiles";
-
     private List<TileButton> buttonList = new ArrayList<>();
 
     ///////////////////////////////////////////////////
@@ -103,9 +101,7 @@ public class HandKeyboard extends LinearLayout implements View.OnClickListener {
         if(isInEditMode()){     // This is only here so that Android Studio will display component
             return;
         }
-        SharedPreferences sharedPref = activity.getPreferences(Context.MODE_PRIVATE);
-        isKeyboardSmallTilesMode = sharedPref.getBoolean(KEYBOARD_TILE_SIZE_SETTING, false);
-        if( isKeyboardSmallTilesMode ){
+        if( AppSettings.getKeyboardTileSize() ){
             largeTilesModeContainer.setVisibility(GONE);
             createSmallButtons();
         } else {

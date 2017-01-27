@@ -1,7 +1,5 @@
 package com.mahjongmanager.riichi.speedquiz;
 
-import android.content.Context;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -17,6 +15,7 @@ import com.mahjongmanager.riichi.components.HandDisplay;
 import com.mahjongmanager.riichi.MainActivity;
 import com.mahjongmanager.riichi.R;
 import com.mahjongmanager.riichi.Tile;
+import com.mahjongmanager.riichi.utils.AppSettings;
 import com.mahjongmanager.riichi.utils.Utils;
 
 import java.util.Arrays;
@@ -86,12 +85,7 @@ public class ScoreHand extends Fragment implements View.OnClickListener {
     }
 
     private void initHandDisplaySettings(){
-        String SQ_SEPARATE_CLOSED_MELDS = "SQSeparateClosedMelds";
-
-        SharedPreferences sharedPref = getActivity().getPreferences(Context.MODE_PRIVATE);
-        boolean val = sharedPref.getBoolean(SQ_SEPARATE_CLOSED_MELDS, true);
-
-        if( val ){
+        if( AppSettings.getSpeedQuizSeparateClosedMelds() ){
             handDisplay.setState(HandDisplay.SPEED_QUIZ);
         } else {
             handDisplay.setState(HandDisplay.SPEED_QUIZ_UNSORTED);

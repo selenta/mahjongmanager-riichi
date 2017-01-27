@@ -1,7 +1,5 @@
 package com.mahjongmanager.riichi.speedquiz;
 
-import android.content.Context;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -11,6 +9,7 @@ import android.widget.TextView;
 
 import com.mahjongmanager.riichi.MainActivity;
 import com.mahjongmanager.riichi.R;
+import com.mahjongmanager.riichi.utils.AppSettings;
 
 public class Start extends Fragment {
     @Override
@@ -19,8 +18,7 @@ public class Start extends Fragment {
 
         TextView currentHighScoreLabel = (TextView) myInflatedView.findViewById(R.id.speedQuizHighScore);
 
-        SharedPreferences sharedPref = getActivity().getPreferences(Context.MODE_PRIVATE);
-        Integer highScore = sharedPref.getInt("SpeedQuizHighScore", 0);
+        Integer highScore = AppSettings.getSpeedQuizHighScore();
 
         String highScoreLabel = "Current Record: " + highScore;
         currentHighScoreLabel.setText(highScoreLabel);

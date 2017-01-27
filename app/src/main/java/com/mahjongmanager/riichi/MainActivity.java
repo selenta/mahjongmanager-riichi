@@ -1,7 +1,5 @@
 package com.mahjongmanager.riichi;
 
-import android.content.Context;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.support.v4.app.Fragment;
@@ -42,6 +40,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        AppSettings.init(this);
         loadBannerAds();
 
         // Load Main Menu
@@ -106,11 +105,7 @@ public class MainActivity extends AppCompatActivity {
     private void loadBannerAds(){
         mAdView = (AdView) findViewById(R.id.adView);
 
-        String BANNER_ADS = "BannerAds";
-        SharedPreferences sharedPref = getPreferences(Context.MODE_PRIVATE);
-        Boolean adsEnabled = sharedPref.getBoolean(BANNER_ADS, true);
-
-        if( adsEnabled ){
+        if( AppSettings.getBannerAdsEnabled() ){
             MobileAds.initialize(getApplicationContext(), "ca-app-pub-7864566452891143/4353535112");
             AdRequest adRequest = new AdRequest.Builder()
                     .addTestDevice(AdRequest.DEVICE_ID_EMULATOR)
@@ -283,31 +278,20 @@ public class MainActivity extends AppCompatActivity {
 
     public CountDownTimer getSpeedQuizTimer(){ return speedQuizTimer; }
     public void generateSpeedQuizHand() {
-        String SQ_RANDOM_WINDS = "SQRandomWinds";
-        String SQ_SITUATIONAL_YAKU = "SQSituationalYaku";
-        String SQ_NUMBER_OF_SUITS = "SQNumberOfSuits";
-        String SQ_ALLOW_HONORS = "SQAllowHonors";
-        SharedPreferences sharedPref = getPreferences(Context.MODE_PRIVATE);
-
-        Boolean randomWinds = sharedPref.getBoolean(SQ_RANDOM_WINDS, false);
-        Boolean situationalYaku = sharedPref.getBoolean(SQ_SITUATIONAL_YAKU, false);
-        Integer numberOfSuits = sharedPref.getInt(SQ_NUMBER_OF_SUITS, 3);
-        Boolean allowHonors = sharedPref.getBoolean(SQ_ALLOW_HONORS, true);
-
         Hand h = new Hand(new ArrayList<Tile>());
 
         while (h.han == 0) {
             HandGenerator hg = new HandGenerator();
-            hg.setNumberOfSuits(numberOfSuits);
-            hg.setAllowHonors(allowHonors);
+            hg.setNumberOfSuits( AppSettings.getSpeedQuizNumberOfSuits() );
+            hg.setAllowHonors( AppSettings.getSpeedQuizAllowHonors() );
 
             Hand hTemp = hg.completelyRandomHand();
 
-            if (situationalYaku) {
+            if (AppSettings.getSpeedQuizSituationalYaku()) {
                 hg.addOtherYaku(hTemp);
             }
 
-            if (randomWinds) {
+            if (AppSettings.getSpeedQuizRandomWinds()) {
                 hTemp.prevailingWind = Utils.getRandomWind();
                 hTemp.playerWind = Utils.getRandomWind();
             }
@@ -345,10 +329,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private boolean proceedToQuizResults(){
-        String SQ_MAX_HANDS = "SQMaxHands";
-        SharedPreferences sharedPref = getPreferences(Context.MODE_PRIVATE);
-
-        Integer maxHands = sharedPref.getInt(SQ_MAX_HANDS, 10);
+        int maxHands = AppSettings.getSpeedQuizMaxHands();
         return getScoredHands().size() >= maxHands;
     }
 

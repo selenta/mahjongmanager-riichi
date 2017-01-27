@@ -1,7 +1,5 @@
 package com.mahjongmanager.riichi.speedquiz;
 
-import android.content.Context;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.support.v4.app.Fragment;
@@ -16,6 +14,7 @@ import com.mahjongmanager.riichi.Hand;
 import com.mahjongmanager.riichi.MainActivity;
 import com.mahjongmanager.riichi.R;
 import com.mahjongmanager.riichi.ScoreCalculator;
+import com.mahjongmanager.riichi.utils.AppSettings;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -82,15 +81,11 @@ public class ResultsScreen extends Fragment implements View.OnClickListener {
         incorrectScoreLabel.setText(String.valueOf(incorrectGuesses));
     }
     private void checkNewHighScore(){
-        SharedPreferences sharedPref = activity.getPreferences(Context.MODE_PRIVATE);
-        int highScore = sharedPref.getInt("SpeedQuizHighScore", 0);
+        int highScore = AppSettings.getSpeedQuizHighScore();
 
         if( correctGuesses> highScore){
             newHighScore.setVisibility(View.VISIBLE);
-            SharedPreferences settings = activity.getPreferences(Context.MODE_PRIVATE);
-            SharedPreferences.Editor editor = settings.edit();
-            editor.putInt("SpeedQuizHighScore", correctGuesses);
-            editor.apply();
+            AppSettings.setSpeedQuizHighScore(correctGuesses);
         }
     }
     private void createButtonsForIncorrectHands(){

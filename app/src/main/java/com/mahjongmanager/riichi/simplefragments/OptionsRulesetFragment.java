@@ -1,7 +1,5 @@
 package com.mahjongmanager.riichi.simplefragments;
 
-import android.content.Context;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -12,6 +10,7 @@ import android.widget.RadioButton;
 import android.widget.RadioGroup;
 
 import com.mahjongmanager.riichi.R;
+import com.mahjongmanager.riichi.utils.AppSettings;
 
 public class OptionsRulesetFragment extends Fragment implements View.OnClickListener {
 
@@ -56,48 +55,6 @@ public class OptionsRulesetFragment extends Fragment implements View.OnClickList
     private RadioGroup fivePlayerPlacementBonus2;
     private RadioGroup fivePlayerChomboSize;
 
-    private String KAN_DORA       = "KanDora";
-    private String LIMIT_URA_DORA = "LimitUraDora";
-    private String GOLDEN_DORA    = "GoldenDora";
-    private String WEST_ROUND     = "WestRound";
-    private String KAN_DORA_IMMEDIATELY      = "KanDoraImmediately";
-    private String AGARI_YAME                = "AgariYame";
-    private String ALLOW_BOXING              = "AllowBoxing";
-    private String RIICHI_WHEN_LOW_ON_POINTS = "RiichiWhenLowOnPoints";
-    private String ATAMA_HANE_RON        = "AtamaHaneRon";
-    private String KAN_CAN_CHANGE_WAIT   = "KanCanChangeWait";
-    private String DOUBLE_YAKUMAN        = "DoubleYakuman";
-
-    private String OPEN_TANYAO    = "OpenTanyao";
-    private String OPEN_PINFU     = "OpenPinfu";
-    private String OPEN_RIICHI    = "OpenRiichi";
-    private String NAGASHI_MANGAN = "NagashiMangan";
-    private String SANRENKOU      = "Sanrenkou";
-    private String SUURENKOU      = "Suurenkou";
-    private String DAISHARIN      = "Daisharin";
-    private String SHIISANPUUTA   = "Shiisanpuuta";
-    private String SHIISUUPUUTA   = "Shiisuupuuta";
-    private String PARENCHAN      = "Parenchan";
-
-    private String ABORTIVE_4_WINDS      = "Abortive4Winds";
-    private String ABORTIVE_4_RIICHI     = "Abortive4Riichi";
-    private String ABORTIVE_KYUSHUKYUHAI = "AbortiveKyushukyuhai";
-    private String ABORTIVE_4_KANS       = "Abortive4Kans";
-
-    private String RED_DORA_COUNT                 = "RedDoraCount";
-    private String THREE_PLAYER_STARTING_POINTS   = "ThreePlayerStartingPoints";
-    private String THREE_PLAYER_PLACEMENT_BONUS_1 = "ThreePlayerPlacementBonus1";
-    private String THREE_PLAYER_CHOMBO_SIZE       = "ThreePlayerChomboSize";
-    private String FOUR_PLAYER_STARTING_POINTS    = "FourPlayerStartingPoints";
-    private String FOUR_PLAYER_PLACEMENT_BONUS_1  = "FourPlayerPlacementBonus1";
-    private String FOUR_PLAYER_PLACEMENT_BONUS_2  = "FourPlayerPlacementBonus2";
-    private String FOUR_PLAYER_CHOMBO_SIZE        = "FourPlayerChomboSize";
-    private String FIVE_PLAYER_STARTING_POINTS    = "FivePlayerStartingPoints";
-    private String FIVE_PLAYER_PLACEMENT_BONUS_1  = "FivePlayerPlacementBonus1";
-    private String FIVE_PLAYER_PLACEMENT_BONUS_2  = "FivePlayerPlacementBonus2";
-    private String FIVE_PLAYER_CHOMBO_SIZE        = "FivePlayerChomboSize";
-
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View myInflatedView = inflater.inflate(R.layout.fragment_options_ruleset, container, false);
@@ -109,58 +66,51 @@ public class OptionsRulesetFragment extends Fragment implements View.OnClickList
         return myInflatedView;
     }
     private void loadSavedSettings(){
-        loadSetting(kanDora, KAN_DORA, true);
-        loadSetting(limitUraDora, LIMIT_URA_DORA, false);
-        loadSetting(goldenDora, GOLDEN_DORA, false);
-        loadSetting(westRound, WEST_ROUND, true);
-        loadSetting(kanDoraImmediately, KAN_DORA_IMMEDIATELY, false);
-        loadSetting(agariYame, AGARI_YAME, true);
-        loadSetting(allowBoxing, ALLOW_BOXING, true);
-        loadSetting(riichiWhenLowOnPoints, RIICHI_WHEN_LOW_ON_POINTS, false);
-        loadSetting(atamaHaneRon, ATAMA_HANE_RON, false);
-        loadSetting(kanCanChangeWait, KAN_CAN_CHANGE_WAIT, false);
-        loadSetting(doubleYakuman, DOUBLE_YAKUMAN, true);
+        kanDora.setChecked(AppSettings.getRulesKanDora());
+        limitUraDora.setChecked(AppSettings.getRulesLimitUraDora());
+        goldenDora.setChecked(AppSettings.getRulesGoldenDora());
+        westRound.setChecked(AppSettings.getRulesWestRound());
+        kanDoraImmediately.setChecked(AppSettings.getRulesKanDoraImmediately());
+        agariYame.setChecked(AppSettings.getRulesAgariYame());
+        allowBoxing.setChecked(AppSettings.getRulesAllowBoxing());
+        riichiWhenLowOnPoints.setChecked(AppSettings.getRulesRiichiWhenLowOnPoints());
+        atamaHaneRon.setChecked(AppSettings.getRulesAtamaHaneRon());
+        kanCanChangeWait.setChecked(AppSettings.getRulesKanCanChangeWait());
+        doubleYakuman.setChecked(AppSettings.getRulesDoubleYakumanAllowed());
 
-        loadSetting(openTanyao, OPEN_TANYAO, true);
-        loadSetting(openPinfu, OPEN_PINFU, false);
-        loadSetting(openRiichi, OPEN_RIICHI, false);
-        loadSetting(nagashiMangan, NAGASHI_MANGAN, true);
-        loadSetting(sanrenkou, SANRENKOU, true);
-        loadSetting(suurenkou, SUURENKOU, false);
-        loadSetting(daisharin, DAISHARIN, false);
-        loadSetting(shiisanpuuta, SHIISANPUUTA, false);
-        loadSetting(shiisuupuuta, SHIISUUPUUTA, false);
-        loadSetting(parenchan, PARENCHAN, true);
+        openTanyao.setChecked(AppSettings.getRulesOpenTanyao());
+        openPinfu.setChecked(AppSettings.getRulesOpenPinfu());
+        openRiichi.setChecked(AppSettings.getRulesOpenRiichi());
+        nagashiMangan.setChecked(AppSettings.getRulesNagashiMangan());
+        sanrenkou.setChecked(AppSettings.getRulesSanrenkou());
+        suurenkou.setChecked(AppSettings.getRulesSuurenkou());
+        daisharin.setChecked(AppSettings.getRulesDaisharin());
+        shiisanpuuta.setChecked(AppSettings.getRulesShiisanpuuta());
+        shiisuupuuta.setChecked(AppSettings.getRulesShiisuupuuta());
+        parenchan.setChecked(AppSettings.getRulesParenchan());
 
-        loadSetting(abortive4Winds, ABORTIVE_4_WINDS, true);
-        loadSetting(abortive4Riichi, ABORTIVE_4_RIICHI, true);
-        loadSetting(abortiveKyushukyuhai, ABORTIVE_KYUSHUKYUHAI, true);
-        loadSetting(abortive4Kans, ABORTIVE_4_KANS, true);
+        abortive4Winds.setChecked(AppSettings.getRulesAbortiveFourWinds());
+        abortive4Riichi.setChecked(AppSettings.getRulesAbortiveFourRiichi());
+        abortiveKyushukyuhai.setChecked(AppSettings.getRulesAbortiveKyuushikyuhai());
+        abortive4Kans.setChecked(AppSettings.getRulesAbortiveFourKans());
 
-        loadSetting(redDoraCount, RED_DORA_COUNT, 3);
-        loadSetting(threePlayerStartingPoints, THREE_PLAYER_STARTING_POINTS, 35000);
-        loadSetting(threePlayerPlacementBonus1, THREE_PLAYER_PLACEMENT_BONUS_1, 15);
-        loadSetting(threePlayerChomboSize, THREE_PLAYER_CHOMBO_SIZE, 6000);
-        loadSetting(fourPlayerStartingPoints, FOUR_PLAYER_STARTING_POINTS, 25000);
-        loadSetting(fourPlayerPlacementBonus1, FOUR_PLAYER_PLACEMENT_BONUS_1, 15);
-        loadSetting(fourPlayerPlacementBonus2, FOUR_PLAYER_PLACEMENT_BONUS_2, 5);
-        loadSetting(fourPlayerChomboSize, FOUR_PLAYER_CHOMBO_SIZE, 3000);
-        loadSetting(fivePlayerStartingPoints, FIVE_PLAYER_STARTING_POINTS, 25000);
-        loadSetting(fivePlayerPlacementBonus1, FIVE_PLAYER_PLACEMENT_BONUS_1, 20);
-        loadSetting(fivePlayerPlacementBonus2, FIVE_PLAYER_PLACEMENT_BONUS_2, 10);
-        loadSetting(fivePlayerChomboSize, FIVE_PLAYER_CHOMBO_SIZE, 2000);
+        loadSetting(redDoraCount, AppSettings.getRulesRedDoraCount());
+        loadSetting(threePlayerStartingPoints, AppSettings.getRulesThreePlayerStartingPoints());
+        loadSetting(threePlayerPlacementBonus1, AppSettings.getRulesThreePlayerPlacementBonus1());
+        loadSetting(threePlayerChomboSize, AppSettings.getRulesThreePlayerChomboSize());
+        loadSetting(fourPlayerStartingPoints, AppSettings.getRulesFourPlayerStartingPoints());
+        loadSetting(fourPlayerPlacementBonus1, AppSettings.getRulesFourPlayerPlacementBonus1());
+        loadSetting(fourPlayerPlacementBonus2, AppSettings.getRulesFourPlayerPlacementBonus2());
+        loadSetting(fourPlayerChomboSize, AppSettings.getRulesFourPlayerChomboSize());
+        loadSetting(fivePlayerStartingPoints, AppSettings.getRulesFivePlayerStartingPoints());
+        loadSetting(fivePlayerPlacementBonus1, AppSettings.getRulesFivePlayerPlacementBonus1());
+        loadSetting(fivePlayerPlacementBonus2, AppSettings.getRulesFivePlayerPlacementBonus2());
+        loadSetting(fivePlayerChomboSize, AppSettings.getRulesFivePlayerChomboSize());
     }
-    private void loadSetting(CheckBox cBox, String settingName, boolean def ){
-        SharedPreferences sharedPref = getActivity().getPreferences(Context.MODE_PRIVATE);
-        boolean val = sharedPref.getBoolean(settingName, def);
-        cBox.setChecked(val);
-    }
-    private void loadSetting(RadioGroup rGroup, String settingName, Integer def ){
-        SharedPreferences sharedPref = getActivity().getPreferences(Context.MODE_PRIVATE);
-        Integer val = sharedPref.getInt(settingName, def);
+    private void loadSetting(RadioGroup rGroup, Integer value){
         for( int i=0; i<rGroup.getChildCount(); i++ ){
             RadioButton child = (RadioButton)rGroup.getChildAt(i);
-            boolean isCorrect = child.getText().equals(val.toString());
+            boolean isCorrect = (value == Integer.parseInt(child.getText().toString()));
             child.setChecked(isCorrect);
         }
     }
@@ -172,87 +122,81 @@ public class OptionsRulesetFragment extends Fragment implements View.OnClickList
     public void onClick(View v) {
         switch(v.getId()){
             case R.id.kanDoraCheckBox:
-                saveSettingBoolean(kanDora.isChecked(), KAN_DORA);
+                AppSettings.setRulesKanDora(kanDora.isChecked());
                 break;
             case R.id.limitUraDora:
-                saveSettingBoolean(limitUraDora.isChecked(), LIMIT_URA_DORA);
+                AppSettings.setRulesLimitUraDora(limitUraDora.isChecked());
                 break;
             case R.id.goldenDora:
-                saveSettingBoolean(goldenDora.isChecked(), GOLDEN_DORA);
+                AppSettings.setRulesGoldenDora(goldenDora.isChecked());
                 break;
             case R.id.westRound:
-                saveSettingBoolean(westRound.isChecked(), WEST_ROUND);
+                AppSettings.setRulesWestRound(westRound.isChecked());
                 break;
             case R.id.kanDoraImmediately:
-                saveSettingBoolean(kanDoraImmediately.isChecked(), KAN_DORA_IMMEDIATELY);
+                AppSettings.setRulesKanDoraImmediately(kanDoraImmediately.isChecked());
                 break;
             case R.id.agariYame:
-                saveSettingBoolean(agariYame.isChecked(), AGARI_YAME);
+                AppSettings.setRulesAgariYame(agariYame.isChecked());
                 break;
             case R.id.allowBoxing:
-                saveSettingBoolean(allowBoxing.isChecked(), ALLOW_BOXING);
+                AppSettings.setRulesAllowBoxing(allowBoxing.isChecked());
                 break;
             case R.id.riichiWhenLowOnPoints:
-                saveSettingBoolean(riichiWhenLowOnPoints.isChecked(), RIICHI_WHEN_LOW_ON_POINTS);
+                AppSettings.setRulesRiichiWhenLowOnPoints(riichiWhenLowOnPoints.isChecked());
                 break;
             case R.id.atamaHaneRon:
-                saveSettingBoolean(atamaHaneRon.isChecked(), ATAMA_HANE_RON);
+                AppSettings.setRulesAtamaHaneRon(atamaHaneRon.isChecked());
                 break;
             case R.id.kanCanChangeWait:
-                saveSettingBoolean(kanCanChangeWait.isChecked(), KAN_CAN_CHANGE_WAIT);
+                AppSettings.setRulesKanCanChangeWait(kanCanChangeWait.isChecked());
                 break;
             case R.id.doubleYakuman:
-                saveSettingBoolean(doubleYakuman.isChecked(), DOUBLE_YAKUMAN);
+                AppSettings.setRulesDoubleYakumanAllowed(doubleYakuman.isChecked());
                 break;
             case R.id.openTanyao:
-                saveSettingBoolean(openTanyao.isChecked(), OPEN_TANYAO);
+                AppSettings.setRulesOpenTanyao(openTanyao.isChecked());
                 break;
             case R.id.openPinfu:
-                saveSettingBoolean(openPinfu.isChecked(), OPEN_PINFU);
+                AppSettings.setRulesOpenPinfu(openPinfu.isChecked());
                 break;
             case R.id.openRiichi:
-                saveSettingBoolean(openRiichi.isChecked(), OPEN_RIICHI);
+                AppSettings.setRulesOpenRiichi(openRiichi.isChecked());
                 break;
             case R.id.nagashiMangan:
-                saveSettingBoolean(nagashiMangan.isChecked(), NAGASHI_MANGAN);
+                AppSettings.setRulesNagashiMangan(nagashiMangan.isChecked());
                 break;
             case R.id.sanrenkou:
-                saveSettingBoolean(sanrenkou.isChecked(), SANRENKOU);
+                AppSettings.setRulesSanrenkou(sanrenkou.isChecked());
                 break;
             case R.id.suurenkou:
-                saveSettingBoolean(suurenkou.isChecked(), SUURENKOU);
+                AppSettings.setRulesSuurenkou(suurenkou.isChecked());
                 break;
             case R.id.daisharin:
-                saveSettingBoolean(daisharin.isChecked(), DAISHARIN);
+                AppSettings.setRulesDaisharin(daisharin.isChecked());
                 break;
             case R.id.shiisanpuuta:
-                saveSettingBoolean(shiisanpuuta.isChecked(), SHIISANPUUTA);
+                AppSettings.setRulesShiisanpuuta(shiisanpuuta.isChecked());
                 break;
             case R.id.shiisuupuuta:
-                saveSettingBoolean(shiisuupuuta.isChecked(), SHIISUUPUUTA);
+                AppSettings.setRulesShiisuupuuta(shiisuupuuta.isChecked());
                 break;
             case R.id.parenchan:
-                saveSettingBoolean(parenchan.isChecked(), PARENCHAN);
+                AppSettings.setRulesParenchan(parenchan.isChecked());
                 break;
             case R.id.abortive4Winds:
-                saveSettingBoolean(abortive4Winds.isChecked(), ABORTIVE_4_WINDS);
+                AppSettings.setRulesAbortiveFourWinds(abortive4Winds.isChecked());
                 break;
             case R.id.abortive4Riichi:
-                saveSettingBoolean(abortive4Riichi.isChecked(), ABORTIVE_4_RIICHI);
+                AppSettings.setRulesAbortiveFourRiichi(abortive4Riichi.isChecked());
                 break;
             case R.id.abortiveKyushukyuhai:
-                saveSettingBoolean(abortiveKyushukyuhai.isChecked(), ABORTIVE_KYUSHUKYUHAI);
+                AppSettings.setRulesAbortiveKyuushukyuhai(abortiveKyushukyuhai.isChecked());
                 break;
             case R.id.abortive4Kans:
-                saveSettingBoolean(abortive4Kans.isChecked(), ABORTIVE_4_KANS);
+                AppSettings.setRulesAbortiveFourKans(abortive4Kans.isChecked());
                 break;
         }
-    }
-    private void saveSettingBoolean(Boolean bool, String label){
-        SharedPreferences settings = getActivity().getPreferences(Context.MODE_PRIVATE);
-        SharedPreferences.Editor editor = settings.edit();
-        editor.putBoolean(label, bool);
-        editor.apply();
     }
 
     ///////////////////////////////////////////////////////
@@ -399,48 +343,55 @@ public class OptionsRulesetFragment extends Fragment implements View.OnClickList
         });
     }
     private void setRedDoraCount(){
-        saveSettingButton(redDoraCount, RED_DORA_COUNT);
+        int value = getButtonValue(redDoraCount);
+        AppSettings.setRulesRedDoraCount(value);
     }
     private void setThreePlayerStartingPoints(){
-        saveSettingButton(threePlayerStartingPoints, THREE_PLAYER_STARTING_POINTS);
+        int value = getButtonValue(threePlayerStartingPoints);
+        AppSettings.setRulesThreePlayerStartingPoints(value);
     }
     private void setThreePlayerPlacementBonus1(){
-        saveSettingButton(threePlayerPlacementBonus1, THREE_PLAYER_PLACEMENT_BONUS_1);
+        int value = getButtonValue(threePlayerPlacementBonus1);
+        AppSettings.aetRulesThreePlayerPlacementBonus1(value);
     }
     private void setThreePlayerChomboSize(){
-        saveSettingButton(threePlayerChomboSize, THREE_PLAYER_CHOMBO_SIZE);
+        int value = getButtonValue(threePlayerChomboSize);
+        AppSettings.setRulesThreePlayerChomboSize(value);
     }
     private void setFourPlayerStartingPoints(){
-        saveSettingButton(fourPlayerStartingPoints, FOUR_PLAYER_STARTING_POINTS);
+        int value = getButtonValue(fourPlayerStartingPoints);
+        AppSettings.setRulesFourPlayerStartingPoints(value);
     }
     private void setFourPlayerPlacementBonus1(){
-        saveSettingButton(fourPlayerPlacementBonus2, FOUR_PLAYER_PLACEMENT_BONUS_1);
+        int value = getButtonValue(fourPlayerPlacementBonus2);
+        AppSettings.setRulesFourPlayerPlacementBonus1(value);
     }
     private void setFourPlayerPlacementBonus2(){
-        saveSettingButton(fourPlayerPlacementBonus2, FOUR_PLAYER_PLACEMENT_BONUS_2);
+        int value = getButtonValue(fourPlayerPlacementBonus2);
+        AppSettings.setRulesFourPlayerPlacementBonus2(value);
     }
     private void setFourPlayerChomboSize(){
-        saveSettingButton(fourPlayerChomboSize, FOUR_PLAYER_CHOMBO_SIZE);
+        int value = getButtonValue(fourPlayerChomboSize);
+        AppSettings.setRulesFourPlayerChomboSize(value);
     }
     private void setFivePlayerStartingPoints(){
-        saveSettingButton(fivePlayerStartingPoints, FIVE_PLAYER_STARTING_POINTS);
+        int value = getButtonValue(fivePlayerStartingPoints);
+        AppSettings.setRulesFivePlayerStartingPoints(value);
     }
     private void setFivePlayerPlacementBonus1(){
-        saveSettingButton(fivePlayerPlacementBonus1, FIVE_PLAYER_PLACEMENT_BONUS_1);
+        int value = getButtonValue(fivePlayerPlacementBonus1);
+        AppSettings.setRulesFivePlayerPlacementBonus1(value);
     }
     private void setFivePlayerPlacementBonus2(){
-        saveSettingButton(fivePlayerPlacementBonus2, FIVE_PLAYER_PLACEMENT_BONUS_2);
+        int value = getButtonValue(fivePlayerPlacementBonus2);
+        AppSettings.setRulesFivePlayerPlacementBonus2(value);
     }
     private void setFivePlayerChomboSize(){
-        saveSettingButton(fivePlayerChomboSize, FIVE_PLAYER_CHOMBO_SIZE);
+        int value = getButtonValue(fivePlayerChomboSize);
+        AppSettings.setRulesFivePlayerChomboSize(value);
     }
-    private void saveSettingButton(RadioGroup rGroup, String label){
+    private int getButtonValue(RadioGroup rGroup){
         RadioButton rButt = (RadioButton)rGroup.findViewById(rGroup.getCheckedRadioButtonId());
-        Integer intVal = Integer.valueOf(rButt.getText().toString());
-
-        SharedPreferences settings = getActivity().getPreferences(Context.MODE_PRIVATE);
-        SharedPreferences.Editor editor = settings.edit();
-        editor.putInt(label, intVal);
-        editor.apply();
+        return Integer.valueOf(rButt.getText().toString());
     }
 }
