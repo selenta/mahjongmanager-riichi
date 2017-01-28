@@ -379,6 +379,10 @@ public class Utils {
         List<Tile.Wind> values = Collections.unmodifiableList(Arrays.asList(Tile.Wind.values()));
         return values.get(new Random().nextInt(Tile.Wind.values().length));
     }
+    public static Tile.Suit getRandomSuit(){
+        List<Tile.Suit> values = Collections.unmodifiableList(Arrays.asList(Tile.Suit.values()));
+        return values.get(new Random().nextInt(Tile.Suit.values().length));
+    }
 
     public static boolean containsHonorsOrTerminalsOnly(Meld meld){ return containsHonorsOrTerminalsOnly(meld.getTiles()); }
     public static boolean containsHonorsOrTerminalsOnly(List<Tile> tiles){

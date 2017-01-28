@@ -278,30 +278,16 @@ public class MainActivity extends AppCompatActivity {
 
     public CountDownTimer getSpeedQuizTimer(){ return speedQuizTimer; }
     public void generateSpeedQuizHand() {
-        Hand h = new Hand(new ArrayList<Tile>());
-
-        while (h.han == 0) {
+        while (true) {
             HandGenerator hg = new HandGenerator();
-            hg.setNumberOfSuits( AppSettings.getSpeedQuizNumberOfSuits() );
-            hg.setAllowHonors( AppSettings.getSpeedQuizAllowHonors() );
+            ScoreCalculator sc = new ScoreCalculator(hg.generateSpeedQuizHand());
 
-            Hand hTemp = hg.completelyRandomHand();
-
-            if (AppSettings.getSpeedQuizSituationalYaku()) {
-                hg.addOtherYaku(hTemp);
-            }
-
-            if (AppSettings.getSpeedQuizRandomWinds()) {
-                hTemp.prevailingWind = Utils.getRandomWind();
-                hTemp.playerWind = Utils.getRandomWind();
-            }
-
-            ScoreCalculator sc = new ScoreCalculator(hTemp);
-            if (sc.validatedHand != null) {
-                h = sc.validatedHand;
+            Hand hand = sc.validatedHand;
+            if( hand!=null && hand.han>0 ){
+                currentHand = hand;
+                break;
             }
         }
-        currentHand = h;
     }
 
     public void setIgnoreBack(boolean newState){

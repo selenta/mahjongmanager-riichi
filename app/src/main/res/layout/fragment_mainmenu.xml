@@ -153,7 +153,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textAppearance="?android:attr/textAppearanceSmall"
-                android:text="v0.88"
+                android:text="v0.89"
                 android:layout_gravity="center_horizontal" />
 
         </LinearLayout>
