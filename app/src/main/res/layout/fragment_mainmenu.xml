@@ -10,7 +10,7 @@
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceLarge"
         android:text="Mahjong Manager"
-        android:textSize="44sp"
+        android:textSize="42sp"
         android:textStyle="italic"
         android:layout_gravity="center_horizontal"
         android:id="@+id/appTitleLabel" />
