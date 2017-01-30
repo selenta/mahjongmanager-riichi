@@ -274,14 +274,16 @@
                 android:layout_height="wrap_content"
                 android:textAppearance="?android:attr/textAppearanceLarge"
                 android:text="3) Dead Wall"
-                android:paddingTop="10dp" />
+                android:paddingTop="10dp"
+                android:visibility="gone" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textAppearance="?android:attr/textAppearanceMedium"
                 android:text="This is what the dead wall looks like at the start of the game. Moving the tile down on the left side is merely a visual indicator, to help remind players when they draw their tiles not to draw from there."
-                android:textSize="14sp" />
+                android:textSize="14sp"
+                android:visibility="gone" />
 
             <TextView
                 android:layout_width="wrap_content"
@@ -291,26 +293,30 @@
                 android:textSize="14sp"
                 android:paddingLeft="15dp"
                 android:layout_gravity="center_horizontal"
-                android:textColor="#ca1f1f" />
+                android:textColor="#ca1f1f"
+                android:visibility="gone" />
 
             <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:id="@+id/deadWallPicture"/>
+                android:id="@+id/deadWallPicture"
+                android:visibility="gone" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textAppearance="?android:attr/textAppearanceLarge"
                 android:text="4) In-progress Games"
-                android:paddingTop="10dp" />
+                android:paddingTop="10dp"
+                android:visibility="gone" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textAppearance="?android:attr/textAppearanceMedium"
                 android:text="Pictures of games in various states of progress. Note that there is usually some kind of marker in the middle to indicate who is the current dealer. In this case, there is a sheet reminding each player of their seat's wind."
-                android:textSize="14sp" />
+                android:textSize="14sp"
+                android:visibility="gone" />
 
             <TextView
                 android:layout_width="wrap_content"
@@ -319,7 +325,8 @@
                 android:text="Before First Turn"
                 android:paddingTop="10dp"
                 android:paddingLeft="15dp"
-                android:textSize="18sp" />
+                android:textSize="18sp"
+                android:visibility="gone" />
 
             <TextView
                 android:layout_width="wrap_content"
@@ -327,7 +334,8 @@
                 android:textAppearance="?android:attr/textAppearanceMedium"
                 android:text="The tiles have been shuffled, walls have been built, player's have drawn their hands, but the first player (the dealer) has not ended their yet by discarding."
                 android:textSize="14sp"
-                android:paddingLeft="15dp" />
+                android:paddingLeft="15dp"
+                android:visibility="gone" />
 
             <TextView
                 android:layout_width="wrap_content"
@@ -337,12 +345,14 @@
                 android:textSize="14sp"
                 android:paddingLeft="15dp"
                 android:layout_gravity="center_horizontal"
-                android:textColor="#ca1f1f" />
+                android:textColor="#ca1f1f"
+                android:visibility="gone" />
 
             <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:id="@+id/beforeFirstTurnPicture"/>
+                android:id="@+id/beforeFirstTurnPicture"
+                android:visibility="gone" />
 
             <TextView
                 android:layout_width="wrap_content"
@@ -351,7 +361,8 @@
                 android:text="Drew Winning Tile"
                 android:paddingTop="10dp"
                 android:paddingLeft="15dp"
-                android:textSize="18sp" />
+                android:textSize="18sp"
+                android:visibility="gone" />
 
             <TextView
                 android:layout_width="wrap_content"
@@ -359,7 +370,8 @@
                 android:textAppearance="?android:attr/textAppearanceMedium"
                 android:text="The hand just ended, as a player drew a tile that completed their hand. The player revealed their hand and winning tile by laying them face-up, keeping the winning tile clearly separate from the rest of the hand."
                 android:textSize="14sp"
-                android:paddingLeft="15dp" />
+                android:paddingLeft="15dp"
+                android:visibility="gone" />
 
             <TextView
                 android:layout_width="wrap_content"
@@ -369,12 +381,14 @@
                 android:textSize="14sp"
                 android:paddingLeft="15dp"
                 android:layout_gravity="center_horizontal"
-                android:textColor="#ca1f1f" />
+                android:textColor="#ca1f1f"
+                android:visibility="gone" />
 
             <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:id="@+id/winningHandPicture"/>
+                android:id="@+id/winningHandPicture"
+                android:visibility="gone" />
 
         </LinearLayout>
     </ScrollView>

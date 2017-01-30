@@ -130,7 +130,8 @@
                     android:layout_height="wrap_content"
                     android:text="Glossary"
                     android:enabled="false"
-                    android:layout_weight="1" />
+                    android:layout_weight="1"
+                    android:visibility="gone" />
 
                 <Button
                     android:layout_width="0dp"
