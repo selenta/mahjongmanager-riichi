@@ -2,6 +2,8 @@ package com.mahjongmanager.riichi;
 
 import android.util.Log;
 
+import com.mahjongmanager.riichi.common.Hand;
+import com.mahjongmanager.riichi.common.Tile;
 import com.mahjongmanager.riichi.utils.HandGenerator;
 
 import org.junit.Test;

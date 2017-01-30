@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="utf-8"?>
+<fus>
+    <fu>
+        <name>FUUTEI</name>
+        <english>Fuutei</english>
+        <romaji>fuutei</romaji>
+        <kanji>???</kanji>
+        <value>20</value>
+        <description>A standard winning hand consisting of four melds and a pair</description>
+    </fu>
+    <fu>
+        <name>CHIITOITSU</name>
+        <english>Chiitoitsu</english>
+        <romaji>chiitoitsu</romaji>
+        <kanji>???</kanji>
+        <value>25</value>
+        <description>A winning hand made up of 7 pairs</description>
+    </fu>
+    <fu>
+        <name>MENZEN_KAFU</name>
+        <english>Menzen-Kafu</english>
+        <romaji>menzen-kafu</romaji>
+        <kanji>???</kanji>
+        <value>10</value>
+        <description>Won from another player's discarded tile with a closed hand</description>
+    </fu>
+    <fu>
+        <name>PINFU</name>
+        <english>Pinfu</english>
+        <romaji>pinfu</romaji>
+        <kanji>???</kanji>
+        <value>20</value>
+        <description>A special winning hand that contains no other Fu. This hand consists of: a closed hand, a valueless pair, all four melds are runs, and the winning tile was a two-sided wait</description>
+    </fu>
+    <fu>
+        <name>PINFU_OPEN</name>
+        <english>Open Pinfu</english>
+        <romaji>Open Pinfu</romaji>
+        <kanji>???</kanji>
+        <value>10</value>
+        <description>A special winning hand that contains no other Fu. This hand consists of: an open hand, a valueless pair, all four melds are runs, and the winning tile was a two-sided wait</description>
+    </fu>
+    <fu>
+        <name>SELF_DRAW</name>
+        <english>Self Draw Winning Tile</english>
+        <romaji>Self Draw</romaji>
+        <kanji>???</kanji>
+        <value>2</value>
+        <description>Drew the winning tile</description>
+    </fu>
+    <fu>
+        <name>DRAGON_PAIR</name>
+        <english>Dragon Pair</english>
+        <romaji>Dragon Pair</romaji>
+        <kanji>???</kanji>
+        <value>2</value>
+        <description>The pair consists of dragon tiles</description>
+    </fu>
+    <fu>
+        <name>PREVAILING_WIND</name>
+        <english>Prevailing Wind</english>
+        <romaji>Prevailing Wind</romaji>
+        <kanji>???</kanji>
+        <value>2</value>
+        <description>The pair consists of the prevailing wind (aka round wind)</description>
+    </fu>
+    <fu>
+        <name>SEAT_WIND</name>
+        <english>Seat Wind</english>
+        <romaji>Seat Wind</romaji>
+        <kanji>???</kanji>
+        <value>2</value>
+        <description>The pair consists of the player's seat wind</description>
+    </fu>
+    <fu>
+        <name>PAIR_WAIT</name>
+        <english>Pair Wait</english>
+        <romaji>Pair Wait</romaji>
+        <kanji>???</kanji>
+        <value>2</value>
+        <description>The winning tile completes the pair</description>
+    </fu>
+    <fu>
+        <name>SINGLE_SIDED_WAIT</name>
+        <english>Single-sided Wait</english>
+        <romaji>Single-sided Wait</romaji>
+        <kanji>???</kanji>
+        <value>2</value>
+        <description>The winning tile completes a run. Either the hand contains a 1-2 and is waiting on a 3, or the hand contains a 9-8 and is waiting on a 7</description>
+    </fu>
+    <fu>
+        <name>INSIDE_WAIT</name>
+        <english>Inside Wait</english>
+        <romaji>???</romaji>
+        <kanji>???</kanji>
+        <value>2</value>
+        <description>The winning tile completes a run and is the middle tile of the run. Example: the hand contains a 3-5 and is waiting on a 4</description>
+    </fu>
+    <fu>
+        <name>MELD_1</name>
+        <english>meld</english>
+        <romaji>meld</romaji>
+        <kanji>meld</kanji>
+        <value>-1</value>
+        <description>(placeholder) The fu of a meld depends on the composition of the meld</description>
+    </fu>
+    <fu>
+        <name>MELD_2</name>
+        <english>meld</english>
+        <romaji>meld</romaji>
+        <kanji>meld</kanji>
+        <value>-1</value>
+        <description>(placeholder) The fu of a meld depends on the composition of the meld</description>
+    </fu>
+    <fu>
+        <name>MELD_3</name>
+        <english>meld</english>
+        <romaji>meld</romaji>
+        <kanji>meld</kanji>
+        <value>-1</value>
+        <description>(placeholder) The fu of a meld depends on the composition of the meld</description>
+    </fu>
+    <fu>
+        <name>MELD_4</name>
+        <english>meld</english>
+        <romaji>meld</romaji>
+        <kanji>meld</kanji>
+        <value>-1</value>
+        <description>(placeholder) The fu of a meld depends on the composition of the meld</description>
+    </fu>
+
+</fus>

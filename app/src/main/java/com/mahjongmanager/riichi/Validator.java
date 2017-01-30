@@ -1,5 +1,8 @@
 package com.mahjongmanager.riichi;
 
+import com.mahjongmanager.riichi.common.Hand;
+import com.mahjongmanager.riichi.common.Meld;
+import com.mahjongmanager.riichi.common.Tile;
 import com.mahjongmanager.riichi.utils.Log;
 
 import java.util.HashSet;

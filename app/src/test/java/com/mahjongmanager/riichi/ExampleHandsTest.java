@@ -1,5 +1,6 @@
 package com.mahjongmanager.riichi;
 
+import com.mahjongmanager.riichi.common.Hand;
 import com.mahjongmanager.riichi.utils.ExampleHands;
 
 import junit.framework.Assert;

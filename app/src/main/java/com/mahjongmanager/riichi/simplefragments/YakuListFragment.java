@@ -15,15 +15,15 @@ import android.widget.TableRow;
 import android.widget.TextView;
 
 import com.mahjongmanager.riichi.MainActivity;
-import com.mahjongmanager.riichi.Yaku;
+import com.mahjongmanager.riichi.common.Yaku;
 import com.mahjongmanager.riichi.components.YakuDescription;
 import com.mahjongmanager.riichi.utils.CSVFile;
 import com.mahjongmanager.riichi.R;
+import com.mahjongmanager.riichi.utils.ExampleHands;
 
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 public class YakuListFragment extends Fragment {
@@ -131,8 +131,7 @@ public class YakuListFragment extends Fragment {
     }
 
     private void populateYakuSortedByPattern(){
-        List<Yaku> allYaku = ((MainActivity)getContext()).getExampleHands().allYaku;
-        for( Yaku y : allYaku ){
+        for( Yaku y : ExampleHands.allYaku ){
             if( y.name!= Yaku.Name.DORA ){
                 YakuDescription yd = new YakuDescription(getContext());
                 yd.setYaku(y);

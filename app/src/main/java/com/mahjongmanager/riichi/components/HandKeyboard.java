@@ -12,11 +12,11 @@ import android.widget.LinearLayout;
 import android.widget.Space;
 import android.widget.TextView;
 
-import com.mahjongmanager.riichi.Hand;
+import com.mahjongmanager.riichi.common.Hand;
 import com.mahjongmanager.riichi.MainActivity;
 import com.mahjongmanager.riichi.R;
 import com.mahjongmanager.riichi.ScoreCalculator;
-import com.mahjongmanager.riichi.Tile;
+import com.mahjongmanager.riichi.common.Tile;
 import com.mahjongmanager.riichi.handcalculator.InputHand;
 import com.mahjongmanager.riichi.utils.AppSettings;
 import com.mahjongmanager.riichi.utils.HandGenerator;

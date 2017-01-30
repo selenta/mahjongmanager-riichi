@@ -1,5 +1,8 @@
 package com.mahjongmanager.riichi;
 
+import com.mahjongmanager.riichi.common.Hand;
+import com.mahjongmanager.riichi.common.Tile;
+
 import org.junit.Assert;
 import org.junit.Test;
 

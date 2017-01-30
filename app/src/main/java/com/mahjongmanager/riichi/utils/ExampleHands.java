@@ -1,10 +1,10 @@
 package com.mahjongmanager.riichi.utils;
 
-import com.mahjongmanager.riichi.Hand;
+import com.mahjongmanager.riichi.common.Hand;
 import com.mahjongmanager.riichi.MainActivity;
 import com.mahjongmanager.riichi.ScoreCalculator;
-import com.mahjongmanager.riichi.Tile;
-import com.mahjongmanager.riichi.Yaku;
+import com.mahjongmanager.riichi.common.Tile;
+import com.mahjongmanager.riichi.common.Yaku;
 
 import org.xmlpull.v1.XmlPullParser;
 import org.xmlpull.v1.XmlPullParserException;
@@ -18,16 +18,9 @@ import java.util.List;
 
 // Copying the example hands at: https://en.wikipedia.org/wiki/Japanese_Mahjong_yaku
 public class ExampleHands {
-    private MainActivity activity;
+    public static List<Yaku> allYaku = new ArrayList<>();
 
-    public List<Yaku> allYaku = new ArrayList<>();
-
-    public ExampleHands(MainActivity ma){
-        activity = ma;
-        populateYakuDescriptions();
-    }
-
-    private void populateYakuDescriptions(){
+    public static void populate(MainActivity activity){
         XmlPullParserFactory factory = null;
         try {
             factory = XmlPullParserFactory.newInstance();
@@ -43,7 +36,7 @@ public class ExampleHands {
             e.printStackTrace();
         }
     }
-    private void parseXml(XmlPullParser parser) throws XmlPullParserException, IOException {
+    private static void parseXml(XmlPullParser parser) throws XmlPullParserException, IOException {
         int eventType = parser.getEventType();
         Yaku yaku = null;
         String text = null;
@@ -90,7 +83,7 @@ public class ExampleHands {
         }
     }
 
-    private void attachHand(Yaku y){
+    private static void attachHand(Yaku y){
         switch (y.name){
             case RIICHI:
                 break;

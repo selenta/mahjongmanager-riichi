@@ -7,9 +7,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 
-import com.mahjongmanager.riichi.Hand;
+import com.mahjongmanager.riichi.common.Hand;
 import com.mahjongmanager.riichi.R;
-import com.mahjongmanager.riichi.Tile;
+import com.mahjongmanager.riichi.common.Tile;
 import com.mahjongmanager.riichi.components.HandDisplay;
 import com.mahjongmanager.riichi.utils.HandGenerator;
 

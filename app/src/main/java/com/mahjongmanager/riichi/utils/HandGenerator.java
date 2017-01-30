@@ -2,9 +2,9 @@ package com.mahjongmanager.riichi.utils;
 
 import android.content.Context;
 
-import com.mahjongmanager.riichi.Hand;
-import com.mahjongmanager.riichi.Meld;
-import com.mahjongmanager.riichi.Tile;
+import com.mahjongmanager.riichi.common.Hand;
+import com.mahjongmanager.riichi.common.Meld;
+import com.mahjongmanager.riichi.common.Tile;
 
 import java.io.IOException;
 import java.io.InputStream;

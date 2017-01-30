@@ -7,13 +7,13 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import com.mahjongmanager.riichi.Hand;
+import com.mahjongmanager.riichi.common.Hand;
 import com.mahjongmanager.riichi.components.HandDisplay;
 import com.mahjongmanager.riichi.MainActivity;
-import com.mahjongmanager.riichi.Meld;
+import com.mahjongmanager.riichi.common.Meld;
 import com.mahjongmanager.riichi.R;
 import com.mahjongmanager.riichi.ScoreCalculator;
-import com.mahjongmanager.riichi.Tile;
+import com.mahjongmanager.riichi.common.Tile;
 import com.mahjongmanager.riichi.components.ScoreScreen;
 import com.mahjongmanager.riichi.utils.Log;
 import com.mahjongmanager.riichi.utils.Utils;

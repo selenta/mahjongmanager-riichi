@@ -1,7 +1,6 @@
 package com.mahjongmanager.riichi.components;
 
 import android.app.AlertDialog;
-import android.app.Dialog;
 import android.content.Context;
 import android.graphics.Paint;
 import android.graphics.Typeface;
@@ -17,13 +16,14 @@ import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
 
-import com.mahjongmanager.riichi.Hand;
-import com.mahjongmanager.riichi.MainActivity;
-import com.mahjongmanager.riichi.Meld;
+import com.mahjongmanager.riichi.common.Fu;
+import com.mahjongmanager.riichi.common.Hand;
+import com.mahjongmanager.riichi.common.Meld;
 import com.mahjongmanager.riichi.R;
 import com.mahjongmanager.riichi.ScoreCalculator;
-import com.mahjongmanager.riichi.Tile;
-import com.mahjongmanager.riichi.Yaku;
+import com.mahjongmanager.riichi.common.Tile;
+import com.mahjongmanager.riichi.common.Yaku;
+import com.mahjongmanager.riichi.utils.ExampleHands;
 import com.mahjongmanager.riichi.utils.FuHelper;
 import com.mahjongmanager.riichi.utils.Log;
 import com.mahjongmanager.riichi.utils.Utils;
@@ -99,14 +99,14 @@ public class ScoreScreen extends LinearLayout implements View.OnClickListener {
         YakuDescription yd = new YakuDescription(getContext());
         yd.setYaku(scoreDetail.yaku);
         yd.showLabels();
-        yd.hideEnglishName();
+        yd.hidePrimaryName();
 
         ScrollView sv = new ScrollView(getContext());
         sv.addView(yd);
 
         AlertDialog.Builder d = new AlertDialog.Builder(getContext());
         d.setView(sv);
-        d.setTitle(scoreDetail.yaku.english);
+        d.setTitle(scoreDetail.yaku.getLocalizedString());
         d.show();
     }
     private void createFuPopup(ScoreDetail scoreDetail){
@@ -141,7 +141,7 @@ public class ScoreScreen extends LinearLayout implements View.OnClickListener {
         } else {
             TextView description = new TextView(getContext());
             container.addView(description);
-            String dStr = FuHelper.getDescription(scoreDetail.toString());
+            String dStr = scoreDetail.fu.description;
             description.setText(dStr);
         }
 
@@ -230,7 +230,7 @@ public class ScoreScreen extends LinearLayout implements View.OnClickListener {
         hanTotalLabel.setText(hand.han.toString());
         fuTotalLabel.setText(hand.fu.toString()+" ("+roundedFu.toString()+")");
 
-        String result = ScoreCalculator.scoreHanFu(hand.han, hand.fu, hand.playerWind== Tile.Wind.EAST, hand.tsumo);
+        String result = ScoreCalculator.scoreHanFu(hand.han, hand.fu, hand.playerWind==Tile.Wind.EAST, hand.tsumo);
         scoreValue.setText(result);
 
         //Do this last, so that we can make it a little more pretty
@@ -272,8 +272,8 @@ public class ScoreScreen extends LinearLayout implements View.OnClickListener {
         for( Yaku.Name yName : hand.hanList.keySet() ){
             addHanRow(yName);
         }
-        for( String label : hand.fuList.keySet() ){
-            addFuRow(label);
+        for( Fu.Name fName : hand.fuList.keySet() ){
+            addFuRow(fName);
         }
     }
     private void addHanRow(Yaku.Name yakuName){
@@ -290,9 +290,11 @@ public class ScoreScreen extends LinearLayout implements View.OnClickListener {
 
         hanTable.addView(sd.tableRow, hanTable.getChildCount()-1);
     }
-    private void addFuRow(String label){
-        String val = hand.fuList.get(label).toString();
-        ScoreDetail sd = new ScoreDetail( label, val );
+    private void addFuRow(Fu.Name fName){
+        Fu fu = getFu(fName);
+        String val = hand.fuList.get(fName).toString();
+
+        ScoreDetail sd = new ScoreDetail( fu, val );
         sd.tableRow.setOnClickListener(this);
         scoreDetailList.add(sd);
 
@@ -300,7 +302,7 @@ public class ScoreScreen extends LinearLayout implements View.OnClickListener {
     }
 
     private class ScoreDetail {
-        String fuName;
+        Fu fu;
         Meld meld;
         Yaku yaku;
         boolean isOpen;
@@ -314,21 +316,17 @@ public class ScoreScreen extends LinearLayout implements View.OnClickListener {
             value = v;
             createTableRow();
         }
-        public ScoreDetail(String name, String v){
-            if( name.contains("1") ){
+        public ScoreDetail(Fu f, String v){
+            if( f.name==Fu.Name.MELD_1 ){
                 meld = hand.meld1;
-            } else if( name.contains("2") ){
+            } else if( f.name==Fu.Name.MELD_2 ){
                 meld = hand.meld2;
-            } else if( name.contains("3") ){
+            } else if( f.name==Fu.Name.MELD_3 ){
                 meld = hand.meld3;
-            } else if( name.contains("4") ){
+            } else if( f.name==Fu.Name.MELD_4 ){
                 meld = hand.meld4;
             }
-            if( meld!=null ) {
-                fuName = FuHelper.getFuName(meld);
-            } else {
-                fuName = name;
-            }
+            fu = f;
             value = v;
             createTableRow();
         }
@@ -369,8 +367,12 @@ public class ScoreScreen extends LinearLayout implements View.OnClickListener {
         }
         public String toString(){
             String s;
-            if(fuName!=null) {
-                s = fuName;
+            if(fu!=null) {
+                if( fu.name==Fu.Name.MELD_1 || fu.name==Fu.Name.MELD_2 || fu.name==Fu.Name.MELD_3 || fu.name== Fu.Name.MELD_4){
+                    s = FuHelper.getFuName(meld);
+                } else {
+                    s = fu.getLocalizedString();
+                }
             } else {
                 s = yaku.getLocalizedString();
             }
@@ -378,14 +380,18 @@ public class ScoreScreen extends LinearLayout implements View.OnClickListener {
         }
     }
 
-    private List<Yaku> _allYaku;
     private Yaku getYaku(Yaku.Name name){
-        if( _allYaku==null ){
-            _allYaku = ((MainActivity)getContext()).getExampleHands().allYaku;
-        }
-        for( Yaku y : _allYaku ){
+        for( Yaku y : ExampleHands.allYaku ){
             if( y.name.equals(name) ){
                 return y;
+            }
+        }
+        return null;
+    }
+    private Fu getFu(Fu.Name name){
+        for( Fu f : FuHelper.allFu ){
+            if( f.name.equals(name) ){
+                return f;
             }
         }
         return null;

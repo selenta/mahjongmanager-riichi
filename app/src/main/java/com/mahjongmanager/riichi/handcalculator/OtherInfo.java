@@ -12,11 +12,11 @@ import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.Spinner;
 
-import com.mahjongmanager.riichi.Hand;
+import com.mahjongmanager.riichi.common.Hand;
 import com.mahjongmanager.riichi.MainActivity;
 import com.mahjongmanager.riichi.R;
 import com.mahjongmanager.riichi.ScoreCalculator;
-import com.mahjongmanager.riichi.Tile;
+import com.mahjongmanager.riichi.common.Tile;
 import com.mahjongmanager.riichi.utils.Log;
 
 import java.util.ArrayList;

@@ -12,6 +12,11 @@ public class AppSettings {
         sharedPref = activity.getPreferences(Context.MODE_PRIVATE);
     }
 
+    public enum Terminology {
+        ENGLISH,
+        ROMAJI,
+        KANJI
+    }
 
     ///////////////////////////////////////////////////////
     //////////////           Keys            //////////////
@@ -85,11 +90,11 @@ public class AppSettings {
     }
 
     // App Settings
-    public static String getTerminology(){
-        return sharedPref.getString(TERMINOLOGY, "Romaji");
+    public static Terminology getTerminology(){
+        return Terminology.valueOf(sharedPref.getString(TERMINOLOGY, "ROMAJI").toUpperCase());
     }
-    public static void setTerminology(String value){
-        savePreference(TERMINOLOGY, value);
+    public static void setTerminology(Terminology term){
+        savePreference(TERMINOLOGY, term.toString());
     }
 
     public static boolean getKeyboardTileSize(){

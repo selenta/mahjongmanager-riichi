@@ -14,9 +14,9 @@ import android.util.DisplayMetrics;
 import android.widget.ImageView;
 
 import com.mahjongmanager.riichi.MainActivity;
-import com.mahjongmanager.riichi.Meld;
+import com.mahjongmanager.riichi.common.Meld;
 import com.mahjongmanager.riichi.R;
-import com.mahjongmanager.riichi.Tile;
+import com.mahjongmanager.riichi.common.Tile;
 
 import java.util.Arrays;
 import java.util.Collections;

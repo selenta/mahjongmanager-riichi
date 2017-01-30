@@ -47,11 +47,11 @@ public class OptionsFragment extends Fragment implements View.OnClickListener {
         loadMaxHands();
     }
     private void loadTerminology(){
-        String val = AppSettings.getTerminology();
+        AppSettings.Terminology val = AppSettings.getTerminology();
 
         for( int i=0; i<terminology.getChildCount(); i++ ){
             RadioButton child = (RadioButton)terminology.getChildAt(i);
-            boolean isCorrect = child.getText().equals(val);
+            boolean isCorrect = child.getText().toString().equalsIgnoreCase(val.toString());
             child.setChecked(isCorrect);
         }
     }
@@ -152,13 +152,13 @@ public class OptionsFragment extends Fragment implements View.OnClickListener {
     private void saveTerminology(RadioGroup group, int checkedId){
         switch (checkedId){
             case R.id.terminologyEnglish:
-                AppSettings.setTerminology("English");
+                AppSettings.setTerminology(AppSettings.Terminology.ENGLISH);
                 break;
             case R.id.terminologyRomaji:
-                AppSettings.setTerminology("Romaji");
+                AppSettings.setTerminology(AppSettings.Terminology.ROMAJI);
                 break;
             case R.id.terminologyKanji:
-                AppSettings.setTerminology("Kanji");
+                AppSettings.setTerminology(AppSettings.Terminology.KANJI);
                 break;
         }
     }

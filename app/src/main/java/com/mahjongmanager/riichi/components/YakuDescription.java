@@ -9,7 +9,8 @@ import android.widget.TableRow;
 import android.widget.TextView;
 
 import com.mahjongmanager.riichi.R;
-import com.mahjongmanager.riichi.Yaku;
+import com.mahjongmanager.riichi.common.Yaku;
+import com.mahjongmanager.riichi.utils.AppSettings;
 
 public class YakuDescription extends LinearLayout {
     private Context context;
@@ -60,8 +61,18 @@ public class YakuDescription extends LinearLayout {
     public void hideLabels(){
         labelRow.setVisibility(GONE);
     }
-    public void hideEnglishName(){
-        yakuNameEnglish.setVisibility(GONE);
+    public void hidePrimaryName(){
+        switch (AppSettings.getTerminology()){
+            case ENGLISH:
+                yakuNameEnglish.setVisibility(GONE);
+                break;
+            case ROMAJI:
+                yakuNameRomaji.setVisibility(GONE);
+                break;
+            case KANJI:
+                yakuNameKanji.setVisibility(GONE);
+                break;
+        }
     }
 
     public void setYaku(Yaku y){

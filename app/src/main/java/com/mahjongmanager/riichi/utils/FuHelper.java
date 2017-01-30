@@ -1,23 +1,85 @@
 package com.mahjongmanager.riichi.utils;
 
-import com.mahjongmanager.riichi.Hand;
-import com.mahjongmanager.riichi.Meld;
-import com.mahjongmanager.riichi.Tile;
+import com.mahjongmanager.riichi.MainActivity;
+import com.mahjongmanager.riichi.common.Fu;
+import com.mahjongmanager.riichi.common.Hand;
+import com.mahjongmanager.riichi.common.Meld;
+import com.mahjongmanager.riichi.common.Tile;
+
+import org.xmlpull.v1.XmlPullParser;
+import org.xmlpull.v1.XmlPullParserException;
+import org.xmlpull.v1.XmlPullParserFactory;
+
+import java.io.IOException;
+import java.io.InputStream;
+import java.util.ArrayList;
+import java.util.List;
 
 public class FuHelper {
-    private static String FUUTEI            = "Fuutei";
-    private static String CHIITOITSU        = "Chiitoitsu";
-    private static String MENZEN_KAFU       = "Menzen-Kafu";
-    private static String PINFU             = "Pinfu";
-    private static String PINFU_OPEN        = "Open Pinfu";
-    private static String SELF_DRAW         = "Self Draw Winning Tile";
-    private static String DRAGON_PAIR       = "Dragon Pair";
-    private static String PREVAILING_WIND   = "Prevailing Wind";
-    private static String SEAT_WIND         = "Seat Wind";
-    private static String PAIR_WAIT         = "Pair Wait";
-    private static String SINGLE_SIDED_WAIT = "Single-sided Wait";
-    private static String INSIDE_WAIT       = "Inside Wait";
+    public static List<Fu> allFu = new ArrayList<>();
 
+    public static void populate(MainActivity activity){
+        XmlPullParserFactory factory = null;
+        try {
+            factory = XmlPullParserFactory.newInstance();
+            XmlPullParser xpp = factory.newPullParser();
+
+            InputStream is = activity.getAssets().open("fu.xml");
+            xpp.setInput(is, null);
+
+            parseXml( xpp );
+        } catch (XmlPullParserException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+    private static void parseXml(XmlPullParser parser) throws XmlPullParserException, IOException {
+        int eventType = parser.getEventType();
+        Fu fu = null;
+        String text = null;
+
+        while (eventType != XmlPullParser.END_DOCUMENT) {
+            String tagname = parser.getName();
+            switch (eventType) {
+                case XmlPullParser.START_TAG:
+                    if (tagname.equalsIgnoreCase("fu")) {
+                        fu = new Fu();
+                    }
+                    break;
+
+                case XmlPullParser.TEXT:
+                    text = parser.getText();
+                    break;
+
+                case XmlPullParser.END_TAG:
+                    if (tagname.equalsIgnoreCase("fu")) {
+                        allFu.add(fu);
+                    } else if (tagname.equalsIgnoreCase("name")) {
+                        fu.name = Fu.Name.valueOf(text);
+                    } else if (tagname.equalsIgnoreCase("english")) {
+                        fu.english = text;
+                    } else if (tagname.equalsIgnoreCase("romaji")) {
+                        fu.romaji = text;
+                    } else if (tagname.equalsIgnoreCase("kanji")) {
+                        fu.kanji = text;
+                    } else if (tagname.equalsIgnoreCase("value")) {
+                        fu.value = Integer.parseInt(text);
+                    } else if (tagname.equalsIgnoreCase("description")) {
+                        fu.description = text;
+                    }
+                    break;
+
+                default:
+                    break;
+            }
+            eventType = parser.next();
+        }
+    }
+
+    /////////////////////////////////////////////////////////////////////////
+    ////////////////////        General Methods        //////////////////////
+    /////////////////////////////////////////////////////////////////////////
     /**
      * Examines the hand in depth, including its overall structure, meld structure, yaku, pair,
      * and its winning tile. Adding an entry to the hand's fuList for each type of Fu present.
@@ -29,12 +91,12 @@ public class FuHelper {
         }
 
         // (0) Fu starts at 20
-        h.fuList.put(FUUTEI, 20);
+        h.fuList.put(Fu.Name.FUUTEI, 20);
 
         // (1) Set fu for chiitoitsu
         if( h.chiiToitsu ){
             h.fuList.clear();
-            h.fuList.put(CHIITOITSU, 25);
+            h.fuList.put(Fu.Name.CHIITOITSU, 25);
             h.fu = 25;
             return;
         }
@@ -47,19 +109,19 @@ public class FuHelper {
 
         // (5) Add fu for tsumo (pinfu exception)
         if( !hasFu(h) ){
-            boolean isClosed = h.fuList.containsKey(MENZEN_KAFU);
+            boolean isClosed = h.fuList.containsKey(Fu.Name.MENZEN_KAFU);
             h.fuList.clear();
-            h.fuList.put( PINFU, 20);
+            h.fuList.put(Fu.Name.PINFU, 20);
             if( isClosed ){
-                h.fuList.put( MENZEN_KAFU, 10);
+                h.fuList.put(Fu.Name.MENZEN_KAFU, 10);
             }
         } else if( h.selfDrawWinningTile ) {
-            h.fuList.put( SELF_DRAW, 2);
+            h.fuList.put(Fu.Name.SELF_DRAW, 2);
         }
 
         // (6) Set fu for open pinfu
         if( h.fuList.size()==1 && !h.pinfu ){
-            h.fuList.put( PINFU_OPEN, 10);
+            h.fuList.put(Fu.Name.PINFU_OPEN, 10);
         }
     }
     private static void fuFromClosedHand(Hand h){
@@ -72,49 +134,49 @@ public class FuHelper {
             }
         }
         if( !isOpen && h.getWinningTile()!=null && h.getWinningTile().calledFrom!=Tile.CalledFrom.NONE ){
-            h.fuList.put(MENZEN_KAFU, 10);
+            h.fuList.put(Fu.Name.MENZEN_KAFU, 10);
         }
     }
     private static void fuFromPair(Hand h){
         if( h.pair.firstTile().dragon!=null ){
-            h.fuList.put( DRAGON_PAIR, 2);
+            h.fuList.put(Fu.Name.DRAGON_PAIR, 2);
         } else if( h.pair.firstTile().wind==h.prevailingWind ){
-            h.fuList.put( PREVAILING_WIND, 2);
+            h.fuList.put(Fu.Name.PREVAILING_WIND, 2);
         }
         if( h.pair.firstTile().wind==h.playerWind ){
             // Double counting here for pairs of winds not allowed in all rulesets
-            h.fuList.put( SEAT_WIND, 2);
+            h.fuList.put(Fu.Name.SEAT_WIND, 2);
         }
     }
     private static void fuFromMelds(Hand h){
-        fuFromMeld( h, h.meld1, "Meld 1" );
-        fuFromMeld( h, h.meld2, "Meld 2" );
-        fuFromMeld( h, h.meld3, "Meld 3" );
-        fuFromMeld( h, h.meld4, "Meld 4" );
+        fuFromMeld( h, h.meld1, Fu.Name.MELD_1 );
+        fuFromMeld( h, h.meld2, Fu.Name.MELD_2 );
+        fuFromMeld( h, h.meld3, Fu.Name.MELD_3 );
+        fuFromMeld( h, h.meld4, Fu.Name.MELD_4 );
     }
-    private static void fuFromMeld(Hand h, Meld meld, String label){
+    private static void fuFromMeld(Hand h, Meld meld, Fu.Name name){
         if( !meld.isChii() ){
             int meldFu = 2;
             meldFu = (meld.isClosed())                                       ? meldFu*2 : meldFu;
             meldFu = (Utils.containsHonorsOrTerminalsOnly(meld.getTiles()))  ? meldFu*2 : meldFu;
             meldFu = (meld.isKan())                                          ? meldFu*4 : meldFu;
-            h.fuList.put( label, meldFu);
+            h.fuList.put( name, meldFu);
         }
     }
     private static void fuFromWait(Hand h){
         Meld winningMeld = h.getWinningMeld();
         if( winningMeld!=null && winningMeld.isPair() ){
-            h.fuList.put( PAIR_WAIT, 2);
+            h.fuList.put(Fu.Name.PAIR_WAIT, 2);
         } else if( winningMeld!=null && winningMeld.isChii() ){
             if( winningMeld.thirdTile().winningTile && winningMeld.firstTile().number==1 && winningMeld.secondTile().number==2 && winningMeld.thirdTile().number==3 ){
                 // Wait on a 3 for a 1-2-3 meld
-                h.fuList.put( SINGLE_SIDED_WAIT, 2);
+                h.fuList.put(Fu.Name.SINGLE_SIDED_WAIT, 2);
             } else if( winningMeld.firstTile().winningTile && winningMeld.firstTile().number==7 && winningMeld.secondTile().number==8 && winningMeld.thirdTile().number==9 ){
                 // Wait on a 7 for a 7-8-9 meld
-                h.fuList.put( SINGLE_SIDED_WAIT, 2);
+                h.fuList.put(Fu.Name.SINGLE_SIDED_WAIT, 2);
             } else if( winningMeld.secondTile().winningTile ){
                 // Wait on an inside tile for a chii
-                h.fuList.put( INSIDE_WAIT, 2);
+                h.fuList.put(Fu.Name.INSIDE_WAIT, 2);
             }
         }
     }
@@ -156,51 +218,16 @@ public class FuHelper {
             populateFuList(h);
         }
 
-        return h.fuList.containsKey(CHIITOITSU)
-                || h.fuList.containsKey(DRAGON_PAIR)
-                || h.fuList.containsKey(PREVAILING_WIND)
-                || h.fuList.containsKey(SEAT_WIND)
-                || h.fuList.containsKey(PAIR_WAIT)
-                || h.fuList.containsKey(SINGLE_SIDED_WAIT)
-                || h.fuList.containsKey(INSIDE_WAIT)
-                || h.fuList.containsKey("Meld 1")
-                || h.fuList.containsKey("Meld 2")
-                || h.fuList.containsKey("Meld 3")
-                || h.fuList.containsKey("Meld 4");
-    }
-
-    /**
-     * When provided a Fu name, will return a more detailed description of the Fu. Valid options
-     * include this class's public static strings.
-     * @param s The name of the Fu
-     * @return Description of the Fu
-     */
-    public static String getDescription(String s){
-        if( s.equalsIgnoreCase(FUUTEI) ){
-            return "A standard winning hand consisting of four melds and a pair";
-        } else if( s.equalsIgnoreCase(CHIITOITSU) ){
-            return "A winning hand made up of 7 pairs";
-        } else if( s.equalsIgnoreCase(MENZEN_KAFU) ){
-            return "Won from another player's discarded tile with a closed hand";
-        } else if( s.equalsIgnoreCase(PINFU) ){
-            return "A special winning hand that contains no other Fu. This hand consists of: a closed hand, a valueless pair, all four melds are runs, and the winning tile was a two-sided wait";
-        } else if( s.equalsIgnoreCase(PINFU_OPEN) ){
-            return "A special winning hand that contains no other Fu. This hand consists of: an open hand, a valueless pair, all four melds are runs, and the winning tile was a two-sided wait";
-        } else if( s.equalsIgnoreCase(SELF_DRAW) ){
-            return "Drew the winning tile";
-        } else if( s.equalsIgnoreCase(DRAGON_PAIR) ){
-            return "The pair consists of dragons";
-        } else if( s.equalsIgnoreCase(PREVAILING_WIND) ){
-            return "The pair consists of the prevailing wind (aka round wind)";
-        } else if( s.equalsIgnoreCase(SEAT_WIND) ){
-            return "The pair consists of the player's seat wind";
-        } else if( s.equalsIgnoreCase(PAIR_WAIT) ){
-            return "The winning tile completes the pair";
-        } else if( s.equalsIgnoreCase(SINGLE_SIDED_WAIT) ){
-            return "The winning tile completes a run. Either the hand contains a 1-2 and is waiting on a 3, or the hand contains a 9-8 and is waiting on a 7";
-        } else if( s.equalsIgnoreCase(INSIDE_WAIT) ){
-            return "The winning tile completes a run and is the middle tile of the run. Example: the hand contains a 3-5 and is waiting on a 4";
-        }
-        return "Error - Could not find description for "+s;
+        return h.fuList.containsKey(Fu.Name.CHIITOITSU)
+                || h.fuList.containsKey(Fu.Name.DRAGON_PAIR)
+                || h.fuList.containsKey(Fu.Name.PREVAILING_WIND)
+                || h.fuList.containsKey(Fu.Name.SEAT_WIND)
+                || h.fuList.containsKey(Fu.Name.PAIR_WAIT)
+                || h.fuList.containsKey(Fu.Name.SINGLE_SIDED_WAIT)
+                || h.fuList.containsKey(Fu.Name.INSIDE_WAIT)
+                || h.fuList.containsKey(Fu.Name.MELD_1)
+                || h.fuList.containsKey(Fu.Name.MELD_2)
+                || h.fuList.containsKey(Fu.Name.MELD_3)
+                || h.fuList.containsKey(Fu.Name.MELD_4);
     }
 }

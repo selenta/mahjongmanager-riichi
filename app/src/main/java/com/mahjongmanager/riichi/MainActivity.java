@@ -11,6 +11,8 @@ import android.view.View;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
 import com.google.android.gms.ads.MobileAds;
+import com.mahjongmanager.riichi.common.Hand;
+import com.mahjongmanager.riichi.common.Tile;
 import com.mahjongmanager.riichi.handcalculator.*;
 import com.mahjongmanager.riichi.simplefragments.*;
 import com.mahjongmanager.riichi.speedquiz.*;
@@ -42,6 +44,8 @@ public class MainActivity extends AppCompatActivity {
 
         AppSettings.init(this);
         loadBannerAds();
+        ExampleHands.populate(this);
+        FuHelper.populate(this);
 
         // Load Main Menu
         if (findViewById(R.id.fragment_container) != null) {
@@ -52,7 +56,6 @@ public class MainActivity extends AppCompatActivity {
             replaceFragment(new MainMenuFragment(), false);
         }
 
-        getExampleHands();
         getImageCache();
     }
 
@@ -325,13 +328,6 @@ public class MainActivity extends AppCompatActivity {
             _utils = new Utils(this);
         }
         return _utils;
-    }
-    private ExampleHands _exampleHands;
-    public  ExampleHands getExampleHands(){
-        if(_exampleHands==null){
-            _exampleHands = new ExampleHands(this);
-        }
-        return _exampleHands;
     }
     private ImageCache _imageCache;
     public  ImageCache getImageCache(){
