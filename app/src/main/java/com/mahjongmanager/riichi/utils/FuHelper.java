@@ -7,7 +7,7 @@ import com.mahjongmanager.riichi.Tile;
 public class FuHelper {
     private static String FUUTEI            = "Fuutei";
     private static String CHIITOITSU        = "Chiitoitsu";
-    private static String MENZEN_KAFU       = "Menzen-Kafu";        //TODO this is appearing as "Menzen-kafu" in prod and is thus not matching
+    private static String MENZEN_KAFU       = "Menzen-Kafu";
     private static String PINFU             = "Pinfu";
     private static String PINFU_OPEN        = "Open Pinfu";
     private static String SELF_DRAW         = "Self Draw Winning Tile";
@@ -176,29 +176,29 @@ public class FuHelper {
      * @return Description of the Fu
      */
     public static String getDescription(String s){
-        if( s.equals(FUUTEI) ){
+        if( s.equalsIgnoreCase(FUUTEI) ){
             return "A standard winning hand consisting of four melds and a pair";
-        } else if( s.equals(CHIITOITSU) ){
+        } else if( s.equalsIgnoreCase(CHIITOITSU) ){
             return "A winning hand made up of 7 pairs";
-        } else if( s.equals(MENZEN_KAFU) ){
+        } else if( s.equalsIgnoreCase(MENZEN_KAFU) ){
             return "Won from another player's discarded tile with a closed hand";
-        } else if( s.equals(PINFU) ){
+        } else if( s.equalsIgnoreCase(PINFU) ){
             return "A special winning hand that contains no other Fu. This hand consists of: a closed hand, a valueless pair, all four melds are runs, and the winning tile was a two-sided wait";
-        } else if( s.equals(PINFU_OPEN) ){
+        } else if( s.equalsIgnoreCase(PINFU_OPEN) ){
             return "A special winning hand that contains no other Fu. This hand consists of: an open hand, a valueless pair, all four melds are runs, and the winning tile was a two-sided wait";
-        } else if( s.equals(SELF_DRAW) ){
+        } else if( s.equalsIgnoreCase(SELF_DRAW) ){
             return "Drew the winning tile";
-        } else if( s.equals(DRAGON_PAIR) ){
+        } else if( s.equalsIgnoreCase(DRAGON_PAIR) ){
             return "The pair consists of dragons";
-        } else if( s.equals(PREVAILING_WIND) ){
+        } else if( s.equalsIgnoreCase(PREVAILING_WIND) ){
             return "The pair consists of the prevailing wind (aka round wind)";
-        } else if( s.equals(SEAT_WIND) ){
+        } else if( s.equalsIgnoreCase(SEAT_WIND) ){
             return "The pair consists of the player's seat wind";
-        } else if( s.equals(PAIR_WAIT) ){
+        } else if( s.equalsIgnoreCase(PAIR_WAIT) ){
             return "The winning tile completes the pair";
-        } else if( s.equals(SINGLE_SIDED_WAIT) ){
+        } else if( s.equalsIgnoreCase(SINGLE_SIDED_WAIT) ){
             return "The winning tile completes a run. Either the hand contains a 1-2 and is waiting on a 3, or the hand contains a 9-8 and is waiting on a 7";
-        } else if( s.equals(INSIDE_WAIT) ){
+        } else if( s.equalsIgnoreCase(INSIDE_WAIT) ){
             return "The winning tile completes a run and is the middle tile of the run. Example: the hand contains a 3-5 and is waiting on a 4";
         }
         return "Error - Could not find description for "+s;

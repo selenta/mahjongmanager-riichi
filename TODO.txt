@@ -8,7 +8,6 @@ Near-term Issues:
 
 
 Known Issues:
-- "Menzen-kafu" bug (on Fu Description?)
 - Locking screen during quiz breaks timer
 
 

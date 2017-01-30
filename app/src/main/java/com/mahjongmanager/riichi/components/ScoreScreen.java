@@ -1,6 +1,6 @@
 package com.mahjongmanager.riichi.components;
 
-import android.app.Activity;
+import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.Context;
 import android.graphics.Paint;
@@ -32,8 +32,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ScoreScreen extends LinearLayout implements View.OnClickListener {
-    Context context;
-
     private Hand hand;
 
     private TableLayout hanTable;
@@ -54,11 +52,10 @@ public class ScoreScreen extends LinearLayout implements View.OnClickListener {
     }
     public ScoreScreen(Context ctx, AttributeSet attrs, int defStyle ){
         super(ctx, attrs, defStyle);
-        context = ctx;
         init();
     }
     private void init(){
-        LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        LayoutInflater inflater = (LayoutInflater) getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         inflater.inflate(R.layout.component_scorescreen, this);
 
         hanTable      = (TableLayout) findViewById(R.id.hanTable);
@@ -99,22 +96,20 @@ public class ScoreScreen extends LinearLayout implements View.OnClickListener {
         }
     }
     private void createHanPopup(ScoreDetail scoreDetail){
-        Dialog dialog = new Dialog(getContext());
-        ScrollView sv = new ScrollView(getContext());
-
         YakuDescription yd = new YakuDescription(getContext());
         yd.setYaku(scoreDetail.yaku);
         yd.showLabels();
         yd.hideEnglishName();
 
+        ScrollView sv = new ScrollView(getContext());
         sv.addView(yd);
-        dialog.setContentView(sv);
-        dialog.setTitle(scoreDetail.yaku.english);
 
-        dialog.show();
+        AlertDialog.Builder d = new AlertDialog.Builder(getContext());
+        d.setView(sv);
+        d.setTitle(scoreDetail.yaku.english);
+        d.show();
     }
     private void createFuPopup(ScoreDetail scoreDetail){
-        Dialog dialog = new Dialog(getContext());
         LinearLayout container = new LinearLayout(getContext());
         container.setOrientation(VERTICAL);
         container.setLayoutParams(new LinearLayout.LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT));
@@ -135,7 +130,7 @@ public class ScoreScreen extends LinearLayout implements View.OnClickListener {
 
         if( scoreDetail.meld!=null ){
             String generalDesc = "Melds that are not sequences have a base Fu value of 2, and can increase depending on whether the meld is open/closed, simples/honors, or is a triplet/quad.";
-            TextView tv = new TextView(context);
+            TextView tv = new TextView(getContext());
             tv.setText(generalDesc);
             tv.setLayoutParams(new LinearLayout.LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT));
             tv.setPadding(0,0,0,30);
@@ -150,13 +145,13 @@ public class ScoreScreen extends LinearLayout implements View.OnClickListener {
             description.setText(dStr);
         }
 
-        dialog.setContentView(container);
-        dialog.setTitle(scoreDetail.toString());
-
-        dialog.show();
+        AlertDialog.Builder d = new AlertDialog.Builder(getContext());
+        d.setView(container);
+        d.setTitle(scoreDetail.toString());
+        d.show();
     }
     private GridLayout buildFuTable(ScoreDetail scoreDetail){
-        GridLayout grid = new GridLayout(context);
+        GridLayout grid = new GridLayout(getContext());
         grid.setColumnCount(2);
 
         TextView baseValLabel = newTextLabel("Base Value", false);
@@ -178,7 +173,7 @@ public class ScoreScreen extends LinearLayout implements View.OnClickListener {
         grid.addView(newTextLabel("Set of 4 Tiles", isTriplet));
         grid.addView(newTextValue("x4", isTriplet));
 
-        View line = new View(context);
+        View line = new View(getContext());
         line.setMinimumHeight(2);
         GridLayout.LayoutParams lineParams = new GridLayout.LayoutParams();
         lineParams.height = 4;
@@ -187,7 +182,7 @@ public class ScoreScreen extends LinearLayout implements View.OnClickListener {
         line.setBackgroundColor(0xFFAAAAAA);
         grid.addView(line);
 
-        TextView totalLabel = new TextView(context);
+        TextView totalLabel = new TextView(getContext());
         totalLabel.setText("Total Fu");
         totalLabel.setPadding(300,0,0,0);
         grid.addView(totalLabel);
@@ -207,7 +202,7 @@ public class ScoreScreen extends LinearLayout implements View.OnClickListener {
         return tv;
     }
     private TextView newTextView(String s, boolean strikethrough){
-        TextView tv = new TextView(context);
+        TextView tv = new TextView(getContext());
         tv.setText(s);
         if( strikethrough ){
             tv.setPaintFlags(tv.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
@@ -386,7 +381,7 @@ public class ScoreScreen extends LinearLayout implements View.OnClickListener {
     private List<Yaku> _allYaku;
     private Yaku getYaku(Yaku.Name name){
         if( _allYaku==null ){
-            _allYaku = ((MainActivity)context).getExampleHands().allYaku;
+            _allYaku = ((MainActivity)getContext()).getExampleHands().allYaku;
         }
         for( Yaku y : _allYaku ){
             if( y.name.equals(name) ){
