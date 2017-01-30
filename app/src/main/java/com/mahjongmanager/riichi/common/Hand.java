@@ -1,4 +1,4 @@
-package com.mahjongmanager.riichi;
+package com.mahjongmanager.riichi.common;
 
 import com.mahjongmanager.riichi.utils.Log;
 import com.mahjongmanager.riichi.utils.Utils;
@@ -482,5 +482,4 @@ public class Hand {
         }
         return "---";
     }
-
 }

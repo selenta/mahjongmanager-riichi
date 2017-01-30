@@ -1,4 +1,4 @@
-package com.mahjongmanager.riichi;
+package com.mahjongmanager.riichi.common;
 
 import com.mahjongmanager.riichi.utils.AppSettings;
 
@@ -25,12 +25,12 @@ public class Yaku {
     public Hand exampleHand;
 
     public String getLocalizedString(){
-        String val = AppSettings.getTerminology();
+        AppSettings.Terminology t = AppSettings.getTerminology();
 
-        switch (val) {
-            case "English":
+        switch (t) {
+            case ENGLISH:
                 return english;
-            case "Kanji":
+            case KANJI:
                 return kanji;
             default:
                 return romaji;

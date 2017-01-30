@@ -1,5 +1,6 @@
-package com.mahjongmanager.riichi;
+package com.mahjongmanager.riichi.common;
 
+import com.mahjongmanager.riichi.Validator;
 import com.mahjongmanager.riichi.utils.Log;
 
 public class Tile {
