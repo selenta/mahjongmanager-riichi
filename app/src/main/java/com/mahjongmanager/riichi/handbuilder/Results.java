@@ -9,9 +9,11 @@ import android.widget.TextView;
 
 import com.mahjongmanager.riichi.MainActivity;
 import com.mahjongmanager.riichi.R;
+import com.mahjongmanager.riichi.ScoreCalculator;
 import com.mahjongmanager.riichi.common.Hand;
 import com.mahjongmanager.riichi.components.HandDisplay;
 import com.mahjongmanager.riichi.components.ScoreScreen;
+import com.mahjongmanager.riichi.utils.AppSettings;
 import com.mahjongmanager.riichi.utils.Utils;
 
 public class Results extends Fragment {
@@ -37,8 +39,27 @@ public class Results extends Fragment {
     private void cleanupAndScoreHand(){
         Hand actHand = ((MainActivity)getActivity()).getCurrentHand();
 
+        ScoreCalculator sc = new ScoreCalculator(actHand, true);
+        if( sc.validatedHand!=null ){
+            actHand = sc.validatedHand;
+            checkHighScore(actHand);
+        }
+
         scoreScreen.setHand(actHand);
         handDisplay.setHand(actHand);
+    }
+
+    private void checkHighScore(Hand h){
+        int recordHan = AppSettings.getHandBuilderHanRecord();
+        int recordFu = AppSettings.getHandBuilderFuRecord();
+
+        int oldScore = ScoreCalculator.scoreBasePoints(recordHan, recordFu);
+        int newScore = ScoreCalculator.scoreBasePoints(h.han, h.fu);
+
+        if( newScore > oldScore ){
+            AppSettings.setHandBuilderHanRecord(h.han);
+            AppSettings.setHandBuilderFuRecord(h.fu);
+        }
     }
 
     //Update title to fit smaller screens

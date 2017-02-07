@@ -113,6 +113,7 @@ public class Simulate4Player extends Fragment implements View.OnClickListener {
                 break;
             case R.id.passButton:
                 pendingTsumoChoice = false;
+                selectDiscard(lastDraw);
                 break;
         }
         updateWallCounters();
@@ -215,7 +216,7 @@ public class Simulate4Player extends Fragment implements View.OnClickListener {
         }
     }
     private void startPlayerTurn(){
-        handDisplay.setHand(round.getHand(playerWind));
+        handDisplay.setHand(playerHand);
         if( !round.isOver() ){
             round.draw();
             lastDraw = round.getLastDraw();
@@ -289,8 +290,6 @@ public class Simulate4Player extends Fragment implements View.OnClickListener {
         round = new Round(Tile.Wind.EAST);
         playerWind = Utils.getRandomWind();
         playerHand = round.getHand(playerWind);
-
-        handDisplay.setHand(playerHand);
     }
 
     Utils _utils;

@@ -23,6 +23,8 @@ public class AppSettings {
     ///////////////////////////////////////////////////////
     // High Scores
     private static final String SQ_HIGH_SCORE = "SpeedQuizHighScore";
+    private static final String HB_HAN_RECORD = "HandBuilderHanRecord";
+    private static final String HB_FU_RECORD = "HandBuilderFuRecord";
 
     // App Settings
     private static final String TERMINOLOGY = "Terminology";
@@ -87,6 +89,20 @@ public class AppSettings {
     }
     public static void setSpeedQuizHighScore(int value){
         savePreference(SQ_HIGH_SCORE, value);
+    }
+
+    public static int getHandBuilderHanRecord(){
+        return sharedPref.getInt(HB_HAN_RECORD, 0);
+    }
+    public static void setHandBuilderHanRecord(int value){
+        savePreference(HB_HAN_RECORD, value);
+    }
+
+    public static int getHandBuilderFuRecord(){
+        return sharedPref.getInt(HB_FU_RECORD, 0);
+    }
+    public static void setHandBuilderFuRecord(int value){
+        savePreference(HB_FU_RECORD, value);
     }
 
     // App Settings
