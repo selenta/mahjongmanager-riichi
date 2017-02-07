@@ -2,15 +2,21 @@ package com.mahjongmanager.riichi.common;
 
 import com.mahjongmanager.riichi.utils.AppSettings;
 
+import java.util.Arrays;
+import java.util.List;
+
 public class Yaku {
     public enum Name {
-        RIICHI, CHIITOITSU, NAGASHI, TSUMO, IPPATSU, HAITEI, HOUTEI, RINSHAN, CHANKAN, DOUBLERIICHI,
-        PINFU, IIPEIKOU, SANSHOKUDOUJUN, ITTSUU, RYANPEIKOU, TOITOI, SANANKOU, SANSHOKUDOUKOU,
-        SANKANTSU, TANYAO, YAKUHAI, CHANTA, JUNCHAN, HONROUTOU, SHOUSANGEN, HONITSU, CHINITSU,
-        KOKUSHIMUSOU, KOKUSHIMUSOU13SIDED, SUUANKOU, SUUANKOUTANKI, DAISANGEN, SHOUSUUSHII,
-        DAISUUSHII, TSUUIISOU, DAICHISEI, CHINROUTOU, RYUUIISOU, CHUURENPOUTOU, CHUURENPOUTOU9SIDED,
-        SUUKANTSU, TENHOU, CHIIHOU, RENHOU, SANRENKOU, SUURENKOU, DAISHARIN, SHIISANPUUTA,
-        SHIISUUPUUTA, PARENCHAN, DORA
+        RIICHI,     CHIITOITSU,     NAGASHI,        TSUMO,          IPPATSU,        HAITEI,
+        HOUTEI,     RINSHAN,        CHANKAN,        DOUBLERIICHI,   PINFU,          IIPEIKOU,
+        SANSHOKUDOUJUN,             ITTSUU,         RYANPEIKOU,     TOITOI,         SANANKOU,
+        SANSHOKUDOUKOU,             SANKANTSU,      TANYAO,         YAKUHAI,        CHANTA,
+        JUNCHAN,    HONROUTOU,      SHOUSANGEN,     HONITSU,        CHINITSU,       KOKUSHIMUSOU,
+        KOKUSHIMUSOU13SIDED,        SUUANKOU,       SUUANKOUTANKI,  DAISANGEN,      SHOUSUUSHII,
+        DAISUUSHII, TSUUIISOU,      DAICHISEI,      CHINROUTOU,     RYUUIISOU,      CHUURENPOUTOU,
+        CHUURENPOUTOU9SIDED,        SUUKANTSU,      TENHOU,         CHIIHOU,        RENHOU,
+        SANRENKOU,   SUURENKOU,     DAISHARIN,      SHIISANPUUTA,   SHIISUUPUUTA,   PARENCHAN,
+        DORA
     }
 
     public Name name;
@@ -35,6 +41,39 @@ public class Yaku {
             default:
                 return romaji;
         }
+    }
+
+    public static List<Name> getAbnormalStructureNames(){
+        return Arrays.asList(
+                Name.KOKUSHIMUSOU,
+                Name.KOKUSHIMUSOU13SIDED,
+                Name.CHIITOITSU,
+                Name.DAICHISEI,
+                Name.NAGASHI
+        );
+    }
+    public static List<Name> getYakumanNames(){
+        return Arrays.asList(
+                Name.KOKUSHIMUSOU,
+                Name.KOKUSHIMUSOU13SIDED,
+                Name.SUUANKOU,
+                Name.SUUANKOUTANKI,
+                Name.DAISANGEN,
+                Name.SHOUSUUSHII,
+                Name.DAISUUSHII,
+                Name.TSUUIISOU,
+                Name.DAICHISEI,
+                Name.CHINROUTOU,
+                Name.RYUUIISOU,
+                Name.CHUURENPOUTOU,
+                Name.CHUURENPOUTOU9SIDED,
+                Name.SUUKANTSU,
+                Name.SUURENKOU,
+                Name.DAISHARIN,
+                Name.SHIISANPUUTA,
+                Name.SHIISUUPUUTA,
+                Name.PARENCHAN
+        );
     }
 
     public String toString(){

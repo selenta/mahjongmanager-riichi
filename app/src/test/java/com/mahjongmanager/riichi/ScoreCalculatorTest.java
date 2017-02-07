@@ -2,6 +2,7 @@ package com.mahjongmanager.riichi;
 
 import com.mahjongmanager.riichi.common.Hand;
 import com.mahjongmanager.riichi.common.Tile;
+import com.mahjongmanager.riichi.common.Yaku;
 
 import org.junit.Assert;
 import org.junit.Test;
@@ -609,7 +610,7 @@ public class ScoreCalculatorTest {
         ScoreCalculator sc = new ScoreCalculator(h);
         Hand validatedHand = sc.validatedHand;
         Assert.assertNotNull(validatedHand);
-        Assert.assertTrue(validatedHand.sanshokuDoujun);
+        Assert.assertTrue(validatedHand.hasYaku(Yaku.Name.SANSHOKUDOUJUN));
     }
 
     @Test
@@ -645,6 +646,39 @@ public class ScoreCalculatorTest {
     }
 
     @Test
+    public void problemHand3() {
+        // This hand was observed (incorrectly) being scored with Sanshoku Doujun
+        // Han: 3       Fu: 20
+        Tile t1  = new Tile(1, Tile.Suit.MANZU);
+        Tile t2  = new Tile(2, Tile.Suit.MANZU);
+        Tile t3  = new Tile(3, Tile.Suit.MANZU);
+        Tile t4  = new Tile(1, Tile.Suit.PINZU);
+        Tile t5  = new Tile(1, Tile.Suit.PINZU);
+        Tile t6  = new Tile(2, Tile.Suit.PINZU);
+        Tile t7  = new Tile(2, Tile.Suit.PINZU);
+        Tile t8  = new Tile(3, Tile.Suit.PINZU);
+        Tile t9  = new Tile(3, Tile.Suit.PINZU);
+        Tile t10 = new Tile(4, Tile.Suit.SOUZU);
+        Tile t11 = new Tile(5, Tile.Suit.SOUZU);
+        Tile t12 = new Tile(6, Tile.Suit.SOUZU);
+        Tile t13 = new Tile(Tile.Wind.SOUTH);
+        Tile t14 = new Tile(Tile.Wind.SOUTH);
+
+        t1.winningTile = true;
+
+        Hand h = new Hand(Arrays.asList(t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11, t12, t13, t14));
+
+        ScoreCalculator sc = new ScoreCalculator(h);
+        Hand validatedHand = sc.validatedHand;
+        Assert.assertTrue(validatedHand!=null);
+
+        Assert.assertSame( 3, validatedHand.han);
+        Assert.assertSame( 20, validatedHand.fu );
+        Assert.assertFalse( validatedHand.hasYaku(Yaku.Name.SANSHOKUDOUJUN) );
+    }
+
+
+    @Test
     public void doraIndicatorTest(){
         // This hand should have: Extreme fu
         // Han: 1       Fu: 102 (110)
@@ -674,15 +708,15 @@ public class ScoreCalculatorTest {
         h.prevailingWind = Tile.Wind.SOUTH;
         h.playerWind = Tile.Wind.SOUTH;
 
-        h.doraIndicator1 = new Tile(Tile.Dragon.GREEN);
-        h.doraIndicator2 = new Tile(Tile.Wind.WEST);
-        h.doraIndicator3 = new Tile(6, Tile.Suit.MANZU);
-        h.doraIndicator4 = new Tile(7, Tile.Suit.MANZU);
+        h.doraIndicators.add(new Tile(Tile.Dragon.GREEN));
+        h.doraIndicators.add(new Tile(Tile.Wind.WEST));
+        h.doraIndicators.add(new Tile(6, Tile.Suit.MANZU));
+        h.doraIndicators.add(new Tile(7, Tile.Suit.MANZU));
 
         ScoreCalculator sc = new ScoreCalculator(h);
         Hand validatedHand = sc.validatedHand;
 
         Assert.assertSame(  9, validatedHand.han);
-        Assert.assertSame(  8, validatedHand.dora);
+        Assert.assertSame(  8, validatedHand.hanList.get(Yaku.Name.DORA));
     }
 }

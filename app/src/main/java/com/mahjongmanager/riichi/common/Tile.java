@@ -38,10 +38,10 @@ public class Tile {
 
     public Suit suit;
     public String value;
-    public Integer sortId;
+    public int sortId;
 
-    public Boolean red = false;
-    public Boolean faceDown = false;
+    public boolean red = false;
+    public boolean faceDown = false;
 
     public Integer number;
     public Dragon dragon;
@@ -50,7 +50,7 @@ public class Tile {
     public RevealedState revealedState;
     public CalledFrom calledFrom;
 
-    public Boolean winningTile;
+    public boolean winningTile;
 
     public Tile( Integer valueInt, Suit suitVal ){
         suit = suitVal;

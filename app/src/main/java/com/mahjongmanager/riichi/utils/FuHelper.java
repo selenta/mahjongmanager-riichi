@@ -5,6 +5,7 @@ import com.mahjongmanager.riichi.common.Fu;
 import com.mahjongmanager.riichi.common.Hand;
 import com.mahjongmanager.riichi.common.Meld;
 import com.mahjongmanager.riichi.common.Tile;
+import com.mahjongmanager.riichi.common.Yaku;
 
 import org.xmlpull.v1.XmlPullParser;
 import org.xmlpull.v1.XmlPullParserException;
@@ -94,7 +95,7 @@ public class FuHelper {
         h.fuList.put(Fu.Name.FUUTEI, 20);
 
         // (1) Set fu for chiitoitsu
-        if( h.chiiToitsu ){
+        if( h.hasYaku(Yaku.Name.CHIITOITSU) ){
             h.fuList.clear();
             h.fuList.put(Fu.Name.CHIITOITSU, 25);
             h.fu = 25;
@@ -120,7 +121,7 @@ public class FuHelper {
         }
 
         // (6) Set fu for open pinfu
-        if( h.fuList.size()==1 && !h.pinfu ){
+        if( h.fuList.size()==1 && !h.hasYaku(Yaku.Name.PINFU) ){
             h.fuList.put(Fu.Name.PINFU_OPEN, 10);
         }
     }

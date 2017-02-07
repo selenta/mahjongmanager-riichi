@@ -136,9 +136,6 @@ public class ScoreHand extends Fragment implements View.OnClickListener {
         if( h.ippatsu ){
             oys = addStrClean(oys, "Ippatsu");
         }
-        if( h.tsumo ){
-            oys = addStrClean(oys, "Tsumo");
-        }
         if( h.rinshan){
             oys = addStrClean(oys, "Rinshan");
         }
@@ -151,8 +148,8 @@ public class ScoreHand extends Fragment implements View.OnClickListener {
         if( h.houtei){
             oys = addStrClean(oys, "Houtei");
         }
-        if( h.dora!=0){
-            oys = addStrClean(oys, "Dora "+ h.dora.toString());
+        if( h.arbitraryDora!=0){
+            oys = addStrClean(oys, "Dora "+ h.arbitraryDora);
         }
         return oys;
     }

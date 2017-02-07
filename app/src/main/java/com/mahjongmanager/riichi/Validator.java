@@ -3,6 +3,7 @@ package com.mahjongmanager.riichi;
 import com.mahjongmanager.riichi.common.Hand;
 import com.mahjongmanager.riichi.common.Meld;
 import com.mahjongmanager.riichi.common.Tile;
+import com.mahjongmanager.riichi.common.Yaku;
 import com.mahjongmanager.riichi.utils.Log;
 
 import java.util.HashSet;
@@ -336,8 +337,8 @@ public class Validator {
     }
     private static boolean handRealScore(Hand hand){
         //validate that score is not impossible (e.g. 1 han 20 fu)
-        if( (hand.han==1&&hand.fu==20) || (hand.han==1&&hand.fu==25) || (hand.han==2&&hand.fu==25&&hand.tsumo) ){
-            Log.e("validateHand", "Impossible score: han-"+hand.han+" fu-"+hand.fu+" tsumo-"+hand.tsumo+" - "+hand.toStringVerbose());
+        if( (hand.han==1&&hand.fu==20) || (hand.han==1&&hand.fu==25) || (hand.han==2&&hand.fu==25&&hand.selfDrawWinningTile) ){
+            Log.e("validateHand", "Impossible score: han-"+hand.han+" fu-"+hand.fu+" tsumo-"+hand.selfDrawWinningTile+" - "+hand.toStringVerbose());
             return false;
         }
         return true;
@@ -347,8 +348,8 @@ public class Validator {
             Log.e("validateHand", "Cannot have haitei without selfDraw or with houtei/rinshan/chankan: "+hand.selfDrawWinningTile+" - "+hand.houtei+" - "+hand.rinshan+" - "+hand.chanKan+" - "+hand.toStringVerbose());
             return false;
         }
-        if( hand.houtei && (hand.selfDrawWinningTile || hand.ippatsu || hand.tsumo || hand.rinshan || hand.chanKan ) ){
-            Log.e("validateHand", "Cannot have houtei with selfDraw or ippatsu/tsumo/rinshan/chankan: "+hand.selfDrawWinningTile+" - "+hand.ippatsu+" - "+hand.tsumo+" - "+hand.rinshan+" - "+hand.chanKan+" - "+hand.toStringVerbose());
+        if( hand.houtei && (hand.selfDrawWinningTile || hand.ippatsu || hand.rinshan || hand.chanKan ) ){
+            Log.e("validateHand", "Cannot have houtei with selfDraw or ippatsu/tsumo/rinshan/chankan: "+hand.selfDrawWinningTile+" - "+hand.ippatsu+" - "+hand.rinshan+" - "+hand.chanKan+" - "+hand.toStringVerbose());
             return false;
         }
         return true;
@@ -356,8 +357,8 @@ public class Validator {
     private static boolean handChanKan(Hand hand){
         if( hand.chanKan ){
             int wTileCount = (hand.getWinningTile()==null) ? 0 : hand.countTile(hand.getWinningTile());
-            if( wTileCount!=1 || hand.selfDrawWinningTile || hand.tsumo || hand.rinshan ){
-                Log.e("validateHand", "Cannot have chanKan with more than one copy of winning tile in hand (or with selfDraw/tsumo/rinshan): "+wTileCount+" "+hand.getWinningTile()+" - "+hand.selfDrawWinningTile+" - "+hand.tsumo+" - "+hand.rinshan+" - "+hand.toStringVerbose());
+            if( wTileCount!=1 || hand.selfDrawWinningTile || hand.rinshan ){
+                Log.e("validateHand", "Cannot have chanKan with more than one copy of winning tile in hand (or with selfDraw/rinshan): "+wTileCount+" "+hand.getWinningTile()+" - "+hand.selfDrawWinningTile+" - "+hand.rinshan+" - "+hand.toStringVerbose());
                 return false;
             }
         }
@@ -371,7 +372,13 @@ public class Validator {
         return true;
     }
     private static boolean handNoClosedYakuWithOpenState(Hand hand){
-        if( hand.isOpen() && (hand.riichi || hand.tsumo || hand.ippatsu || hand.doubleRiichi || hand.pinfu || hand.iipeikou ) ){
+        if( hand.isOpen() && (hand.riichi
+                                || hand.hasYaku(Yaku.Name.TSUMO)
+                                || hand.ippatsu
+                                || hand.doubleRiichi
+                                || hand.hasYaku(Yaku.Name.PINFU)
+                                || hand.hasYaku(Yaku.Name.IIPEIKOU) )
+        ){
             Log.e("validateHand", "Open hand has a conflicting yaku: "+hand.toStringVerbose());
             return false;
         }

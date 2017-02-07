@@ -77,7 +77,7 @@ public class OtherInfo extends Fragment implements View.OnClickListener {
      * page by pressing the Back button. So select those options.
      */
     private void checkHandState(){
-        doraCount.setSelection(actHand.dora);
+        doraCount.setSelection(actHand.arbitraryDora);
 
         doubleRiichiCheckBox.setChecked(actHand.doubleRiichi);
         riichiCheckBox.setChecked(actHand.riichi);
@@ -103,7 +103,7 @@ public class OtherInfo extends Fragment implements View.OnClickListener {
     }
 
     private void setDoraCount(){
-        actHand.dora = Integer.parseInt(doraCount.getSelectedItem().toString().trim());
+        actHand.arbitraryDora = Integer.parseInt(doraCount.getSelectedItem().toString().trim());
         ((MainActivity)getActivity()).setCurrentHand(actHand);
     }
     private void setDoubleRiichi(){

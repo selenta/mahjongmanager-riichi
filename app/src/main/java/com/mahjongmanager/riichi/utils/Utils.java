@@ -19,10 +19,13 @@ import com.mahjongmanager.riichi.R;
 import com.mahjongmanager.riichi.common.Tile;
 
 import java.util.Arrays;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Random;
+import java.util.Set;
 
 public class Utils {
     private MainActivity activity;
@@ -474,6 +477,25 @@ public class Utils {
         }
         return false;
     }
+
+    /**
+     * Returns a set of all tiles in the provided list that were duplicates (only one
+     * tile of each type).
+     * @param tiles List of tiles to search for duplicates
+     * @return Set of one copy of each tile that had a duplicate
+     */
+    public static Set<Tile> findDuplicateTiles(Collection<Tile> tiles ){
+        final Set<Tile> duplicateTiles = new HashSet<>();
+        final Set<String> tempSet = new HashSet<>();
+
+        for (Tile dupTile : tiles ){
+            if (!tempSet.add(dupTile.toString())) {
+                duplicateTiles.add(dupTile);
+            }
+        }
+        return duplicateTiles;
+    }
+
 
     public static String prettifyName(String s){
         char[] chars = s.toLowerCase().toCharArray();

@@ -307,19 +307,8 @@ public class HandGenerator {
         t.calledFrom = calledFroms.get(new Random().nextInt(calledFroms.size()));
     }
     private void addDoraIndicator(Hand h){
-        if( h.doraIndicator1==null ){
-            h.doraIndicator1    = randomTile(allTiles());
-            h.uraDoraIndicator1 = randomTile(allTiles());
-        } else if( h.doraIndicator2==null ){
-            h.doraIndicator2    = randomTile(allTiles());
-            h.uraDoraIndicator2 = randomTile(allTiles());
-        } else if( h.doraIndicator3==null ){
-            h.doraIndicator3    = randomTile(allTiles());
-            h.uraDoraIndicator3 = randomTile(allTiles());
-        } else if( h.doraIndicator4==null ){
-            h.doraIndicator4    = randomTile(allTiles());
-            h.uraDoraIndicator4 = randomTile(allTiles());
-        }
+        h.doraIndicators.add(randomTile(allTiles()));
+        h.uraDoraIndicators.add(randomTile(allTiles()));
     }
 
     public static List<Tile> allTiles(){

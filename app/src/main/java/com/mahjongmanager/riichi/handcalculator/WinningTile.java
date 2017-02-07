@@ -50,7 +50,7 @@ public class WinningTile extends Fragment implements View.OnClickListener {
         actHand.findTile(rButtTxt).winningTile = true;
 
         for( Tile t : actHand.tiles ){
-            Log.d("printWinningTile", "(tile, wT): (" + t.toString() + ", " + t.winningTile.toString() + ")");
+            Log.d("printWinningTile", "(tile, wT): (" + t.toString() + ", " + t.winningTile + ")");
         }
 
         checkNextEnablement();

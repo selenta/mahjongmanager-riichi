@@ -3,15 +3,14 @@ package com.mahjongmanager.riichi;
 import com.mahjongmanager.riichi.common.Hand;
 import com.mahjongmanager.riichi.common.Meld;
 import com.mahjongmanager.riichi.common.Tile;
-import com.mahjongmanager.riichi.common.Yaku;
 import com.mahjongmanager.riichi.utils.FuHelper;
+import com.mahjongmanager.riichi.utils.HanHelper;
 import com.mahjongmanager.riichi.utils.HandGenerator;
 import com.mahjongmanager.riichi.utils.Log;
 import com.mahjongmanager.riichi.utils.Utils;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collection;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -85,12 +84,7 @@ public class ScoreCalculator {
             processIncompleteHand();        // Skip straight to this, it can't be a complete hand
             return;
         }
-
-        //Check for unusually structured hands
-        checkKokushiMusou(unsortedHand);
-        checkChiitoitsu(unsortedHand);
-        checkDaichisei(unsortedHand);
-        checkNagashiMangan(unsortedHand);
+        checkForUnusualStructure();
 
         //The hand should already be "processed" if it's an unusual hand
         if( scoredHand!=null ){
@@ -107,7 +101,7 @@ public class ScoreCalculator {
         // Start the sorting process, now that unusual hands are accounted for
         // Pull out pairs first
         List<Hand> sortingHands = new ArrayList<>();
-        Set<Tile> duplicateTiles = findDuplicateTiles(unsortedHand.tiles);
+        Set<Tile> duplicateTiles = Utils.findDuplicateTiles(unsortedHand.tiles);
 
         for( Tile dupeTile : duplicateTiles ){
             if( dupeTile.revealedState==Tile.RevealedState.NONE ){
@@ -128,6 +122,34 @@ public class ScoreCalculator {
             processIncompleteHand();
         }
     }
+    private void checkForUnusualStructure(){
+        Hand hand = new Hand(unsortedHand);
+        scrubScore(hand);
+
+        if( HanHelper.isKokushiVariant(unsortedHand) ){
+            HanHelper.checkKokushiMusou(hand);
+            scoredHand = hand;
+            return;
+        }
+
+        if( HanHelper.isDaichisei(unsortedHand) ){
+            HanHelper.checkDaichisei(hand);
+            scoredHand = hand;
+            return;
+        }
+
+        if( HanHelper.isChiitoitsu(unsortedHand) ){
+            HanHelper.checkChiitoitsu(hand);
+            sortedHands.add(hand);
+        }
+
+        if( unsortedHand.nagashiMangan ){
+            HanHelper.checkNagashiMangan(hand);
+            scoredHand = hand;
+            validatedHand = hand;
+        }
+    }
+
     private void slotTilesIntoMelds( List<Hand> sortingHands ){
         // Iterate over the hand, reading it for each possible combination of chii/pon/kan until all tiles have been examined
         while( sortingHands.size() > 0 ){
@@ -219,7 +241,6 @@ public class ScoreCalculator {
      */
     private void determineScoredHand(){
         if( scoredHand!=null ){
-            scoreHand(scoredHand);
             countHan(scoredHand);
             countFu(scoredHand);
         } else if( sortedHands.size()>0 ){
@@ -232,7 +253,6 @@ public class ScoreCalculator {
                     continue;
                 }
 
-                scoreHand(unscoredHand);
                 countHan(unscoredHand);
                 countFu(unscoredHand);
                 if( scoredHand==null || handTwoIsLarger(scoredHand, unscoredHand) ){
@@ -249,234 +269,23 @@ public class ScoreCalculator {
                 || (handOneBasePoints==handTwoBasePoints && handTwo.han > handOne.han) ;
     }
 
-    // Checks hand for all yaku that consist of normal melds (e.g. does NOT check for Chiitoitsu or Kokushi)
-    private void scoreHand(Hand h){
-        if( h.hasAbnormalStructure() ){
-            return;
-        }
-
-        checkSuuAnkou(h);
-        checkDaisangen(h);
-        checkShousuushii(h);
-        checkDaisuushii(h);
-        checkTsuuiisou(h);
-        checkDaichisei(h);
-        checkChinroutou(h);
-        checkRyuuiisou(h);
-        checkChuurenPoutou(h);
-        checkSuuKantsu(h);
-
-        if( h.hasYakuman() ){
-            clearNormalYaku(h);
-            return;
-        }
-
-        // Situational
-        checkRiichi(h);
-        checkNagashiMangan(h);
-        checkTsumo(h);
-        checkIppatsu(h);
-        checkHaitei(h);
-        checkHoutei(h);
-        checkRinshan(h);
-        checkChanKan(h);
-        checkDoubleRiichi(h);
-
-        checkPinfu(h);
-        checkIipeikou(h);
-        checkSanshokuDoujun(h);
-        checkIttsuu(h);
-        checkRyanpeikou(h);
-        checkToitoi(h);
-        checkSanAnkou(h);
-        checkSanshokuDoukou(h);
-        checkSanKantsu(h);
-        checkTanyao(h);
-        checkYakuhai(h);
-        checkJunchan(h);
-        checkHonroutou(h);
-        checkChanta(h);
-        checkShousangen(h);
-        checkHonitsu(h);
-        checkChinitsu(h);
-
-        checkSanrenkou(h);
-        checkSuurenkou(h);
-        checkDaiSharin(h);
-        checkShiisanpuuta(h);
-        checkShiisuupuuta(h);
-        checkParenchan(h);
-
-        countDora(h);
-    }
     private void countHan(Hand h){
-        if( h.riichi ){
-            h.hanList.put(Yaku.Name.RIICHI, 1);
-        }
-        if(h.tsumo){
-            h.hanList.put(Yaku.Name.TSUMO, 1);
-        }
-        if(h.ippatsu){
-            h.hanList.put(Yaku.Name.IPPATSU, 1);
-        }
-        if(h.haitei){
-            h.hanList.put(Yaku.Name.HAITEI, 1);
-        }
-        if(h.houtei){
-            h.hanList.put(Yaku.Name.HOUTEI, 1);
-        }
-        if(h.rinshan){
-            h.hanList.put(Yaku.Name.RINSHAN, 1);
-        }
-        if(h.chanKan){
-            h.hanList.put(Yaku.Name.CHANKAN, 1);
-        }
-        if(h.doubleRiichi){
-            h.hanList.put(Yaku.Name.DOUBLERIICHI, 2);
-        }
-        if(h.chiiToitsu){
-            h.hanList.put(Yaku.Name.CHIITOITSU, 2);
-        }
-        if(h.pinfu){
-            h.hanList.put(Yaku.Name.PINFU, 1);
-        }
-        if(h.iipeikou){
-            h.hanList.put(Yaku.Name.IIPEIKOU, 1);
-        }
-        if(h.sanshokuDoujun){
-            int han = (h.isOpen()) ? 1 : 2;
-            h.hanList.put(Yaku.Name.SANSHOKUDOUJUN, han);
-        }
-        if(h.ittsuu){
-            int han = (h.isOpen()) ? 1 : 2;
-            h.hanList.put(Yaku.Name.ITTSUU, han);
-        }
-        if(h.ryanpeikou){
-            h.hanList.put(Yaku.Name.RYANPEIKOU, 3);
-        }
-        if(h.toitoi){
-            h.hanList.put(Yaku.Name.TOITOI, 2);
-        }
-        if(h.sanAnkou){
-            h.hanList.put(Yaku.Name.SANANKOU, 2);
-        }
-        if(h.sanshokuDoukou){
-            h.hanList.put(Yaku.Name.SANSHOKUDOUKOU, 2);
-        }
-        if(h.sanKantsu){
-            h.hanList.put(Yaku.Name.SANKANTSU, 2);
-        }
-        if(h.tanyao){
-            h.hanList.put(Yaku.Name.TANYAO, 1);
-        }
-        if( h.hasYakuhai() && !h.hasYakuman() ){
-            int han = 0;
-            han = (h.whiteDragon) ? han+1 : han;
-            han = (h.greenDragon) ? han+1 : han;
-            han = (h.redDragon)   ? han+1 : han;
-            han = (h.roundWind)   ? han+1 : han;
-            han = (h.seatWind)    ? han+1 : han;
-            h.hanList.put(Yaku.Name.YAKUHAI, han);
-        }
-        if(h.chanta){
-            int han = (h.isOpen()) ? 1 : 2;
-            h.hanList.put(Yaku.Name.CHANTA, han);
-        }
-        if(h.junchan){
-            int han = (h.isOpen()) ? 2 : 3;
-            h.hanList.put(Yaku.Name.JUNCHAN, han);        }
-        if(h.honroutou){
-            h.hanList.put(Yaku.Name.HONROUTOU, 2);
-        }
-        if(h.shousangen){
-            h.hanList.put(Yaku.Name.SHOUSANGEN, 2);
-        }
-        if(h.honitsu){
-            int han = (h.isOpen()) ? 2 : 3;
-            h.hanList.put(Yaku.Name.HONITSU, han);
-        }
-        if(h.chinitsu){
-            int han = (h.isOpen()) ? 5 : 6;
-            h.hanList.put(Yaku.Name.CHINITSU, han);        }
-        if(h.kokushiMusou){
-            h.hanList.put(Yaku.Name.KOKUSHIMUSOU, 13);
-        } else if(h.kokushiMusou13wait){
-            h.hanList.put(Yaku.Name.KOKUSHIMUSOU13SIDED, 26);
-        }
-        if(h.suuAnkou){
-            h.hanList.put(Yaku.Name.SUUANKOU, 13);
-        } else if(h.suuAnkouTanki){
-            h.hanList.put(Yaku.Name.SUUANKOUTANKI, 26);
-        }
-        if(h.daisangen){
-            h.hanList.put(Yaku.Name.DAISANGEN, 13);
-        }
-        if(h.shousuushii){
-            h.hanList.put(Yaku.Name.SHOUSUUSHII, 13);
-        }
-        if(h.daisuushii){
-            h.hanList.put(Yaku.Name.DAISUUSHII, 26);
-        }
-        if(h.tsuuiisou){
-            h.hanList.put(Yaku.Name.TSUUIISOU, 13);
-        }
-        if(h.daichisei){
-            h.hanList.put(Yaku.Name.DAICHISEI, 26);
-        }
-        if(h.chinroutou){
-            h.hanList.put(Yaku.Name.CHINROUTOU, 13);
-        }
-        if(h.ryuuiisou){
-            h.hanList.put(Yaku.Name.RYUUIISOU, 13);
-        }
-        if(h.chuurenPoutou){
-            h.hanList.put(Yaku.Name.CHUURENPOUTOU, 13);
-        } else if(h.chuurenPoutou9wait){
-            h.hanList.put(Yaku.Name.CHUURENPOUTOU9SIDED, 26);
-        }
-        if(h.suuKantsu){
-            h.hanList.put(Yaku.Name.SUUKANTSU, 13);
-        }
-        if(h.sanrenkou){
-            h.hanList.put(Yaku.Name.SANRENKOU, 2);
-        }
-        if(h.suurenkou){
-            h.hanList.put(Yaku.Name.SUURENKOU, 13);
-        }
-        if(h.daiSharin){
-            h.hanList.put(Yaku.Name.DAISHARIN, 13);
-        }
-        if(h.shiisanpuuta){
-            h.hanList.put(Yaku.Name.SHIISANPUUTA, 13);
-        }
-        if(h.shiisuupuuta){
-            h.hanList.put(Yaku.Name.SHIISUUPUUTA, 13);
-        }
-        if(h.parenchan){
-            h.hanList.put(Yaku.Name.PARENCHAN, 13);
-        }
-        if(h.nagashiMangan){
-            h.hanList.put(Yaku.Name.NAGASHI, 5);
-        }
+        HanHelper.populateHanList(h);
 
-        if( h.hanList.size()!=0 && h.dora!=0){
-            h.hanList.put(Yaku.Name.DORA, h.dora);
-        }
-
-        int hanTotal = 0;
+        int total = 0;
         for(int i : h.hanList.values() ){
-            hanTotal += i;
+            total += i;
         }
-        h.han = hanTotal;
+        h.han = total;
     }
     private void countFu(Hand h){
         FuHelper.populateFuList(h);
 
-        int fuTotal = 0;
+        int total = 0;
         for(int i : h.fuList.values() ){
-            fuTotal += i;
+            total += i;
         }
-        h.fu = fuTotal;
+        h.fu = total;
     }
 
     public static Integer scoreBasePoints( Integer han, Integer fu ){
@@ -944,718 +753,19 @@ public class ScoreCalculator {
         return 13 - noDupSet.size();
     }
     private int countChiitoitsuShanten(Hand h){
-        Set<Tile> tz = findDuplicateTiles(h.tiles);
-        int moreThanTwoCopies = findDuplicateTiles(tz).size();
+        Set<Tile> tz = Utils.findDuplicateTiles(h.tiles);
+        int moreThanTwoCopies = Utils.findDuplicateTiles(tz).size();
         return 7 - tz.size() - moreThanTwoCopies;
     }
 
     ///////////////////////////////////////////////////////////////////////
     /////////////////          Internal methods           /////////////////
     ///////////////////////////////////////////////////////////////////////
-    // Convenience methods
-    private int countSuits( List<Tile> s ){
-        HashSet<String> noDupSet = new HashSet<>();
-        for( Tile t : s ){
-            noDupSet.add(t.suit.toString());
-        }
-        noDupSet.remove("HONOR");
-        return noDupSet.size();
-    }
-    private int countTileInSet( Tile t, List<Tile> s ){
-        int count = 0;
-        for( Tile setTile : s ){
-            if( setTile.toString().equals(t.toString()) ){
-                count++;
-            }
-        }
-        return count;
-    }
-
-    // Unusually structed hands (must be handled seperately)
-    private void checkChiitoitsu(Hand h){
-        Set<Tile> tz = findDuplicateTiles(h.tiles);
-        int moreThanTwoCopies = findDuplicateTiles(tz).size();
-        if(tz.size()==7 && moreThanTwoCopies==0 ) {
-            Hand chiitoitsuHand = new Hand(h);
-
-            checkTanyao(chiitoitsuHand);
-            checkHonroutou(chiitoitsuHand);
-            checkHonitsu(chiitoitsuHand);
-            checkChinitsu(chiitoitsuHand);
-
-            chiitoitsuHand.unsortedTiles.clear();
-            chiitoitsuHand.chiiToitsu=true;
-            countHan(chiitoitsuHand);
-            countFu(chiitoitsuHand);
-
-            sortedHands.add(chiitoitsuHand);
-        }
-    }
-    private void checkDaichisei(Hand h){
-        Set<Tile> tz = findDuplicateTiles(h.tiles);
-        Set<Tile> doubleDupes = findDuplicateTiles(tz);
-        int suitCount = countSuits(h.tiles);
-        if( tz.size()==7 && doubleDupes.size()==0 && suitCount==0 ){
-            h.unsortedTiles.clear();
-            h.daichisei = true;
-            clearNormalYaku(h);
-            scoredHand = h;
-            countHan(h);
-        }
-    }     // 7 pairs of all honors
-    private void checkKokushiMusou(Hand h){
-        if( !Utils.containsHonorsOrTerminalsOnly(h.tiles) ){
-            return;
-        }
-
-        //Different tiles
-        HashSet<String> noDupSet = new HashSet<>();
-        for( Tile t : h.tiles ){
-            noDupSet.add(t.toString());
-        }
-        if( noDupSet.size()==13 && h.getWinningTile()!=null && countTileInSet(h.getWinningTile(), h.tiles)==2 ){
-            h.unsortedTiles.clear();
-            h.kokushiMusou13wait = true;
-            clearNormalYaku(h);
-            scoredHand=h;
-            countHan(scoredHand);
-        } else if( noDupSet.size()==13 ){
-            h.unsortedTiles.clear();
-            h.kokushiMusou = true;
-            clearNormalYaku(h);
-            scoredHand=h;
-            countHan(scoredHand);
-        }
-    }
-    private void checkNagashiMangan(Hand h){
-        if( h.nagashiMangan ){
-            h.unsortedTiles.clear();
-            scoredHand=h;
-            validatedHand=h;
-            countHan(validatedHand);
-        }
-    }
-
-
-    // Circumstantial Yaku
-    private void checkDoubleRiichi(Hand h){}
-    private void checkRiichi(Hand h){}
-    private void checkTsumo(Hand h){
-        for( Tile t : h.tiles ){
-            if( t.winningTile && t.calledFrom==Tile.CalledFrom.NONE ){
-                h.selfDrawWinningTile = true;
-            }
-        }
-        if( !h.isOpen() && h.selfDrawWinningTile ){
-            h.tsumo = (h.selfDrawWinningTile);
-        }
-    }
-    private void checkIppatsu(Hand h){}
-    private void checkHaitei(Hand h){}
-    private void checkHoutei(Hand h){}
-    private void checkRinshan(Hand h){
-        if( h.rinshan ){
-            h.tsumo = false;
-        }
-    }
-    private void checkChanKan(Hand h){}
-
-    // Standard Yaku
-    private void checkPinfu(Hand h){
-        //If no winning tile has been set, it's ok to still to count this as pinfu
-        if( FuHelper.hasFu(h) ){
-            h.pinfu = false;
-            return;
-        }
-        h.pinfu = true;
-    }
-    private void checkIipeikou(Hand h){
-        if( !h.isOpen() ){
-            if(        h.meld1.toString().equals(h.meld2.toString()) ){
-                h.iipeikou = true;
-            } else if( h.meld1.toString().equals(h.meld3.toString()) ){
-                h.iipeikou = true;
-            } else if( h.meld1.toString().equals(h.meld4.toString()) ){
-                h.iipeikou = true;
-            } else if( h.meld2.toString().equals(h.meld3.toString()) ){
-                h.iipeikou = true;
-            } else if( h.meld2.toString().equals(h.meld4.toString()) ){
-                h.iipeikou = true;
-            } else if( h.meld3.toString().equals(h.meld4.toString()) ){
-                h.iipeikou = true;
-            }
-        }
-    }
-    private void checkSanshokuDoujun(Hand h){
-        //Get 3+ chiis
-        List<Tile> leadTiles = new ArrayList<>();
-        if( h.meld1.isChii() && h.meld1.getSuit()!=Tile.Suit.HONOR ){
-            leadTiles.add(h.meld1.firstTile());
-        }
-        if( h.meld2.isChii() && h.meld2.getSuit()!=Tile.Suit.HONOR ){
-            leadTiles.add(h.meld2.firstTile());
-        }
-        if( h.meld3.isChii() && h.meld3.getSuit()!=Tile.Suit.HONOR ){
-            leadTiles.add(h.meld3.firstTile());
-        }
-        if( h.meld4.isChii() && h.meld4.getSuit()!=Tile.Suit.HONOR ){
-            leadTiles.add(h.meld4.firstTile());
-        }
-        if( leadTiles.size()<3 ){
-            return;
-        }
-
-        //Same number (remove the ones that don't match number)
-        int firstTile = 0;
-        int secondTile = 0;
-        for( Tile t : leadTiles ){
-            if( t.number.equals(leadTiles.get(0).number) ){
-                firstTile++;
-            } else if( t.number.equals(leadTiles.get(1).number) ){
-                secondTile++;
-            }
-        }
-        if( firstTile<3 && secondTile<3 ){
-            return;
-        } else if( firstTile==1 && secondTile==3 ){
-            leadTiles.remove(0);
-        } else if( firstTile==3 && secondTile==1 ){
-            leadTiles.remove(1);
-        }
-
-        //Different suits
-        HashSet<String> noDupSet = new HashSet<>();
-        for( Tile t : leadTiles ){
-            noDupSet.add(t.suit.toString());
-        }
-        if( noDupSet.size()==3 ){
-            h.sanshokuDoujun = true;
-        }
-    }
-    private void checkIttsuu(Hand h){
-        //find dominant suit first
-        final Set<String> duplicateSuits = new HashSet<>();
-        final Set<String> tempSet = new HashSet<>();
-        final Set<String> tempSet2 = new HashSet<>();
-        List<Tile> leadingTiles = new ArrayList<>();
-        leadingTiles.add( h.meld1.firstTile() );
-        leadingTiles.add( h.meld2.firstTile() );
-        leadingTiles.add( h.meld3.firstTile() );
-        leadingTiles.add( h.meld4.firstTile() );
-        for (Tile dupTile : leadingTiles ){
-            if (!tempSet.add(dupTile.suit.toString())) {
-                if (!tempSet2.add(dupTile.suit.toString())) {
-                    duplicateSuits.add(dupTile.suit.toString());
-                }
-            }
-        }
-
-        //check for a 1-2-3, 4-5-6, and 7-8-9 chii in the dominant suit
-        Boolean firstMeld = false;
-        Boolean secondMeld = false;
-        Boolean thirdMeld = false;
-        for( Meld m : Arrays.asList(h.meld1, h.meld2, h.meld3, h.meld4) ){
-            if( m.isChii() && duplicateSuits.contains(m.firstTile().suit.toString()) && m.firstTile().number==1 ){
-                firstMeld = true;
-            } else if( m.isChii() && duplicateSuits.contains(m.firstTile().suit.toString()) && m.firstTile().number==4 ){
-                secondMeld = true;
-            } else if( m.isChii() && duplicateSuits.contains(m.firstTile().suit.toString()) && m.firstTile().number==7 ){
-                thirdMeld = true;
-            }
-        }
-
-        //if all three sets exist, we have an ittsuu
-        if( firstMeld && secondMeld && thirdMeld ){
-            h.ittsuu = true;
-        }
-    }
-    private void checkRyanpeikou(Hand h){
-        if(        h.meld1.toString().equals(h.meld2.toString()) && h.meld3.toString().equals(h.meld4.toString()) ){
-            h.ryanpeikou = true;
-            h.iipeikou = false;
-        } else if( h.meld1.toString().equals(h.meld3.toString()) && h.meld2.toString().equals(h.meld4.toString()) ){
-            h.ryanpeikou = true;
-            h.iipeikou = false;
-        } else if( h.meld1.toString().equals(h.meld4.toString()) && h.meld2.toString().equals(h.meld3.toString()) ){
-            h.ryanpeikou = true;
-            h.iipeikou = false;
-        }
-    }
-    private void checkToitoi(Hand h){
-        if( !h.meld1.isChii() && !h.meld2.isChii() && !h.meld3.isChii() && !h.meld4.isChii() ){
-            h.toitoi=true;
-        }
-    }
-    private void checkSanAnkou(Hand h){
-        Integer closedTriplets = 0;
-        if( !h.meld1.isChii() && h.meld1.isClosed() ){
-            closedTriplets += 1;
-        }
-        if( !h.meld2.isChii() && h.meld2.isClosed() ){
-            closedTriplets += 1;
-        }
-        if( !h.meld3.isChii() && h.meld3.isClosed() ){
-            closedTriplets += 1;
-        }
-        if( !h.meld4.isChii() && h.meld4.isClosed() ){
-            closedTriplets += 1;
-        }
-
-        h.sanAnkou= (closedTriplets>=3);
-    }
-    private void checkSanshokuDoukou(Hand h){
-        //Get 3+ triplets
-        List<Tile> leadTiles = new ArrayList<>();
-        if( !h.meld1.isChii() && h.meld1.getSuit()!=Tile.Suit.HONOR ){
-            leadTiles.add(h.meld1.firstTile());
-        }
-        if( !h.meld2.isChii() && h.meld2.getSuit()!=Tile.Suit.HONOR ){
-            leadTiles.add(h.meld2.firstTile());
-        }
-        if( !h.meld3.isChii() && h.meld3.getSuit()!=Tile.Suit.HONOR ){
-            leadTiles.add(h.meld3.firstTile());
-        }
-        if( !h.meld4.isChii() && h.meld4.getSuit()!=Tile.Suit.HONOR ){
-            leadTiles.add(h.meld4.firstTile());
-        }
-        if( leadTiles.size()<3 ){
-            return;
-        }
-
-        //Same number (remove the ones that don't match number)
-        int firstTile = 0;
-        int secondTile = 0;
-        for( Tile t : leadTiles ){
-            if( t.number.equals(leadTiles.get(0).number) ){
-                firstTile++;
-            } else if( t.number.equals(leadTiles.get(1).number) ){
-                secondTile++;
-            }
-        }
-        if( firstTile<3 && secondTile<3 ){
-            return;
-        } else if( firstTile==1 && secondTile==3 ){
-            leadTiles.remove(0);
-        } else if( firstTile==3 && secondTile==1 ){
-            leadTiles.remove(1);
-        }
-
-        //Different suits
-        HashSet<String> noDupSet = new HashSet<>();
-        for( Tile t : leadTiles ){
-            noDupSet.add(t.suit.toString());
-        }
-        if( noDupSet.size()==3 ){
-            h.sanshokuDoukou = true;
-        }
-    }
-    private void checkSanKantsu(Hand h){
-        Integer kanNumber = 0;
-        kanNumber = (h.meld1.isKan()) ? kanNumber+1 : kanNumber;
-        kanNumber = (h.meld2.isKan()) ? kanNumber+1 : kanNumber;
-        kanNumber = (h.meld3.isKan()) ? kanNumber+1 : kanNumber;
-        kanNumber = (h.meld4.isKan()) ? kanNumber+1 : kanNumber;
-        if( kanNumber==3 ){
-            h.sanKantsu = true;
-        }
-    }
-    private void checkTanyao(Hand h){
-        if( !Utils.containsHonorsOrTerminals(h.tiles) ){
-            h.tanyao=true;
-        }
-    }
-    private void checkYakuhai(Hand h){
-        h.whiteDragon = h.hasDragonWhiteSet();
-        h.greenDragon = h.hasDragonGreenSet();
-        h.redDragon   = h.hasDragonRedSet();
-        h.roundWind   = h.hasPrevailingWindSet();
-        h.seatWind    = h.hasPlayerWindSet();
-    }
-    private void checkJunchan(Hand h){
-        if( Utils.containsTerminals(h.pair.getTiles())
-                && Utils.containsTerminals(h.meld1.getTiles())
-                && Utils.containsTerminals(h.meld2.getTiles())
-                && Utils.containsTerminals(h.meld3.getTiles())
-                && Utils.containsTerminals(h.meld4.getTiles()) ){
-            h.junchan = true;
-        }
-    }
-    private void checkHonroutou(Hand h){
-        if( Utils.containsHonorsOrTerminalsOnly(h.tiles) ){
-            h.honroutou = true;
-        }
-    }
-    private void checkChanta(Hand h){
-        if( Utils.containsHonorsOrTerminals(h.pair.getTiles())
-                && Utils.containsHonorsOrTerminals(h.meld1.getTiles())
-                && Utils.containsHonorsOrTerminals(h.meld2.getTiles())
-                && Utils.containsHonorsOrTerminals(h.meld3.getTiles())
-                && Utils.containsHonorsOrTerminals(h.meld4.getTiles())
-                && !h.honroutou
-                && !h.junchan ){
-            h.chanta = true;
-        }
-    }
-    private void checkShousangen(Hand h){
-        HashSet<String> noDupSet = new HashSet<>();
-        if( h.pair.firstTile().dragon!=null ){
-            noDupSet.add(h.pair.firstTile().dragon.toString());
-        }
-        if( h.whiteDragon ){
-            noDupSet.add("WHITE");
-        }
-        if( h.greenDragon ){
-            noDupSet.add("GREEN");
-        }
-        if( h.redDragon ){
-            noDupSet.add("RED");
-        }
-        if( noDupSet.size()==3 && (!h.whiteDragon||!h.greenDragon||!h.redDragon) ){
-            h.shousangen = true;
-        }
-    }
-    private void checkHonitsu(Hand h){
-        if( Utils.containsHonors(h.tiles) && countSuits(h.tiles)==1 ){
-            h.honitsu = true;
-        }
-    }
-    private void checkChinitsu(Hand h){
-        if( !Utils.containsHonors(h.tiles) && countSuits(h.tiles)==1 ){
-            h.chinitsu = true;
-        }
-    }
-
-    // Yakuman
-    private void checkSuuAnkou(Hand h){
-        int selfDrawnTriplets = 0;
-        for(Meld m : Arrays.asList(h.meld1, h.meld2, h.meld3, h.meld4)){
-            if( !m.isPair() && !m.isChii() && m.isClosed() && m.size()>0 ){
-                selfDrawnTriplets++;
-            }
-        }
-        if( selfDrawnTriplets==4 ){
-            if( h.pair.hasWinningTile() ){
-                h.suuAnkou = false;
-                h.suuAnkouTanki = true;
-            } else {
-                h.suuAnkou = true;
-            }
-        }
-    }      // Four concealed triplets (double for pair wait)
-    private void checkDaisangen(Hand h){
-        int dragonPons = 0;
-        if( h.hasDragonWhiteSet() ){
-            dragonPons++;
-        }
-        if( h.hasDragonGreenSet()){
-            dragonPons++;
-        }
-        if( h.hasDragonRedSet() ){
-            dragonPons++;
-        }
-        if( dragonPons==3 ){
-            h.daisangen = true;
-        }
-    }
-    private void checkShousuushii(Hand h){
-        List<Tile.Wind> winds = new ArrayList<>(Arrays.asList(Tile.Wind.values()));
-        for( Tile.Wind w : Tile.Wind.values() ){
-            if( countTileInSet(new Tile(w),h.tiles)==3
-                    || countTileInSet(new Tile(w),h.tiles)==4 ){
-                winds.remove(w);
-            }
-        }
-        if( winds.size()==0 ){
-            return;
-        }
-
-        int fourthWindCount = countTileInSet(new Tile(winds.get(0)), h.tiles);
-        if(winds.size()==1 && fourthWindCount==2 ){
-            h.shousuushii = true;
-        }
-    }   // Three triplets and a pair of winds
-    private void checkDaisuushii(Hand h){
-        List<Tile.Wind> winds = new ArrayList<>(Arrays.asList(Tile.Wind.values()));
-        for( Tile.Wind w : Tile.Wind.values() ){
-            int tileCount = countTileInSet(new Tile(w),h.tiles);
-            if( tileCount==3 || tileCount==4 ){
-                winds.remove(w);
-            }
-        }
-
-        if( winds.size()==0 ){
-            h.daisuushii = true;
-        }
-    }    // Four triplets of winds
-    private void checkTsuuiisou(Hand h){
-        if( countSuits(h.tiles)==0 && !h.chiiToitsu ){
-            h.tsuuiisou = true;
-        }
-    }     // All honors
-    private void checkChinroutou(Hand h){
-        if( !Utils.containsHonors(h.tiles) && !Utils.containsSimples(h.tiles) ){
-            h.chinroutou = true;
-        }
-    }    // All terminals
-    private void checkRyuuiisou(Hand h){
-        for(Tile t : h.tiles){
-            if( t.suit==Tile.Suit.HONOR && t.dragon!=Tile.Dragon.GREEN ){
-                return;
-            } else if( t.number!=null && (t.number==1||t.number==5||t.number==7||t.number==9) ){
-                return;
-            }
-        }
-        h.ryuuiisou = true;
-    }     // All green
-    private void checkChuurenPoutou(Hand h){
-        if( countSuits(h.tiles)!=1 || Utils.containsHonors(h.tiles) ){
-            return;
-        }
-
-        Tile.Suit suit = h.tiles.get(0).suit;
-        List<Tile> expectedTiles = new ArrayList<>();
-        for(int i=1; i<10; i++){
-            expectedTiles.add(new Tile(i, suit));
-        }
-        expectedTiles.add(new Tile(1, suit));
-        expectedTiles.add(new Tile(1, suit));
-        expectedTiles.add(new Tile(9, suit));
-        expectedTiles.add(new Tile(9, suit));
-
-        List<Tile> usedTiles = new ArrayList<>();
-        List<Tile> usedExpectedTiles = new ArrayList<>();
-        for(Tile realTile : h.tiles){
-            for(Tile expectedTile : expectedTiles ){
-                if( expectedTile.value.equals(realTile.value)
-                        && !usedTiles.contains(realTile)
-                        && !usedExpectedTiles.contains(expectedTile) ){
-                    usedTiles.add(realTile);
-                    usedExpectedTiles.add(expectedTile);
-                }
-            }
-        }
-        //Log.v("checkChuurenPoutou", "usedTiles is not empty: "+usedTiles.toString());
-        //Log.v("checkChuurenPoutou", "usedExpectedTiles is not empty: " + usedExpectedTiles.toString());
-        expectedTiles.removeAll(usedExpectedTiles);
-        if( expectedTiles.size()!=0 ){
-            //Log.v("checkChuurenPoutou", "expectedTiles is not empty: "+expectedTiles.toString());
-            return;
-        }
-        List<Tile> tempList = new ArrayList<>();
-        tempList.addAll(h.tiles);
-        tempList.removeAll(usedTiles);
-        if( tempList.size()>1 ){
-            //Log.v("checkChuurenPoutou", "tempList still too big: "+tempList.toString());
-            return;
-        }
-        h.chuurenPoutou = true;
-        //TODO implement 9-sided wait... seems like a pain...
-    }
-    private void checkSuuKantsu(Hand h){
-        if( h.meld1.isKan() && h.meld2.isKan() && h.meld3.isKan() && h.meld4.isKan() ){
-            h.suuKantsu = true;
-        }
-    }     // Four Kans
-
-    // Controversial Yaku
-    private void checkSanrenkou(Hand h){
-        //Get 3+ triplets
-        List<Tile> leadTiles = new ArrayList<>();
-        if( !h.meld1.isChii() && h.meld1.getSuit()!=Tile.Suit.HONOR ){
-            leadTiles.add(h.meld1.firstTile());
-        }
-        if( !h.meld2.isChii() && h.meld2.getSuit()!=Tile.Suit.HONOR ){
-            leadTiles.add(h.meld2.firstTile());
-        }
-        if( !h.meld3.isChii() && h.meld3.getSuit()!=Tile.Suit.HONOR ){
-            leadTiles.add(h.meld3.firstTile());
-        }
-        if( !h.meld4.isChii() && h.meld4.getSuit()!=Tile.Suit.HONOR ){
-            leadTiles.add(h.meld4.firstTile());
-        }
-        if( leadTiles.size()<3 ){
-            return;
-        }
-
-        //Cut down to leading tiles where 3+ are in same suit
-        int firstTile = 0;
-        int secondTile = 0;
-        for( Tile t : leadTiles ){
-            if( t.suit==leadTiles.get(0).suit ){
-                firstTile++;
-            } else if( t.suit==leadTiles.get(1).suit ){
-                secondTile++;
-            }
-        }
-        if( firstTile<3 && secondTile<3 ){
-            return;
-        } else if( firstTile==1 && secondTile==3 ){
-            leadTiles.remove(0);
-        } else if( firstTile==3 && secondTile==1 ){
-            leadTiles.remove(1);
-        }
-
-        //Ensure they are sequential
-        int numbs[] = new int[leadTiles.size()];
-        for(int i=0; i<leadTiles.size() ; i++){
-            numbs[i] = leadTiles.get(i).number;
-        }
-        Arrays.sort(numbs);
-        for (int i = 0; i < numbs.length - 2; ++i) {
-            if( numbs[i]==numbs[i+1]-1 && numbs[i]==numbs[i+2]-2 ){
-                h.sanrenkou = true;
-            }
-        }
-    }     // Three consecutive triplets
-    private void checkSuurenkou(Hand h){
-        //Get 4 triplets
-        List<Tile> leadTiles = new ArrayList<>();
-        if( !h.meld1.isChii() && h.meld1.getSuit()!=Tile.Suit.HONOR ){
-            leadTiles.add(h.meld1.firstTile());
-        }
-        if( !h.meld2.isChii() && h.meld2.getSuit()!=Tile.Suit.HONOR ){
-            leadTiles.add(h.meld2.firstTile());
-        }
-        if( !h.meld3.isChii() && h.meld3.getSuit()!=Tile.Suit.HONOR ){
-            leadTiles.add(h.meld3.firstTile());
-        }
-        if( !h.meld4.isChii() && h.meld4.getSuit()!=Tile.Suit.HONOR ){
-            leadTiles.add(h.meld4.firstTile());
-        }
-        if( leadTiles.size()<4 ){
-            return;
-        }
-
-        //Cut down to same suit
-        int firstSuit = 0;
-        for( Tile t : leadTiles ){
-            if( t.suit==leadTiles.get(0).suit ){
-                firstSuit++;
-            }
-        }
-        if( firstSuit<4 ){
-            return;
-        }
-
-        //Ensure they are sequential
-        int numbs[] = new int[4];
-        for(int i=0; i<leadTiles.size() ; i++){
-            numbs[i] = leadTiles.get(i).number;
-        }
-        Arrays.sort(numbs);
-        if( numbs[0]==numbs[1]-1 && numbs[1]==numbs[2]-1&& numbs[2]==numbs[3]-1 ){
-            h.suurenkou = true;
-        }
-    }     // Four consecutive triplets
-    private void checkDaiSharin(Hand h){
-        Set<Tile> tz = findDuplicateTiles(h.tiles);
-        if( tz.size()==7
-                && findDuplicateTiles(tz).size()==0
-                && !Utils.containsHonorsOrTerminals(h.tiles)
-                && countSuits(h.tiles)==1 ){
-            h.daiSharin = true;
-        }
-    }     // Single suit, pairs from 2-8
-    private void checkShiisanpuuta(Hand h){}     // Thirteen unconnected tiles on first draw
-    private void checkShiisuupuuta(Hand h){}     // Fourteen unconnected tiles (on first draw? wut)
-    private void checkParenchan(Hand h){}        // Eight consecutive wins as dealer
-
-    private void countDora(Hand h){
-        int dora = 0;
-        if( h.doraIndicator1!=null ){
-            dora += h.countTile(h.doraIndicator1.getNextTile());
-            if( h.riichi ){
-                dora += h.countTile(h.uraDoraIndicator1.getNextTile());
-            }
-        }
-        if( h.doraIndicator2!=null ){
-            dora += h.countTile(h.doraIndicator2.getNextTile());
-            if( h.riichi ){
-                dora += h.countTile(h.uraDoraIndicator2.getNextTile());
-            }
-        }
-        if( h.doraIndicator3!=null ){
-            dora += h.countTile(h.doraIndicator3.getNextTile());
-            if( h.riichi ){
-                dora += h.countTile(h.uraDoraIndicator3.getNextTile());
-            }
-        }
-        if( h.doraIndicator4!=null ){
-            dora += h.countTile(h.doraIndicator4.getNextTile());
-            if( h.riichi ){
-                dora += h.countTile(h.uraDoraIndicator4.getNextTile());
-            }
-        }
-        h.dora = dora;
-    }
 
     private void scrubScore(Hand h){
-        clearYakuman(h);
-        clearNormalYaku(h);
         h.hanList.clear();
         h.fuList.clear();
         h.han = 0;
         h.fu = 0;
-    }
-    private void clearYakuman(Hand h){
-        h.kokushiMusou = false;
-        h.kokushiMusou13wait = false;
-        h.suuAnkou = false;
-        h.suuAnkouTanki = false;
-        h.daisangen = false;
-        h.shousuushii = false;
-        h.daisuushii = false;
-        h.tsuuiisou = false;
-        h.daichisei = false;
-        h.chinroutou = false;
-        h.ryuuiisou = false;
-        h.chuurenPoutou = false;
-        h.chuurenPoutou9wait = false;
-        h.suuKantsu = false;
-        h.suurenkou = false;
-        h.daiSharin = false;
-        h.shiisanpuuta = false;
-        h.shiisuupuuta = false;
-        h.parenchan = false;
-    }
-    private void clearNormalYaku(Hand h){
-        h.chiiToitsu = false;
-        h.pinfu = false;
-        h.iipeikou = false;
-        h.sanshokuDoujun = false;
-        h.ittsuu = false;
-        h.ryanpeikou = false;
-        h.toitoi = false;
-        h.sanAnkou = false;
-        h.sanshokuDoukou = false;
-        h.sanKantsu = false;
-        h.tanyao = false;
-        h.whiteDragon = false;
-        h.greenDragon = false;
-        h.redDragon = false;
-        h.roundWind = false;
-        h.seatWind = false;
-        h.chanta = false;
-        h.junchan = false;
-        h.honroutou = false;
-        h.shousangen = false;
-        h.honitsu = false;
-        h.chinitsu = false;
-        h.sanrenkou = false;
-        h.dora = 0;
-        h.fu = 0;
-        h.fuList.clear();
-    }
-
-    private Set<Tile> findDuplicateTiles( Collection<Tile> s ){
-        final Set<Tile> duplicateTiles = new HashSet<>();
-        final Set<String> tempSet = new HashSet<>();
-
-        for (Tile dupTile : s ){
-            if (!tempSet.add(dupTile.toString())) {
-                duplicateTiles.add(dupTile);
-            }
-        }
-        return duplicateTiles;
     }
 }

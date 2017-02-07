@@ -296,10 +296,10 @@ public class ScoreScreen extends LinearLayout implements View.OnClickListener {
     }
     private void updateLabels(){
         Integer roundedFu = (hand.fu==25) ? 25 : (int) Math.ceil(hand.fu/10.0)*10;
-        hanTotalLabel.setText(hand.han.toString());
-        fuTotalLabel.setText(hand.fu.toString()+" ("+roundedFu.toString()+")");
+        hanTotalLabel.setText( String.valueOf(hand.han) );
+        fuTotalLabel.setText( ""+hand.fu+" ("+roundedFu.toString()+")");
 
-        String result = ScoreCalculator.scoreHanFu(hand.han, hand.fu, hand.playerWind==Tile.Wind.EAST, hand.tsumo);
+        String result = ScoreCalculator.scoreHanFu(hand.han, hand.fu, hand.playerWind==Tile.Wind.EAST, hand.selfDrawWinningTile);
         scoreValue.setText(result);
 
         //Do this last, so that we can make it a little more pretty
@@ -307,29 +307,29 @@ public class ScoreScreen extends LinearLayout implements View.OnClickListener {
         scoreBreakdown.setText(sBreakdown);
     }
     private String getScoreText(int roundedFu){
-        String sBreakdown = hand.han.toString() + " Han " + roundedFu + " Fu";
+        String sBreakdown = ""+hand.han+" Han "+roundedFu+" Fu";
         if( hand.han==5 || (hand.han==4&&hand.fu>=40) || (hand.han==3&&hand.fu>=70) ){
-            sBreakdown = sBreakdown + " (Mangan)";
+            sBreakdown += " (Mangan)";
         } else if( hand.han<5 ){
             return sBreakdown;
         } else if( hand.han==6 || hand.han==7 ){
-            sBreakdown = sBreakdown + " (Haneman)";
+            sBreakdown += " (Haneman)";
         } else if( hand.han==8 || hand.han==9 || hand.han==10 ){
-            sBreakdown = sBreakdown + " (Baiman)";
+            sBreakdown += " (Baiman)";
         } else if( hand.han==11|| hand.han==12 ){
-            sBreakdown = sBreakdown + " (Sanbaiman)";
+            sBreakdown += " (Sanbaiman)";
         } else if( hand.han<14 ){
-            sBreakdown = sBreakdown + " (Yakuman)";
+            sBreakdown += " (Yakuman)";
         } else if( hand.han<27 ){
-            sBreakdown = sBreakdown + " (2x Yakuman)";
+            sBreakdown += " (2x Yakuman)";
         } else if( hand.han<40 ){
-            sBreakdown = sBreakdown + " (3x Yakuman)";
+            sBreakdown += " (3x Yakuman)";
         } else if( hand.han<53 ){
-            sBreakdown = sBreakdown + " (4x Yakuman)";
+            sBreakdown += " (4x Yakuman)";
         } else if( hand.han<66 ){
-            sBreakdown = sBreakdown + " (5x Yakuman)";
+            sBreakdown += " (5x Yakuman)";
         } else {
-            sBreakdown = sBreakdown + " (ERROR)";
+            sBreakdown += " (ERROR)";
         }
         return sBreakdown;
     }
