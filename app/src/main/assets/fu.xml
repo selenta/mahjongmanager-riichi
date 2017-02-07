@@ -91,7 +91,7 @@
     <fu>
         <name>INSIDE_WAIT</name>
         <english>Inside Wait</english>
-        <romaji>???</romaji>
+        <romaji>Inside Wait</romaji>
         <kanji>???</kanji>
         <value>2</value>
         <description>The winning tile completes a run and is the middle tile of the run. Example: the hand contains a 3-5 and is waiting on a 4</description>
