@@ -8,10 +8,26 @@ public class Tile {
         MANZU, PINZU, SOUZU, HONOR
     }
     public enum Dragon {
-        WHITE, GREEN, RED
+        WHITE, GREEN, RED;
+
+        private static Dragon[] vals = values();
+        public Dragon next(){
+            return vals[(this.ordinal()+1) % vals.length ];
+        }
+        public Dragon prev(){
+            return vals[(this.ordinal()+vals.length-1) % vals.length ];
+        }
     }
     public enum Wind {
-        EAST, SOUTH, WEST, NORTH
+        EAST, SOUTH, WEST, NORTH;
+
+        private static Wind[] vals = values();
+        public Wind next(){
+            return vals[(this.ordinal()+1) % vals.length ];
+        }
+        public Wind prev(){
+            return vals[(this.ordinal()+vals.length-1) % vals.length ];
+        }
     }
     public enum RevealedState {
         NONE, PON, CHI, OPENKAN, CLOSEDKAN, ADDEDKAN
@@ -237,30 +253,25 @@ public class Tile {
 
     public Tile getNextTile(){
         if( suit==Suit.HONOR && wind!=null ) {
-            switch (wind){
-                case EAST:
-                    return new Tile(Wind.SOUTH);
-                case SOUTH:
-                    return new Tile(Wind.WEST);
-                case WEST:
-                    return new Tile(Wind.NORTH);
-                case NORTH:
-                    return new Tile(Wind.EAST);
-            }
+            return new Tile(wind.next());
         } else if( suit==Suit.HONOR ){
-            switch (dragon){
-                case WHITE:
-                    return new Tile(Dragon.GREEN);
-                case GREEN:
-                    return new Tile(Dragon.RED);
-                case RED:
-                    return new Tile(Dragon.WHITE);
-            }
+            return new Tile(dragon.next());
         } else if(number==9) {
             return new Tile(1, suit);
         }
         return new Tile(number+1, suit);
     }
+    public Tile getPreviousTile(){
+        if( suit==Suit.HONOR && wind!=null ) {
+            return new Tile(wind.prev());
+        } else if( suit==Suit.HONOR ){
+            return new Tile(dragon.prev());
+        } else if(number==1) {
+            return new Tile(9, suit);
+        }
+        return new Tile(number-1, suit);
+    }
+
 
     public String getImageCacheKey(String usage, boolean rotated){
         String s = getImageCacheKey(usage);
@@ -272,13 +283,13 @@ public class Tile {
     public String getImageCacheKey(String usage){
         String s = usage;
         if( faceDown ){
-            s = s + "Facedown";
+            s += "Facedown";
         } else if( red ){
-            s = s + toString() + " Red";
+            s += toString() + " Red";
         } else if( !Validator.validate(this) ){
-            s = s + "Blank";
+            s += "Blank";
         } else {
-            s = s + toString();
+            s += toString();
         }
         return s;
     }

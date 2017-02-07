@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="Score Breakdown"
+        android:textSize="44sp"
+        android:textStyle="italic"
+        android:layout_gravity="center_horizontal"
+        android:id="@+id/scoreScreenTitleLabel" />
+
+    <com.mahjongmanager.riichi.components.HandDisplay
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/handDisplay" />
+
+    <com.mahjongmanager.riichi.components.ScoreScreen
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:id="@+id/scoreScreen"
+        android:layout_weight="1" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@android:color/darker_gray" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Back to Main Menu"
+        android:layout_gravity="center"
+        android:paddingEnd="20dp"
+        android:paddingStart="20dp"
+        android:onClick="backToMainMenu" />
+
+</LinearLayout>

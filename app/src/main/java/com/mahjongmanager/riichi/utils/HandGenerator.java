@@ -15,6 +15,8 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Random;
 
+import static com.mahjongmanager.riichi.utils.Utils.randomTile;
+
 /**
  * Used to generate completely random hands. There is some massaging to make them slightly
  * more interesting, but the only thing can currently be determined before generating the hand are:
@@ -44,7 +46,7 @@ public class HandGenerator {
     private Meld meld4;
 
     public HandGenerator(){
-        yakuOdds.put("Chiitoitsu", 0.1);
+        yakuOdds.put("Chiitoitsu", 0.04);
         yakuOdds.put("Honroutou",  0.2);
         yakuOdds.put("Tanyao",     0.4);
         yakuOdds.put("Honitsu",    0.25);
@@ -256,9 +258,6 @@ public class HandGenerator {
     /////////////////////////////////////////////////////////////////////////
     private Tile randomFoundingTile(){
         return randomTile(foundingTileOptions);
-    }
-    private Tile randomTile(List<Tile> options){
-        return options.get(new Random().nextInt(options.size()));
     }
 
     private void removeTilesFromFounders( List<Tile> removeList ){

@@ -13,6 +13,9 @@ import com.google.android.gms.ads.AdView;
 import com.google.android.gms.ads.MobileAds;
 import com.mahjongmanager.riichi.common.Hand;
 import com.mahjongmanager.riichi.common.Tile;
+import com.mahjongmanager.riichi.handbuilder.Results;
+import com.mahjongmanager.riichi.handbuilder.Simulate4Player;
+import com.mahjongmanager.riichi.handbuilder.HandBuilderStart;
 import com.mahjongmanager.riichi.handcalculator.*;
 import com.mahjongmanager.riichi.simplefragments.*;
 import com.mahjongmanager.riichi.speedquiz.*;
@@ -148,8 +151,12 @@ public class MainActivity extends AppCompatActivity {
         replaceFragment(new FinalScore());
     }
 
+    public void goToMinigames(View view){
+        replaceFragment(new MinigamesFragment());
+    }
+
     public void goToSpeedQuizStart(View view){
-        replaceFragment(new Start());
+        replaceFragment(new SpeedQuizStart());
     }
     public void goToSpeedQuizScoreHand(View view){
         ignoreBack = true;
@@ -183,6 +190,17 @@ public class MainActivity extends AppCompatActivity {
     public void goToSpeedQuizReviewHand(View view){
         ignoreBack = false;
         replaceFragment(new ReviewHand());
+    }
+
+    public void goToHandBuilderStart(View view){
+        replaceFragment(new HandBuilderStart());
+    }
+    public void goToHandBuilder4Player(View view){
+        ignoreBack = true;
+        replaceFragment(new Simulate4Player(), false);
+    }
+    public void goToHandBuilderScoreHand(View view){
+        replaceFragment(new Results(), false);
     }
 
     public void goToScoreTable(View view){

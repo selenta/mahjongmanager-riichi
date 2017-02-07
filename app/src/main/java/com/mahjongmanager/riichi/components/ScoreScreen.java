@@ -10,12 +10,14 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.GridLayout;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ScrollView;
 import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
 
+import com.mahjongmanager.riichi.MainActivity;
 import com.mahjongmanager.riichi.common.Fu;
 import com.mahjongmanager.riichi.common.Hand;
 import com.mahjongmanager.riichi.common.Meld;
@@ -36,13 +38,25 @@ public class ScoreScreen extends LinearLayout implements View.OnClickListener {
 
     private TableLayout hanTable;
     private TableLayout fuTable;
+    private TableLayout waitTable;
     private TextView hanTotalLabel;
     private TextView fuTotalLabel;
 
     private TextView scoreBreakdown;
     private TextView scoreValue;
+    private TextView shantenLabel;
+
+    private LinearLayout scoreContainer;
+    private LinearLayout tenpaiContainer;
+    private LinearLayout incompleteContainer;
+    private LinearLayout invalidContainer;
 
     private List<ScoreDetail> scoreDetailList = new ArrayList<>();
+
+    private static final int MODE_SCORING = 0;
+    private static final int MODE_TENPAI = 1;
+    private static final int MODE_SHANTEN = 2;
+    private static final int MODE_INVALID = 3;
 
     public ScoreScreen(Context ctx){
         this(ctx, null);
@@ -60,20 +74,76 @@ public class ScoreScreen extends LinearLayout implements View.OnClickListener {
 
         hanTable      = (TableLayout) findViewById(R.id.hanTable);
         fuTable       = (TableLayout) findViewById(R.id.fuTable);
+        waitTable     = (TableLayout) findViewById(R.id.waitTable);
         hanTotalLabel = (TextView) findViewById(R.id.hanTotalLabel);
         fuTotalLabel  = (TextView) findViewById(R.id.fuTotalLabel);
 
         scoreValue = (TextView) findViewById(R.id.scoreValue);
         scoreBreakdown = (TextView) findViewById(R.id.scoreBreakdown);
+        shantenLabel = (TextView) findViewById(R.id.shantenLabel);
 
+        scoreContainer = (LinearLayout) findViewById(R.id.scoreContainer);
+        tenpaiContainer = (LinearLayout) findViewById(R.id.tenpaiContainer);
+        incompleteContainer = (LinearLayout) findViewById(R.id.incompleteContainer);
+        invalidContainer = (LinearLayout) findViewById(R.id.invalidContainer);
     }
 
     public void setHand(Hand h){
         hand = h;
-        displayScores();
+        determineMode();
     }
     public void hideScoreTotal(){
         scoreValue.setVisibility(GONE);
+    }
+
+    private void determineMode(){
+        ScoreCalculator sc = new ScoreCalculator(hand, true);
+
+        if( sc.validatedHand==null && hand.getWinningTile()==null ){
+            int shanten = sc.shanten;
+            if( shanten > 0 ){
+                setMode(MODE_SHANTEN);
+                String label = shanten+"-"+(shanten+1)+" tiles away";
+                shantenLabel.setText( label );
+            } else {
+                setMode(MODE_TENPAI);
+                displayWaitValues();
+            }
+        } else if( sc.validatedHand==null ){
+            setMode(MODE_INVALID);
+        } else {
+            hand = sc.validatedHand;
+            setMode(MODE_SCORING);
+            displayHanFu();
+        }
+    }
+    private void setMode(int m){
+        switch (m){
+            case MODE_SCORING:
+                scoreContainer.setVisibility(View.VISIBLE);
+                tenpaiContainer.setVisibility(View.GONE);
+                incompleteContainer.setVisibility(View.GONE);
+                invalidContainer.setVisibility(View.GONE);
+                break;
+            case MODE_TENPAI:
+                scoreContainer.setVisibility(View.GONE);
+                tenpaiContainer.setVisibility(View.VISIBLE);
+                incompleteContainer.setVisibility(View.GONE);
+                invalidContainer.setVisibility(View.GONE);
+                break;
+            case MODE_SHANTEN:
+                scoreContainer.setVisibility(View.GONE);
+                tenpaiContainer.setVisibility(View.GONE);
+                incompleteContainer.setVisibility(View.VISIBLE);
+                invalidContainer.setVisibility(View.GONE);
+                break;
+            case MODE_INVALID:
+                scoreContainer.setVisibility(View.GONE);
+                tenpaiContainer.setVisibility(View.GONE);
+                incompleteContainer.setVisibility(View.GONE);
+                invalidContainer.setVisibility(View.VISIBLE);
+                break;
+        }
     }
 
     ////////////////////////////////////////////////////////////////////////
@@ -83,7 +153,7 @@ public class ScoreScreen extends LinearLayout implements View.OnClickListener {
     public void onClick(View v){
         for(ScoreDetail sd : scoreDetailList){
             if( v==sd.tableRow ){
-                Log.i("ClickDetect", "ScoreDetail: "+sd.toString()+" - "+sd.meld);
+                Log.d("ClickDetect", "ScoreDetail: "+sd.toString()+" - "+sd.meld);
                 createPopup(sd);
             }
         }
@@ -214,7 +284,7 @@ public class ScoreScreen extends LinearLayout implements View.OnClickListener {
     /////////////////////////////////////////////////////////////////////////
     ////////////////////////        Update UI        ////////////////////////
     /////////////////////////////////////////////////////////////////////////
-    private void displayScores(){
+    private void displayHanFu(){
         if(hand==null){
             return;
         }
@@ -222,9 +292,8 @@ public class ScoreScreen extends LinearLayout implements View.OnClickListener {
         Log.i("displayScore", "fuList: " + hand.fuList.toString());
 
         updateLabels();
-        addRows();
+        addHanFuRows();
     }
-
     private void updateLabels(){
         Integer roundedFu = (hand.fu==25) ? 25 : (int) Math.ceil(hand.fu/10.0)*10;
         hanTotalLabel.setText(hand.han.toString());
@@ -266,9 +335,9 @@ public class ScoreScreen extends LinearLayout implements View.OnClickListener {
     }
 
     /////////////////////////////////////////////////////////////////////////////
-    ///////////////////////////    Populate Tables    ///////////////////////////
+    ////////////////////////    Populate Score Tables   /////////////////////////
     /////////////////////////////////////////////////////////////////////////////
-    private void addRows(){
+    private void addHanFuRows(){
         for( Yaku.Name yName : hand.hanList.keySet() ){
             addHanRow(yName);
         }
@@ -395,5 +464,104 @@ public class ScoreScreen extends LinearLayout implements View.OnClickListener {
             }
         }
         return null;
+    }
+
+    /////////////////////////////////////////////////////////////////////////////
+    ////////////////////////    Populate Wait Tables    /////////////////////////
+    /////////////////////////////////////////////////////////////////////////////
+    //TODO move all this Wait logic somewhere more appropriate
+    private class Wait {
+        int han;
+        int fu;
+        boolean isTsumo;
+        List<Tile> tiles = new ArrayList<>();
+        public Wait( Tile tile, int h, int f, boolean tsumo ){
+            han = h;
+            fu = f;
+            isTsumo = tsumo;
+            tiles.add(tile);
+        }
+
+        public String toString(){
+            return "["+han+","+fu+","+isTsumo+"-"+tiles+"]";
+        }
+    }
+    List<Wait> waits = new ArrayList<>();
+    private void addWait(Tile tile, int han, int fu, boolean tsumo){
+        for( Wait wait : waits ){
+            if( han==wait.han && fu==wait.fu && tsumo==wait.isTsumo ){
+                wait.tiles.add(tile);
+                return;
+            }
+        }
+        waits.add(new Wait(tile, han, fu, tsumo));
+    }
+
+    private void displayWaitValues(){
+        // TODO query ScoreCalculator for Waits
+
+        addWait(new Tile(Tile.Dragon.RED), 3, 30, true);
+        addWait(new Tile(Tile.Dragon.RED), 3, 30, false);
+        addWait(new Tile(Tile.Dragon.WHITE), 3, 30, true);
+        addWait(new Tile(Tile.Dragon.WHITE), 4, 30, false);
+        addWait(new Tile(Tile.Dragon.GREEN), 4, 30, true);
+        addWait(new Tile(Tile.Dragon.GREEN), 4, 30, false);
+
+        for(Wait wait : waits){
+            addWaitRow(wait);
+            createSeparatorLine();
+        }
+    }
+    private void addWaitRow(Wait wait){
+        TableRow newRow = new TableRow( getContext() );
+        newRow.setPadding(0,15,0,15);
+
+        LinearLayout waitContainer = new LinearLayout(getContext());
+        waitContainer.setOrientation(HORIZONTAL);
+
+        ViewGroup.LayoutParams params = new TableRow.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT, 1f);
+        waitContainer.setLayoutParams(params);
+        waitContainer.setPadding(20,0,0,0);
+
+        for(Tile tile : wait.tiles){
+            ImageView image = getUtils().getHandDisplayTileView(tile, false);
+            waitContainer.addView(image);
+        }
+        newRow.addView(waitContainer);
+
+        String winTypeLabel = (wait.isTsumo) ? "Tsumo" : "Ron";
+        newRow.addView(tableValue(winTypeLabel, 80));
+        newRow.addView(tableValue(String.valueOf(wait.han), 50));
+        newRow.addView(tableValue(String.valueOf(wait.fu), 50));
+
+        waitTable.addView(newRow);
+    }
+    private TextView tableValue(String value, int width){
+        TextView label = new TextView(getContext());
+
+        ViewGroup.LayoutParams params = new TableRow.LayoutParams(width, ViewGroup.LayoutParams.WRAP_CONTENT);
+        label.setLayoutParams(params);
+
+        label.setTextSize(16);
+        label.setTextAlignment(TEXT_ALIGNMENT_CENTER);
+        label.setText(value);
+        return label;
+    }
+    private void createSeparatorLine(){
+        View line = new View(getContext());
+
+        ViewGroup.LayoutParams params = new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, 1);
+        line.setLayoutParams(params);
+
+        line.setBackgroundColor(0xFFAAAAAA);
+        waitTable.addView(line);
+    }
+
+    Utils _utils;
+    private Utils getUtils(){
+        if( _utils==null ){
+            _utils = ((MainActivity) getContext()).getUtils();
+        }
+        return _utils;
     }
 }

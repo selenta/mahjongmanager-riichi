@@ -8,6 +8,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.Space;
 import android.widget.TextView;
@@ -117,6 +118,10 @@ public class HandKeyboard extends LinearLayout implements View.OnClickListener {
             if( smallButton!=null ){
                 addTile(new Tile(smallButton.tile));
             }
+        }
+        if( v.getClass()==ImageView.class ){
+            Tile tile = handDisplay.getTileFromImage((ImageView) v);
+            handDisplay.deleteTile(tile);
         }
         switch (v.getId()) {
             case R.id.openMeldsCheckbox:
@@ -540,7 +545,8 @@ public class HandKeyboard extends LinearLayout implements View.OnClickListener {
 
         handDisplay  = (HandDisplay) findViewById(R.id.handDisplay);
         handDisplay.setOnClickListener(this);
-        handDisplay.setState(HandDisplay.HAND_CALCULATOR, this);
+        handDisplay.setParentKeyboard(this);
+        handDisplay.setState(HandDisplay.HAND_CALCULATOR);
 
         openMeldsCheckbox = (CheckBox) findViewById(R.id.openMeldsCheckbox);
         openMeldsCheckbox.setOnClickListener(this);

@@ -29,6 +29,7 @@ public class Hand {
     public Boolean selfDrawWinningTile = false;
 
     //Yaku
+    // TODO Most of these serve no real purpose now, with the addition of hanList
     public Boolean doubleRiichi = false;
     public Boolean riichi = false;
     public Boolean ippatsu = false;
@@ -257,7 +258,19 @@ public class Hand {
         sort();
         return true;
     }
-
+    public boolean discardTile( Tile t ){
+        if( pair.getTiles().contains(t)
+                || meld1.getTiles().contains(t)
+                || meld2.getTiles().contains(t)
+                || meld3.getTiles().contains(t)
+                || meld4.getTiles().contains(t) ){
+            return false;
+        }
+        tiles.remove(t);
+        unsortedTiles.remove(t);
+        sort();
+        return true;
+    }
 
     public boolean isOpen(){
         return isOpen(tiles);
@@ -446,16 +459,16 @@ public class Hand {
     }
     public String toStringVerbose(){
         String s = " tiles: " + toString() + "\n";
-        s = s + " unsortedTiles: " + unsortedTiles.toString() + "\n";
-        s = s + " pair: " + pair.toStringVerbose() + "\n";
-        s = s + " meld1: " + meld1.toStringVerbose() + "\n";
-        s = s + " meld2: " + meld2.toStringVerbose() + "\n";
-        s = s + " meld3: " + meld3.toStringVerbose() + "\n";
-        s = s + " meld4: " + meld4.toStringVerbose() + "\n";
+        s += " unsortedTiles: " + unsortedTiles.toString() + "\n";
+        s += " pair: " + pair.toStringVerbose() + "\n";
+        s += " meld1: " + meld1.toStringVerbose() + "\n";
+        s += " meld2: " + meld2.toStringVerbose() + "\n";
+        s += " meld3: " + meld3.toStringVerbose() + "\n";
+        s += " meld4: " + meld4.toStringVerbose() + "\n";
         String wTile = (getWinningTile()==null) ? "null" : getWinningTile().toString();
-        s = s + " winningTile: " + wTile + "\n";
-        s = s + " hanList: " + hanList.toString() + "\n";
-        s = s + " fuList: " + fuList.toString() + "\n";
+        s += " winningTile: " + wTile + "\n";
+        s += " hanList: " + hanList.toString() + "\n";
+        s += " fuList: " + fuList.toString() + "\n";
         return s;
     }
     public String getString(Tile.Wind w){

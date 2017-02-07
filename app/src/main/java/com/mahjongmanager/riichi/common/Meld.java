@@ -13,6 +13,10 @@ public class Meld {
         tiles.addAll(oldM.tiles);
         sort();
     }
+    public Meld(List<Tile> list){
+        tiles.addAll(list);
+        sort();
+    }
     public Meld(){}
 
     public void setTiles(List<Tile> newTiles){

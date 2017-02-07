@@ -11,7 +11,7 @@ import com.mahjongmanager.riichi.MainActivity;
 import com.mahjongmanager.riichi.R;
 import com.mahjongmanager.riichi.utils.AppSettings;
 
-public class Start extends Fragment {
+public class SpeedQuizStart extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View myInflatedView = inflater.inflate(R.layout.fragment_speedquiz_1start, container, false);

@@ -1,6 +1,7 @@
 TODO list
 
 Near-term Issues:
+- Fix Tenpai mode in ScoreScreen to display proper Waits
 - Ability to zoom-in on pictures
 - Ensure flowchart is high enough quality for horizontal mode
 - Update Flowchart to include Fu scoring steps
@@ -16,3 +17,4 @@ Long-term Issues:
 - Add a HandCalculator clarifying step, should there be an ambiguous closed kan (very rare)
 - Add glossary (that can be used throughout app)
 - Add Tutorial mode to Rules section (skipping over complicating details, such as determining seats/dealer/drawing order/etc)
+- Shanten calculations are imprecise

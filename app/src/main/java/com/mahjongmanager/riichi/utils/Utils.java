@@ -84,6 +84,12 @@ public class Utils {
     public int KEYBOARD_SMALL_MARGIN;
     public int KEYBOARD_SMALL_PADDING;
 
+    /**
+     * The method to get the actual image used in the HandDisplay
+     * @param t The tile you want the image of
+     * @param rotated If the image is rotated (for a called tile)
+     * @return Image of tile
+     */
     public ImageView getHandDisplayTileView(Tile t, boolean rotated){
         if( activity==null ){
             return null;
@@ -134,13 +140,29 @@ public class Utils {
         return new ShapeDrawable(tileOutline);
     }
 
-    public int getActualTileWidth( String s ){
+    public ImageView getHandDisplayPlaceholderTileView(){
+        Tile s = new Tile(10, Tile.Suit.MANZU);
+        return getHandDisplayTileView(s, false);
+    }
+
+    /**
+     * Returns the width of the image used as the face of the tile for the specified tilesets.
+     * Does NOT return the width of the full tile view that is most commonly used. Expects:
+     * <ul>
+     *     <li>ImageCache.KEYBOARD_KEY_LARGE</li>
+     *     <li>ImageCache.KEYBOARD_KEY_SMALL</li>
+     *     <li>ImageCache.HAND_DISPLAY_KEY</li>
+     * </ul>
+     * @param keyString One of the image size keys from ImageCache
+     * @return Width of the images used in specified tileset
+     */
+    public int getActualTileWidth( String keyString ){
         Tile example = new Tile(1, Tile.Suit.MANZU);
-        if( s.equals(ImageCache.KEYBOARD_KEY_LARGE) ){
+        if( keyString.equals(ImageCache.KEYBOARD_KEY_LARGE) ){
             return imageCache.getBitmapFromCache(example.getImageCacheKey(ImageCache.KEYBOARD_KEY_LARGE)).getIntrinsicWidth();
-        } else if( s.equals(ImageCache.KEYBOARD_KEY_SMALL) ){
+        } else if( keyString.equals(ImageCache.KEYBOARD_KEY_SMALL) ){
             return imageCache.getBitmapFromCache(example.getImageCacheKey(ImageCache.KEYBOARD_KEY_SMALL)).getIntrinsicWidth();
-        } else if( s.equals(ImageCache.HAND_DISPLAY_KEY) ){
+        } else if( keyString.equals(ImageCache.HAND_DISPLAY_KEY) ){
             return imageCache.getBitmapFromCache(example.getImageCacheKey(ImageCache.KEYBOARD_KEY_SMALL)).getIntrinsicWidth();
         }
         return 0;
@@ -384,6 +406,10 @@ public class Utils {
         return values.get(new Random().nextInt(Tile.Suit.values().length));
     }
 
+    public static Tile randomTile(List<Tile> options){
+        return options.get(new Random().nextInt(options.size()));
+    }
+
     public static boolean containsHonorsOrTerminalsOnly(Meld meld){ return containsHonorsOrTerminalsOnly(meld.getTiles()); }
     public static boolean containsHonorsOrTerminalsOnly(List<Tile> tiles){
         for( Tile t : tiles ){
@@ -434,6 +460,21 @@ public class Utils {
         return false;
     }
 
+    /**
+     *
+     * @param list List of tiles to be checked
+     * @param tile Tile being looked for
+     * @return Whether the list contains a similar tile
+     */
+    public static boolean listContainsTile(List<Tile> list, Tile tile){
+        for(Tile t : list){
+            if( t.isSame(tile) ){
+                return true;
+            }
+        }
+        return false;
+    }
+
     public static String prettifyName(String s){
         char[] chars = s.toLowerCase().toCharArray();
         boolean found = false;
@@ -448,6 +489,17 @@ public class Utils {
         return String.valueOf(chars);
     }
 
+    public static void sortMelds( List<Meld> mz ){
+        Collections.sort(mz, new Comparator<Meld>() {
+            @Override
+            public int compare(Meld m1, Meld m2) {
+                if( m1.size()!=m2.size() ){
+                    return m2.size() - m1.size();
+                }
+                return m1.firstTile().sortId - m2.firstTile().sortId; // Ascending
+            }
+        });
+    }
     public static void sort( List<Tile> tz ){
         Collections.sort(tz, new Comparator<Tile>() {
             @Override

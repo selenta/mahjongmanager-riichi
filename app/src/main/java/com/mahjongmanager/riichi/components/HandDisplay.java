@@ -1,10 +1,10 @@
 package com.mahjongmanager.riichi.components;
 
 import android.content.Context;
+import android.support.v4.app.Fragment;
 import android.util.AttributeSet;
 import android.view.Gravity;
 import android.view.LayoutInflater;
-import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.Space;
@@ -21,8 +21,9 @@ import com.mahjongmanager.riichi.utils.Utils;
 import java.util.ArrayList;
 import java.util.List;
 
-public class HandDisplay extends LinearLayout implements View.OnClickListener {
+public class HandDisplay extends LinearLayout {
     private Context activity;
+    private Fragment parentFragment = null;
     private HandKeyboard parentKeyboard = null;
 
     private LinearLayout handDisplayContainer;
@@ -71,9 +72,19 @@ public class HandDisplay extends LinearLayout implements View.OnClickListener {
         openTilesContainer   = (LinearLayout) findViewById(R.id.openTilesContainer);
         winningTileContainer = (LinearLayout) findViewById(R.id.winningTileContainer);
 
-        calcScreenSize();
+        int hdp = Utils.SCREEN_SIZE / 200 + 1;
+        handDisplayContainer.setPadding(hdp, hdp, hdp, hdp);
+        spacerSize = Utils.SCREEN_SIZE / 128;
+
         calcHeight();
         setState(YAKU_DESCRIPTION);
+    }
+
+    public void setParentFragment(Fragment p){
+        parentFragment = p;
+    }
+    public void setParentKeyboard(HandKeyboard hk){
+        parentKeyboard = hk;
     }
 
     /**
@@ -101,7 +112,7 @@ public class HandDisplay extends LinearLayout implements View.OnClickListener {
      * Only editable during HAND_CALCULATOR
      * Always show open melds in their true form
      */
-    public void setState(Integer state, HandKeyboard handKeyboard){
+    public void setState(int state){
         switch (state){
             case FU_DISPLAY:
                 isEditable = false;
@@ -110,10 +121,9 @@ public class HandDisplay extends LinearLayout implements View.OnClickListener {
                 separateWinningTile = false;
                 break;
             case HAND_CALCULATOR:
-                if( handKeyboard==null ){
+                if( parentKeyboard==null ){
                     Log.e("setHandDisplayState", "Attempted to set state to HAND_CALCULATOR without a keyboard.");
                 }
-                parentKeyboard = handKeyboard;
                 isEditable = true;
                 includeWinningTile = true;
                 separateClosedMelds = false;
@@ -139,21 +149,16 @@ public class HandDisplay extends LinearLayout implements View.OnClickListener {
                 break;
         }
     }
-    public void setState(int s){
-        setState(s, null);
-    }
 
-    private void calcScreenSize(){
-        int hdp = Utils.SCREEN_SIZE / 200 + 1;
-        handDisplayContainer.setPadding(hdp, hdp, hdp, hdp);
-
-        spacerSize = Utils.SCREEN_SIZE / 128;
-    }
     private void calcHeight(){
         if( isInEditMode() ){
             return;
         }
 
+        // TODO this method returns a non-sense answer for what I want to use it for here
+        //      no wonder this is all so ugly. It gives the size of the tile-face image, NOT
+        //      the size of the complete tile ImageView, which we can't actually know
+        //      until we draw one.
         int size = getUtils().getActualTileWidth(ImageCache.HAND_DISPLAY_KEY);
 
         /* TODO Re-think this. Rather awkward, leaves lots of extra padding around, containers
@@ -178,13 +183,10 @@ public class HandDisplay extends LinearLayout implements View.OnClickListener {
     ///////////////////////////////////////////
     /////////////     Main     ////////////////
     ///////////////////////////////////////////
-    @Override
-    public void onClick(View v) {
-        if( isEditable && v.getClass()==ImageView.class ){
-            TileDisplay td = getTileDisplay((ImageView) v);
-            if( td!=null ){
-                deleteTile(td);
-            }
+    public void deleteTile(Tile tile){
+        TileDisplay td = getTileDisplay(tile);
+        if( isEditable && td!=null){
+            deleteTile(td);
         }
     }
     private void deleteTile(TileDisplay tileDisplay){
@@ -195,8 +197,7 @@ public class HandDisplay extends LinearLayout implements View.OnClickListener {
             }
             meld.setTiles(new ArrayList<Tile>());
         } else {
-            hand.tiles.remove(tileDisplay.tile);
-            hand.unsortedTiles.remove(tileDisplay.tile);
+            hand.discardTile(tileDisplay.tile);
         }
         tileList.remove(tileDisplay);
         displayHand();
@@ -220,7 +221,7 @@ public class HandDisplay extends LinearLayout implements View.OnClickListener {
         openTilesContainer.removeAllViews();
         winningTileContainer.removeAllViews();
 
-        if( separateClosedMelds && !hand.hasAbnormalStructure() ){
+        if( separateClosedMelds && !hand.hasAbnormalStructure() && hand.unsortedTiles.size()==0 ){
             displayComplexHand();
         } else {
             displaySimpleHand();
@@ -424,14 +425,14 @@ public class HandDisplay extends LinearLayout implements View.OnClickListener {
         TileDisplay tileDisplay = new TileDisplay(t, false);
         tileList.add(tileDisplay);
 
-        tileDisplay.view.setOnClickListener(this);
+        addListeners(tileDisplay.view);
         closedTilesContainer.addView(tileDisplay.view);
     }
     private void addTileOpen(Tile t){
         TileDisplay tileDisplay = new TileDisplay(t, false);
         tileList.add(tileDisplay);
 
-        tileDisplay.view.setOnClickListener(this);
+        addListeners(tileDisplay.view);
         openTilesContainer.addView(tileDisplay.view);
     }
     private void addTileCalled(Tile calledTile, Tile addedTile){
@@ -445,13 +446,13 @@ public class HandDisplay extends LinearLayout implements View.OnClickListener {
             TileDisplay aDisplay = new TileDisplay(addedTile, true);
             tileList.add(aDisplay);
 
-            aDisplay.view.setOnClickListener(this);
+            addListeners(aDisplay.view);
             container.addView(aDisplay.view);
         }
         TileDisplay cDisplay = new TileDisplay(calledTile, true);
         tileList.add(cDisplay);
 
-        cDisplay.view.setOnClickListener(this);
+        addListeners(cDisplay.view);
         container.addView(cDisplay.view);
 
         openTilesContainer.addView(container);
@@ -466,8 +467,18 @@ public class HandDisplay extends LinearLayout implements View.OnClickListener {
         TileDisplay tileDisplay = new TileDisplay(winningTile, false);
         tileList.add(tileDisplay);
 
-        tileDisplay.view.setOnClickListener(this);
+        addListeners(tileDisplay.view);
         winningTileContainer.addView(tileDisplay.view);
+    }
+
+    // It is the parent's responsibility to handle clicks events on tiles
+    private void addListeners(ImageView image){
+        if( parentFragment !=null && parentFragment instanceof OnClickListener ){
+            image.setOnClickListener((OnClickListener) parentFragment);
+        }
+        if( parentKeyboard!=null ){
+            image.setOnClickListener( parentKeyboard);
+        }
     }
 
     /**
@@ -500,10 +511,18 @@ public class HandDisplay extends LinearLayout implements View.OnClickListener {
             view = getUtils().getHandDisplayTileView(tile, rotated);
         }
     }
-    private TileDisplay getTileDisplay(ImageView imageView){
+    private TileDisplay getTileDisplay(Tile tile){
+        for( TileDisplay tileDisplay : tileList ){
+            if( tileDisplay.tile == tile ){     // Must be an EXACT object match, not merely equal
+                return tileDisplay;
+            }
+        }
+        return null;
+    }
+    public Tile getTileFromImage(ImageView imageView){
         for( TileDisplay tileDisplay : tileList ){
             if( tileDisplay.view == imageView ){
-                return tileDisplay;
+                return tileDisplay.tile;
             }
         }
         return null;

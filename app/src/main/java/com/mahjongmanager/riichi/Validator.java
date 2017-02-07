@@ -26,6 +26,7 @@ public class Validator {
         return tileIsNotNaked(tile)
                 && tileOnlyOneValue(tile)
                 && tileValueMatchesSuit(tile)
+                && tileNumberIsValid(tile)
                 && tileRedIsFive(tile)
                 && tileCalledCannotBeAdded(tile);
     }
@@ -52,6 +53,13 @@ public class Validator {
             return false;
         } else if( tile.suit!=Tile.Suit.HONOR && (tile.dragon!=null || tile.wind!=null) ){
             Log.e("validateTile", "Suited tiles should not have a wind or dragon value: " + tile.wind + " " + tile.dragon);
+            return false;
+        }
+        return true;
+    }
+    private static boolean tileNumberIsValid(Tile tile){
+        if( tile.suit!=Tile.Suit.HONOR && (tile.number<1 || tile.number>9) ){
+            Log.e("validateTile", "Non-honor tiles must have numbers between 1 and 9: " + tile.number );
             return false;
         }
         return true;
