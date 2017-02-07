@@ -52,8 +52,6 @@ public class Round {
 
         buildWalls();
         buildHands();
-
-        draw();
     }
     private void buildWalls(){
         List<Tile> allTiles = HandGenerator.allTiles();
