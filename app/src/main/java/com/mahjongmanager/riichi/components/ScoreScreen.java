@@ -23,6 +23,7 @@ import com.mahjongmanager.riichi.common.Hand;
 import com.mahjongmanager.riichi.common.Meld;
 import com.mahjongmanager.riichi.R;
 import com.mahjongmanager.riichi.ScoreCalculator;
+import com.mahjongmanager.riichi.ScoreCalculator.Wait;
 import com.mahjongmanager.riichi.common.Tile;
 import com.mahjongmanager.riichi.common.Yaku;
 import com.mahjongmanager.riichi.utils.ExampleHands;
@@ -105,9 +106,11 @@ public class ScoreScreen extends LinearLayout implements View.OnClickListener {
                 setMode(MODE_SHANTEN);
                 String label = shanten+"-"+(shanten+1)+" tiles away";
                 shantenLabel.setText( label );
-            } else {
+            } else if(shanten==0) {
                 setMode(MODE_TENPAI);
-                displayWaitValues();
+                displayWaitValues( sc.waits );
+            } else {
+                setMode(MODE_INVALID);
             }
         } else if( sc.validatedHand==null ){
             setMode(MODE_INVALID);
@@ -469,44 +472,7 @@ public class ScoreScreen extends LinearLayout implements View.OnClickListener {
     /////////////////////////////////////////////////////////////////////////////
     ////////////////////////    Populate Wait Tables    /////////////////////////
     /////////////////////////////////////////////////////////////////////////////
-    //TODO move all this Wait logic somewhere more appropriate
-    private class Wait {
-        int han;
-        int fu;
-        boolean isTsumo;
-        List<Tile> tiles = new ArrayList<>();
-        public Wait( Tile tile, int h, int f, boolean tsumo ){
-            han = h;
-            fu = f;
-            isTsumo = tsumo;
-            tiles.add(tile);
-        }
-
-        public String toString(){
-            return "["+han+","+fu+","+isTsumo+"-"+tiles+"]";
-        }
-    }
-    List<Wait> waits = new ArrayList<>();
-    private void addWait(Tile tile, int han, int fu, boolean tsumo){
-        for( Wait wait : waits ){
-            if( han==wait.han && fu==wait.fu && tsumo==wait.isTsumo ){
-                wait.tiles.add(tile);
-                return;
-            }
-        }
-        waits.add(new Wait(tile, han, fu, tsumo));
-    }
-
-    private void displayWaitValues(){
-        // TODO query ScoreCalculator for Waits
-
-        addWait(new Tile(Tile.Dragon.RED), 3, 30, true);
-        addWait(new Tile(Tile.Dragon.RED), 3, 30, false);
-        addWait(new Tile(Tile.Dragon.WHITE), 3, 30, true);
-        addWait(new Tile(Tile.Dragon.WHITE), 4, 30, false);
-        addWait(new Tile(Tile.Dragon.GREEN), 4, 30, true);
-        addWait(new Tile(Tile.Dragon.GREEN), 4, 30, false);
-
+    private void displayWaitValues(List<Wait> waits){
         for(Wait wait : waits){
             addWaitRow(wait);
             createSeparatorLine();

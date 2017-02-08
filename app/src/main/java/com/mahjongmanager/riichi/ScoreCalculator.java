@@ -40,6 +40,8 @@ public class ScoreCalculator {
      */
     private boolean processIncompleteHands = false;
     public int shanten = 0;
+    public List<Wait> waits = new ArrayList<>();
+    private List<Tile> candidates = new ArrayList<>();
 
     public ScoreCalculator(Hand h){
         processHand(h);
@@ -288,8 +290,15 @@ public class ScoreCalculator {
         h.fu = total;
     }
 
-    public static Integer scoreBasePoints( Integer han, Integer fu ){
-        Integer roundedFu = (fu==25) ? 25 : (int) Math.ceil(fu/10.0)*10;
+    private void scrubScore(Hand h){
+        h.hanList.clear();
+        h.fuList.clear();
+        h.han = 0;
+        h.fu = 0;
+    }
+
+    public static Integer scoreBasePoints( int han, int fu ){
+        int roundedFu = (fu==25) ? 25 : (int) Math.ceil(fu/10.0)*10;
         Double value = roundedFu * Math.pow(2,2+han);
         if( han>4 ){
             return getBasePointsForLargeHand(han, value.intValue());
@@ -368,7 +377,6 @@ public class ScoreCalculator {
      * - Guarantee all saved MeldSolvers have unique combination of melds (makes saving them
      *      slower, but would make later processing/analysis faster, such as for an AI)
      */
-
     /**
      * These are used in the processing of incomplete hands. Hands being used in this way
      * MUST not need pre-processing. This means:
@@ -481,6 +489,10 @@ public class ScoreCalculator {
 
         shanten = getShanten(incompleteHand, possibilities);
         Log.i("processIncompleteHand", "shanten: "+shanten);
+
+        if( shanten==0 ){
+            processTenpaiHand(possibilities);
+        }
     }
     private void removeOutliers(Hand hand){
         List<Tile> outliers = new ArrayList<>();
@@ -759,13 +771,121 @@ public class ScoreCalculator {
     }
 
     ///////////////////////////////////////////////////////////////////////
-    /////////////////          Internal methods           /////////////////
+    /////////////////         Calculating Waits           /////////////////
     ///////////////////////////////////////////////////////////////////////
 
-    private void scrubScore(Hand h){
-        h.hanList.clear();
-        h.fuList.clear();
-        h.han = 0;
-        h.fu = 0;
+    public static class Wait {
+        public int han;
+        public int fu;
+        public boolean isTsumo;
+        public List<Tile> tiles = new ArrayList<>();
+        public Wait( Tile tile, int h, int f, boolean tsumo ){
+            han = h;
+            fu = f;
+            isTsumo = tsumo;
+            tiles.add(tile);
+        }
+
+        public String toString(){
+            return "["+han+","+fu+","+isTsumo+"-"+tiles+"]";
+        }
     }
+
+    /*
+     * Look at each possibility,
+     *       find the missing tile(s) options,
+     *       add them to list of candidates.
+     *  Once all unique tiles have been found,
+     *      create a copy of the hand with each candidate.
+     *  If found to be a valid hand,
+     *      add the tile as a wait.
+     *  If that tile is already listed as a wait (for that isTsumo option),
+     *       use whichever scores higher.
+     */
+    private void processTenpaiHand(List<MeldSolver> possibilities){
+        for(MeldSolver ms : possibilities){
+            for(Meld m : ms.melds){
+                findCandidates(m);
+            }
+        }
+
+        for(Tile candidate : candidates){
+            testCandidate(candidate, false);
+            testCandidate(candidate, true);
+        }
+    }
+
+    private void findCandidates(Meld m){
+        if(m.size()!=2){
+            return;
+        }
+
+        if( m.firstTile().isSame(m.secondTile()) ){                             // Pair
+
+            // looking for a third
+            addCandidate(m.firstTile());
+        } else if( m.firstTile().getNextTile().isSame(m.secondTile()) ){        // Sequence (touching)
+
+            // looking for a tile on either end (unless it's on the end)
+            if( m.firstTile().number==1 ){
+                addCandidate(m.secondTile().getNextTile());
+            } else if( m.secondTile().number==9 ){
+                addCandidate(m.firstTile().getPreviousTile());
+            } else {
+                addCandidate(m.firstTile().getPreviousTile());
+                addCandidate(m.secondTile().getNextTile());
+            }
+        } else {                                                                // Sequence (seperated)
+
+            // looking for a tile in the middle
+            addCandidate(m.firstTile().getNextTile());
+        }
+    }
+    private void addCandidate(Tile tile){
+        boolean isNew = true;
+        for(Tile t : candidates){
+            if(t.isSame(tile)){
+                isNew = false;
+            }
+        }
+        if(isNew){
+            candidates.add(new Tile(tile));
+        }
+    }
+
+    private void testCandidate(Tile candidate, boolean isTsumo){
+        Hand hand = new Hand(unsortedHand);
+        Tile tile = new Tile(candidate);
+        if( !isTsumo ){
+            tile.calledFrom = Tile.CalledFrom.LEFT;
+        } else {
+            tile.calledFrom = Tile.CalledFrom.NONE;
+        }
+        tile.winningTile = true;
+        hand.addTile(candidate);
+
+        ScoreCalculator sc = new ScoreCalculator(hand);
+        if( sc.validatedHand!=null ){
+            addWait(candidate, sc.validatedHand.han, sc.validatedHand.fu, isTsumo);
+        }
+        Log.i("testCandidate", "Tested candidate: "+candidate+"   -   "+sc.validatedHand);
+    }
+    private void addWait(Tile tile, int han, int fu, boolean tsumo){
+        for( Wait wait : waits ){
+            if( wait.tiles.contains(tile) && wait.isTsumo==tsumo ){
+                int estPoints = ScoreCalculator.scoreBasePoints(han,fu);
+                int waitPoints = ScoreCalculator.scoreBasePoints(wait.han,wait.fu);
+
+                if( estPoints>waitPoints ){
+                    wait.tiles.remove(tile);
+                }
+            }
+            if( han==wait.han && fu==wait.fu && tsumo==wait.isTsumo ){
+                wait.tiles.add(tile);
+                return;
+            }
+        }
+        waits.add(new Wait(tile, han, fu, tsumo));
+    }
+
 }
