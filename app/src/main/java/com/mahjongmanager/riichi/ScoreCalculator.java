@@ -35,13 +35,14 @@ public class ScoreCalculator {
     public Hand        validatedHand;
 
     /*
-     * Incomplete hands are those that do not meed the 4-sets+1-pair model. Examining these hands
-     * will reveal its shanten, as well as its waits (if shanten=0).
+     * Incomplete hands are those that do not meed the 4-sets+1-pair model. Choosing to examine
+     * these hands will reveal calculate its shanten, as well as its waits (if shanten=0).
      */
     private boolean processIncompleteHands = false;
-    public int shanten = 0;
+    public int shanten = -1;
     public List<Wait> waits = new ArrayList<>();
     private List<Tile> candidates = new ArrayList<>();
+
 
     public ScoreCalculator(Hand h){
         processHand(h);
@@ -440,20 +441,31 @@ public class ScoreCalculator {
             uniqueTiles.removeAll(outliers);
         }
 
-        public int usedTiles(int emptyMeldsInHand){
+        public int getShanten(int emptyMeldsInHand){
             int countedMelds = 0;
-            int usedTiles = 0;
+            int count = 0;
+            boolean hasPair = false;
+
             for(Meld m : melds){
-                if( countedMelds<emptyMeldsInHand+1 ){
-                    usedTiles += m.size();
+                if( !hasPair && m.isPair() ){
+                    hasPair = true;
+                } else if (countedMelds < emptyMeldsInHand){
+                    if( m.size()==2 || m.size()==4 ){
+                        count++;
+                    }
                     countedMelds++;
                 }
             }
-            return usedTiles;
+            if( hasPair && countedMelds==emptyMeldsInHand){
+                count--;
+            }
+            for(int i=countedMelds; i<emptyMeldsInHand; i++){
+                // all remaining tiles are singles, but still need more melds
+                count += 2;
+            }
+            return count;
         }
-        public int usedTiles(){
-            return usedTiles(4);
-        }
+
         public String toString(){
             return "MeldSolver-"+melds.toString();
         }
@@ -475,24 +487,26 @@ public class ScoreCalculator {
         }
 
         Hand incompleteHand = new Hand(unsortedHand);
-
-        // Removes tiles from unsortedTiles that can't actually be used in melds
-        //      Technically unneeded, but makes later steps cleaner
-        removeOutliers(incompleteHand);
-
-        // These will actually remove tiles from unsortedTiles and place them in melds
-        //      Technically unneeded, but makes later steps cleaner
-        removeObviousTriplets(incompleteHand);
-        removeObviousLoneRuns(incompleteHand);
+        cleanHandBeforeMessyPart(incompleteHand);
 
         List<MeldSolver> possibilities = solveRemainingMelds(incompleteHand);
-
         shanten = getShanten(incompleteHand, possibilities);
-        Log.i("processIncompleteHand", "shanten: "+shanten);
 
+        Log.i("processIncompleteHand", "shanten: "+shanten);
         if( shanten==0 ){
             processTenpaiHand(possibilities);
         }
+    }
+
+    private void cleanHandBeforeMessyPart(Hand hand){
+        // Removes tiles from unsortedTiles that can't actually be used in melds
+        //      Technically unneeded, but makes later steps cleaner
+        removeOutliers(hand);
+
+        // These will actually remove tiles from unsortedTiles and place them in melds
+        //      Technically unneeded, but makes later steps cleaner
+        removeObviousTriplets(hand);
+        removeObviousLoneRuns(hand);
     }
     private void removeOutliers(Hand hand){
         List<Tile> outliers = new ArrayList<>();
@@ -567,21 +581,22 @@ public class ScoreCalculator {
         incomplete.add(new MeldSolver(hand));
 
         List<MeldSolver> solved = new ArrayList<>();
-        int largestUsedTiles = 0;
+        int lowestShanten = 14;
+        int emptyMeldsInHand = hand.emptyMeldCount();
 
         // Iterate over the tiles, reading it for each possible combination of chii/pon/kan until all tiles have been examined
         while( incomplete.size() > 0 ){
             MeldSolver ms = incomplete.get(0);
 
             // All tiles have been slotted, remove it from the list
-            if( ms.tiles.size()==0 ){
+            if( ms.tiles.size()<2 ){
                 incomplete.remove(ms);
-                int used = ms.usedTiles();
-                if( used > largestUsedTiles ){
-                    largestUsedTiles = used;
+                int msShanten = ms.getShanten(emptyMeldsInHand);
+                if( msShanten < lowestShanten ){
+                    lowestShanten = msShanten;
                     solved.clear();
                 }
-                if( used >= largestUsedTiles ){
+                if( msShanten <= lowestShanten ){
                     solved.add(ms);
                 }
                 continue;
@@ -630,7 +645,7 @@ public class ScoreCalculator {
         List<MeldSolver> slottedChiis = new ArrayList<>();
 
         Tile founder = ms.uniqueTiles.get(0);
-        if( founder.suit== Tile.Suit.HONOR || founder.number>7 ){
+        if( founder.suit== Tile.Suit.HONOR || founder.number>8 ){
             return slottedChiis;
         }
 
@@ -641,22 +656,25 @@ public class ScoreCalculator {
         }
         Tile founderNextNext = null;
         List<Tile> nextNextTiles = ms.getTilesOf(founder.getNextTile().getNextTile());
-        if( !nextNextTiles.isEmpty() ){
+        if( !nextNextTiles.isEmpty() && founder.number!=8){
             founderNextNext = nextNextTiles.get(0);
         }
 
+        // Found: 1-2-3
         if( founderNext!=null && founderNextNext!=null ){
             MeldSolver msFull = new MeldSolver(ms);
             msFull.createMeld(Arrays.asList(founder, founderNext, founderNextNext));
             slottedChiis.add(msFull);
         }
 
+        // Found: 1-3
         if( founderNext!=null ){
             MeldSolver msShort = new MeldSolver(ms);
             msShort.createMeld(Arrays.asList(founder, founderNext));
             slottedChiis.add(msShort);
         }
 
+        // Found: 1-2
         if( founderNextNext!=null ){
             MeldSolver msHollow = new MeldSolver(ms);
             msHollow.createMeld(Arrays.asList(founder, founderNextNext));
@@ -737,37 +755,27 @@ public class ScoreCalculator {
         shanten = (chiitoitsu<shanten) ? chiitoitsu : shanten;
 
         int handEmptyMelds = h.emptyMeldCount();
-        int usedMeldTiles = 0;
-        usedMeldTiles += h.meld1.size();
-        usedMeldTiles += h.meld2.size();
-        usedMeldTiles += h.meld3.size();
-        usedMeldTiles += h.meld4.size();
 
         for(MeldSolver ms : meldSolvers){
-            int msShanten = 13 - ms.usedTiles(handEmptyMelds) - usedMeldTiles;
+            int msShanten = ms.getShanten(handEmptyMelds);
             shanten = (msShanten<shanten) ? msShanten : shanten;
         }
 
         return shanten;
     }
     private int countKokushiShanten(Hand h){
-        List<Tile> kokushiTiles = HandGenerator.allHonors();
-        kokushiTiles.addAll(HandGenerator.allTerminals());
-
-        //Different tiles
-        HashSet<String> noDupSet = new HashSet<>();
-        for( Tile t : h.tiles ){
+        int kokushiCount = 0;
+        List<Tile> uniqueTiles = Utils.findUniqueTiles(h.tiles);
+        for( Tile t : uniqueTiles ){
             if( t.isTerminal() || t.isHonor() ){
-                noDupSet.add(t.toString());
+                kokushiCount++;
             }
         }
-
-        return 13 - noDupSet.size();
+        return 12 - kokushiCount;
     }
     private int countChiitoitsuShanten(Hand h){
         Set<Tile> tz = Utils.findDuplicateTiles(h.tiles);
-        int moreThanTwoCopies = Utils.findDuplicateTiles(tz).size();
-        return 7 - tz.size() - moreThanTwoCopies;
+        return 6 - tz.size();
     }
 
     ///////////////////////////////////////////////////////////////////////
@@ -859,6 +867,7 @@ public class ScoreCalculator {
         if( !isTsumo ){
             tile.calledFrom = Tile.CalledFrom.LEFT;
         } else {
+            hand.selfDrawWinningTile = true;
             tile.calledFrom = Tile.CalledFrom.NONE;
         }
         tile.winningTile = true;
