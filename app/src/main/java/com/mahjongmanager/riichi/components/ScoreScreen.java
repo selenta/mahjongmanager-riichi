@@ -104,7 +104,7 @@ public class ScoreScreen extends LinearLayout implements View.OnClickListener {
             int shanten = sc.shanten;
             if( shanten > 0 ){
                 setMode(MODE_SHANTEN);
-                String label = shanten+"-"+(shanten+1)+" tiles away";
+                String label = shanten+" tiles away";
                 shantenLabel.setText( label );
             } else if(shanten==0) {
                 setMode(MODE_TENPAI);
