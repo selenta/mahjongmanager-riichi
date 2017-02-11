@@ -198,7 +198,7 @@ public class TenpaiWaitTest {
         ScoreCalculator sc = new ScoreCalculator(h, true);
         Assert.assertSame(0, sc.shanten );
 
-        Assert.assertTrue( sc.waits.size()==2 );
+        Assert.assertTrue( sc.waits.size()==5 );
         for(ScoreCalculator.Wait wait : sc.waits){
             if( wait.han==7 && wait.fu==30 && wait.isTsumo ){
                 Assert.assertTrue(wait.tiles.contains( new Tile(1, Tile.Suit.MANZU) ));
@@ -214,11 +214,10 @@ public class TenpaiWaitTest {
                 Assert.assertTrue(wait.tiles.contains( new Tile(1, Tile.Suit.MANZU) ));
                 Assert.assertTrue(wait.tiles.contains( new Tile(9, Tile.Suit.MANZU) ));
             } else if( wait.han==7 && wait.fu==40 && !wait.isTsumo ){
-                Assert.assertTrue(wait.tiles.contains( t6 ));
-                Assert.assertTrue(wait.tiles.contains( t8));
-            } else if( wait.han==7 && wait.fu==50 && !wait.isTsumo ){
                 Assert.assertTrue(wait.tiles.contains( t1 ));
+                Assert.assertTrue(wait.tiles.contains( t6 ));
                 Assert.assertTrue(wait.tiles.contains( t7 ));
+                Assert.assertTrue(wait.tiles.contains( t8));
                 Assert.assertTrue(wait.tiles.contains( t13 ));
             } else {
                 Assert.fail();
