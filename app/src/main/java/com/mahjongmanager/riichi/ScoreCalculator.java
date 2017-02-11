@@ -3,17 +3,15 @@ package com.mahjongmanager.riichi;
 import com.mahjongmanager.riichi.common.Hand;
 import com.mahjongmanager.riichi.common.Meld;
 import com.mahjongmanager.riichi.common.Tile;
+import com.mahjongmanager.riichi.common.TileSet;
 import com.mahjongmanager.riichi.utils.FuHelper;
 import com.mahjongmanager.riichi.utils.HanHelper;
-import com.mahjongmanager.riichi.utils.HandGenerator;
 import com.mahjongmanager.riichi.utils.Log;
 import com.mahjongmanager.riichi.utils.Utils;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 public class ScoreCalculator {
     /*
@@ -104,7 +102,7 @@ public class ScoreCalculator {
         // Start the sorting process, now that unusual hands are accounted for
         // Pull out pairs first
         List<Hand> sortingHands = new ArrayList<>();
-        Set<Tile> duplicateTiles = Utils.findDuplicateTiles(unsortedHand.tiles);
+        List<Tile> duplicateTiles = Utils.findDuplicateTiles(unsortedHand.tiles);
 
         for( Tile dupeTile : duplicateTiles ){
             if( dupeTile.revealedState==Tile.RevealedState.NONE ){
@@ -388,7 +386,7 @@ public class ScoreCalculator {
      */
     private class MeldSolver {
         List<Tile> tiles = new ArrayList<>();
-        List<Tile> uniqueTiles = new ArrayList<>();
+        TileSet uniqueTiles = new TileSet();
         List<Meld> melds = new ArrayList<>();
 
         MeldSolver(Hand h) {
@@ -424,11 +422,7 @@ public class ScoreCalculator {
 
         private void uniquify(){
             uniqueTiles.clear();
-            for(Tile t : tiles){
-                if( !Utils.listContainsTile(uniqueTiles, t) ){
-                    uniqueTiles.add(t);
-                }
-            }
+            uniqueTiles.addAll(tiles);
         }
         private void removeOutliers(){
             List<Tile> outliers = new ArrayList<>();
@@ -757,7 +751,7 @@ public class ScoreCalculator {
     }
     private int countKokushiShanten(Hand h){
         int kokushiCount = 0;
-        List<Tile> uniqueTiles = Utils.findUniqueTiles(h.tiles);
+        TileSet uniqueTiles = new TileSet(h.tiles);
         for( Tile t : uniqueTiles ){
             if( t.isTerminal() || t.isHonor() ){
                 kokushiCount++;
@@ -766,7 +760,7 @@ public class ScoreCalculator {
         return 12 - kokushiCount;
     }
     private int countChiitoitsuShanten(Hand h){
-        Set<Tile> tz = Utils.findDuplicateTiles(h.tiles);
+        List<Tile> tz = Utils.findDuplicateTiles(h.tiles);
         return 6 - tz.size();
     }
 
@@ -778,7 +772,7 @@ public class ScoreCalculator {
         public int han;
         public int fu;
         public boolean isTsumo;
-        public List<Tile> tiles = new ArrayList<>();
+        public TileSet tiles = new TileSet();
         public Wait( Tile tile, int h, int f, boolean tsumo ){
             han = h;
             fu = f;

@@ -485,9 +485,9 @@ public class Utils {
      * @param tiles List of tiles to search for duplicates
      * @return Set of one copy of each tile that had a duplicate
      */
-    public static Set<Tile> findDuplicateTiles(Collection<Tile> tiles ){
-        final Set<Tile> duplicateTiles = new HashSet<>();
-        final Set<String> tempSet = new HashSet<>();
+    public static List<Tile> findDuplicateTiles(Collection<Tile> tiles ){
+        List<Tile> duplicateTiles = new ArrayList<>();
+        Set<String> tempSet = new HashSet<>();
 
         for (Tile dupTile : tiles ){
             if (!tempSet.add(dupTile.toString())) {
@@ -503,30 +503,6 @@ public class Utils {
             }
         }
         return duplicateTiles;
-    }
-
-    /**
-     * Filters the current list down to a single copy of each tile (uses the first copy).
-     * Should NOT be used to manipulate anything, only examine.
-     * @param original List to be searched
-     * @return List of unique tiles
-     */
-    public static List<Tile> findUniqueTiles(List<Tile> original){
-        List<Tile> uniques = new ArrayList<>();
-
-        for(Tile oTile : original){
-            boolean isNew = true;
-            for(Tile uTile : uniques ){
-                if( uTile.isSame(oTile) ){
-                    isNew = false;
-                }
-            }
-            if( isNew ){
-                uniques.add(oTile);
-            }
-        }
-
-        return uniques;
     }
 
     public static String prettifyName(String s){

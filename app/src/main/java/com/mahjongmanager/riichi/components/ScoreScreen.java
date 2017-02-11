@@ -489,7 +489,7 @@ public class ScoreScreen extends LinearLayout implements View.OnClickListener {
         waitContainer.setLayoutParams(params);
         waitContainer.setPadding(20,0,0,0);
 
-        for(Tile tile : wait.tiles){
+        for(Tile tile : wait.tiles ){
             ImageView image = getUtils().getHandDisplayTileView(tile, false);
             waitContainer.addView(image);
         }

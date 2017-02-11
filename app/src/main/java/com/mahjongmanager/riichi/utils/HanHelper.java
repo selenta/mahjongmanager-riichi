@@ -109,7 +109,7 @@ public class HanHelper {
 
     // Unusually structed hands (must be handled seperately)
     public static boolean isChiitoitsu(Hand h){
-        Set<Tile> tz = Utils.findDuplicateTiles(h.tiles);
+        List<Tile> tz = Utils.findDuplicateTiles(h.tiles);
         int moreThanTwoCopies = Utils.findDuplicateTiles(tz).size();
         return tz.size()==7 && moreThanTwoCopies==0;
     }
@@ -127,8 +127,8 @@ public class HanHelper {
         }
     }
     public static boolean isDaichisei(Hand h){
-        Set<Tile> tz = Utils.findDuplicateTiles(h.tiles);
-        Set<Tile> doubleDupes = Utils.findDuplicateTiles(tz);
+        List<Tile> tz = Utils.findDuplicateTiles(h.tiles);
+        List<Tile> doubleDupes = Utils.findDuplicateTiles(tz);
         int suitCount = countSuits(h.tiles);
         return tz.size()==7 && doubleDupes.size()==0 && suitCount==0;
     }
@@ -255,9 +255,9 @@ public class HanHelper {
     }
     private static void checkIttsuu(Hand h){
         //find dominant suit first
-        final Set<String> duplicateSuits = new HashSet<>();
-        final Set<String> tempSet = new HashSet<>();
-        final Set<String> tempSet2 = new HashSet<>();
+        Set<String> duplicateSuits = new HashSet<>();
+        Set<String> tempSet = new HashSet<>();
+        Set<String> tempSet2 = new HashSet<>();
         List<Tile> leadingTiles = new ArrayList<>();
         leadingTiles.add( h.meld1.firstTile() );
         leadingTiles.add( h.meld2.firstTile() );
@@ -272,9 +272,9 @@ public class HanHelper {
         }
 
         //check for a 1-2-3, 4-5-6, and 7-8-9 chii in the dominant suit
-        Boolean firstMeld = false;
-        Boolean secondMeld = false;
-        Boolean thirdMeld = false;
+        boolean firstMeld = false;
+        boolean secondMeld = false;
+        boolean thirdMeld = false;
         for( Meld m : Arrays.asList(h.meld1, h.meld2, h.meld3, h.meld4) ){
             if( m.isChii() && duplicateSuits.contains(m.firstTile().suit.toString()) && m.firstTile().number==1 ){
                 firstMeld = true;
@@ -306,7 +306,7 @@ public class HanHelper {
         }
     }
     private static void checkSanAnkou(Hand h){
-        Integer closedTriplets = 0;
+        int closedTriplets = 0;
         for(Meld m : Arrays.asList(h.meld1, h.meld2, h.meld3, h.meld4)){
             if( !m.isChii() && m.isClosed() ){
                 closedTriplets += 1;
@@ -364,7 +364,7 @@ public class HanHelper {
         }
     }
     private static void checkSanKantsu(Hand h){
-        Integer kanNumber = 0;
+        int kanNumber = 0;
         for(Meld m : Arrays.asList(h.meld1, h.meld2, h.meld3, h.meld4)){
             if( m.isKan() ){
                 kanNumber++;
@@ -678,7 +678,7 @@ public class HanHelper {
         }
     }     // Four consecutive triplets
     private static void checkDaiSharin(Hand h){
-        Set<Tile> tz = Utils.findDuplicateTiles(h.tiles);
+        List<Tile> tz = Utils.findDuplicateTiles(h.tiles);
         if( tz.size()==7
                 && Utils.findDuplicateTiles(tz).size()==0
                 && !Utils.containsHonorsOrTerminals(h.tiles)
