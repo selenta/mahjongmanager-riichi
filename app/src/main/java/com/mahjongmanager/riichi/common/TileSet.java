@@ -13,7 +13,7 @@ public class TileSet implements Iterable<Tile> {
 
     public TileSet(){}
     public TileSet(List<Tile> list){
-        tileSet.addAll(list);
+        addAll(list);
     }
 
 
@@ -26,13 +26,14 @@ public class TileSet implements Iterable<Tile> {
     }
 
     public boolean addAll(Collection<Tile> collection) {
+        boolean anythingChanged = false;
         for(Tile t : collection){
-            if(contains(t)){
-                return false;
+            if(!contains(t)){
+                anythingChanged = true;
+                tileSet.add(t);
             }
         }
-        tileSet.addAll(collection);
-        return true;
+        return anythingChanged;
     }
 
     public void clear() {
