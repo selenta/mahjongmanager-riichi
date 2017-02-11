@@ -225,9 +225,9 @@ public class HanHelper {
         int firstTile = 0;
         int secondTile = 0;
         for( Tile t : leadTiles ){
-            if( t.number.equals(leadTiles.get(0).number) ){
+            if( t.number == leadTiles.get(0).number ){
                 firstTile++;
-            } else if( t.number.equals(leadTiles.get(1).number) ){
+            } else if( t.number == leadTiles.get(1).number ){
                 secondTile++;
             }
         }
@@ -237,7 +237,7 @@ public class HanHelper {
             leadTiles.remove(0);
         } else if( firstTile==3 ){
             for(int i=0; i<leadTiles.size(); i++){
-                if( !leadTiles.get(i).number.equals(leadTiles.get(0).number) ){
+                if( leadTiles.get(i).number != leadTiles.get(0).number ){
                     leadTiles.remove(i);
                 }
             }
@@ -340,9 +340,9 @@ public class HanHelper {
         int firstTile = 0;
         int secondTile = 0;
         for( Tile t : leadTiles ){
-            if( t.number.equals(leadTiles.get(0).number) ){
+            if( t.number == leadTiles.get(0).number ){
                 firstTile++;
-            } else if( t.number.equals(leadTiles.get(1).number) ){
+            } else if( t.number == leadTiles.get(1).number ){
                 secondTile++;
             }
         }
@@ -527,7 +527,7 @@ public class HanHelper {
         for(Tile t : h.tiles){
             if( t.suit==Tile.Suit.HONOR && t.dragon!=Tile.Dragon.GREEN ){
                 return;
-            } else if( t.number!=null && (t.number==1||t.number==5||t.number==7||t.number==9) ){
+            } else if( (t.number==1||t.number==5||t.number==7||t.number==9) ){
                 return;
             }
         }

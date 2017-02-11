@@ -43,7 +43,7 @@ public class Tile {
     public boolean red = false;
     public boolean faceDown = false;
 
-    public Integer number;
+    public int number;
     public Dragon dragon;
     public Wind wind;
 
@@ -52,7 +52,7 @@ public class Tile {
 
     public boolean winningTile;
 
-    public Tile( Integer valueInt, Suit suitVal ){
+    public Tile( int valueInt, Suit suitVal ){
         suit = suitVal;
         number = valueInt;
         initTile();
@@ -89,7 +89,7 @@ public class Tile {
         value = getValue();
         determineSortId();
 
-        if( number==null && dragon==null && wind==null ){
+        if( number==0 && dragon==null && wind==null ){
             Log.e("constructorValidation", "Tile has no value. Value given was: " + getValue());
         } else if( suit==null ){
             Log.e("constructorValidation", "Tile has no suit.");
@@ -97,24 +97,23 @@ public class Tile {
     }
 
     public boolean isSame( Tile t ){
-        return isSame(t.value, t.suit.toString());
-    }
-    public boolean isSame( String val, String s ){
-        String realSuit = (s.equalsIgnoreCase("DRAGON")||s.equalsIgnoreCase("WIND")) ? "HONOR" : s;
-        return value.equalsIgnoreCase(val) && suit.toString().equalsIgnoreCase(realSuit);
+        return this.number == t.number
+            && this.suit   == t.suit
+            && this.wind   == t.wind
+            && this.dragon == t.dragon;
     }
     public boolean isTerminal(){
-        return number!=null && (number==1 || number==9);
+        return (number==1 || number==9);
     }
     public boolean isSimple(){
-        return number!=null && number>1 && number<9;
+        return number>1 && number<9;
     }
     public boolean isHonor(){
         return suit==Suit.HONOR;
     }
 
     public String getValue(){
-        if( number!=null ){
+        if( number>0 && number<10 ){
             return String.valueOf(number);
         } else if( dragon!=null ){
             switch(dragon){

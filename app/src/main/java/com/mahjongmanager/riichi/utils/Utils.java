@@ -417,7 +417,7 @@ public class Utils {
     public static boolean containsHonorsOrTerminalsOnly(Meld meld){ return containsHonorsOrTerminalsOnly(meld.getTiles()); }
     public static boolean containsHonorsOrTerminalsOnly(List<Tile> tiles){
         for( Tile t : tiles ){
-            if( t.number!=null && t.number>1 && t.number<9 ){
+            if( t.number>1 && t.number<9 ){
                 return false;
             }
         }
@@ -449,7 +449,7 @@ public class Utils {
     }
     public static boolean containsSimples( List<Tile> s ){
         for( Tile t : s ){
-            if( t.number!=null && t.number>1 && t.number<9 ){
+            if( t.number>1 && t.number<9 ){
                 return true;
             }
         }
@@ -477,6 +477,22 @@ public class Utils {
             }
         }
         return false;
+    }
+
+    /**
+     * Return only the tiles in the list of the specified type
+     * @param list List to be searched
+     * @param tile Tile being looked for
+     * @return All copies of that tile from the list
+     */
+    public static List<Tile> findTiles(List<Tile> list, Tile tile){
+        List<Tile> temp = new ArrayList<>();
+        for(Tile t : list){
+            if(tile.isSame(t)){
+                temp.add(t);
+            }
+        }
+        return temp;
     }
 
     /**

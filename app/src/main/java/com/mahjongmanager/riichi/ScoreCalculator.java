@@ -6,6 +6,7 @@ import com.mahjongmanager.riichi.common.Tile;
 import com.mahjongmanager.riichi.common.TileSet;
 import com.mahjongmanager.riichi.utils.FuHelper;
 import com.mahjongmanager.riichi.utils.HanHelper;
+import com.mahjongmanager.riichi.utils.HandGenerator;
 import com.mahjongmanager.riichi.utils.Log;
 import com.mahjongmanager.riichi.utils.Utils;
 
@@ -400,13 +401,7 @@ public class ScoreCalculator {
         }
 
         List<Tile> getTilesOf(Tile t){
-            List<Tile> temp = new ArrayList<>();
-            for(Tile tile : tiles){
-                if(tile.isSame(t)){
-                    temp.add(tile);
-                }
-            }
-            return temp;
+            return Utils.findTiles(tiles, t);
         }
         void createMeld(List<Tile> ts){
             melds.add(new Meld(ts));
@@ -435,7 +430,7 @@ public class ScoreCalculator {
             uniqueTiles.removeAll(outliers);
         }
 
-        public int getShanten(int emptyMeldsInHand){
+        int getShanten(int emptyMeldsInHand){
             int countedMelds = 0;
             int count = 0;
             boolean hasPair = false;
@@ -460,6 +455,19 @@ public class ScoreCalculator {
             return count;
         }
 
+        boolean isSame(MeldSolver ms){
+            if( melds.size()!=ms.melds.size() ){
+                return false;
+            }
+            // TODO check for tiles/uniqueTiles size/contents?
+            for(int i=0; i<melds.size(); i++){
+                if( !melds.get(i).isSame(ms.melds.get(i)) ){
+                    return false;
+                }
+            }
+            return true;
+        }
+
         public String toString(){
             return "MeldSolver-"+melds.toString();
         }
@@ -474,8 +482,12 @@ public class ScoreCalculator {
         cleanHandBeforeMessyPart(incompleteHand);
 
         List<MeldSolver> possibilities = solveRemainingMelds(incompleteHand);
-        shanten = getShanten(incompleteHand, possibilities);
+        for(MeldSolver ms : possibilities){
+            Log.i("solveRemainingMelds", "MeldSolver possibility: "+ms.toString());
+        }
+        Log.i("solveRemainingMelds", "MeldSolvers generated: "+possibilities.size());
 
+        shanten = getShanten(incompleteHand, possibilities);
         Log.i("processIncompleteHand", "shanten: "+shanten);
         if( shanten==0 ){
             processTenpaiHand(possibilities);
@@ -485,7 +497,7 @@ public class ScoreCalculator {
     private void cleanHandBeforeMessyPart(Hand hand){
         // Removes tiles from unsortedTiles that can't actually be used in melds
         //      Technically unneeded, but makes later steps cleaner
-//        removeOutliers(hand);
+        removeOutliers(hand);
 
         // These will actually remove tiles from unsortedTiles and place them in melds
         //      Technically unneeded, but makes later steps cleaner
@@ -570,42 +582,56 @@ public class ScoreCalculator {
 
         // Iterate over the tiles, reading it for each possible combination of chii/pon/kan until all tiles have been examined
         while( incomplete.size() > 0 ){
-            MeldSolver ms = incomplete.get(0);
+            MeldSolver ms = incomplete.remove(0);
 
             // All tiles have been slotted, remove it from the list
             if( ms.tiles.size()<2 ){
-                incomplete.remove(ms);
                 int msShanten = ms.getShanten(emptyMeldsInHand);
                 if( msShanten < lowestShanten ){
                     lowestShanten = msShanten;
                     solved.clear();
                 }
-                if( msShanten <= lowestShanten ){
+                if( msShanten <= lowestShanten && !msAlreadyPresent(solved, ms) ){
                     solved.add(ms);
                 }
                 continue;
             }
 
-            // hoooo booyy... here we go!
-            //      Something like this is necessary to get all valid Waits
-            for(int i=0; i<ms.uniqueTiles.size(); i++){
-                incomplete.addAll(slotIncompletePons(ms, i));
-                incomplete.addAll(slotIncompleteChiis(ms, i));
+            if( !msAlreadyPresent(incomplete, ms) ){
+                // hoooo booyy... here we go!
+                //      Something like this is necessary to get all valid Waits
+                for(int i=0; i<3; i++){
+                    List<MeldSolver> incPons = slotIncompletePons(ms, i);
+                    for(MeldSolver pMS : incPons){
+                        if( !msAlreadyPresent(incomplete, pMS) ){
+                            incomplete.add(pMS);
+                        }
+                    }
+                    List<MeldSolver> incChiis = slotIncompleteChiis(ms, i);
+                    for(MeldSolver cMS : incChiis){
+                        if( !msAlreadyPresent(incomplete, cMS) ){
+                            incomplete.add(cMS);
+                        }
+                    }
+                }
             }
-
-            // Remove the original version of the hand. If it didn't have children, its line ends here
-            incomplete.remove(ms);
         }
-
-        for(MeldSolver ms : solved){
-            Log.i("solveRemainingMelds", "MeldSolver possibility: "+ms.toString());
-        }
-        Log.i("solveRemainingMelds", "MeldSolvers generated: "+solved.size());
 
         return solved;
     }
+    private boolean msAlreadyPresent(List<MeldSolver> list, MeldSolver meldSolver){
+        for( MeldSolver ms : list ){
+            if( meldSolver.isSame(ms) ){
+                return true;
+            }
+        }
+        return false;
+    }
     private List<MeldSolver> slotIncompletePons(MeldSolver ms, int i){
         List<MeldSolver> slottedPons = new ArrayList<>();
+        if( i >= ms.uniqueTiles.size() ){
+            return slottedPons;
+        }
 
         List<Tile> tiles = ms.getTilesOf(ms.uniqueTiles.get(i));
         switch (tiles.size()){
@@ -629,6 +655,9 @@ public class ScoreCalculator {
     }
     private List<MeldSolver> slotIncompleteChiis(MeldSolver ms, int i){
         List<MeldSolver> slottedChiis = new ArrayList<>();
+        if( i >= ms.uniqueTiles.size() ){
+            return slottedChiis;
+        }
 
         Tile founder = ms.uniqueTiles.get(i);
         if( founder.suit== Tile.Suit.HONOR || founder.number>8 ){

@@ -103,10 +103,22 @@ public class Meld {
         Utils.sort(tiles);
     }
     public int size(){ return tiles.size(); }
-    public boolean isPair(){ return tiles.size()==2 && tiles.get(0).value.equals(tiles.get(1).value); }
-    public boolean isChii(){ return tiles.size()==3 && !tiles.get(0).value.equals(tiles.get(1).value); }
+    public boolean isPair(){ return tiles.size()==2 && firstTile().isSame(secondTile()); }
+    public boolean isChii(){ return tiles.size()==3 && !firstTile().isSame(secondTile()); }
     public boolean isKan(){ return tiles.size()==4; }
     public Tile.Suit getSuit(){ return tiles.get(0).suit; }
+
+    public boolean isSame(Meld m){
+        if( size()!=m.size() ){
+            return false;
+        }
+        for(int i=0; i<size(); i++){
+            if( !tiles.get(i).isSame(m.tiles.get(i)) ){
+                return false;
+            }
+        }
+        return true;
+    }
 
     public boolean isClosed(){
         for( Tile t : tiles ){

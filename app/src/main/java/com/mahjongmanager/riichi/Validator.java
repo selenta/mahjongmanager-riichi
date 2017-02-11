@@ -39,7 +39,7 @@ public class Validator {
         return true;
     }
     private static boolean tileOnlyOneValue(Tile tile){
-        boolean n = tile.number!=null;
+        boolean n = tile.number!=0;
         boolean d = tile.dragon!=null;
         boolean w = tile.wind!=null;
         if(!( (n&&!d&&!w)||(!n&&d&&!w)||(!n&&!d&&w) )){
@@ -49,7 +49,7 @@ public class Validator {
         return true;
     }
     private static boolean tileValueMatchesSuit(Tile tile){
-        if( tile.suit==Tile.Suit.HONOR && tile.number!=null ){
+        if( tile.suit==Tile.Suit.HONOR && tile.number!=0 ){
             Log.e("validateTile", "Honor tiles should not have a number: " + tile.number );
             return false;
         } else if( tile.suit!=Tile.Suit.HONOR && (tile.dragon!=null || tile.wind!=null) ){
@@ -66,7 +66,7 @@ public class Validator {
         return true;
     }
     private static boolean tileRedIsFive(Tile tile){
-        if (tile.red && (tile.number==null || tile.number!=5)) {
+        if (tile.red && tile.number!=5) {
             Log.e("validateTile", "Only 5s can be red: " + tile.toString());
             return false;
         }
