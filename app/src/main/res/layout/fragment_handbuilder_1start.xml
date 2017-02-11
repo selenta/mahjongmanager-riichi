@@ -24,10 +24,43 @@
                 android:textStyle="italic"
                 android:layout_gravity="center_horizontal" />
 
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:text="NOTE: It is more difficult to complete a hand in this mode than in a regular game! Without the ability to call or Riichi, some hands will be harder to get than normal, and hands that do win will frequently be smaller in size."
+                android:textAlignment="center"
+                android:paddingLeft="20dp"
+                android:paddingRight="20dp"
+                android:textSize="13sp"
+                android:textStyle="italic" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:text="Consider this an exercise to practice building hands."
+                android:textAlignment="center"
+                android:paddingTop="5dp"
+                android:paddingLeft="20dp"
+                android:paddingRight="20dp"
+                android:textSize="13sp"
+                android:textStyle="italic" />
+
+
             <Space
                 android:layout_width="20px"
                 android:layout_height="0dp"
                 android:layout_weight="1" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:text="Riichi: Disabled"
+                android:textSize="21sp"
+                android:textStyle="italic"
+                android:layout_gravity="center_horizontal" />
 
             <TextView
                 android:layout_width="wrap_content"

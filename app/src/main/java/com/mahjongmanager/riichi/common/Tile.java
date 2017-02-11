@@ -113,7 +113,9 @@ public class Tile {
     }
 
     public String getValue(){
-        if( number>0 && number<10 ){
+        if( number==10 ){
+            return "Placeholder";
+        } else if( number>0 && number<10 ){
             return String.valueOf(number);
         } else if( dragon!=null ){
             switch(dragon){
@@ -124,7 +126,7 @@ public class Tile {
                 case RED:
                     return "Red";
             }
-        } else {
+        } else if( wind!=null ){
             switch(wind){
                 case EAST:
                     return "East";

@@ -165,7 +165,7 @@ public class MainActivity extends AppCompatActivity {
         generateSpeedQuizHand();
         replaceFragment(new ScoreHand(), false);
 
-        createSpeedQuizTimer(90000);
+        createSpeedQuizTimer(91000);
     }
     public void goToSpeedQuizScoreHandNext(View view){
         scoredHands.add(currentHand);
