@@ -9,6 +9,7 @@ import org.junit.Test;
 import java.util.Arrays;
 
 public class ShantenTest {
+    // Good list of complex waits: http://arcturus.su/wiki/Complex_waits
 
     @Test
     public void shantenTest1() {
@@ -157,6 +158,30 @@ public class ShantenTest {
 
         ScoreCalculator sc = new ScoreCalculator(h, true);
         Assert.assertSame(1, sc.shanten );
+    }
+
+    @Test
+    public void shantenTest7() {
+        // Several partial runs
+        // Shanten: 2
+        Tile t1  = new Tile(2, Tile.Suit.MANZU);
+        Tile t2  = new Tile(2, Tile.Suit.MANZU);
+        Tile t3  = new Tile(2, Tile.Suit.MANZU);
+        Tile t4  = new Tile(4, Tile.Suit.MANZU);
+        Tile t5  = new Tile(4, Tile.Suit.MANZU);
+        Tile t6  = new Tile(4, Tile.Suit.PINZU);
+        Tile t7  = new Tile(5, Tile.Suit.PINZU);
+        Tile t8  = new Tile(2, Tile.Suit.SOUZU);
+        Tile t9  = new Tile(3, Tile.Suit.SOUZU);
+        Tile t10 = new Tile(5, Tile.Suit.SOUZU);
+        Tile t11 = new Tile(6, Tile.Suit.SOUZU);
+        Tile t12 = new Tile(7, Tile.Suit.SOUZU);
+        Tile t13 = new Tile(8, Tile.Suit.SOUZU);
+
+        Hand h = new Hand(Arrays.asList(t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11, t12, t13));
+
+        ScoreCalculator sc = new ScoreCalculator(h, true);
+        Assert.assertSame(2, sc.shanten );
     }
 
     @Test
