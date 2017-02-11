@@ -217,7 +217,7 @@ public class TenpaiWaitTest {
                 Assert.assertTrue(wait.tiles.contains( t1 ));
                 Assert.assertTrue(wait.tiles.contains( t6 ));
                 Assert.assertTrue(wait.tiles.contains( t7 ));
-                Assert.assertTrue(wait.tiles.contains( t8));
+                Assert.assertTrue(wait.tiles.contains( t8 ));
                 Assert.assertTrue(wait.tiles.contains( t13 ));
             } else {
                 Assert.fail();

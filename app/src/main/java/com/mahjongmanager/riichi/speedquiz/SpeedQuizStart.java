@@ -7,7 +7,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import com.mahjongmanager.riichi.MainActivity;
 import com.mahjongmanager.riichi.R;
 import com.mahjongmanager.riichi.utils.AppSettings;
 
@@ -29,8 +28,5 @@ public class SpeedQuizStart extends Fragment {
     @Override
     public void onStart(){
         super.onStart();
-
-        //Load tile images now
-        ((MainActivity)getActivity()).getImageCache();
     }
 }

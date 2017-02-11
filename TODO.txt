@@ -1,7 +1,6 @@
 TODO list
 
 Near-term Issues:
-- Fix Tenpai mode in ScoreScreen to display proper Waits
 - Ability to zoom-in on pictures
 - Ensure flowchart is high enough quality for horizontal mode
 - Update Flowchart to include Fu scoring steps

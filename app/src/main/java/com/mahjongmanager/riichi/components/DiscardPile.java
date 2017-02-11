@@ -6,7 +6,6 @@ import android.view.LayoutInflater;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 
-import com.mahjongmanager.riichi.MainActivity;
 import com.mahjongmanager.riichi.R;
 import com.mahjongmanager.riichi.common.Tile;
 import com.mahjongmanager.riichi.utils.Utils;
@@ -15,8 +14,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class DiscardPile extends LinearLayout {
-    private Context context;
-
     private LinearLayout firstRow;
     private LinearLayout secondRow;
     private LinearLayout thirdRow;
@@ -31,12 +28,11 @@ public class DiscardPile extends LinearLayout {
     }
     public DiscardPile(Context ctx, AttributeSet attrs, int defStyle ){
         super(ctx, attrs, defStyle);
-        context = ctx;
         initializeView();
     }
 
     private void initializeView(){
-        LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        LayoutInflater inflater = (LayoutInflater) getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         inflater.inflate(R.layout.component_discardpile, this);
 
         firstRow = (LinearLayout) findViewById(R.id.firstRow);
@@ -50,7 +46,7 @@ public class DiscardPile extends LinearLayout {
         int width = 40;
         int height = 60;
         if( !isInEditMode() ){
-            width  = getUtils().HAND_DISPLAY_TILE_WIDTH;
+            width  = Utils.HAND_DISPLAY_TILE_WIDTH;
             height = (int) ((double)width * Utils.TILE_RATIO);
         }
 
@@ -84,7 +80,7 @@ public class DiscardPile extends LinearLayout {
             return;
         }
 
-        ImageView image = getUtils().getHandDisplayTileView(t, false);
+        ImageView image = Utils.getHandDisplayTileView(t, false);
         if( firstRow.getChildCount() < 6 ){
             firstRow.addView(image);
         } else if( secondRow.getChildCount() < 6 ){
@@ -99,13 +95,5 @@ public class DiscardPile extends LinearLayout {
         firstRow.removeAllViews();
         secondRow.removeAllViews();
         thirdRow.removeAllViews();
-    }
-
-    Utils _utils;
-    private Utils getUtils(){
-        if( _utils==null && !isInEditMode() ){
-            _utils = ((MainActivity) context).getUtils();
-        }
-        return _utils;
     }
 }

@@ -109,17 +109,15 @@ public class ScoreHand extends Fragment implements View.OnClickListener {
         otherYakuLabel.setText(oys);
     }
     private void displaySingleTiles(Hand hand){
-        Utils utils = ((MainActivity)getActivity()).getUtils();
-
         Tile prevailingWindTile = new Tile(hand.prevailingWind);
-        ImageView prevailingWindTileImage = utils.getHandDisplayTileView(prevailingWindTile, false);
+        ImageView prevailingWindTileImage = Utils.getHandDisplayTileView(prevailingWindTile, false);
         prevailingWindTileContainer.addView(prevailingWindTileImage);
 
         Tile playerWindTile = new Tile(hand.playerWind);
-        ImageView playerWindTileImage = utils.getHandDisplayTileView(playerWindTile, false);
+        ImageView playerWindTileImage = Utils.getHandDisplayTileView(playerWindTile, false);
         playerWindTileContainer.addView(playerWindTileImage);
 
-        ImageView winningTileImage = utils.getHandDisplayTileView(hand.getWinningTile(), false);
+        ImageView winningTileImage = Utils.getHandDisplayTileView(hand.getWinningTile(), false);
         winningTileContainer.addView(winningTileImage);
     }
     private String otherYakuStr(Hand h){

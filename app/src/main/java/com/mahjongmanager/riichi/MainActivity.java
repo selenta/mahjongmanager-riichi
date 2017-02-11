@@ -47,8 +47,6 @@ public class MainActivity extends AppCompatActivity {
 
         AppSettings.init(this);
         loadBannerAds();
-        ExampleHands.populate(this);
-        FuHelper.populate(this);
 
         // Load Main Menu
         if (findViewById(R.id.fragment_container) != null) {
@@ -59,7 +57,11 @@ public class MainActivity extends AppCompatActivity {
             replaceFragment(new MainMenuFragment(), false);
         }
 
-        getImageCache();
+        ExampleHands.populate(this);
+        FuHelper.populate(this);
+        ImageCache.init(this);
+        Utils.init(this);
+        Utils.getHandDisplayPlaceholderTileView();     // This will populate HandDisplay tiles
     }
 
     @Override
@@ -338,22 +340,5 @@ public class MainActivity extends AppCompatActivity {
     private boolean proceedToQuizResults(){
         int maxHands = AppSettings.getSpeedQuizMaxHands();
         return getScoredHands().size() >= maxHands;
-    }
-
-    private Utils _utils;
-    public  Utils getUtils(){
-        if(_utils==null){
-            _utils = new Utils(this);
-        }
-        return _utils;
-    }
-    private ImageCache _imageCache;
-    public  ImageCache getImageCache(){
-        if(_imageCache==null){
-            _imageCache = new ImageCache(this);
-            _imageCache.clearCache();
-            getUtils().populateImageCacheForHandDisplay();
-        }
-        return _imageCache;
     }
 }

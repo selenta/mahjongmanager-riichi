@@ -14,7 +14,6 @@ import android.widget.Space;
 import android.widget.TextView;
 
 import com.mahjongmanager.riichi.common.Hand;
-import com.mahjongmanager.riichi.MainActivity;
 import com.mahjongmanager.riichi.R;
 import com.mahjongmanager.riichi.ScoreCalculator;
 import com.mahjongmanager.riichi.common.Tile;
@@ -29,8 +28,6 @@ import java.util.Arrays;
 import java.util.List;
 
 public class HandKeyboard extends LinearLayout implements View.OnClickListener {
-    MainActivity activity;
-
     private InputHand fragment;
     private HandDisplay handDisplay;
 
@@ -88,11 +85,10 @@ public class HandKeyboard extends LinearLayout implements View.OnClickListener {
     }
     public HandKeyboard(Context ctx, AttributeSet attrs, int defStyle ){
         super(ctx, attrs, defStyle);
-        activity = (MainActivity)ctx;
         init();
     }
     private void init(){
-        LayoutInflater inflater = (LayoutInflater) activity.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        LayoutInflater inflater = (LayoutInflater) getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         inflater.inflate(R.layout.component_handkeyboard, this);
 
         registerUIElements();
@@ -433,7 +429,7 @@ public class HandKeyboard extends LinearLayout implements View.OnClickListener {
     private void setButtonImage(ImageButton b, int i){
         Tile t = getTileForButton(i);
         String cacheKey = t.getImageCacheKey(ImageCache.KEYBOARD_KEY_LARGE);
-        BitmapDrawable tileDrawable = getImageCache().getBitmapFromCache(cacheKey);
+        BitmapDrawable tileDrawable = ImageCache.getBitmapFromCache(cacheKey);
         b.setImageDrawable(tileDrawable);
     }
 
@@ -475,10 +471,10 @@ public class HandKeyboard extends LinearLayout implements View.OnClickListener {
                 ImageButton honorButton = tileButton.button;
                 fourthButtonContainer.addView(honorButton);
                 if( tileButton.tile.toString().equals("North") ){
-                    int smallKeyboardTileWidth = getUtils().KEYBOARD_TILE_WIDTH_SMALL;
+                    int smallKeyboardTileWidth = Utils.KEYBOARD_TILE_WIDTH_SMALL;
 
-                    int spacerSize = smallKeyboardTileWidth + 2*getUtils().KEYBOARD_SMALL_MARGIN;
-                    Space spacer = new Space(activity);
+                    int spacerSize = smallKeyboardTileWidth + 2*Utils.KEYBOARD_SMALL_MARGIN;
+                    Space spacer = new Space(getContext());
                     spacer.setMinimumWidth(spacerSize);
                     fourthButtonContainer.addView(spacer);
                 }
@@ -500,18 +496,18 @@ public class HandKeyboard extends LinearLayout implements View.OnClickListener {
         }
 
         private void createButtonWithImage(){
-            button = new ImageButton(activity);
+            button = new ImageButton(getContext());
             button.setBackgroundColor(0xFFD6D7D7);
 
-            int padding = getUtils().KEYBOARD_SMALL_PADDING;
-            int margin = getUtils().KEYBOARD_SMALL_MARGIN;
+            int padding = Utils.KEYBOARD_SMALL_PADDING;
+            int margin = Utils.KEYBOARD_SMALL_MARGIN;
             button.setPadding(padding,padding,padding,padding);
             LayoutParams params = new LayoutParams(LayoutParams.WRAP_CONTENT,LayoutParams.WRAP_CONTENT);
             params.setMargins(margin,margin,margin,margin);
             button.setLayoutParams(params);
 
             String cacheKey = tile.getImageCacheKey(ImageCache.KEYBOARD_KEY_SMALL);
-            BitmapDrawable tileDrawable = getImageCache().getBitmapFromCache(cacheKey);
+            BitmapDrawable tileDrawable = ImageCache.getBitmapFromCache(cacheKey);
             button.setImageDrawable(tileDrawable);
         }
     }
@@ -603,21 +599,5 @@ public class HandKeyboard extends LinearLayout implements View.OnClickListener {
         handDisplay.setHand(hand);
         setErrorMessage(null);
         checkValidCurrentHand();
-    }
-
-    ImageCache _imageCache;
-    private ImageCache getImageCache(){
-        if( _imageCache==null ){
-            _imageCache = activity.getImageCache();
-        }
-        return _imageCache;
-    }
-
-    Utils _utils;
-    private Utils getUtils(){
-        if( _utils==null ){
-            _utils = activity.getUtils();
-        }
-        return _utils;
     }
 }

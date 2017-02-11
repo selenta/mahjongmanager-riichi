@@ -10,7 +10,6 @@ import android.widget.LinearLayout;
 import android.widget.Space;
 
 import com.mahjongmanager.riichi.common.Hand;
-import com.mahjongmanager.riichi.MainActivity;
 import com.mahjongmanager.riichi.common.Meld;
 import com.mahjongmanager.riichi.R;
 import com.mahjongmanager.riichi.common.Tile;
@@ -22,7 +21,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class HandDisplay extends LinearLayout {
-    private Context activity;
     private Fragment parentFragment = null;
     private HandKeyboard parentKeyboard = null;
 
@@ -58,12 +56,11 @@ public class HandDisplay extends LinearLayout {
     }
     public HandDisplay(Context ctx, AttributeSet attrs, int defStyle ){
         super(ctx, attrs, defStyle);
-        activity = ctx;
-        initializeView();
+        initializeView(ctx);
     }
 
-    private void initializeView(){
-        LayoutInflater inflater = (LayoutInflater) activity.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+    private void initializeView(Context context){
+        LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         inflater.inflate(R.layout.component_handdisplay, this);
 
         handDisplayContainer = (LinearLayout) findViewById(R.id.handDisplayContainer);
@@ -159,7 +156,7 @@ public class HandDisplay extends LinearLayout {
         //      no wonder this is all so ugly. It gives the size of the tile-face image, NOT
         //      the size of the complete tile ImageView, which we can't actually know
         //      until we draw one.
-        int size = getUtils().getActualTileWidth(ImageCache.HAND_DISPLAY_KEY);
+        int size = Utils.getActualTileWidth(ImageCache.HAND_DISPLAY_KEY);
 
         /* TODO Re-think this. Rather awkward, leaves lots of extra padding around, containers
             are being set to arbitrary sizes, and some of the containers are sized relative
@@ -436,7 +433,7 @@ public class HandDisplay extends LinearLayout {
         openTilesContainer.addView(tileDisplay.view);
     }
     private void addTileCalled(Tile calledTile, Tile addedTile){
-        LinearLayout container = new LinearLayout(activity);
+        LinearLayout container = new LinearLayout(getContext());
         container.setBackgroundColor(0xffccb0d5);
         container.setOrientation(VERTICAL);
         container.setLayoutParams(new LinearLayout.LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT));
@@ -508,7 +505,7 @@ public class HandDisplay extends LinearLayout {
             tile = t;
             value = tile.value;
             suit = tile.suit.toString();
-            view = getUtils().getHandDisplayTileView(tile, rotated);
+            view = Utils.getHandDisplayTileView(tile, rotated);
         }
     }
     private TileDisplay getTileDisplay(Tile tile){
@@ -526,14 +523,5 @@ public class HandDisplay extends LinearLayout {
             }
         }
         return null;
-    }
-
-
-    Utils _utils;
-    private Utils getUtils(){
-        if( _utils==null && !isInEditMode() ){
-            _utils = ((MainActivity) activity).getUtils();
-        }
-        return _utils;
     }
 }

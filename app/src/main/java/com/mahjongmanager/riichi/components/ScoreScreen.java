@@ -17,7 +17,6 @@ import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
 
-import com.mahjongmanager.riichi.MainActivity;
 import com.mahjongmanager.riichi.common.Fu;
 import com.mahjongmanager.riichi.common.Hand;
 import com.mahjongmanager.riichi.common.Meld;
@@ -490,7 +489,7 @@ public class ScoreScreen extends LinearLayout implements View.OnClickListener {
         waitContainer.setPadding(20,0,0,0);
 
         for(Tile tile : wait.tiles ){
-            ImageView image = getUtils().getHandDisplayTileView(tile, false);
+            ImageView image = Utils.getHandDisplayTileView(tile, false);
             waitContainer.addView(image);
         }
         newRow.addView(waitContainer);
@@ -521,13 +520,5 @@ public class ScoreScreen extends LinearLayout implements View.OnClickListener {
 
         line.setBackgroundColor(0xFFAAAAAA);
         waitTable.addView(line);
-    }
-
-    Utils _utils;
-    private Utils getUtils(){
-        if( _utils==null ){
-            _utils = ((MainActivity) getContext()).getUtils();
-        }
-        return _utils;
     }
 }

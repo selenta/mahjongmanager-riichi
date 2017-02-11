@@ -178,7 +178,7 @@ public class Simulate4Player extends Fragment implements View.OnClickListener {
     }
 
     private void setTileImage(LinearLayout container, Tile t){
-        ImageView tileImage = getUtils().getHandDisplayTileView(t, false);
+        ImageView tileImage = Utils.getHandDisplayTileView(t, false);
         container.removeAllViews();
         container.addView(tileImage);
         container.setVisibility(View.VISIBLE);
@@ -251,12 +251,12 @@ public class Simulate4Player extends Fragment implements View.OnClickListener {
         handDisplay.setParentFragment(this);
         lastDrawImage = (LinearLayout) myInflatedView.findViewById(R.id.lastDrawImage);
         lastDrawImage.setOnClickListener(this);
-        lastDrawImage.addView(getUtils().getHandDisplayPlaceholderTileView());
+        lastDrawImage.addView(Utils.getHandDisplayPlaceholderTileView());
         lastDrawImage.setVisibility(INVISIBLE);
 
         confirmDiscardContainer = (LinearLayout) myInflatedView.findViewById(R.id.confirmDiscardContainer);
         confirmDiscardImage = (LinearLayout) myInflatedView.findViewById(R.id.confirmDiscardImage);
-        confirmDiscardImage.addView(getUtils().getHandDisplayPlaceholderTileView());
+        confirmDiscardImage.addView(Utils.getHandDisplayPlaceholderTileView());
         confirmDiscardImage.setVisibility(INVISIBLE);
         confirmDiscardButton = (Button) myInflatedView.findViewById(R.id.confirmDiscardButton);
         confirmDiscardButton.setOnClickListener(this);
@@ -283,20 +283,12 @@ public class Simulate4Player extends Fragment implements View.OnClickListener {
         // To make the padding around the lastDrawImage look identical to the handDisplay
         int hdp = Utils.SCREEN_SIZE / 200 + 1;
         lastDrawImage.setPadding(hdp, hdp, hdp, hdp);
-        int size = getUtils().getActualTileWidth(ImageCache.HAND_DISPLAY_KEY);
+        int size = Utils.getActualTileWidth(ImageCache.HAND_DISPLAY_KEY);
         lastDrawImage.setMinimumHeight(size * 14/10 + 10);
     }
     private void initRound(){
         round = new Round(Tile.Wind.EAST);
         playerWind = Utils.getRandomWind();
         playerHand = round.getHand(playerWind);
-    }
-
-    Utils _utils;
-    private Utils getUtils(){
-        if( _utils==null ){
-            _utils = ((MainActivity) getActivity()).getUtils();
-        }
-        return _utils;
     }
 }

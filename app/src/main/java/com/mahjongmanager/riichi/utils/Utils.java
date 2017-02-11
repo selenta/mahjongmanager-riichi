@@ -1,10 +1,6 @@
 package com.mahjongmanager.riichi.utils;
 
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.graphics.Matrix;
 import android.graphics.RectF;
-import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.graphics.drawable.LayerDrawable;
 import android.graphics.drawable.ShapeDrawable;
@@ -15,7 +11,6 @@ import android.widget.ImageView;
 
 import com.mahjongmanager.riichi.MainActivity;
 import com.mahjongmanager.riichi.common.Meld;
-import com.mahjongmanager.riichi.R;
 import com.mahjongmanager.riichi.common.Tile;
 
 import java.util.ArrayList;
@@ -29,15 +24,24 @@ import java.util.Random;
 import java.util.Set;
 
 public class Utils {
-    private MainActivity activity;
-    private ImageCache imageCache;
-    public Utils(MainActivity ma){
+    private static MainActivity activity;
+
+    public static int SCREEN_SIZE;
+    public static Double TILE_RATIO = 1.36;
+    public static int TILE_PADDING;
+
+    public static int HAND_DISPLAY_TILE_WIDTH;
+    public static int KEYBOARD_TILE_WIDTH_LARGE;
+    public static int KEYBOARD_TILE_WIDTH_SMALL;
+    public static int KEYBOARD_SMALL_MARGIN;
+    public static int KEYBOARD_SMALL_PADDING;
+
+    public static void init(MainActivity ma){
         activity = ma;
         setTileSizeConstants();
-        imageCache = ma.getImageCache();
     }
 
-    private void setTileSizeConstants(){
+    private static void setTileSizeConstants(){
         DisplayMetrics metrics = new DisplayMetrics();
         activity.getWindowManager().getDefaultDisplay().getMetrics(metrics);
         SCREEN_SIZE = metrics.widthPixels;
@@ -47,7 +51,7 @@ public class Utils {
         Log.i("screenSize", "Screen size in pixels: "+ SCREEN_SIZE);
 
         borderWidth      = 1+ SCREEN_SIZE / 512;
-        tilePadding      = SCREEN_SIZE / 128;
+        TILE_PADDING     = SCREEN_SIZE / 128;
         tileCornerRadius = SCREEN_SIZE / 128;
 
         // TODO clean the keyboard float values, they seem to work, but are currently arbitrary
@@ -58,7 +62,7 @@ public class Utils {
         KEYBOARD_SMALL_MARGIN  = SCREEN_SIZE / 100;
         KEYBOARD_SMALL_PADDING = SCREEN_SIZE / 100;
     }
-    private int calcTileWidth(int screenSize, int numberOfTiles, float edgePadding, boolean includeSpacers){
+    private static int calcTileWidth(int screenSize, int numberOfTiles, float edgePadding, boolean includeSpacers){
         // Padding on the sides
         int tileWidth = Math.round((float)screenSize*(1f-edgePadding));
 
@@ -76,17 +80,8 @@ public class Utils {
     ///////////////////////////////////////////////////////////////
     /////////////////        Hand Display         /////////////////
     ///////////////////////////////////////////////////////////////
-    public static int SCREEN_SIZE;
-    public static Double TILE_RATIO = 1.36;
-    private int borderWidth;
-    private int tilePadding;
-    private int tileCornerRadius;
-
-    public int HAND_DISPLAY_TILE_WIDTH;
-    public int KEYBOARD_TILE_WIDTH_LARGE;
-    public int KEYBOARD_TILE_WIDTH_SMALL;
-    public int KEYBOARD_SMALL_MARGIN;
-    public int KEYBOARD_SMALL_PADDING;
+    private static int borderWidth;
+    private static int tileCornerRadius;
 
     /**
      * The method to get the actual image used in the HandDisplay
@@ -94,14 +89,14 @@ public class Utils {
      * @param rotated If the image is rotated (for a called tile)
      * @return Image of tile
      */
-    public ImageView getHandDisplayTileView(Tile t, boolean rotated){
+    public static ImageView getHandDisplayTileView(Tile t, boolean rotated){
         if( activity==null ){
             return null;
         }
 
         String keyString = t.getImageCacheKey(ImageCache.HAND_DISPLAY_KEY, rotated);
 
-        Drawable dBmap = imageCache.getBitmapFromCache(keyString);
+        Drawable dBmap = ImageCache.getBitmapFromCache(keyString);
         LayerDrawable tileImage = getCombinedImage(dBmap, t.faceDown, rotated);
 
         ImageView view = new ImageView(activity);
@@ -109,7 +104,7 @@ public class Utils {
 
         return view;
     }
-    private LayerDrawable getCombinedImage(Drawable bmp, boolean isFacedown, boolean isRotated){
+    private static LayerDrawable getCombinedImage(Drawable bmp, boolean isFacedown, boolean isRotated){
         if( isFacedown ){
             Drawable[] layers = new Drawable[1];
             layers[0] = bmp;
@@ -127,14 +122,14 @@ public class Utils {
 
         Drawable[] layers = new Drawable[3];
         layers[0] = tileOutline;
-        layers[1] = imageCache.getBitmapFromCache(frontTileKey);
+        layers[1] = ImageCache.getBitmapFromCache(frontTileKey);
         layers[2] = bmp;
         LayerDrawable layerDrawable = new LayerDrawable(layers);
         layerDrawable.setLayerInset(1, borderWidth,borderWidth,borderWidth,borderWidth);
-        layerDrawable.setLayerInset(2, tilePadding,tilePadding,tilePadding,tilePadding);
+        layerDrawable.setLayerInset(2, TILE_PADDING, TILE_PADDING, TILE_PADDING, TILE_PADDING);
         return layerDrawable;
     }
-    private ShapeDrawable getTileOutline(int width, int height){
+    private static ShapeDrawable getTileOutline(int width, int height){
         float[] outerR = new float[8];
         for(int i=0; i<8; i++ ){
             outerR[i] = tileCornerRadius;
@@ -144,7 +139,7 @@ public class Utils {
         return new ShapeDrawable(tileOutline);
     }
 
-    public ImageView getHandDisplayPlaceholderTileView(){
+    public static ImageView getHandDisplayPlaceholderTileView(){
         Tile s = new Tile(10, Tile.Suit.MANZU);
         return getHandDisplayTileView(s, false);
     }
@@ -160,208 +155,18 @@ public class Utils {
      * @param keyString One of the image size keys from ImageCache
      * @return Width of the images used in specified tileset
      */
-    public int getActualTileWidth( String keyString ){
+    public static int getActualTileWidth( String keyString ){
         Tile example = new Tile(1, Tile.Suit.MANZU);
         if( keyString.equals(ImageCache.KEYBOARD_KEY_LARGE) ){
-            return imageCache.getBitmapFromCache(example.getImageCacheKey(ImageCache.KEYBOARD_KEY_LARGE)).getIntrinsicWidth();
+            return ImageCache.getBitmapFromCache(example.getImageCacheKey(ImageCache.KEYBOARD_KEY_LARGE)).getIntrinsicWidth();
         } else if( keyString.equals(ImageCache.KEYBOARD_KEY_SMALL) ){
-            return imageCache.getBitmapFromCache(example.getImageCacheKey(ImageCache.KEYBOARD_KEY_SMALL)).getIntrinsicWidth();
+            return ImageCache.getBitmapFromCache(example.getImageCacheKey(ImageCache.KEYBOARD_KEY_SMALL)).getIntrinsicWidth();
         } else if( keyString.equals(ImageCache.HAND_DISPLAY_KEY) ){
-            return imageCache.getBitmapFromCache(example.getImageCacheKey(ImageCache.KEYBOARD_KEY_SMALL)).getIntrinsicWidth();
+            return ImageCache.getBitmapFromCache(example.getImageCacheKey(ImageCache.KEYBOARD_KEY_SMALL)).getIntrinsicWidth();
         }
         return 0;
     }
 
-    //////////////////////////////////////////////////////////////////////////
-    ////////////////////     Populate ImageCache      ////////////////////////
-    //////////////////////////////////////////////////////////////////////////
-    public void populateImageCacheForHandDisplay(){
-        // First, do the normal (vertical) version of the tiles
-        List<Tile> allTiles = getAllTilesWithImages();
-        for(Tile t : allTiles){
-            BitmapDrawable dBmap = getBitmapDrawableFromFile(getTileImageInt(t), HAND_DISPLAY_TILE_WIDTH, null, t.faceDown);
-            String keyString = t.getImageCacheKey(ImageCache.HAND_DISPLAY_KEY);
-            imageCache.addBitmapToCache(keyString, dBmap);
-        }
-        BitmapDrawable frontDBmap = getBitmapDrawableFromFile(R.drawable.front, HAND_DISPLAY_TILE_WIDTH);
-        String frontKeyString = ImageCache.HAND_DISPLAY_KEY + "Front";
-        imageCache.addBitmapToCache(frontKeyString, frontDBmap);
-
-        // Second, do a rotated version of all the tile images
-        Matrix matrix = new Matrix();
-        matrix.postRotate(270);
-        for(Tile t : allTiles){
-            BitmapDrawable dBmap = getBitmapDrawableFromFile(getTileImageInt(t), HAND_DISPLAY_TILE_WIDTH, matrix, false);
-            String keyString = t.getImageCacheKey(ImageCache.HAND_DISPLAY_KEY, true);
-            imageCache.addBitmapToCache(keyString, dBmap);
-        }
-        BitmapDrawable rotatedFrontDBmap = getBitmapDrawableFromFile(R.drawable.front, HAND_DISPLAY_TILE_WIDTH, matrix, false);
-        String rotatedFrontKeyString = ImageCache.HAND_DISPLAY_KEY + "Front Rotated";
-        imageCache.addBitmapToCache(rotatedFrontKeyString, rotatedFrontDBmap);
-    }
-    public void populateImageCacheForKeyboard(String keyboardKey){
-        int width = 0;
-        if( keyboardKey.equals(ImageCache.KEYBOARD_KEY_LARGE) ){
-            width = KEYBOARD_TILE_WIDTH_LARGE;
-        } else if( keyboardKey.equals(ImageCache.KEYBOARD_KEY_SMALL) ){
-            width = KEYBOARD_TILE_WIDTH_SMALL;
-        }
-
-        List<Tile> allTiles = getAllTilesWithImages();
-        for(Tile t : allTiles){
-            BitmapDrawable dBmap = getBitmapDrawableFromFile(getTileImageInt(t), width);
-            String keyString = t.getImageCacheKey(keyboardKey);
-            imageCache.addBitmapToCache(keyString, dBmap);
-        }
-        BitmapDrawable frontDBmap = getBitmapDrawableFromFile(R.drawable.front, width);
-        String frontKeyString = keyboardKey + "Front";
-        imageCache.addBitmapToCache(frontKeyString, frontDBmap);
-    }
-    private BitmapDrawable getBitmapDrawableFromFile(int imageInt, int width ){
-        return getBitmapDrawableFromFile(imageInt, width, null, false);
-    }
-    private BitmapDrawable getBitmapDrawableFromFile(int imageInt, int width, Matrix matrix, boolean isFacedown ){
-        int height = (int) ((double)width*TILE_RATIO);
-
-        Bitmap origBmap = BitmapFactory.decodeResource(activity.getResources(), imageInt);
-        Bitmap resizedBmap;
-        if( isFacedown ){
-            resizedBmap = Bitmap.createScaledBitmap(origBmap, width, height, false);
-        } else {
-            int padding = 2*tilePadding;
-            resizedBmap = Bitmap.createScaledBitmap(origBmap, width-padding, height-padding, false);
-        }
-        Bitmap rotatedBitmap;
-        if( matrix==null ){
-            rotatedBitmap = resizedBmap;
-        } else {
-            rotatedBitmap = Bitmap.createBitmap(resizedBmap, 0, 0, resizedBmap.getWidth(), resizedBmap.getHeight(), matrix, true);
-        }
-        return new BitmapDrawable(activity.getResources(), rotatedBitmap);
-    }
-    private List<Tile> getAllTilesWithImages(){
-        List<Tile> tiles = HandGenerator.allTiles();
-
-        for(Tile.Suit suit : Arrays.asList(Tile.Suit.MANZU, Tile.Suit.PINZU, Tile.Suit.SOUZU)){
-            Tile red5 = new Tile(5, suit);
-            red5.red = true;
-            tiles.add(red5);
-        }
-        Tile facedownTile = new Tile(1, Tile.Suit.MANZU);
-        facedownTile.faceDown = true;
-        tiles.add(facedownTile);
-
-        Tile blankTile = new Tile(0, Tile.Suit.MANZU);
-        tiles.add(blankTile);
-
-        return tiles;
-    }
-
-    private static int getTileImageInt(Tile t){
-        if( t.faceDown ){
-            return R.drawable.back;
-        }
-
-        switch (t.suit){
-            case MANZU:
-                switch (t.number){
-                    case 1:
-                        return R.drawable.man1;
-                    case 2:
-                        return R.drawable.man2;
-                    case 3:
-                        return R.drawable.man3;
-                    case 4:
-                        return R.drawable.man4;
-                    case 5:
-                        if( !t.red ){
-                            return R.drawable.man5;
-                        } else {
-                            return R.drawable.man5_dora;
-                        }
-                    case 6:
-                        return R.drawable.man6;
-                    case 7:
-                        return R.drawable.man7;
-                    case 8:
-                        return R.drawable.man8;
-                    case 9:
-                        return R.drawable.man9;
-                }
-                break;
-            case PINZU:
-                switch (t.number){
-                    case 1:
-                        return R.drawable.pin1;
-                    case 2:
-                        return R.drawable.pin2;
-                    case 3:
-                        return R.drawable.pin3;
-                    case 4:
-                        return R.drawable.pin4;
-                    case 5:
-                        if( !t.red ){
-                            return R.drawable.pin5;
-                        } else {
-                            return R.drawable.pin5_dora;
-                        }
-                    case 6:
-                        return R.drawable.pin6;
-                    case 7:
-                        return R.drawable.pin7;
-                    case 8:
-                        return R.drawable.pin8;
-                    case 9:
-                        return R.drawable.pin9;
-                }
-                break;
-            case SOUZU:
-                switch (t.number){
-                    case 1:
-                        return R.drawable.sou1;
-                    case 2:
-                        return R.drawable.sou2;
-                    case 3:
-                        return R.drawable.sou3;
-                    case 4:
-                        return R.drawable.sou4;
-                    case 5:
-                        if( !t.red ){
-                            return R.drawable.sou5;
-                        } else {
-                            return R.drawable.sou5_dora;
-                        }
-                    case 6:
-                        return R.drawable.sou6;
-                    case 7:
-                        return R.drawable.sou7;
-                    case 8:
-                        return R.drawable.sou8;
-                    case 9:
-                        return R.drawable.sou9;
-                }
-                break;
-            case HONOR:
-                switch (t.value){
-                    case "East":
-                        return R.drawable.ton;
-                    case "South":
-                        return R.drawable.nan;
-                    case "West":
-                        return R.drawable.shaa;
-                    case "North":
-                        return R.drawable.pei;
-                    case "White":
-                        return R.drawable.haku;
-                    case "Green":
-                        return R.drawable.hatsu;
-                    case "Red":
-                        return R.drawable.chun;
-                }
-                break;
-        }
-        return R.drawable.blank;
-    }
 
     //////////////////////////////////////////////////////////////////////////
     ////////////////////     Common Util Methods      ////////////////////////
