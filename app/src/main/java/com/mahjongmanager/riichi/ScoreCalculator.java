@@ -469,18 +469,8 @@ public class ScoreCalculator {
         public String toString(){
             return "MeldSolver-"+melds.toString();
         }
-        public String toStringVerbose(){
-            String s = "MeldSolver["+tiles.size()+"]\n";
-            s += "tiles: " + tiles.toString() + "\n";
-            s += "uniqueTiles: " + uniqueTiles.toString() + "\n";
-            s += "melds: " + melds.toString() + "\n";
-            return s;
-        }
     }
 
-    // TODO properly account for pairs
-    //  The following hand is scored as shanten=1 (should be shanten=2)
-    //  Manzu: 22244, Pinzu: 45, Souzu: 235678
     private void processIncompleteHand(){
         if( !processIncompleteHands){
             return;
@@ -501,7 +491,7 @@ public class ScoreCalculator {
     private void cleanHandBeforeMessyPart(Hand hand){
         // Removes tiles from unsortedTiles that can't actually be used in melds
         //      Technically unneeded, but makes later steps cleaner
-        removeOutliers(hand);
+//        removeOutliers(hand);
 
         // These will actually remove tiles from unsortedTiles and place them in melds
         //      Technically unneeded, but makes later steps cleaner
@@ -602,10 +592,12 @@ public class ScoreCalculator {
                 continue;
             }
 
-            // TODO consider trying to build melds from every tile, to be thorough
-            //      Likely necessary to get all valid Waits
-            incomplete.addAll(slotIncompletePons(ms));
-            incomplete.addAll(slotIncompleteChiis(ms));
+            // hoooo booyy... here we go!
+            //      Something like this is necessary to get all valid Waits
+            for(int i=0; i<ms.uniqueTiles.size(); i++){
+                incomplete.addAll(slotIncompletePons(ms, i));
+                incomplete.addAll(slotIncompleteChiis(ms, i));
+            }
 
             // Remove the original version of the hand. If it didn't have children, its line ends here
             incomplete.remove(ms);
@@ -618,10 +610,10 @@ public class ScoreCalculator {
 
         return solved;
     }
-    private List<MeldSolver> slotIncompletePons(MeldSolver ms){
+    private List<MeldSolver> slotIncompletePons(MeldSolver ms, int i){
         List<MeldSolver> slottedPons = new ArrayList<>();
 
-        List<Tile> tiles = ms.getTilesOf(ms.uniqueTiles.get(0));
+        List<Tile> tiles = ms.getTilesOf(ms.uniqueTiles.get(i));
         switch (tiles.size()){
             // Intentionally ignoring break statements here
             //      It is correct behavior that 4 of a kind creates one of each MeldSolver
@@ -641,10 +633,10 @@ public class ScoreCalculator {
 
         return slottedPons;
     }
-    private List<MeldSolver> slotIncompleteChiis(MeldSolver ms){
+    private List<MeldSolver> slotIncompleteChiis(MeldSolver ms, int i){
         List<MeldSolver> slottedChiis = new ArrayList<>();
 
-        Tile founder = ms.uniqueTiles.get(0);
+        Tile founder = ms.uniqueTiles.get(i);
         if( founder.suit== Tile.Suit.HONOR || founder.number>8 ){
             return slottedChiis;
         }
@@ -815,6 +807,7 @@ public class ScoreCalculator {
             for(Meld m : ms.melds){
                 findCandidates(m);
             }
+            findOtherCandidate(ms);
         }
 
         for(Tile candidate : candidates){
@@ -849,6 +842,30 @@ public class ScoreCalculator {
             addCandidate(m.firstTile().getNextTile());
         }
     }
+    private void findOtherCandidate(MeldSolver ms){
+        int fullMelds = 4 - unsortedHand.emptyMeldCount();
+
+        List<Tile> uncheckedTiles = new ArrayList<>();
+        uncheckedTiles.addAll(unsortedHand.tiles);
+        for(Meld m : Arrays.asList(unsortedHand.meld1, unsortedHand.meld2, unsortedHand.meld3, unsortedHand.meld4)){
+            uncheckedTiles.removeAll(m.getTiles());
+        }
+
+        for(Meld m : ms.melds){
+            if( m.size() >= 3 ){
+                fullMelds++;
+                uncheckedTiles.removeAll(m.getTiles());
+            } else {
+                // At least one undersized meld, thus we shouldn't be looking for a pair(?)
+                return;
+            }
+        }
+
+        if( uncheckedTiles.size()!=1 ){
+            Log.w("findOtherCandidate", "More unchecked tiles than expected for a tenpai hand: "+unsortedHand.toString()+" - "+uncheckedTiles);
+        }
+        candidates.addAll(uncheckedTiles);
+    }
     private void addCandidate(Tile tile){
         boolean isNew = true;
         for(Tile t : candidates){
@@ -871,30 +888,31 @@ public class ScoreCalculator {
             tile.calledFrom = Tile.CalledFrom.NONE;
         }
         tile.winningTile = true;
-        hand.addTile(candidate);
+        hand.addTile(tile);
 
         ScoreCalculator sc = new ScoreCalculator(hand);
         if( sc.validatedHand!=null ){
-            addWait(candidate, sc.validatedHand.han, sc.validatedHand.fu, isTsumo);
+            addWait(sc.validatedHand.han, sc.validatedHand.fu, isTsumo, candidate);
         }
         Log.i("testCandidate", "Tested candidate: "+candidate+"   -   "+sc.validatedHand);
     }
-    private void addWait(Tile tile, int han, int fu, boolean tsumo){
+    private void addWait(int han, int fu, boolean tsumo, Tile tile){
+        int roundedFu = (fu==25) ? 25 : (int) Math.ceil(fu/10.0)*10;;
+
         for( Wait wait : waits ){
             if( wait.tiles.contains(tile) && wait.isTsumo==tsumo ){
-                int estPoints = ScoreCalculator.scoreBasePoints(han,fu);
+                int estPoints = ScoreCalculator.scoreBasePoints(han,roundedFu);
                 int waitPoints = ScoreCalculator.scoreBasePoints(wait.han,wait.fu);
 
                 if( estPoints>waitPoints ){
                     wait.tiles.remove(tile);
                 }
             }
-            if( han==wait.han && fu==wait.fu && tsumo==wait.isTsumo ){
+            if( han==wait.han && roundedFu==wait.fu && tsumo==wait.isTsumo ){
                 wait.tiles.add(tile);
                 return;
             }
         }
-        waits.add(new Wait(tile, han, fu, tsumo));
+        waits.add(new Wait(tile, han, roundedFu, tsumo));
     }
-
 }
