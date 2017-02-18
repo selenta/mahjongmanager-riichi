@@ -30,6 +30,7 @@ public class Simulate4Player extends Fragment implements View.OnClickListener {
     private DiscardPile discardPile;
     private HandDisplay handDisplay;
 
+    private TextView title;
     private TextView remainingTiles;
     private TextView remainingTurns;
     private TextView currentHandInstructions;
@@ -68,6 +69,7 @@ public class Simulate4Player extends Fragment implements View.OnClickListener {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View myInflatedView = inflater.inflate(R.layout.fragment_handbuilder_2simulate_4p, container, false);
         assignUIElements(myInflatedView);
+        checkTextSize();
 
         initHandDisplaySettings();
         initRound();
@@ -107,6 +109,12 @@ public class Simulate4Player extends Fragment implements View.OnClickListener {
                 confirmDiscard();
                 break;
             case R.id.tsumoButton:
+
+                // TODO hands are not always scoring correctly
+                //  The following hand was scored as Tsumo (1h 30fu):
+                //  45567789m 22456s drawing 6m as winning tile
+                //  Should be scored as Tsumo+Pinfu (2h 20fu)
+
                 round.declareTsumo();
                 ((MainActivity)getActivity()).setCurrentHand(playerHand);
                 ((MainActivity)getActivity()).goToHandBuilderScoreHand(v);
@@ -238,6 +246,7 @@ public class Simulate4Player extends Fragment implements View.OnClickListener {
     ///////////       Init       ////////////
     /////////////////////////////////////////
     private void assignUIElements(View myInflatedView){
+        title = (TextView) myInflatedView.findViewById(R.id.handBuilder4pTitle);
         remainingTiles = (TextView) myInflatedView.findViewById(R.id.remainingTiles);
         remainingTurns = (TextView) myInflatedView.findViewById(R.id.estimatedDraws);
 
@@ -276,6 +285,11 @@ public class Simulate4Player extends Fragment implements View.OnClickListener {
         kanDiscardButton.setOnClickListener(this);
 
         scoreHandButton = (Button) myInflatedView.findViewById(R.id.scoreHandButton);
+    }
+    private void checkTextSize(){
+        if( Utils.SCREEN_SIZE < 1024 ){
+            title.setTextSize(title.getTextSize()*0.55f);
+        }
     }
     private void initHandDisplaySettings(){
         handDisplay.setState(HandDisplay.YAKU_DESCRIPTION);

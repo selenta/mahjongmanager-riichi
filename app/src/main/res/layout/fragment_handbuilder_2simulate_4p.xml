@@ -19,6 +19,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:id="@+id/handBuilder4pTitle"
                 android:textAppearance="?android:attr/textAppearanceLarge"
                 android:text="Hand Builder (4p)"
                 android:textSize="44sp"
