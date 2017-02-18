@@ -1,5 +1,7 @@
 package com.mahjongmanager.riichi.common;
 
+import com.mahjongmanager.riichi.utils.Utils;
+
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Iterator;
@@ -22,6 +24,7 @@ public class TileSet implements Iterable<Tile> {
             return false;
         }
         tileSet.add(tile);
+        Utils.sort(tileSet);
         return true;
     }
 
@@ -33,6 +36,7 @@ public class TileSet implements Iterable<Tile> {
                 tileSet.add(t);
             }
         }
+        Utils.sort(tileSet);
         return anythingChanged;
     }
 
