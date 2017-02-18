@@ -524,7 +524,7 @@ public class ScoreScreen extends LinearLayout implements View.OnClickListener {
     private TextView tableError(){
         TextView label = tableValue("No Yaku");
 
-        TableRow.LayoutParams params = (TableRow.LayoutParams) label.getLayoutParams();
+        TableRow.LayoutParams params = new TableRow.LayoutParams();
         params.span = 2;
         label.setLayoutParams(params);
 
