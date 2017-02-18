@@ -67,8 +67,8 @@ public class ScoreCalculatorTest {
         ScoreCalculator sc = new ScoreCalculator(h);
         Hand validatedHand = sc.validatedHand;
 
-        Assert.assertSame( 2, validatedHand.han);
-        Assert.assertSame(32, validatedHand.fu );
+        Assert.assertSame( 2, validatedHand.countHan());
+        Assert.assertSame(32, validatedHand.countFu() );
     }
 
     @Test
@@ -99,8 +99,8 @@ public class ScoreCalculatorTest {
         ScoreCalculator sc = new ScoreCalculator(h);
         Hand validatedHand = sc.validatedHand;
 
-        Assert.assertSame(4, validatedHand.han);
-        Assert.assertSame(20, validatedHand.fu);
+        Assert.assertSame(4, validatedHand.countHan());
+        Assert.assertSame(20, validatedHand.countFu());
     }
 
     @Test
@@ -132,8 +132,8 @@ public class ScoreCalculatorTest {
         ScoreCalculator sc = new ScoreCalculator(h);
         Hand validatedHand = sc.validatedHand;
 
-        Assert.assertSame(7, validatedHand.han);
-        Assert.assertSame(30, validatedHand.fu);
+        Assert.assertSame(7, validatedHand.countHan());
+        Assert.assertSame(30, validatedHand.countFu());
     }
 
     @Test
@@ -163,7 +163,7 @@ public class ScoreCalculatorTest {
         ScoreCalculator sc = new ScoreCalculator(h);
         Hand validatedHand = sc.validatedHand;
 
-        Assert.assertSame(26, validatedHand.han);
+        Assert.assertSame(26, validatedHand.countHan());
     }
 
     @Test
@@ -194,8 +194,8 @@ public class ScoreCalculatorTest {
         ScoreCalculator sc = new ScoreCalculator(h);
         Hand validatedHand = sc.validatedHand;
 
-        Assert.assertSame(4, validatedHand.han);
-        Assert.assertSame(25, validatedHand.fu);
+        Assert.assertSame(4, validatedHand.countHan());
+        Assert.assertSame(25, validatedHand.countFu());
     }
 
     @Test
@@ -228,8 +228,8 @@ public class ScoreCalculatorTest {
         ScoreCalculator sc = new ScoreCalculator(h);
         Hand validatedHand = sc.validatedHand;
 
-        Assert.assertSame(6, validatedHand.han);
-        Assert.assertSame(44, validatedHand.fu);
+        Assert.assertSame(6, validatedHand.countHan());
+        Assert.assertSame(44, validatedHand.countFu());
     }
 
     @Test
@@ -269,7 +269,7 @@ public class ScoreCalculatorTest {
         ScoreCalculator sc = new ScoreCalculator(h);
         Hand validatedHand = sc.validatedHand;
 
-        Assert.assertSame(8, validatedHand.han);
+        Assert.assertSame(8, validatedHand.countHan());
     }
 
     @Test
@@ -302,8 +302,8 @@ public class ScoreCalculatorTest {
         ScoreCalculator sc = new ScoreCalculator(h);
         Hand validatedHand = sc.validatedHand;
 
-        Assert.assertSame(5, validatedHand.han);
-        Assert.assertSame(46, validatedHand.fu);
+        Assert.assertSame(5, validatedHand.countHan());
+        Assert.assertSame(46, validatedHand.countFu());
     }
 
     @Test
@@ -337,8 +337,8 @@ public class ScoreCalculatorTest {
         ScoreCalculator sc = new ScoreCalculator(h);
         Hand validatedHand = sc.validatedHand;
 
-        Assert.assertSame(5, validatedHand.han);
-        Assert.assertSame(42, validatedHand.fu);
+        Assert.assertSame(5, validatedHand.countHan());
+        Assert.assertSame(42, validatedHand.countFu());
     }
 
     @Test
@@ -368,7 +368,7 @@ public class ScoreCalculatorTest {
         ScoreCalculator sc = new ScoreCalculator(h);
         Hand validatedHand = sc.validatedHand;
 
-        Assert.assertSame(6, validatedHand.han);
+        Assert.assertSame(6, validatedHand.countHan());
     }
 
     @Test
@@ -402,7 +402,7 @@ public class ScoreCalculatorTest {
         ScoreCalculator sc = new ScoreCalculator(h);
         Hand validatedHand = sc.validatedHand;
 
-        Assert.assertSame(7, validatedHand.han);
+        Assert.assertSame(7, validatedHand.countHan());
     }
 
     @Test
@@ -434,7 +434,7 @@ public class ScoreCalculatorTest {
         ScoreCalculator sc = new ScoreCalculator(h);
         Hand validatedHand = sc.validatedHand;
 
-        Assert.assertSame(5, validatedHand.han);
+        Assert.assertSame(5, validatedHand.countHan());
     }
 
     @Test
@@ -472,8 +472,8 @@ public class ScoreCalculatorTest {
         ScoreCalculator sc = new ScoreCalculator(h);
         Hand validatedHand = sc.validatedHand;
 
-        Assert.assertSame(  1, validatedHand.han);
-        Assert.assertSame(102, validatedHand.fu );
+        Assert.assertSame(  1, validatedHand.countHan());
+        Assert.assertSame(102, validatedHand.countFu() );
     }
 
     @Test
@@ -513,8 +513,8 @@ public class ScoreCalculatorTest {
         ScoreCalculator sc = new ScoreCalculator(h);
         Hand validatedHand = sc.validatedHand;
 
-        Assert.assertSame(  2, validatedHand.han);
-        Assert.assertSame(108, validatedHand.fu );
+        Assert.assertSame(  2, validatedHand.countHan());
+        Assert.assertSame(108, validatedHand.countFu() );
     }
 
     @Test
@@ -544,8 +544,8 @@ public class ScoreCalculatorTest {
         Hand scoredHand = sc.scoredHand;
         Assert.assertTrue(scoredHand!=null);
 
-        //Assert.assertSame(  2, validatedHand.han);
-        //Assert.assertSame(108, validatedHand.fu );
+        //Assert.assertSame(  2, validatedHand.countHan());
+        //Assert.assertSame(108, validatedHand.countFu() );
     }
 
     @Test
@@ -641,8 +641,8 @@ public class ScoreCalculatorTest {
         Hand validatedHand = sc.validatedHand;
         Assert.assertTrue(validatedHand!=null);
 
-        Assert.assertSame( 10, validatedHand.han);
-        Assert.assertSame( 30, validatedHand.fu );
+        Assert.assertSame( 10, validatedHand.countHan());
+        Assert.assertSame( 30, validatedHand.countFu() );
     }
 
     @Test
@@ -672,8 +672,8 @@ public class ScoreCalculatorTest {
         Hand validatedHand = sc.validatedHand;
         Assert.assertTrue(validatedHand!=null);
 
-        Assert.assertSame( 3, validatedHand.han);
-        Assert.assertSame( 20, validatedHand.fu );
+        Assert.assertSame( 3, validatedHand.countHan());
+        Assert.assertSame( 20, validatedHand.countFu() );
         Assert.assertFalse( validatedHand.hasYaku(Yaku.Name.SANSHOKUDOUJUN) );
     }
 
@@ -716,7 +716,7 @@ public class ScoreCalculatorTest {
         ScoreCalculator sc = new ScoreCalculator(h);
         Hand validatedHand = sc.validatedHand;
 
-        Assert.assertSame(  9, validatedHand.han);
+        Assert.assertSame(  9, validatedHand.countHan());
         Assert.assertSame(  8, validatedHand.hanList.get(Yaku.Name.DORA));
     }
 }

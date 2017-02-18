@@ -336,9 +336,12 @@ public class Validator {
         return true;
     }
     private static boolean handRealScore(Hand hand){
+        int han = hand.countHan();
+        int fu  = hand.countFu();
+
         //validate that score is not impossible (e.g. 1 han 20 fu)
-        if( (hand.han==1&&hand.fu==20) || (hand.han==1&&hand.fu==25) || (hand.han==2&&hand.fu==25&&hand.selfDrawWinningTile) ){
-            Log.e("validateHand", "Impossible score: han-"+hand.han+" fu-"+hand.fu+" tsumo-"+hand.selfDrawWinningTile+" - "+hand.toStringVerbose());
+        if( (han==1&&fu==20) || (han==1&&fu==25) || (han==2&&fu==25&&hand.selfDrawWinningTile) ){
+            Log.e("validateHand", "Impossible score: han-"+han+" fu-"+fu+" tsumo-"+hand.selfDrawWinningTile+" - "+hand.toStringVerbose());
             return false;
         }
         return true;

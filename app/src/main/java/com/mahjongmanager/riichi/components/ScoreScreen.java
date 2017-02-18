@@ -24,6 +24,7 @@ import com.mahjongmanager.riichi.R;
 import com.mahjongmanager.riichi.ScoreCalculator;
 import com.mahjongmanager.riichi.ScoreCalculator.Wait;
 import com.mahjongmanager.riichi.common.Tile;
+import com.mahjongmanager.riichi.common.TileSet;
 import com.mahjongmanager.riichi.common.Yaku;
 import com.mahjongmanager.riichi.utils.ExampleHands;
 import com.mahjongmanager.riichi.utils.FuHelper;
@@ -54,7 +55,7 @@ public class ScoreScreen extends LinearLayout implements View.OnClickListener {
     private List<ScoreDetail> scoreDetailList = new ArrayList<>();
 
     private static final int MODE_SCORING = 0;
-    private static final int MODE_TENPAI = 1;
+    private static final int MODE_TENPAI  = 1;
     private static final int MODE_SHANTEN = 2;
     private static final int MODE_INVALID = 3;
 
@@ -99,7 +100,7 @@ public class ScoreScreen extends LinearLayout implements View.OnClickListener {
     private void determineMode(){
         ScoreCalculator sc = new ScoreCalculator(hand, true);
 
-        if( sc.validatedHand==null && hand.getWinningTile()==null ){
+        if( sc.validatedHand==null || hand.getWinningTile()==null ){
             int shanten = sc.shanten;
             if( shanten > 0 ){
                 setMode(MODE_SHANTEN);
@@ -297,11 +298,14 @@ public class ScoreScreen extends LinearLayout implements View.OnClickListener {
         addHanFuRows();
     }
     private void updateLabels(){
-        Integer roundedFu = (hand.fu==25) ? 25 : (int) Math.ceil(hand.fu/10.0)*10;
-        hanTotalLabel.setText( String.valueOf(hand.han) );
-        fuTotalLabel.setText( ""+hand.fu+" ("+roundedFu.toString()+")");
+        int han = hand.countHan();
+        int fu  = hand.countFu();
 
-        String result = ScoreCalculator.scoreHanFu(hand.han, hand.fu, hand.playerWind==Tile.Wind.EAST, hand.selfDrawWinningTile);
+        int roundedFu = (fu==25) ? 25 : (int) Math.ceil(fu/10.0)*10;
+        hanTotalLabel.setText( String.valueOf(han) );
+        fuTotalLabel.setText( ""+fu+" ("+roundedFu+")");
+
+        String result = ScoreCalculator.scoreHanFu(han, fu, hand.playerWind==Tile.Wind.EAST, hand.selfDrawWinningTile);
         scoreValue.setText(result);
 
         //Do this last, so that we can make it a little more pretty
@@ -309,26 +313,29 @@ public class ScoreScreen extends LinearLayout implements View.OnClickListener {
         scoreBreakdown.setText(sBreakdown);
     }
     private String getScoreText(int roundedFu){
-        String sBreakdown = ""+hand.han+" Han "+roundedFu+" Fu";
-        if( hand.han==5 || (hand.han==4&&hand.fu>=40) || (hand.han==3&&hand.fu>=70) ){
+        int han = hand.countHan();
+        int fu  = hand.countFu();
+
+        String sBreakdown = ""+han+" Han "+roundedFu+" Fu";
+        if( han==5 || (han==4&&fu>=40) || (han==3&&fu>=70) ){
             sBreakdown += " (Mangan)";
-        } else if( hand.han<5 ){
+        } else if( han<5 ){
             return sBreakdown;
-        } else if( hand.han==6 || hand.han==7 ){
+        } else if( han==6 || han==7 ){
             sBreakdown += " (Haneman)";
-        } else if( hand.han==8 || hand.han==9 || hand.han==10 ){
+        } else if( han==8 || han==9 || han==10 ){
             sBreakdown += " (Baiman)";
-        } else if( hand.han==11|| hand.han==12 ){
+        } else if( han==11|| han==12 ){
             sBreakdown += " (Sanbaiman)";
-        } else if( hand.han<14 ){
+        } else if( han<14 ){
             sBreakdown += " (Yakuman)";
-        } else if( hand.han<27 ){
+        } else if( han<27 ){
             sBreakdown += " (2x Yakuman)";
-        } else if( hand.han<40 ){
+        } else if( han<40 ){
             sBreakdown += " (3x Yakuman)";
-        } else if( hand.han<53 ){
+        } else if( han<53 ){
             sBreakdown += " (4x Yakuman)";
-        } else if( hand.han<66 ){
+        } else if( han<66 ){
             sBreakdown += " (5x Yakuman)";
         } else {
             sBreakdown += " (ERROR)";
@@ -479,37 +486,50 @@ public class ScoreScreen extends LinearLayout implements View.OnClickListener {
     }
     private void addWaitRow(Wait wait){
         TableRow newRow = new TableRow( getContext() );
+        newRow.setGravity(Gravity.CENTER);
         newRow.setPadding(0,15,0,15);
 
-        LinearLayout waitContainer = new LinearLayout(getContext());
-        waitContainer.setOrientation(HORIZONTAL);
-
-        ViewGroup.LayoutParams params = new TableRow.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT, 1f);
-        waitContainer.setLayoutParams(params);
-        waitContainer.setPadding(20,0,0,0);
-
-        for(Tile tile : wait.tiles ){
-            ImageView image = Utils.getHandDisplayTileView(tile, false);
-            waitContainer.addView(image);
-        }
-        newRow.addView(waitContainer);
-
         String winTypeLabel = (wait.isTsumo) ? "Tsumo" : "Ron";
-        newRow.addView(tableValue(winTypeLabel, 80));
-        newRow.addView(tableValue(String.valueOf(wait.han), 50));
-        newRow.addView(tableValue(String.valueOf(wait.fu), 50));
+        newRow.addView(tableValue(winTypeLabel));
+
+        newRow.addView(buildTileList(wait.tiles));
+
+        if( wait.han > 0 ){
+            newRow.addView(tableValue(String.valueOf(wait.han)));
+            newRow.addView(tableValue(String.valueOf(wait.fu)));
+        } else {
+            newRow.addView(tableError());
+        }
 
         waitTable.addView(newRow);
     }
-    private TextView tableValue(String value, int width){
+    private LinearLayout buildTileList(TileSet tiles){
+        LinearLayout waitContainer = new LinearLayout(getContext());
+        waitContainer.setOrientation(HORIZONTAL);
+        waitContainer.setGravity(Gravity.CENTER);
+
+        for(Tile tile : tiles ){
+            ImageView image = Utils.getHandDisplayTileView(tile, false);
+            waitContainer.addView(image);
+        }
+        return waitContainer;
+    }
+    private TextView tableValue(String value){
         TextView label = new TextView(getContext());
-
-        ViewGroup.LayoutParams params = new TableRow.LayoutParams(width, ViewGroup.LayoutParams.WRAP_CONTENT);
-        label.setLayoutParams(params);
-
         label.setTextSize(16);
         label.setTextAlignment(TEXT_ALIGNMENT_CENTER);
         label.setText(value);
+        return label;
+    }
+    private TextView tableError(){
+        TextView label = tableValue("No Yaku");
+
+        TableRow.LayoutParams params = (TableRow.LayoutParams) label.getLayoutParams();
+        params.span = 2;
+        label.setLayoutParams(params);
+
+        label.setTextColor(0xffcc0000);
+        label.setTypeface(null, Typeface.ITALIC);
         return label;
     }
     private void createSeparatorLine(){

@@ -47,6 +47,8 @@ public class MainActivity extends AppCompatActivity {
 
         AppSettings.init(this);
         loadBannerAds();
+        ImageCache.init(this);
+        Utils.init(this);
 
         // Load Main Menu
         if (findViewById(R.id.fragment_container) != null) {
@@ -59,8 +61,6 @@ public class MainActivity extends AppCompatActivity {
 
         ExampleHands.populate(this);
         FuHelper.populate(this);
-        ImageCache.init(this);
-        Utils.init(this);
         Utils.getHandDisplayPlaceholderTileView();     // This will populate HandDisplay tiles
     }
 
@@ -306,7 +306,7 @@ public class MainActivity extends AppCompatActivity {
             ScoreCalculator sc = new ScoreCalculator(hg.generateSpeedQuizHand());
 
             Hand hand = sc.validatedHand;
-            if( hand!=null && hand.han>0 ){
+            if( hand!=null && hand.countHan()>0 ){
                 currentHand = hand;
                 break;
             }

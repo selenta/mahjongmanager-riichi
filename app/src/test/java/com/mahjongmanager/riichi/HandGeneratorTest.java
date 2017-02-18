@@ -35,7 +35,7 @@ public class HandGeneratorTest {
         for(int i=0; i<30; i++){
             Hand h = new Hand(new ArrayList<Tile>());
 
-            while( h.han==0 ){
+            while( h.countHan()==0 ){
                 HandGenerator hg = new HandGenerator();
                 Hand hTemp = hg.completelyRandomHand();
                 hg.addSituationalYaku(hTemp);

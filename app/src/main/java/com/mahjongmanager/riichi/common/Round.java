@@ -147,6 +147,7 @@ public class Round {
         }
         roundIsOver = true;
         lastDraw.winningTile = true;
+        getActiveHand().selfDrawWinningTile = true;
         winningPlayers.add(activePlayer);
         currentState = State.ENDTURN;
     }

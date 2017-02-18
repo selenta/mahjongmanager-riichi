@@ -51,14 +51,14 @@ public class Results extends Fragment {
 
     private void checkHighScore(Hand h){
         int recordHan = AppSettings.getHandBuilderHanRecord();
-        int recordFu = AppSettings.getHandBuilderFuRecord();
+        int recordFu  = AppSettings.getHandBuilderFuRecord();
 
         int oldScore = ScoreCalculator.scoreBasePoints(recordHan, recordFu);
-        int newScore = ScoreCalculator.scoreBasePoints(h.han, h.fu);
+        int newScore = ScoreCalculator.scoreBasePoints(h.countHan(), h.countFu());
 
         if( newScore > oldScore ){
-            AppSettings.setHandBuilderHanRecord(h.han);
-            AppSettings.setHandBuilderFuRecord(h.fu);
+            AppSettings.setHandBuilderHanRecord(h.countHan());
+            AppSettings.setHandBuilderFuRecord(h.countFu());
         }
     }
 

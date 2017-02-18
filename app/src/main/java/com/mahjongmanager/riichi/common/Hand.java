@@ -18,9 +18,6 @@ public class Hand {
     public Meld meld3 = new Meld();
     public Meld meld4 = new Meld();
 
-    public int han = 0;
-    public int fu = 0;
-
     public Map<Yaku.Name,Integer> hanList = new HashMap<>();
     public Map<Fu.Name,Integer> fuList = new HashMap<>();
 
@@ -61,8 +58,6 @@ public class Hand {
         meld3 = new Meld(oldHand.meld3);
         meld4 = new Meld(oldHand.meld4);
 
-        han = oldHand.han;
-        fu  = oldHand.fu;
         for(Yaku.Name name : oldHand.hanList.keySet()){
             hanList.put(name, oldHand.hanList.get(name));
         }
@@ -75,14 +70,14 @@ public class Hand {
 
         selfDrawWinningTile = oldHand.selfDrawWinningTile;
 
-        riichi =         oldHand.riichi;
-        nagashiMangan =  oldHand.nagashiMangan;
-        ippatsu =        oldHand.ippatsu;
-        haitei =         oldHand.haitei;
-        houtei =         oldHand.houtei;
-        rinshan =        oldHand.rinshan;
-        chanKan =        oldHand.chanKan;
-        doubleRiichi =   oldHand.doubleRiichi;
+        doubleRiichi  = oldHand.doubleRiichi;
+        riichi        = oldHand.riichi;
+        ippatsu       = oldHand.ippatsu;
+        rinshan       = oldHand.rinshan;
+        chanKan       = oldHand.chanKan;
+        haitei        = oldHand.haitei;
+        houtei        = oldHand.houtei;
+        nagashiMangan = oldHand.nagashiMangan;
 
         doraIndicators.addAll(oldHand.doraIndicators);
         uraDoraIndicators.addAll(oldHand.uraDoraIndicators);
@@ -182,6 +177,22 @@ public class Hand {
         unsortedTiles.remove(t);
         sort();
         return true;
+    }
+
+
+    public int countHan(){
+        int han = 0;
+        for(Yaku.Name name : hanList.keySet()){
+            han += hanList.get(name);
+        }
+        return han;
+    }
+    public int countFu(){
+        int fu = 0;
+        for(Fu.Name name : fuList.keySet()){
+            fu += fuList.get(name);
+        }
+        return fu;
     }
 
     public boolean isOpen(){

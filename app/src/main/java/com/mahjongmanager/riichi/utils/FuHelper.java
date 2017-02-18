@@ -98,7 +98,6 @@ public class FuHelper {
         if( h.hasYaku(Yaku.Name.CHIITOITSU) ){
             h.fuList.clear();
             h.fuList.put(Fu.Name.CHIITOITSU, 25);
-            h.fu = 25;
             return;
         }
 

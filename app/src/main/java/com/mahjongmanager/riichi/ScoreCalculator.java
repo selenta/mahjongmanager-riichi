@@ -6,7 +6,6 @@ import com.mahjongmanager.riichi.common.Tile;
 import com.mahjongmanager.riichi.common.TileSet;
 import com.mahjongmanager.riichi.utils.FuHelper;
 import com.mahjongmanager.riichi.utils.HanHelper;
-import com.mahjongmanager.riichi.utils.HandGenerator;
 import com.mahjongmanager.riichi.utils.Log;
 import com.mahjongmanager.riichi.utils.Utils;
 
@@ -15,6 +14,15 @@ import java.util.Arrays;
 import java.util.List;
 
 public class ScoreCalculator {
+    public enum State {
+        UNPROCESSED,
+        SHANTEN,
+        TENPAI,
+        VALIDATED,
+        INVALID
+    }
+    public State state = State.UNPROCESSED;
+
     /*
      * These are the four primary stages of the process for a valid/complete winning hand:
      *
@@ -23,7 +31,7 @@ public class ScoreCalculator {
      *                 sorted/scored are placed in here (e.g. both a chiitoitsu interpretation of
      *                 the hand AND a ryanpeikou could appear in the list).
      * scoredHand    - All of the hands in sortedHands are examined, this hand is the one
-     *                 with the highest value.
+     *                 with the highest value. It has had its Han/Fu lists populated.
      * validatedHand - The scoredHand is thoroughly examined for anything that could be
      *                 nonsensical or contradictory. If ANY part of the hand/melds/tiles/yaku
      *                 looks wrong, this will remain null.
@@ -61,6 +69,11 @@ public class ScoreCalculator {
         determineScoredHand();
         if( scoredHand!=null && Validator.validate(scoredHand) ){
             validatedHand = scoredHand;
+            state = State.VALIDATED;
+        }
+
+        if( state==State.UNPROCESSED ){
+            state = State.INVALID;
         }
     }
 
@@ -149,6 +162,7 @@ public class ScoreCalculator {
             HanHelper.checkNagashiMangan(hand);
             scoredHand = hand;
             validatedHand = hand;
+            state = State.VALIDATED;
         }
     }
 
@@ -243,8 +257,8 @@ public class ScoreCalculator {
      */
     private void determineScoredHand(){
         if( scoredHand!=null ){
-            countHan(scoredHand);
-            countFu(scoredHand);
+            HanHelper.populateHanList(scoredHand);
+            FuHelper.populateFuList(scoredHand);
         } else if( sortedHands.size()>0 ){
             boolean anyHandValidated = false;
             for( Hand unscoredHand : sortedHands ){
@@ -255,8 +269,8 @@ public class ScoreCalculator {
                     continue;
                 }
 
-                countHan(unscoredHand);
-                countFu(unscoredHand);
+                HanHelper.populateHanList(unscoredHand);
+                FuHelper.populateFuList(unscoredHand);
                 if( scoredHand==null || handTwoIsLarger(scoredHand, unscoredHand) ){
                     scoredHand = unscoredHand;
                 }
@@ -264,37 +278,16 @@ public class ScoreCalculator {
         }
     }
     private boolean handTwoIsLarger(Hand handOne, Hand handTwo ){
-        int handOneBasePoints = scoreBasePoints(handOne.han, handOne.fu);
-        int handTwoBasePoints = scoreBasePoints(handTwo.han, handTwo.fu);
+        int handOneBasePoints = scoreBasePoints(handOne.countHan(), handOne.countFu());
+        int handTwoBasePoints = scoreBasePoints(handTwo.countHan(), handTwo.countFu());
 
         return handTwoBasePoints > handOneBasePoints
-                || (handOneBasePoints==handTwoBasePoints && handTwo.han > handOne.han) ;
-    }
-
-    private void countHan(Hand h){
-        HanHelper.populateHanList(h);
-
-        int total = 0;
-        for(int i : h.hanList.values() ){
-            total += i;
-        }
-        h.han = total;
-    }
-    private void countFu(Hand h){
-        FuHelper.populateFuList(h);
-
-        int total = 0;
-        for(int i : h.fuList.values() ){
-            total += i;
-        }
-        h.fu = total;
+                || (handOneBasePoints==handTwoBasePoints && handTwo.countHan() > handOne.countHan()) ;
     }
 
     private void scrubScore(Hand h){
         h.hanList.clear();
         h.fuList.clear();
-        h.han = 0;
-        h.fu = 0;
     }
 
     public static Integer scoreBasePoints( int han, int fu ){
@@ -372,7 +365,7 @@ public class ScoreCalculator {
     /*
      * This whole section is incredibly inefficient and ugly
      *      (though this is definitely an objectively non-trivial problem)
-     * Ideads to make this more efficient (...maybe?):
+     * Ideas to make this more efficient (...maybe?):
      * - Pre-cache meld combinations, then build MeldSolvers from combinations
      * - Guarantee all saved MeldSolvers have unique combination of melds (makes saving them
      *      slower, but would make later processing/analysis faster, such as for an AI)
@@ -491,6 +484,9 @@ public class ScoreCalculator {
         Log.i("processIncompleteHand", "shanten: "+shanten);
         if( shanten==0 ){
             processTenpaiHand(possibilities);
+            state = State.TENPAI;
+        } else {
+            state = State.SHANTEN;
         }
     }
 
@@ -915,7 +911,7 @@ public class ScoreCalculator {
 
         ScoreCalculator sc = new ScoreCalculator(hand);
         if( sc.validatedHand!=null ){
-            addWait(sc.validatedHand.han, sc.validatedHand.fu, isTsumo, candidate);
+            addWait(sc.validatedHand.countHan(), sc.validatedHand.countFu(), isTsumo, candidate);
         }
         Log.i("testCandidate", "Tested candidate: "+candidate+"   -   "+sc.validatedHand);
     }

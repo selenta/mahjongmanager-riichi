@@ -71,10 +71,10 @@ public class ResultsScreen extends Fragment implements View.OnClickListener {
     private boolean scoreGuess(int[] guess, ScoreCalculator sc ){
         int hanGuess = guess[0];
         int fuGuess = guess[1];
-        boolean isManganOrMore = ScoreCalculator.scoreBasePoints(sc.validatedHand.han, sc.validatedHand.fu) >= 2000;
-        Integer roundedFu = (sc.validatedHand.fu==25) ? 25 : (int) Math.ceil(sc.validatedHand.fu/10.0)*10;
+        boolean isManganOrMore = ScoreCalculator.scoreBasePoints(sc.validatedHand.countHan(), sc.validatedHand.countFu()) >= 2000;
+        Integer roundedFu = (sc.validatedHand.countFu()==25) ? 25 : (int) Math.ceil(sc.validatedHand.countFu()/10.0)*10;
 
-        return hanGuess==sc.validatedHand.han && ( isManganOrMore || fuGuess==roundedFu);
+        return hanGuess==sc.validatedHand.countHan() && (isManganOrMore || fuGuess==roundedFu);
     }
     private void updateDisplayedScores(){
         correctScoreLabel.setText(String.valueOf(correctGuesses));

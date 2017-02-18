@@ -98,12 +98,6 @@ public class HanHelper {
         if(h.doubleRiichi){
             h.hanList.put(Yaku.Name.DOUBLERIICHI, 2);
         }
-
-        int hanTotal = 0;
-        for(int i : h.hanList.values() ){
-            hanTotal += i;
-        }
-        h.han = hanTotal;
     }
 
 
@@ -165,7 +159,6 @@ public class HanHelper {
         if( h.nagashiMangan ){
             h.unsortedTiles.clear();
             h.hanList.put(Yaku.Name.NAGASHI, 5);
-            h.han = 5;
         }
     }
 
