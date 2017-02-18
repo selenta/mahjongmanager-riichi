@@ -51,13 +51,7 @@ public class MainActivity extends AppCompatActivity {
         Utils.init(this);
 
         // Load Main Menu
-        if (findViewById(R.id.fragment_container) != null) {
-            if (savedInstanceState != null) {
-                return;
-            }
-
-            replaceFragment(new MainMenuFragment(), false);
-        }
+        backToMainMenu(null);
 
         ExampleHands.populate(this);
         FuHelper.populate(this);
@@ -250,8 +244,8 @@ public class MainActivity extends AppCompatActivity {
         scoredHands = new ArrayList<>();
         hanFuGuesses = new ArrayList<>();
 
-        replaceFragment(new MainMenuFragment(), false);
         clearBackStack();
+        replaceFragment(new MainMenuFragment(), false);
     }
 
     private void replaceFragment(Fragment fragment){
@@ -282,7 +276,7 @@ public class MainActivity extends AppCompatActivity {
     private void clearBackStack(){
         FragmentManager manager = getSupportFragmentManager();
         if( manager.getBackStackEntryCount() > 0 ){
-            getSupportFragmentManager().popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
+            manager.popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
         }
     }
 
