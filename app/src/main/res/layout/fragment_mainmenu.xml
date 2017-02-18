@@ -1,203 +1,210 @@
-<ScrollView
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:fillViewport="true">
+    tools:context=".simplefragments.MainMenuFragment"
+    android:orientation="vertical">
 
-    <LinearLayout
-        android:orientation="vertical"
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-
-        <LinearLayout
-            android:orientation="horizontal"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:background="@drawable/rounded_green_rect"
-            android:layout_marginTop="10dp"
-            android:layout_marginBottom="10dp"
-            android:layout_marginLeft="20dp"
-            android:layout_marginRight="20dp"
-            android:layout_gravity="center_horizontal"
-            android:paddingTop="10dp"
-            android:paddingBottom="10dp"
-            android:paddingLeft="30dp"
-            android:paddingRight="30dp">
-
-            <RelativeLayout
-                android:layout_width="60dp"
-                android:layout_height="81dp"
-                android:id="@+id/titleTileImage">
-
-                <ImageView
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:src="@drawable/front"
-                    android:contentDescription="Tile Background"/>
-
-                <ImageView
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:padding="5dp"
-                    android:src="@drawable/pin1"
-                    android:contentDescription="Image of 1 Pin Tile"/>
-
-            </RelativeLayout>
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textAppearance="?android:attr/textAppearanceLarge"
-                android:text="Mahjong\n   Manager"
-                android:textSize="30sp"
-                android:textStyle="italic"
-                android:id="@+id/appTitleLabel"
-                android:shadowColor="@android:color/black"
-                android:shadowRadius="5"
-                android:textColor="?android:attr/textColorPrimaryInverse"
-                android:shadowDx="4"
-                android:shadowDy="4"
-                android:layout_gravity="center"
-                android:paddingLeft="20dp" />
-        </LinearLayout>
+        android:layout_height="match_parent"
+        android:fillViewport="true">
 
         <LinearLayout
             android:orientation="vertical"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:paddingLeft="45dp"
-            android:paddingRight="45dp">
-
-            <Button
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:text="Mini-Games"
-                android:layout_gravity="center_horizontal"
-                android:enabled="true"
-                android:onClick="goToMinigames" />
-
-            <Button
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:text="Game Score Tracker (v2.0)"
-                android:layout_gravity="center_horizontal"
-                android:enabled="false"
-                android:visibility="gone" />
-
-            <Button
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="League Tracker (v3.0)"
-                android:layout_gravity="center_horizontal"
-                android:maxWidth="800dp"
-                android:enabled="false"
-                android:visibility="gone" />
-
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:background="@android:color/darker_gray"
-                android:layout_marginLeft="30dp"
-                android:layout_marginRight="30dp"
-                android:layout_marginTop="10dp"
-                android:layout_marginBottom="10dp" />
-
-            <Button
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:text="Rules Overview"
-                android:enabled="true"
-                android:onClick="goToOverview" />
-
-            <Button
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:text="Yaku Descriptions"
-                android:enabled="true"
-                android:onClick="goToYakuList" />
+            android:layout_height="wrap_content">
 
             <LinearLayout
                 android:orientation="horizontal"
-                android:layout_width="fill_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:background="@drawable/rounded_green_rect"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="10dp"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp"
                 android:layout_gravity="center_horizontal"
-                android:measureWithLargestChild="true">
+                android:paddingTop="10dp"
+                android:paddingBottom="10dp"
+                android:paddingLeft="30dp"
+                android:paddingRight="30dp">
 
-                <Button
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:text="Score Table"
-                    android:layout_gravity="center_horizontal"
-                    android:layout_weight="1"
-                    android:onClick="goToScoreTable" />
+                <RelativeLayout
+                    android:layout_width="60dp"
+                    android:layout_height="81dp"
+                    android:id="@+id/titleTileImage">
 
-                <Button
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:text="Han/Fu"
-                    android:layout_gravity="center_horizontal"
-                    android:enabled="true"
-                    android:onClick="goToHanFuCalculator"
-                    android:layout_weight="1" />
+                    <ImageView
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:src="@drawable/front"
+                        android:contentDescription="Tile Background"/>
 
+                    <ImageView
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:padding="5dp"
+                        android:src="@drawable/pin1"
+                        android:contentDescription="Image of 1 Pin Tile"/>
+
+                </RelativeLayout>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="?android:attr/textAppearanceLarge"
+                    android:text="Mahjong\n   Manager"
+                    android:textSize="30sp"
+                    android:textStyle="italic"
+                    android:id="@+id/appTitleLabel"
+                    android:shadowColor="@android:color/black"
+                    android:shadowRadius="5"
+                    android:textColor="?android:attr/textColorPrimaryInverse"
+                    android:shadowDx="4"
+                    android:shadowDy="4"
+                    android:layout_gravity="center"
+                    android:paddingLeft="20dp" />
             </LinearLayout>
 
-            <Button
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:text="Hand Calculator"
-                android:layout_gravity="center_horizontal"
-                android:enabled="true"
-                android:onClick="gotoHandCalculatorStart"/>
-
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:background="@android:color/darker_gray"
-                android:layout_marginLeft="30dp"
-                android:layout_marginRight="30dp"
-                android:layout_marginBottom="10dp"
-                android:layout_marginTop="10dp" />
-
             <LinearLayout
-                android:orientation="horizontal"
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal"
-                android:measureWithLargestChild="true">
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:paddingLeft="45dp"
+                android:paddingRight="45dp">
 
                 <Button
-                    android:layout_width="0dp"
+                    android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
-                    android:text="Glossary"
+                    android:text="Mini-Games"
+                    android:layout_gravity="center_horizontal"
+                    android:enabled="true"
+                    android:onClick="goToMinigames" />
+
+                <Button
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Game Score Tracker (v2.0)"
+                    android:layout_gravity="center_horizontal"
                     android:enabled="false"
-                    android:layout_weight="1"
                     android:visibility="gone" />
 
                 <Button
-                    android:layout_width="0dp"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="About"
-                    android:layout_weight="1"
-                    android:onClick="goToAbout" />
+                    android:text="League Tracker (v3.0)"
+                    android:layout_gravity="center_horizontal"
+                    android:maxWidth="800dp"
+                    android:enabled="false"
+                    android:visibility="gone" />
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="@android:color/darker_gray"
+                    android:layout_marginLeft="30dp"
+                    android:layout_marginRight="30dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginBottom="10dp" />
+
+                <Button
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Rules Overview"
+                    android:enabled="true"
+                    android:onClick="goToOverview" />
+
+                <Button
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Yaku Descriptions"
+                    android:enabled="true"
+                    android:onClick="goToYakuList" />
+
+                <LinearLayout
+                    android:orientation="horizontal"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:measureWithLargestChild="true">
+
+                    <Button
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:text="Score Table"
+                        android:layout_gravity="center_horizontal"
+                        android:layout_weight="1"
+                        android:onClick="goToScoreTable" />
+
+                    <Button
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:text="Han/Fu"
+                        android:layout_gravity="center_horizontal"
+                        android:enabled="true"
+                        android:onClick="goToHanFuCalculator"
+                        android:layout_weight="1" />
+
+                </LinearLayout>
+
+                <Button
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Hand Calculator"
+                    android:layout_gravity="center_horizontal"
+                    android:enabled="true"
+                    android:onClick="gotoHandCalculatorStart"/>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="@android:color/darker_gray"
+                    android:layout_marginLeft="30dp"
+                    android:layout_marginRight="30dp"
+                    android:layout_marginBottom="10dp"
+                    android:layout_marginTop="10dp" />
+
+                <LinearLayout
+                    android:orientation="horizontal"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:measureWithLargestChild="true">
+
+                    <Button
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:text="Glossary"
+                        android:enabled="false"
+                        android:layout_weight="1"
+                        android:visibility="gone" />
+
+                    <Button
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:text="About"
+                        android:layout_weight="1"
+                        android:onClick="goToAbout" />
+
+                </LinearLayout>
+
+                <Button
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Options"
+                    android:layout_gravity="center_horizontal"
+                    android:enabled="true"
+                    android:onClick="goToOptions" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="?android:attr/textAppearanceSmall"
+                    android:text="v0.89"
+                    android:layout_gravity="center_horizontal" />
 
             </LinearLayout>
-
-            <Button
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:text="Options"
-                android:layout_gravity="center_horizontal"
-                android:enabled="true"
-                android:onClick="goToOptions" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textAppearance="?android:attr/textAppearanceSmall"
-                android:text="v0.89"
-                android:layout_gravity="center_horizontal" />
-
         </LinearLayout>
-    </LinearLayout>
-</ScrollView>
+    </ScrollView>
+</LinearLayout>
