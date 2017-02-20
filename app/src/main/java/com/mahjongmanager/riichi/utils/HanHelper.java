@@ -518,7 +518,7 @@ public class HanHelper {
     }    // All terminals
     private static void checkRyuuiisou(Hand h){
         for(Tile t : h.tiles){
-            if( t.suit==Tile.Suit.HONOR && t.dragon!=Tile.Dragon.GREEN ){
+            if( t.suit!=Tile.Suit.SOUZU && t.dragon!=Tile.Dragon.GREEN ){
                 return;
             } else if( (t.number==1||t.number==5||t.number==7||t.number==9) ){
                 return;
