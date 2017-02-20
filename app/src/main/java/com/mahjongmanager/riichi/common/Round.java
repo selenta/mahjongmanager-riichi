@@ -2,11 +2,12 @@ package com.mahjongmanager.riichi.common;
 
 import com.mahjongmanager.riichi.utils.HandGenerator;
 import com.mahjongmanager.riichi.utils.Log;
+import com.mahjongmanager.riichi.utils.Utils;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
-
-import static com.mahjongmanager.riichi.utils.Utils.randomTile;
+import java.util.Map;
 
 public class Round {
     private enum State{
@@ -21,8 +22,7 @@ public class Round {
         }
     }
 
-    private List<Tile> wall = new ArrayList<>();
-    private List<Tile> deadWall = new ArrayList<>();
+    private Deck deck = new Deck();
 
     private Tile.Wind roundWind    = Tile.Wind.EAST;
     private Tile.Wind activePlayer = Tile.Wind.EAST;
@@ -50,42 +50,30 @@ public class Round {
     public Round (Tile.Wind rWind){
         roundWind = rWind;
 
-        buildWalls();
         buildHands();
     }
-    private void buildWalls(){
-        List<Tile> allTiles = HandGenerator.allTiles();
-        allTiles.addAll(HandGenerator.allTiles());
-        allTiles.addAll(HandGenerator.allTiles());
-        allTiles.addAll(HandGenerator.allTiles());
-
-        while(deadWall.size()<14){
-            Tile t = randomTile(allTiles);
-            deadWall.add(t);
-            allTiles.remove(t);
-        }
-        while(allTiles.size()>0){
-            Tile t = randomTile(allTiles);
-            wall.add(t);
-            allTiles.remove(t);
-        }
-    }
     private void buildHands(){
-        eastHand  = new Hand( drawTiles(13) );
+        eastHand  = new Hand( drawTiles(Tile.Wind.EAST, 13) );
         eastHand.playerWind = Tile.Wind.EAST;
         eastHand.prevailingWind = roundWind;
 
-        southHand = new Hand( drawTiles(13) );
+        southHand = new Hand( drawTiles(Tile.Wind.SOUTH, 13) );
         southHand.playerWind = Tile.Wind.SOUTH;
         southHand.prevailingWind = roundWind;
 
-        westHand  = new Hand( drawTiles(13) );
+        westHand  = new Hand( drawTiles(Tile.Wind.WEST, 13) );
         westHand.playerWind = Tile.Wind.WEST;
         westHand.prevailingWind = roundWind;
 
-        northHand = new Hand( drawTiles(13) );
+        northHand = new Hand( drawTiles(Tile.Wind.NORTH, 13) );
         northHand.playerWind = Tile.Wind.NORTH;
         northHand.prevailingWind = roundWind;
+    }
+
+    public void stackDeck(Tile.Wind player, List<Tile> tiles){
+        deck = new Deck(deck);
+        deck.stackDeck(player, tiles);
+        buildHands();
     }
 
     /////////////////////////////////////////////////////
@@ -103,16 +91,16 @@ public class Round {
 
         switch (activePlayer){
             case EAST:
-                eastHand.addTile(drawTile());
+                eastHand.addTile(drawTile(activePlayer));
                 break;
             case SOUTH:
-                southHand.addTile(drawTile());
+                southHand.addTile(drawTile(activePlayer));
                 break;
             case WEST:
-                westHand.addTile(drawTile());
+                westHand.addTile(drawTile(activePlayer));
                 break;
             case NORTH:
-                northHand.addTile(drawTile());
+                northHand.addTile(drawTile(activePlayer));
                 break;
         }
         currentState = State.ACTIVE;
@@ -179,8 +167,8 @@ public class Round {
             Log.w("declareTsumo", "Ending turn when state is not END_TURN: "+currentState);
         }
 
-        Log.d("endTurn", "Tiles remaining in wall at end of seat's turn: "+activePlayer+" - "+wall.size());
-        if( wall.size() > 0 ){
+        Log.d("endTurn", "Tiles remaining in wall at end of seat's turn: "+activePlayer+" - "+deck.tiles());
+        if( deck.tiles() > 0 ){
             currentState = State.DRAW;
             activePlayer = activePlayer.next();
             Log.v("endTurn", "Next player's wind: "+activePlayer);
@@ -194,20 +182,15 @@ public class Round {
     /////////////       Internal        ///////////////
     ///////////////////////////////////////////////////
     // Draw tiles from the wall. These are the correct methods for additional draws during a turn
-    private List<Tile> drawTiles(int n){
+    private List<Tile> drawTiles(Tile.Wind player, int n){
         List<Tile> drawnTiles = new ArrayList<>();
         for(int i=0; i<n;i++){
-            drawnTiles.add( drawTile() );
+            drawnTiles.add( drawTile(player) );
         }
         return drawnTiles;
     }
-    private Tile drawTile(){
-        if( wall.isEmpty() ){
-            Log.e("drawTile", "Wall is empty! Cannot draw a tile");
-            return null;
-        }
-        Tile t = wall.get(0);
-        wall.remove(0);
+    private Tile drawTile(Tile.Wind player){
+        Tile t = deck.draw(player);
         lastDraw = t;
         return t;
     }
@@ -233,6 +216,107 @@ public class Round {
         }
     }
 
+    private class Deck {
+        private List<Tile> wall = new ArrayList<>();
+        private List<Tile> deadWall = new ArrayList<>();
+
+        // If we want to stack the deck for a player
+        //    When building walls we will ensure that tiles in these lists are put in the correct
+        //    position so that (assuming no calls are made) they will be drawn by the player
+        private Map<Tile.Wind, List<Tile>> presetDraws = new HashMap<Tile.Wind, List<Tile>>();
+
+        Deck(){
+            presetDraws.put(Tile.Wind.EAST,  new ArrayList<Tile>());
+            presetDraws.put(Tile.Wind.SOUTH, new ArrayList<Tile>());
+            presetDraws.put(Tile.Wind.WEST,  new ArrayList<Tile>());
+            presetDraws.put(Tile.Wind.NORTH, new ArrayList<Tile>());
+        }
+        Deck(Deck oldDeck){
+            presetDraws.put(Tile.Wind.EAST,  oldDeck.presetDraws.get(Tile.Wind.EAST));
+            presetDraws.put(Tile.Wind.SOUTH, oldDeck.presetDraws.get(Tile.Wind.SOUTH));
+            presetDraws.put(Tile.Wind.WEST,  oldDeck.presetDraws.get(Tile.Wind.WEST));
+            presetDraws.put(Tile.Wind.NORTH, oldDeck.presetDraws.get(Tile.Wind.NORTH));
+        }
+
+        void stackDeck(Tile.Wind playerWind, List<Tile> tiles){
+            int max = (playerWind==Tile.Wind.EAST || playerWind==Tile.Wind.SOUTH) ? 31 : 30;
+            if( tiles.size() > max ){
+                Log.w("stackDeck", "Trying to stack the deck with an abnormally large number of tiles: "+playerWind+" - "+tiles.size()+" - "+tiles);
+            }
+            presetDraws.get(playerWind).addAll(tiles);
+            Log.i("stackDeck", "StackedDeck: "+playerWind+" - "+presetDraws.get(playerWind));
+        }
+
+        public Tile draw(Tile.Wind playerWind){
+            if( deadWall.size()==0){
+                buildDeck();
+            }
+
+            if( !presetDraws.get(playerWind).isEmpty() ){
+                return presetDraws.get(playerWind).remove(0);
+            } else if( wall.size()==0 ){
+                for(Tile.Wind wind : presetDraws.keySet()){
+                    if( !presetDraws.get(wind).isEmpty() ){
+                        Log.wtf("draw", "Woah shit boy! Wall is empty but preset draws are not(drawing a tile from here then): "+wind+" - "+presetDraws.get(wind));
+                        return presetDraws.get(wind).remove(0);
+                    }
+                }
+                Log.w("draw", "Wall is empty! Cannot draw tile from an empty wall");
+                return null;
+            }
+            return wall.remove(0);
+        }
+
+        // Remove tiles in presetDraws from allTiles first
+        private void buildDeck(){
+            List<Tile> allTiles = HandGenerator.allTiles();
+            allTiles.addAll(HandGenerator.allTiles());
+            allTiles.addAll(HandGenerator.allTiles());
+            allTiles.addAll(HandGenerator.allTiles());
+
+            Log.i("buildDeck", "AllTiles before removing: "+allTiles.size());
+            for(Tile.Wind wind : presetDraws.keySet()){
+                Log.i("buildDeck", "PresetDraws: "+wind+" - "+presetDraws.get(wind));
+                for(Tile tile : presetDraws.get(wind) ){
+                    removeTileFromList(allTiles, tile);
+                }
+            }
+            Log.i("buildDeck", "AllTiles after removing: "+allTiles.size());
+
+
+            while(deadWall.size()<14){
+                Tile t = Utils.randomTile(allTiles);
+                deadWall.add(t);
+                allTiles.remove(t);
+            }
+            while(allTiles.size()>0){
+                Tile t = Utils.randomTile(allTiles);
+                wall.add(t);
+                allTiles.remove(t);
+            }
+        }
+
+        private void removeTileFromList(List<Tile> list, Tile tile){
+            Tile doomed = null;
+            for(Tile t : list){
+                if( t.isSame(tile) ){
+                    doomed = t;
+                    break;
+                }
+            }
+            Log.i("removeTileFromList", "Before removing tile: "+list.size()+" - "+doomed);
+            list.remove(doomed);
+            Log.i("removeTileFromList", "After removing tile: "+list.size());
+        }
+
+        public int tiles(){
+            int count = wall.size();
+            for(Tile.Wind wind : presetDraws.keySet()){
+                count += presetDraws.get(wind).size();
+            }
+            return count;
+        }
+    }
 
     ///////////////////////////////////////////////////
     /////////////        Getters        ///////////////
@@ -294,6 +378,6 @@ public class Round {
     }
 
     public int tilesInWall(){
-        return wall.size();
+        return deck.tiles();
     }
 }

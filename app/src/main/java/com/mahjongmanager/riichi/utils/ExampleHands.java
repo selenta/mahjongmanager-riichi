@@ -1062,4 +1062,42 @@ public class ExampleHands {
         ScoreCalculator sc = new ScoreCalculator(h);
         return sc.validatedHand;
     }
+
+    // Hand-building Tutorial
+    public static List<Tile> getHandBuilderTutorialSouth(){
+        Tile s1  = new Tile(3, Tile.Suit.MANZU);
+        Tile s2  = new Tile(5, Tile.Suit.MANZU);
+        Tile s3  = new Tile(8, Tile.Suit.MANZU);
+        Tile s4  = new Tile(4, Tile.Suit.PINZU);
+        Tile s5  = new Tile(5, Tile.Suit.PINZU);
+        Tile s6  = new Tile(7, Tile.Suit.PINZU);
+        Tile s7  = new Tile(9, Tile.Suit.PINZU);
+        Tile s8  = new Tile(2, Tile.Suit.SOUZU);
+        Tile s9  = new Tile(4, Tile.Suit.SOUZU);
+        Tile s10 = new Tile(9, Tile.Suit.SOUZU);
+        Tile s11 = new Tile(Tile.Wind.WEST);
+        Tile s12 = new Tile(Tile.Wind.NORTH);
+        Tile s13 = new Tile(Tile.Dragon.RED);
+
+        Tile d1  = new Tile(Tile.Wind.WEST);
+        Tile d2  = new Tile(3, Tile.Suit.SOUZU);    // Advances
+        Tile d3  = new Tile(4, Tile.Suit.PINZU);    // Advances
+        Tile d4  = new Tile(2, Tile.Suit.MANZU);    // Advances
+        Tile d5  = new Tile(7, Tile.Suit.SOUZU);    // Temporary
+        Tile d6  = new Tile(Tile.Wind.SOUTH);
+        Tile d7  = new Tile(3, Tile.Suit.PINZU);    // Advances
+        Tile d8  = new Tile(2, Tile.Suit.SOUZU);    // Advances
+        Tile d9  = new Tile(9, Tile.Suit.MANZU);
+        Tile d10 = new Tile(2, Tile.Suit.PINZU);    // Advances
+        Tile d11 = new Tile(2, Tile.Suit.SOUZU);    // Advances
+        Tile d12 = new Tile(8, Tile.Suit.PINZU);
+        Tile d13 = new Tile(Tile.Dragon.WHITE);
+        Tile d14 = new Tile(6, Tile.Suit.PINZU);    // Advances
+        Tile d15 = new Tile(8, Tile.Suit.SOUZU);
+        Tile d16 = new Tile(Tile.Dragon.RED);
+        Tile d17 = new Tile(Tile.Dragon.RED);
+        Tile d18 = new Tile(7, Tile.Suit.MANZU);
+
+        return Arrays.asList(s1, s2, s3, s4, s5, s6, s7, s8, s9, s10, s11, s12, s13, d1, d2, d3, d4, d5, d6, d7, d8, d9, d10, d11, d12, d13, d14, d15, d16, d17, d18);
+    }
 }
