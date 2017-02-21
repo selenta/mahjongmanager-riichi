@@ -541,7 +541,7 @@ public class HandKeyboard extends LinearLayout implements View.OnClickListener {
 
         handDisplay  = (HandDisplay) findViewById(R.id.handDisplay);
         handDisplay.setOnClickListener(this);
-        handDisplay.setParentKeyboard(this);
+        handDisplay.setParentLayout(this);
         handDisplay.setState(HandDisplay.HAND_CALCULATOR);
 
         openMeldsCheckbox = (CheckBox) findViewById(R.id.openMeldsCheckbox);

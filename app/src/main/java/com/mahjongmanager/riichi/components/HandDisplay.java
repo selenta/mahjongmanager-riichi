@@ -22,7 +22,7 @@ import java.util.List;
 
 public class HandDisplay extends LinearLayout {
     private Fragment parentFragment = null;
-    private HandKeyboard parentKeyboard = null;
+    private LinearLayout parentLayout = null;
 
     private LinearLayout handDisplayContainer;
     private LinearLayout closedTilesContainer;
@@ -80,8 +80,8 @@ public class HandDisplay extends LinearLayout {
     public void setParentFragment(Fragment p){
         parentFragment = p;
     }
-    public void setParentKeyboard(HandKeyboard hk){
-        parentKeyboard = hk;
+    public void setParentLayout(LinearLayout pl){
+        parentLayout = pl;
     }
 
     /**
@@ -118,7 +118,7 @@ public class HandDisplay extends LinearLayout {
                 separateWinningTile = false;
                 break;
             case HAND_CALCULATOR:
-                if( parentKeyboard==null ){
+                if( parentLayout ==null ){
                     Log.e("setHandDisplayState", "Attempted to set state to HAND_CALCULATOR without a keyboard.");
                 }
                 isEditable = true;
@@ -198,7 +198,9 @@ public class HandDisplay extends LinearLayout {
         }
         tileList.remove(tileDisplay);
         displayHand();
-        parentKeyboard.setHand(hand);
+        if( parentLayout instanceof HandKeyboard ){
+            ((HandKeyboard) parentLayout).setHand(hand);
+        }
     }
 
     public Hand getHand(){
@@ -470,11 +472,11 @@ public class HandDisplay extends LinearLayout {
 
     // It is the parent's responsibility to handle clicks events on tiles
     private void addListeners(ImageView image){
-        if( parentFragment !=null && parentFragment instanceof OnClickListener ){
+        if( parentFragment!=null && parentFragment instanceof OnClickListener ){
             image.setOnClickListener((OnClickListener) parentFragment);
         }
-        if( parentKeyboard!=null ){
-            image.setOnClickListener( parentKeyboard);
+        if( parentLayout !=null && parentLayout instanceof OnClickListener ){
+            image.setOnClickListener((OnClickListener) parentLayout);
         }
     }
 
