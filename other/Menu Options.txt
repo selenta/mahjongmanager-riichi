@@ -161,3 +161,69 @@ Icons		(from https://material.io/icons)
 		Back to Main Menu				Action > home				Navigation > menu
 	Other
 		Time Remaining					Image > timer				Image > timelapse
+
+
+
+
+Tutorial Order
+
+Discussion
+    Draw tile to determine seats
+    Show all Tiles
+    Hands consist of 4 sets of 3 and a pair
+    Anatomy of a Turn
+        Draw
+        Declare Discard
+        Calling
+            Pon
+            Chii
+            Show Revealed Melds
+    Ending the Round
+        Tsumo
+        Ron
+    Explain general discard preferences:
+        1) Singleton honors
+        2) Pairs of non-yakuhai winds
+        3) Lone suited tiles, starting with 1s/9s, then 2s/8s, then 3s/7s
+
+Game 1
+    Build complete hand
+    Play face-up
+    Find an excuse to have someone call a Chii and a Pon
+
+Discussion
+    Passing Dealer (if applicable)
+    Hand must contain a yaku
+    Call only if:
+        1) Yakuhai
+        2) Honitsu
+        3) Tanyao
+    Otherwise go for Riichi
+
+Game 2
+    Build hand with Yaku
+    Help each player determine which Yaku to shoot for
+    Recommend not to spend more then 5 seconds per discard (don't tell them to hurry until like 20 seconds!)
+
+Discussion
+    Passing Dealer (if applicable)
+    Other possible ways the hand can end
+        Draw
+        Redeal
+    Game lasts until dealership goes around twice or someone gets boxed
+    Points
+        Start with 25000 points
+        Have players exchange points for Game 2
+        Explain how big hands usually are, and points double as you add more yaku
+    Remind not to call unless it is part of your strategy!
+
+Game 3
+    Mostly hands-off
+    Once game is in-progress, explain how it is often worth going for a larger hand, even if it lowers your chance of success
+
+Discussion (Final)
+    Furiten
+    Chombo (a type of redeal)
+
+	
+
