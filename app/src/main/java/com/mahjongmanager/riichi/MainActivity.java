@@ -221,6 +221,9 @@ public class MainActivity extends AppCompatActivity {
     public void goToOverviewScoring(View view){
         replaceFragment(new OverviewScoringFragment());
     }
+    public void goToTutorialDrawDiscard(View view){
+        replaceFragment(new TutorialDrawDiscardFragment());
+    }
     public void goToScoringFlowchart(View view){
         replaceFragment(new ScoringFlowchartFragment());
     }

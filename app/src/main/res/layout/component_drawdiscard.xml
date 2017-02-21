@@ -20,8 +20,8 @@
                 android:layout_height="wrap_content"
                 android:id="@+id/handBuilder4pTitle"
                 android:textAppearance="?android:attr/textAppearanceLarge"
-                android:text="Hand Builder (4p)"
-                android:textSize="44sp"
+                android:text="Draw/Discard Component"
+                android:textSize="30sp"
                 android:textStyle="italic"
                 android:textAlignment="center"
                 android:layout_gravity="center_horizontal" />

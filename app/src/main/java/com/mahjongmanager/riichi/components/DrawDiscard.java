@@ -100,6 +100,9 @@ public class DrawDiscard extends LinearLayout implements View.OnClickListener {
             tsumoButton.setOnClickListener((OnClickListener) parentFragment);
         }
     }
+    public void setTitle(String t){
+        title.setText(t);
+    }
     public void declareTsumo(){
         round.declareTsumo();
         ((MainActivity)getContext()).setCurrentHand(playerHand);
