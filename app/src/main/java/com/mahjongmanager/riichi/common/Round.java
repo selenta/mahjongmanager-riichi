@@ -136,6 +136,9 @@ public class Round {
         roundIsOver = true;
         lastDraw.winningTile = true;
         getActiveHand().selfDrawWinningTile = true;
+        if( tilesInWall()==0 ){
+            getActiveHand().haitei = true;
+        }
         winningPlayers.add(activePlayer);
         currentState = State.ENDTURN;
     }
