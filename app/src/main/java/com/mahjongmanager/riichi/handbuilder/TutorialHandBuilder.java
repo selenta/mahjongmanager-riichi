@@ -1,4 +1,4 @@
-package com.mahjongmanager.riichi.simplefragments;
+package com.mahjongmanager.riichi.handbuilder;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -11,9 +11,9 @@ import com.mahjongmanager.riichi.R;
 import com.mahjongmanager.riichi.common.Round;
 import com.mahjongmanager.riichi.common.Tile;
 import com.mahjongmanager.riichi.components.DrawDiscard;
-import com.mahjongmanager.riichi.utils.ExampleHands;
+import com.mahjongmanager.riichi.utils.TutorialLibrary;
 
-public class TutorialDrawDiscardFragment extends Fragment implements View.OnClickListener {
+public class TutorialHandBuilder extends Fragment implements View.OnClickListener {
     private DrawDiscard drawDiscard;
 
     @Override
@@ -37,10 +37,10 @@ public class TutorialDrawDiscardFragment extends Fragment implements View.OnClic
         switch (v.getId()) {
             case R.id.tsumoButton:
                 drawDiscard.declareTsumo();
-                ((MainActivity)getContext()).goToHandBuilderScoreHand(null);
+                ((MainActivity)getContext()).goToTutorialResults(null);
                 break;
             case R.id.scoreHandButton:
-                ((MainActivity)getActivity()).goToHandBuilderScoreHand(null);
+                ((MainActivity)getActivity()).goToTutorialResults(null);
                 break;
         }
     }
@@ -52,7 +52,7 @@ public class TutorialDrawDiscardFragment extends Fragment implements View.OnClic
         Round round = new Round(Tile.Wind.EAST);
 
         Tile.Wind playerWind = Tile.Wind.SOUTH;
-        round.stackDeck(playerWind, ExampleHands.getHandBuilderTutorialSouth());
+        round.stackDeck(playerWind, TutorialLibrary.getTutorialTiles());
 
         drawDiscard.setRound(round, playerWind);
     }

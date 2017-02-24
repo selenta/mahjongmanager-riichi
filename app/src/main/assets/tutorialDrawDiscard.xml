@@ -1,0 +1,168 @@
+<?xml version="1.0" encoding="utf-8"?>
+<discards>
+    <discard>
+        <number>1</number>
+        <tiles>
+            <tile>North</tile>
+            <tile>9 Sou</tile>
+            <tile>Red</tile>
+        </tiles>
+        <description>Singleton honor or terminal tiles with no nearby tiles. The Red is slightly more valuable, as it could be used for Yakuhai.</description>
+    </discard>
+    <discard>
+        <number>2</number>
+        <tiles>
+            <tile>9 Sou</tile>
+            <tile>Red</tile>
+        </tiles>
+        <description>Singleton honor or terminal tiles with no nearby tiles. The Red is slightly more valuable, as it could be used for Yakuhai.</description>
+        <tiles>
+            <tile>West</tile>
+            <tile>West</tile>
+        </tiles>
+        <description>A pair of valueless winds. More useful than the other two, but unlikely to be part of the final hand.
+You would not want to open up your hand by calling on these tiles, as you have no other yaku (and even if you did manage to make one, the hand would be extremely cheap). Keeping valueless winds is most common in Honitsu hands, which does not look like a good bet with these tiles.</description>
+    </discard>
+    <discard>
+        <number>3</number>
+        <tiles>
+            <tile>Red</tile>
+        </tiles>
+        <description>Singleton honor tile. It would be reasonable to keep this tile and discard the pair of Wests first, but the rest of the hand looks to be developing nicely, so even if drew another we may not want to use this tile.
+Tiles that can be used in Yakuhai should usually be discarded as soon as you decide you will not use them, to lower the chances that other players will call them.</description>
+        <tiles>
+            <tile>West</tile>
+            <tile>West</tile>
+        </tiles>
+        <description>A pair of valueless winds. More useful than the Red dragon, but unlikely to be part of the final hand.
+You would not want to open up your hand by calling on these tiles, as you have no other yaku (and even if you did manage to make a yaku, the hand would be extremely cheap). Keeping valueless winds is most common in Honitsu hands, which does not look like a good bet with these tiles.</description>
+    </discard>
+    <discard>
+        <number>4</number>
+        <tiles>
+            <tile>West</tile>
+            <tile>West</tile>
+        </tiles>
+        <description>A pair of valueless winds. There is only one completed Meld at this point (the 2-3-4), it is too soon to try and determine your pair and keeping these tiles would limit your flexibility, also likely lowering the value of your hand. We can do better.</description>
+        <tiles>
+            <tile>8 Man</tile>
+        </tiles>
+        <description>Singleton tile with no neighbors. It would be reasonable to discard this before the pair of Wests, but the rest of the hand looks very flexible, and this tile would be extremely useful if we drew a 7 Man.</description>
+    </discard>
+    <discard>
+        <number>5</number>
+        <tiles>
+            <tile>West</tile>
+        </tiles>
+        <description>We've already discarded one West tile, can't go back now, the other West has to go.</description>
+    </discard>
+    <discard>
+        <number>6</number>
+        <tiles>
+            <tile>South</tile>
+        </tiles>
+        <description>Obviously doesn't fit with the rest of our hand.</description>
+    </discard>
+    <discard>
+        <number>7</number>
+        <tiles>
+            <tile>8 Man</tile>
+            <tile>7 Sou</tile>
+        </tiles>
+        <description>Single tile with no neighbors. 8s are less valuable than 7s, in general (as the 8 can be involved in a 6-7-8 or 7-8-9, while the 7 can also be part of a 5-6-7).
+However, we have already discarded a 9 Sou, so if we draw an 8 Sou, we cannot wait on the 6/9 for a win. The 7 is awkward, but flexibility is important, so let's discard the 8 here. Not evey choice has a clear-cut answer.</description>
+        <tiles>
+            <tile>9 Pin</tile>
+        </tiles>
+        <description>While more immediately useful than the other two (drawing an 8 Pin completes a Meld), we should also consider the value of our hand. All the other tiles in the hand are simples (between 2-8), and every extra Yaku doubles the value of our hand.
+In addition, because of the 3-4-4-5 tiles we have, the 7 and 9 don't really add much flexibility, and are only really useful if we draw an 8. Let's hold on to this just a little while longer.</description>
+    </discard>
+    <discard>
+        <number>8</number>
+        <tiles>
+            <tile>9 Pin</tile>
+        </tiles>
+        <description>All the other tiles in the hand are simples (between 2-8), and every extra Yaku doubles the value of our hand. This is currently the only tile standing in our way of that yaku, at this point it seems worth it to pursue.</description>
+        <tiles>
+            <tile>7 Sou</tile>
+        </tiles>
+        <description>Single tile with no neighbors, while not immediately useful, it is flexible. </description>
+    </discard>
+    <discard>
+        <number>9</number>
+        <tiles>
+            <tile>9 Man</tile>
+        </tiles>
+        <description>Single terminal tile with no neighbors, obvious discard. </description>
+    </discard>
+    <discard>
+        <number>10</number>
+        <tiles>
+            <tile>7 Pin</tile>
+        </tiles>
+        <description>With the 2-3-4-4-5 structure already waiting for a 3/6, the 7 is not contributing much. The best way for the 7 to be useful is to help make a pair if you draw another 7 (which is true of any tile) or a 6 AND a 1/4, but you already have two 4s in the your hand and including a 1 would ruin your Tan'yao yaku (which is undesirable, but possibly acceptable in some circumstances).
+While still flexible, most of this tile's potential is better utilized by the 2-3-4-4-5 structure.</description>
+        <tiles>
+            <tile>7 Sou</tile>
+        </tiles>
+        <description>Just like the 7 Pin, we have discarded the 9 in this suit; however, this tile would still be extremely useful if we draw a 6. So it is still more flexible, let's hold onto it for now.</description>
+    </discard>
+    <discard>
+        <number>11</number>
+        <tiles>
+            <tile>5 Man</tile>
+            <tile>7 Sou</tile>
+        </tiles>
+        <description>You have two completed melds, two partial melds, and a pair. The hand is nearly complete, and both of these tiles are unneeded. Between the two, the 7 Sou is the less flexible, as the hand is nearly complete and drawing an 8 will leave you in Furiten.</description>
+    </discard>
+    <discard>
+        <number>12</number>
+        <tiles>
+            <tile>8 Pin</tile>
+        </tiles>
+        <description>Single tile with no neighbors, and we have already discarded several nearby tiles, an obvious discard.</description>
+    </discard>
+    <discard>
+        <number>13</number>
+        <tiles>
+            <tile>White</tile>
+        </tiles>
+        <description>Single honor tile, obvious discard.</description>
+    </discard>
+    <discard>
+        <number>14</number>
+        <tiles>
+            <tile>5 Man</tile>
+        </tiles>
+        <description>It could have been useful, but it was not meant to be!
+Your hand is looking good! This is your 14th discard, so the round is nearing its end, but this is a potentially valuable hand and you have some good waits, now may be a good time to Riichi when you discard this tile!</description>
+    </discard>
+    <discard>
+        <number>15</number>
+        <tiles>
+            <tile>8 Sou</tile>
+        </tiles>
+        <description>Not useful</description>
+    </discard>
+    <discard>
+        <number>16</number>
+        <tiles>
+            <tile>Red</tile>
+        </tiles>
+        <description>Not useful</description>
+    </discard>
+    <discard>
+        <number>17</number>
+        <tiles>
+            <tile>Red</tile>
+        </tiles>
+        <description>Not useful</description>
+    </discard>
+    <discard>
+        <number>18</number>
+        <tiles>
+            <tile>7 Man</tile>
+        </tiles>
+        <description>Not useful</description>
+    </discard>
+</discards>

@@ -1,0 +1,166 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:scrollIndicators="right"
+        android:fillViewport="true">
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:text="Tutorial - Review"
+                android:textSize="30sp"
+                android:textStyle="italic"
+                android:textAlignment="center"
+                android:layout_gravity="center_horizontal" />
+
+            <Space
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Your Discarded Tiles"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:textAlignment="center" />
+
+            <com.mahjongmanager.riichi.components.DiscardPile
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/playerDiscardPile"
+                android:layout_gravity="center_horizontal" />
+
+            <Space
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Your Hand"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:textAlignment="center" />
+
+            <com.mahjongmanager.riichi.components.HandDisplay
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/playerHandDisplay"
+                android:layout_gravity="center_horizontal" />
+
+            <Space
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@android:color/darker_gray"/>
+
+            <Space
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Expected Discarded Tiles*"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:textAlignment="center" />
+
+            <com.mahjongmanager.riichi.components.DiscardPile
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/expectedDiscardPile"
+                android:layout_gravity="center_horizontal" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:text="* The exact order does not need to match, but the general flow should be similar"
+                android:textAlignment="center"
+                android:paddingLeft="20dp"
+                android:paddingRight="20dp"
+                android:textSize="13sp"
+                android:textStyle="italic" />
+
+            <Space
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Expected Hand"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:textAlignment="center" />
+
+            <com.mahjongmanager.riichi.components.HandDisplay
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/expectedHandDisplay"
+                android:layout_gravity="center_horizontal" />
+
+            <Space
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@android:color/darker_gray"
+                android:visibility="gone" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Result"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:textAlignment="center"
+                android:visibility="gone" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:text="[Result description goes here]"
+                android:textAlignment="center"
+                android:paddingLeft="20dp"
+                android:paddingRight="20dp"
+                android:textSize="14sp"
+                android:visibility="gone" />
+
+        </LinearLayout>
+    </ScrollView>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@android:color/darker_gray"/>
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Button"
+        android:id="@+id/nextButton"
+        android:layout_gravity="center_horizontal" />
+</LinearLayout>

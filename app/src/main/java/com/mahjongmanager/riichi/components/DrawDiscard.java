@@ -105,6 +105,7 @@ public class DrawDiscard extends LinearLayout implements View.OnClickListener {
     }
     public void declareTsumo(){
         round.declareTsumo();
+        ((MainActivity)getContext()).setCurrentRound(round);
         ((MainActivity)getContext()).setCurrentHand(playerHand);
     }
 
@@ -152,6 +153,7 @@ public class DrawDiscard extends LinearLayout implements View.OnClickListener {
             setButtonState(BUTTONS_TSUMO);
         } else if( round.isOver() ){
             currentHandInstructions.setVisibility(INVISIBLE);
+            ((MainActivity)getContext()).setCurrentRound(round);
             ((MainActivity)getContext()).setCurrentHand(playerHand);
             setButtonState(BUTTONS_SCORE);
         } else if( currP == playerWind){

@@ -1,0 +1,227 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:scrollIndicators="right"
+        android:fillViewport="true">
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:text="Discard Explanations"
+                android:textSize="30sp"
+                android:textStyle="italic"
+                android:textAlignment="center"
+                android:layout_gravity="center_horizontal" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@android:color/darker_gray"/>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Discarded Tiles"
+                android:id="@+id/discardPileLabel"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:textAlignment="center" />
+
+            <com.mahjongmanager.riichi.components.DiscardPile
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/discardPile"
+                android:layout_gravity="center_horizontal" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Current Hand"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:textAlignment="center"
+                android:paddingTop="10dp" />
+
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center">
+
+                <com.mahjongmanager.riichi.components.HandDisplay
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/handDisplay"/>
+
+                <com.mahjongmanager.riichi.components.HandDisplay
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/lastDrawTile"/>
+
+            </LinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@android:color/darker_gray"/>
+
+            <LinearLayout
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/explanationContainer">
+
+                <GridLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:columnCount="2"
+                    android:rowCount="1"
+                    android:useDefaultMargins="false"
+                    android:paddingTop="5dp"
+                    android:paddingBottom="5dp"
+                    android:layout_gravity="center">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:textAppearance="?android:attr/textAppearanceMedium"
+                        android:text="Recommended Discard: "
+                        android:textStyle="italic"
+                        android:textSize="16sp"
+                        android:layout_gravity="center_vertical|right" />
+
+                    <LinearLayout
+                        android:id="@+id/recommendedDiscardImage"
+                        android:orientation="horizontal"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_gravity="center" />
+
+                </GridLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="@android:color/darker_gray"/>
+
+                <LinearLayout
+                    android:orientation="horizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="15dp"
+                    android:layout_marginRight="15dp"
+                    android:paddingTop="10dp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textAppearance="?android:attr/textAppearanceMedium"
+                        android:text="Option(s)"
+                        android:textSize="16sp"
+                        android:textStyle="bold"
+                        android:textAlignment="center" />
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:textAppearance="?android:attr/textAppearanceMedium"
+                        android:text="Explanation"
+                        android:textSize="16sp"
+                        android:textStyle="bold"
+                        android:textAlignment="center"/>
+
+                </LinearLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="@android:color/darker_gray"
+                    android:layout_marginLeft="15dp"
+                    android:layout_marginRight="15dp" />
+
+                <TableLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:measureWithLargestChild="false"
+                    android:columnCount="2"
+                    android:stretchColumns="1"
+                    android:id="@+id/explanationTable"
+                    android:paddingLeft="10dp"
+                    android:paddingRight="10dp">
+
+                </TableLayout>
+            </LinearLayout>
+
+            <com.mahjongmanager.riichi.components.ScoreScreen
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/scoreScreen"
+                android:visibility="gone"/>
+
+        </LinearLayout>
+    </ScrollView>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@android:color/darker_gray"/>
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/navButtonContainer">
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Back"
+            android:id="@+id/backButton"
+            android:enabled="false"
+            android:layout_gravity="center"
+            android:paddingEnd="15dp"
+            android:paddingStart="15dp"
+            android:layout_marginLeft="5dp" />
+
+        <Space
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1" />
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/mainMenuButton"
+            android:text="Main Menu"
+            android:onClick="backToMainMenu"
+            android:layout_gravity="center_horizontal"
+            android:visibility="gone"/>
+
+        <Space
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1" />
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Next"
+            android:id="@+id/nextButton"
+            android:layout_gravity="center_vertical|right"
+            android:paddingEnd="15dp"
+            android:paddingStart="15dp"
+            android:layout_marginRight="5dp" />
+
+    </LinearLayout>
+</LinearLayout>

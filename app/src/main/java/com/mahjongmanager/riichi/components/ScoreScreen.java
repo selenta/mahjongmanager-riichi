@@ -479,6 +479,10 @@ public class ScoreScreen extends LinearLayout implements View.OnClickListener {
     ////////////////////////    Populate Wait Tables    /////////////////////////
     /////////////////////////////////////////////////////////////////////////////
     private void displayWaitValues(List<Wait> waits){
+        while(waitTable.getChildCount()>2){
+            waitTable.removeViewAt(2);
+        }
+
         for(Wait wait : waits){
             addWaitRow(wait);
             createSeparatorLine();

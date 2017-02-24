@@ -93,12 +93,17 @@ public class TileSet implements Iterable<Tile> {
         return tileSet.subList(start, end);
     }
 
-//    public List<Tile> toList(){
-//        return new ArrayList<>(tileSet);
-//    }
+    public List<Tile> toList(){
+        return new ArrayList<>(tileSet);
+    }
 
     @Override
     public Iterator<Tile> iterator() {
         return tileSet.iterator();
+    }
+
+    @Override
+    public String toString(){
+        return tileSet.toString();
     }
 }

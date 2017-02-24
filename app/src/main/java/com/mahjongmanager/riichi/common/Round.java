@@ -307,9 +307,9 @@ public class Round {
                     break;
                 }
             }
-            Log.i("removeTileFromList", "Before removing tile: "+list.size()+" - "+doomed);
+            Log.v("removeTileFromList", "Before removing tile: "+list.size()+" - "+doomed);
             list.remove(doomed);
-            Log.i("removeTileFromList", "After removing tile: "+list.size());
+            Log.v("removeTileFromList", "After removing tile: "+list.size());
         }
 
         public int tiles(){

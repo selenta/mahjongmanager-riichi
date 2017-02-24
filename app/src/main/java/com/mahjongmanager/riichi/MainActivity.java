@@ -11,7 +11,11 @@ import android.view.View;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
 import com.google.android.gms.ads.MobileAds;
+import com.mahjongmanager.riichi.handbuilder.TutorialExplanation;
+import com.mahjongmanager.riichi.handbuilder.TutorialHandBuilder;
+import com.mahjongmanager.riichi.handbuilder.TutorialResults;
 import com.mahjongmanager.riichi.common.Hand;
+import com.mahjongmanager.riichi.common.Round;
 import com.mahjongmanager.riichi.common.Tile;
 import com.mahjongmanager.riichi.handbuilder.Results;
 import com.mahjongmanager.riichi.handbuilder.Simulate4Player;
@@ -27,8 +31,9 @@ import java.util.List;
 public class MainActivity extends AppCompatActivity {
     private AdView mAdView;
 
-    // When a hand needs to be passed along between fragments (such as the HandCalculator)
-    public Hand currentHand = new Hand(new ArrayList<Tile>());
+    // When a round/hand needs to be passed along between fragments (such as the HandCalculator)
+    private Round currentRound = null;
+    private Hand currentHand = null;
 
     // Speed Quiz - Record the hands/guesses so they can be reviewed at the end
     private List<Hand> scoredHands = new ArrayList<>();
@@ -55,6 +60,7 @@ public class MainActivity extends AppCompatActivity {
 
         ExampleHands.populate(this);
         FuHelper.populate(this);
+        TutorialLibrary.populate(this);
         Utils.getHandDisplayPlaceholderTileView();     // This will populate HandDisplay tiles
     }
 
@@ -222,8 +228,15 @@ public class MainActivity extends AppCompatActivity {
         replaceFragment(new OverviewScoringFragment());
     }
     public void goToTutorialDrawDiscard(View view){
-        replaceFragment(new TutorialDrawDiscardFragment());
+        replaceFragment(new TutorialHandBuilder());
     }
+    public void goToTutorialResults(View view){
+        replaceFragment(new TutorialResults());
+    }
+    public void goToTutorialExplanation(View view){
+        replaceFragment(new TutorialExplanation());
+    }
+
     public void goToScoringFlowchart(View view){
         replaceFragment(new ScoringFlowchartFragment());
     }
@@ -286,6 +299,8 @@ public class MainActivity extends AppCompatActivity {
     /////////////////////////////////////////////////////////
     /////////    Cross-Fragment Communication     ///////////
     /////////////////////////////////////////////////////////
+    public Round getCurrentRound(){ return currentRound; }
+    public void setCurrentRound(Round r){ currentRound = r; }
     public Hand getCurrentHand(){ return currentHand; }
     public void setCurrentHand(Hand h){ currentHand = h; }
     public int  getCurrentHanGuess(){ return currentHanGuess; }
