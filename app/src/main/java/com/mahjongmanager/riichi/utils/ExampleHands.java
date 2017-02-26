@@ -61,6 +61,8 @@ public class ExampleHands {
                         allYaku.add(yaku);
                     } else if (tagname.equalsIgnoreCase("name")) {
                         yaku.name = Yaku.Name.valueOf(text);
+                    } else if (tagname.equalsIgnoreCase("rarity")) {
+                        yaku.rarity = Integer.parseInt(text);
                     } else if (tagname.equalsIgnoreCase("english")) {
                         yaku.english = text;
                     } else if (tagname.equalsIgnoreCase("romaji")) {

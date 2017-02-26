@@ -31,31 +31,28 @@
                 android:orientation="vertical"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:id="@+id/yakuListByPattern" >
+                android:id="@+id/yakuDescriptions" >
 
                 <TextView
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
                     android:textAppearance="?android:attr/textAppearanceLarge"
-                    android:text="Descriptions and examples of all Yaku. Sorted and grouped by build pattern and/or exclusions."
+                    android:text="Descriptions of the six Yaku that beginners should learn first (with example hands)."
                     android:textAlignment="center"
                     android:layout_gravity="center"
                     android:layout_marginTop="15dp"
                     android:layout_marginLeft="10dp"
                     android:layout_marginRight="10dp"
-                    android:textSize="18sp" />
+                    android:textSize="18sp"
+                    android:textStyle="normal|italic"
+                    android:id="@+id/yakuListNotes" />
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textAppearance="?android:attr/textAppearanceSmall"
-                    android:text="Same information as the &quot;Yaku Guide sorted by Han&quot; options, except that it is organized by the pattern that describes how to build the hand."
-                    android:textAlignment="center"
-                    android:textStyle="italic"
-                    android:layout_marginLeft="20dp"
-                    android:layout_marginRight="20dp"
-                    android:layout_marginBottom="20dp"
-                    android:visibility="gone" />
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_marginLeft="40dp"
+                    android:layout_marginRight="40dp"
+                    android:background="@android:color/darker_gray" />
 
             </LinearLayout>
 
@@ -63,37 +60,8 @@
                 android:orientation="vertical"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:id="@+id/yakuListByHan" >
-
-                <TextView
-                    android:layout_width="fill_parent"
-                    android:layout_height="wrap_content"
-                    android:textAppearance="?android:attr/textAppearanceLarge"
-                    android:text="Descriptions and examples of all Yaku."
-                    android:textAlignment="center"
-                    android:layout_gravity="center"
-                    android:layout_marginTop="15dp"
-                    android:layout_marginLeft="10dp"
-                    android:layout_marginRight="10dp"
-                    android:textSize="18sp" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textAppearance="?android:attr/textAppearanceSmall"
-                    android:text="Same information as the &quot;Yaku Guide sorted by Pattern&quot; options, except sorted by Han."
-                    android:textAlignment="center"
-                    android:textStyle="italic"
-                    android:layout_marginLeft="20dp"
-                    android:layout_marginRight="20dp" />
-
-            </LinearLayout>
-
-            <LinearLayout
-                android:orientation="vertical"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:id="@+id/yakuFrequency">
+                android:id="@+id/yakuFrequency"
+                android:visibility="gone">
 
                 <TextView
                     android:layout_width="fill_parent"
@@ -114,7 +82,8 @@
                     android:textAlignment="center"
                     android:layout_marginLeft="25dp"
                     android:layout_marginRight="25dp"
-                    android:textSize="12sp" />
+                    android:textSize="12sp"
+                    android:textStyle="italic" />
 
                 <TableLayout
                     android:layout_width="match_parent"
@@ -146,7 +115,8 @@
                 android:orientation="vertical"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:id="@+id/yakuByAverageHan" >
+                android:id="@+id/yakuByAverageHan"
+                android:visibility="gone">
 
                 <TextView
                     android:layout_width="fill_parent"
@@ -170,7 +140,8 @@
                     android:layout_marginTop="15dp"
                     android:layout_marginLeft="10dp"
                     android:layout_marginRight="10dp"
-                    android:textSize="18sp" />
+                    android:textSize="16sp"
+                    android:textStyle="italic" />
 
                 <TableLayout
                     android:layout_width="match_parent"

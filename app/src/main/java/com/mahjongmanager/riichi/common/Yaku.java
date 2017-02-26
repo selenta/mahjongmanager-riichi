@@ -20,6 +20,7 @@ public class Yaku {
     }
 
     public Name name;
+    public int rarity;      // Determines when it is displayed in the YakuDescriptions page
 
     public String english;
     public String romaji;
@@ -81,6 +82,7 @@ public class Yaku {
     }
     public String toStringVerbose(){
         String s = " name: " + name + "\n";
+        s = s + " rarity: " + rarity+ "\n";
         s = s + " english: " + english + "\n";
         s = s + " romaji: " + romaji + "\n";
         s = s + " kanji: " + kanji + "\n";

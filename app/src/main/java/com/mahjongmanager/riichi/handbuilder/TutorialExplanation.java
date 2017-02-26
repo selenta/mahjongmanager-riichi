@@ -142,7 +142,7 @@ public class TutorialExplanation extends Fragment implements View.OnClickListene
         params.columnSpec = GridLayout.spec(GridLayout.UNDEFINED, 2);
         line.setLayoutParams(params);
 
-        line.setBackgroundColor(0xFFCCCCCC);
+        line.setBackgroundColor(0xFF666666);
         return line;
     }
     private void setTileImage(LinearLayout container, Tile t){

@@ -14,7 +14,6 @@ import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
 
-import com.mahjongmanager.riichi.MainActivity;
 import com.mahjongmanager.riichi.common.Yaku;
 import com.mahjongmanager.riichi.components.YakuDescription;
 import com.mahjongmanager.riichi.utils.CSVFile;
@@ -26,11 +25,10 @@ import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
 
-public class YakuListFragment extends Fragment {
+public class YakuListFragment extends Fragment implements AdapterView.OnItemSelectedListener {
     Spinner spinner;
 
-    LinearLayout yakuListByPattern;
-    LinearLayout yakuListByHan;
+    LinearLayout yakuDescriptions;
     LinearLayout yakuFrequency;
     LinearLayout yakuByAverageHan;
     LinearLayout yakuCombinatorics;
@@ -39,54 +37,91 @@ public class YakuListFragment extends Fragment {
     TableLayout yakuByAverageHanTable;
     TableLayout yakuCombinatoricsTable;
 
-    static final String YAKU_LIST_BY_PATTERN = "Yaku Guide sorted by Pattern";
-    static final String YAKU_LIST_BY_HAN = "Yaku Guide sorted by Han";
+    TextView yakuListNotes;
+
+    static final String YAKU_LIST_COMMON   = "Common Yaku";
+    static final String YAKU_LIST_STANDARD = "Standard Yaku";
+    static final String YAKU_LIST_ALL      = "All Yaku";
+    static final String yakuListCommonNotes   = "Descriptions of the six Yaku that beginners should learn first (with example hands).";
+    static final String yakuListStandardNotes = "Descriptions of all Yaku that are used in most rulesets (with example hands) .";
+    static final String yakuListAllNotes      = "Descriptions of all Yaku (with example hands). Those in the 'Uncommon Yaku' category are not accepted in most rulesets.";
+
     static final String YAKU_BY_FREQUENCY_LABEL = "Han sorted by Frequency";
-    static final String YAKU_BY_AVERAGE_HAN = "Han sorted by Avg. Hand Size";
-    static final String YAKU_COMBINATORICS = "Yaku Combinatorics (math)";
+    static final String YAKU_BY_AVERAGE_HAN     = "Han sorted by Avg. Hand Size";
+    static final String YAKU_COMBINATORICS      = "Yaku Combinatorics (math)";
+
+    boolean csvPopulated = false;
+    boolean isBusy = false;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View myInflatedView = inflater.inflate(R.layout.fragment_yakulist, container, false);
 
-        registerControls(myInflatedView);
-
-        populateRealWorldDataTable();
+        registerUIElements(myInflatedView);
         initializeDropdown();
-        spinner.setSelection(0);
-        setView();
-
-        populateYakuSortedByPattern();
 
         return myInflatedView;
     }
 
-    private void setView(){
-        yakuListByPattern.setVisibility(View.GONE);
-        yakuListByHan.setVisibility(View.GONE);
+    //////////////////////////////////////////
+    ///////////       Modes       ////////////
+    //////////////////////////////////////////
+    @Override
+    public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+        setView(parent.getSelectedItem().toString());
+    }
+
+    @Override
+    public void onNothingSelected(AdapterView<?> parent) {}
+
+    // NOTE: this is not thread-safe, and may result in double/triple population of lists
+    //      Not sure how to make this safer... seems to mostly work?
+    private void setView(String mode){
+        if( isBusy ){
+            return;
+        }
+        isBusy = true;
+
+        yakuDescriptions.setVisibility(View.GONE);
         yakuFrequency.setVisibility(View.GONE);
         yakuByAverageHan.setVisibility(View.GONE);
         yakuCombinatorics.setVisibility(View.GONE);
-        switch (spinner.getSelectedItem().toString()){
-            case YAKU_LIST_BY_PATTERN:
-                yakuListByPattern.setVisibility(View.VISIBLE);
+        switch (mode){
+            case YAKU_LIST_COMMON:
+                displayYaku(1);
+                yakuDescriptions.setVisibility(View.VISIBLE);
                 break;
-            case YAKU_LIST_BY_HAN:
-                yakuListByHan.setVisibility(View.VISIBLE);
+            case YAKU_LIST_STANDARD:
+                displayYaku(2);
+                yakuDescriptions.setVisibility(View.VISIBLE);
+                break;
+            case YAKU_LIST_ALL:
+                displayYaku(3);
+                yakuDescriptions.setVisibility(View.VISIBLE);
                 break;
             case YAKU_BY_FREQUENCY_LABEL:
+                populateRealWorldDataTable();
                 yakuFrequency.setVisibility(View.VISIBLE);
                 break;
             case YAKU_BY_AVERAGE_HAN:
+                populateRealWorldDataTable();
                 yakuByAverageHan.setVisibility(View.VISIBLE);
                 break;
             case YAKU_COMBINATORICS:
                 yakuCombinatorics.setVisibility(View.VISIBLE);
                 break;
         }
+        isBusy = false;
     }
 
+    ///////////////////////////////////////////////////////
+    ///////////       Display Statistics       ////////////
+    ///////////////////////////////////////////////////////
     private void populateRealWorldDataTable(){
+        if(csvPopulated){
+            return;
+        }
+
         InputStream inputStream = null;
         try {
             inputStream = getResources().getAssets().open("RiichiStats.csv");
@@ -100,6 +135,7 @@ public class YakuListFragment extends Fragment {
         } catch (IOException e) {
             e.printStackTrace();
         }
+        csvPopulated = true;
     }
     private void addRow( String itemName, String col1, TableLayout table ){
         TableRow newRow = new TableRow(getContext());
@@ -127,96 +163,102 @@ public class YakuListFragment extends Fragment {
             newRow.setBackgroundColor(0xFFFFFFFF);
         }
 
+        if( itemName.equals("Dora") || itemName.equals("Red Dora") || itemName.equals("Ura Dora") ){
+            yakuName.setTypeface(null, Typeface.ITALIC);
+            columnOne.setTypeface(null, Typeface.ITALIC);
+            yakuName.setText(itemName + "*");
+        }
+
         table.addView(newRow);
     }
 
-    private void populateYakuSortedByPattern(){
+    /////////////////////////////////////////////////
+    ///////////       Display Yaku       ////////////
+    /////////////////////////////////////////////////
+    private void displayYaku( int rarity ){
+        while( yakuDescriptions.getChildCount()>2 ){
+            yakuDescriptions.removeViewAt(2);
+        }
+
+        switch (rarity){
+            case 1:
+                yakuListNotes.setText(yakuListCommonNotes);
+                break;
+            case 2:
+                yakuListNotes.setText(yakuListStandardNotes);
+                break;
+            case 3:
+                yakuListNotes.setText(yakuListAllNotes);
+                break;
+        }
+
         for( Yaku y : ExampleHands.allYaku ){
-            if( y.name!= Yaku.Name.DORA ){
+            if( y.name!=Yaku.Name.DORA && y.rarity<=rarity){
                 YakuDescription yd = new YakuDescription(getContext());
                 yd.setYaku(y);
 
-                checkForCategoryByPattern(y, yd);
-                yakuListByPattern.addView(yd);
+                checkForCategoryLabel(y, yd);
+                yakuDescriptions.addView(yd);
             }
         }
     }
-    private void checkForCategoryByPattern(Yaku y, YakuDescription yd){
+    private void checkForCategoryLabel(Yaku y, YakuDescription yd){
         switch (y.name){
             case PINFU:
-                addYakuCategoryLabel(yakuListByPattern, "Yaku based on Sequences" );
+                addYakuCategoryLabel("Yaku based on Sequences" );
                 yd.showLabels();
                 break;
             case TOITOI:
-                addYakuCategoryLabel(yakuListByPattern, "Yaku based on Triplets/Quads" );
+                addYakuCategoryLabel("Yaku based on Triplets/Quads" );
                 yd.showLabels();
                 break;
             case TANYAO:
-                addYakuCategoryLabel(yakuListByPattern, "Yaku based on Terminals/Honors" );
+                addYakuCategoryLabel("Yaku based on Terminals/Honors" );
                 yd.showLabels();
                 break;
             case HONITSU:
-                addYakuCategoryLabel(yakuListByPattern, "Yaku based on Suits" );
+                addYakuCategoryLabel("Yaku based on Suits" );
                 yd.showLabels();
                 break;
             case TSUMO:
-                addYakuCategoryLabel(yakuListByPattern, "Yaku based on Luck" );
+                addYakuCategoryLabel("Yaku based on Luck" );
                 yd.showLabels();
                 break;
             case RIICHI:
-                addYakuCategoryLabel(yakuListByPattern, "Special Criteria" );
+                addYakuCategoryLabel("Special Criteria" );
                 yd.showLabels();
                 break;
             case KOKUSHIMUSOU:
-                addYakuCategoryLabel(yakuListByPattern, "Yakuman Hands" );
+                addYakuCategoryLabel("Yakuman Hands" );
                 yd.showLabels();
                 break;
             case TENHOU:
-                addYakuCategoryLabel(yakuListByPattern, "Yakuman on Opening Hands" );
+                addYakuCategoryLabel("Yakuman on Opening Hands" );
                 yd.showLabels();
                 break;
             case SANRENKOU:
-                addYakuCategoryLabel(yakuListByPattern, "Uncommon Yaku" );
+                addYakuCategoryLabel("Uncommon Yaku" );
                 yd.showLabels();
                 break;
         }
     }
-    private void addYakuCategoryLabel(LinearLayout ll, String s){
+    private void addYakuCategoryLabel(String s){
         TextView tv = new TextView(getContext());
         tv.setText(s);
         tv.setTextSize(22);
         tv.setTypeface(null, Typeface.BOLD);
         tv.setPadding(50,30,0,5);
-        ll.addView(tv);
+        yakuDescriptions.addView(tv);
     }
 
-    private void initializeDropdown(){
-        List<String> viewOptions = new ArrayList<>();
-        viewOptions.add(YAKU_LIST_BY_PATTERN);
-//        viewOptions.add(YAKU_LIST_BY_HAN);
-        viewOptions.add(YAKU_BY_FREQUENCY_LABEL);
-        viewOptions.add(YAKU_BY_AVERAGE_HAN);
-//        viewOptions.add(YAKU_COMBINATORICS);
-
-        ArrayAdapter<String> dataAdapter = new ArrayAdapter<>
-                (getActivity(), R.layout.spinner_item_large, R.id.spinneritem, viewOptions);
-        spinner.setAdapter(dataAdapter);
-    }
-    private void registerControls(View myInflatedView){
+    /////////////////////////////////////////
+    ///////////       Init       ////////////
+    /////////////////////////////////////////
+    private void registerUIElements(View myInflatedView){
         spinner = (Spinner) myInflatedView.findViewById(R.id.spinner);
-        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> parentView, View selectedItemView, int position, long id) {
-                setView();
-            }
-            @Override
-            public void onNothingSelected(AdapterView<?> parentView) {
-                // your code here
-            }
-        });
+        spinner.setOnItemSelectedListener(this);
 
-        yakuListByPattern= (LinearLayout) myInflatedView.findViewById(R.id.yakuListByPattern);
-        yakuListByHan= (LinearLayout) myInflatedView.findViewById(R.id.yakuListByHan);
+        yakuDescriptions= (LinearLayout) myInflatedView.findViewById(R.id.yakuDescriptions);
         yakuFrequency = (LinearLayout) myInflatedView.findViewById(R.id.yakuFrequency);
         yakuByAverageHan = (LinearLayout) myInflatedView.findViewById(R.id.yakuByAverageHan);
         yakuCombinatorics = (LinearLayout) myInflatedView.findViewById(R.id.yakuCombinatorics);
@@ -224,5 +266,19 @@ public class YakuListFragment extends Fragment {
         yakuFrequencyTable = (TableLayout) myInflatedView.findViewById(R.id.yakuFrequencyTable);
         yakuByAverageHanTable = (TableLayout) myInflatedView.findViewById(R.id.yakuByAverageHanTable);
         yakuCombinatoricsTable = (TableLayout) myInflatedView.findViewById(R.id.yakuCombinatoricsTable);
+
+        yakuListNotes = (TextView) myInflatedView.findViewById(R.id.yakuListNotes);
+    }
+    private void initializeDropdown(){
+        List<String> viewOptions = new ArrayList<>();
+        viewOptions.add(YAKU_LIST_COMMON);
+        viewOptions.add(YAKU_LIST_STANDARD);
+        viewOptions.add(YAKU_LIST_ALL);
+        viewOptions.add(YAKU_BY_FREQUENCY_LABEL);
+        viewOptions.add(YAKU_BY_AVERAGE_HAN);
+//        viewOptions.add(YAKU_COMBINATORICS);
+
+        ArrayAdapter<String> dataAdapter = new ArrayAdapter<>(getActivity(), R.layout.spinner_item_large, R.id.spinneritem, viewOptions);
+        spinner.setAdapter(dataAdapter);
     }
 }
