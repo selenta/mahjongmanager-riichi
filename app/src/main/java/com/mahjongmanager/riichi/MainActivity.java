@@ -13,6 +13,7 @@ import com.google.android.gms.ads.AdView;
 import com.google.android.gms.ads.MobileAds;
 import com.mahjongmanager.riichi.handbuilder.TutorialExplanation;
 import com.mahjongmanager.riichi.handbuilder.TutorialHandBuilder;
+import com.mahjongmanager.riichi.handbuilder.TutorialOverview;
 import com.mahjongmanager.riichi.handbuilder.TutorialResults;
 import com.mahjongmanager.riichi.common.Hand;
 import com.mahjongmanager.riichi.common.Round;
@@ -226,6 +227,10 @@ public class MainActivity extends AppCompatActivity {
     }
     public void goToOverviewScoring(View view){
         replaceFragment(new OverviewScoringFragment());
+    }
+
+    public void goToTutorialOverview(View view){
+        replaceFragment(new TutorialOverview());
     }
     public void goToTutorialDrawDiscard(View view){
         replaceFragment(new TutorialHandBuilder());
