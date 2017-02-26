@@ -118,7 +118,7 @@ public class TutorialLibrary {
             factory = XmlPullParserFactory.newInstance();
             XmlPullParser xpp = factory.newPullParser();
 
-            InputStream is = activity.getAssets().open("drawDiscardTutorial.xml");
+            InputStream is = activity.getAssets().open("tutorialDrawDiscard.xml");
             xpp.setInput(is, null);
 
             parseXml( xpp );
