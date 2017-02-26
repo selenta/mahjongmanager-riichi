@@ -4,6 +4,7 @@ import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
@@ -25,7 +26,7 @@ import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
 
-public class YakuListFragment extends Fragment implements AdapterView.OnItemSelectedListener {
+public class YakuListFragment extends Fragment implements AdapterView.OnItemSelectedListener, View.OnTouchListener {
     Spinner spinner;
 
     LinearLayout yakuDescriptions;
@@ -39,19 +40,18 @@ public class YakuListFragment extends Fragment implements AdapterView.OnItemSele
 
     TextView yakuListNotes;
 
-    static final String YAKU_LIST_COMMON   = "Common Yaku";
-    static final String YAKU_LIST_STANDARD = "Standard Yaku";
-    static final String YAKU_LIST_ALL      = "All Yaku";
-    static final String yakuListCommonNotes   = "Descriptions of the six Yaku that beginners should learn first (with example hands).";
-    static final String yakuListStandardNotes = "Descriptions of all Yaku that are used in most rulesets (with example hands) .";
-    static final String yakuListAllNotes      = "Descriptions of all Yaku (with example hands). Those in the 'Uncommon Yaku' category are not accepted in most rulesets.";
-
+    static final String YAKU_LIST_COMMON        = "Common Yaku";
+    static final String YAKU_LIST_STANDARD      = "Standard Yaku";
+    static final String YAKU_LIST_ALL           = "All Yaku";
     static final String YAKU_BY_FREQUENCY_LABEL = "Han sorted by Frequency";
     static final String YAKU_BY_AVERAGE_HAN     = "Han sorted by Avg. Hand Size";
     static final String YAKU_COMBINATORICS      = "Yaku Combinatorics (math)";
 
+    static final String yakuListCommonNotes   = "Descriptions of the six Yaku that beginners should learn first (with example hands).";
+    static final String yakuListStandardNotes = "Descriptions of all Yaku that are used in most rulesets (with example hands) .";
+    static final String yakuListAllNotes      = "Descriptions of all Yaku (with example hands). Those in the 'Uncommon Yaku' category are not accepted in most rulesets.";
+
     boolean csvPopulated = false;
-    boolean isBusy = false;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -59,6 +59,7 @@ public class YakuListFragment extends Fragment implements AdapterView.OnItemSele
 
         registerUIElements(myInflatedView);
         initializeDropdown();
+        setMode(YAKU_LIST_COMMON);
 
         return myInflatedView;
     }
@@ -66,9 +67,19 @@ public class YakuListFragment extends Fragment implements AdapterView.OnItemSele
     //////////////////////////////////////////
     ///////////       Modes       ////////////
     //////////////////////////////////////////
+    private boolean userMode = false;
+    @Override
+    public boolean onTouch(View v, MotionEvent event) {
+        userMode = true;
+        return false;
+    }
+
+
     @Override
     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-        setView(parent.getSelectedItem().toString());
+        if( userMode ){
+            setMode( parent.getSelectedItem().toString() );
+        }
     }
 
     @Override
@@ -76,12 +87,7 @@ public class YakuListFragment extends Fragment implements AdapterView.OnItemSele
 
     // NOTE: this is not thread-safe, and may result in double/triple population of lists
     //      Not sure how to make this safer... seems to mostly work?
-    private void setView(String mode){
-        if( isBusy ){
-            return;
-        }
-        isBusy = true;
-
+    private void setMode(String mode){
         yakuDescriptions.setVisibility(View.GONE);
         yakuFrequency.setVisibility(View.GONE);
         yakuByAverageHan.setVisibility(View.GONE);
@@ -111,7 +117,6 @@ public class YakuListFragment extends Fragment implements AdapterView.OnItemSele
                 yakuCombinatorics.setVisibility(View.VISIBLE);
                 break;
         }
-        isBusy = false;
     }
 
     ///////////////////////////////////////////////////////
@@ -257,6 +262,7 @@ public class YakuListFragment extends Fragment implements AdapterView.OnItemSele
     private void registerUIElements(View myInflatedView){
         spinner = (Spinner) myInflatedView.findViewById(R.id.spinner);
         spinner.setOnItemSelectedListener(this);
+        spinner.setOnTouchListener(this);
 
         yakuDescriptions= (LinearLayout) myInflatedView.findViewById(R.id.yakuDescriptions);
         yakuFrequency = (LinearLayout) myInflatedView.findViewById(R.id.yakuFrequency);
