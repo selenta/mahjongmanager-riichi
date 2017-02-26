@@ -61,7 +61,7 @@ You would not want to open up your hand by calling on these tiles, as you have n
         <tiles>
             <tile>South</tile>
         </tiles>
-        <description>Obviously doesn't fit with the rest of our hand.</description>
+        <description>Not useful</description>
     </discard>
     <discard>
         <number>7</number>
@@ -127,7 +127,7 @@ While still flexible, most of this tile's potential is better utilized by the 2-
         <tiles>
             <tile>White</tile>
         </tiles>
-        <description>Single honor tile, obvious discard.</description>
+        <description>Not useful</description>
     </discard>
     <discard>
         <number>14</number>
@@ -135,7 +135,7 @@ While still flexible, most of this tile's potential is better utilized by the 2-
             <tile>5 Man</tile>
         </tiles>
         <description>It could have been useful, but it was not meant to be!
-Your hand is looking good! This is your 14th discard, so the round is nearing its end, but this is a potentially valuable hand and you have some good waits, now may be a good time to Riichi when you discard this tile!</description>
+Your hand is looking good! This is your 14th discard, so the round is nearing its end, but this is a potentially valuable hand and you have some good waits, so you are in good shape!</description>
     </discard>
     <discard>
         <number>15</number>

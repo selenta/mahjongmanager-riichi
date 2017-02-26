@@ -2,19 +2,21 @@
 <yakus>
     <yaku>
         <name>PINFU</name>
+        <rarity>1</rarity>
         <english>No Fu Hand</english>
         <romaji>pinfu</romaji>
         <kanji>平和</kanji>
         <closedValue>1</closedValue>
         <openValue>---</openValue>
-        <description>This is a very common yaku, since it is rather easy to get. A no-points hand is just that—a hand that is worth no additional fu-points whatsoever. Specifically, the hand must have no triplets or quads, and must not contain any pair of dragons, player’s own wind, or wind of the round which is worth points, meaning the pair can be other winds.
+        <description>A pinfu hand is a hand that has no additional fu-points whatsoever.
 
-Furthermore, the hand must be waiting for multiple winning tiles that can make a sequence, such as having number 2 and 3 and waiting for 1 or 4; if the hand is in a closed, edge, or pair wait, it is worth two points, thus violating the no-points condition.
+Effectively, this means the hand must be closed, have no triplets/quads, and a valueless pair (e.g. no dragons, not the player’s wind, not the prevailing wind); in addition, the wait for a winning tile must be a 2-sided wait to complete a sequence (e.g. having a 2-3 and waiting for a 1 or a 4).
 
-When the hand is won by drawing from the wall, as an exception, in most rules the two fu for the self-drawing are not awarded.</description>
+NOTE: This is often referred to as an "all runs" hand, but as you can see, there is a little more to it than that. See the "Rules Overview > Scoring" section on counting Fu for a more detailed explanation.</description>
     </yaku>
     <yaku>
         <name>IIPEIKOU</name>
+        <rarity>2</rarity>
         <english>Closed Double Run</english>
         <romaji>iipeikou</romaji>
         <kanji>一盃口</kanji>
@@ -24,6 +26,7 @@ When the hand is won by drawing from the wall, as an exception, in most rules th
     </yaku>
     <yaku>
         <name>SANSHOKUDOUJUN</name>
+        <rarity>2</rarity>
         <english>Three Color Straight</english>
         <romaji>sanshoku doujun</romaji>
         <kanji>三色同順</kanji>
@@ -33,6 +36,7 @@ When the hand is won by drawing from the wall, as an exception, in most rules th
     </yaku>
     <yaku>
         <name>ITTSUU</name>
+        <rarity>2</rarity>
         <english>Straight</english>
         <romaji>ittsuu</romaji>
         <kanji>一通</kanji>
@@ -42,6 +46,7 @@ When the hand is won by drawing from the wall, as an exception, in most rules th
     </yaku>
     <yaku>
         <name>RYANPEIKOU</name>
+        <rarity>2</rarity>
         <english>Two Closed Double Runs</english>
         <romaji>ryanpeikou</romaji>
         <kanji>二盃口</kanji>
@@ -51,6 +56,7 @@ When the hand is won by drawing from the wall, as an exception, in most rules th
     </yaku>
     <yaku>
         <name>TOITOI</name>
+        <rarity>2</rarity>
         <english>All Triplets</english>
         <romaji>toitoi</romaji>
         <kanji>対々</kanji>
@@ -60,6 +66,7 @@ When the hand is won by drawing from the wall, as an exception, in most rules th
     </yaku>
     <yaku>
         <name>SANANKOU</name>
+        <rarity>2</rarity>
         <english>Three Closed Triplets</english>
         <romaji>san ankou</romaji>
         <kanji>三暗刻</kanji>
@@ -69,6 +76,7 @@ When the hand is won by drawing from the wall, as an exception, in most rules th
     </yaku>
     <yaku>
         <name>SANSHOKUDOUKOU</name>
+        <rarity>2</rarity>
         <english>Three Color Triplets</english>
         <romaji>sanshoku doukou</romaji>
         <kanji>三色同刻</kanji>
@@ -78,6 +86,7 @@ When the hand is won by drawing from the wall, as an exception, in most rules th
     </yaku>
     <yaku>
         <name>SANKANTSU</name>
+        <rarity>2</rarity>
         <english>Three Kans</english>
         <romaji>san kantsu</romaji>
         <kanji>三槓子</kanji>
@@ -87,24 +96,29 @@ When the hand is won by drawing from the wall, as an exception, in most rules th
     </yaku>
     <yaku>
         <name>TANYAO</name>
+        <rarity>1</rarity>
         <english>All Simples</english>
         <romaji>tan'yao</romaji>
         <kanji>断么</kanji>
         <closedValue>1</closedValue>
         <openValue>1</openValue>
-        <description>Tan'yaochuu literally means "no 1's or 9's". Only numbered tiles from 2 through 8 are used eliminating terminals or honors. If the hand is open, it is called "kuitan" (喰い断), which means tan'yao made by "eating" discards. As there are varieties of rules, this hand can be closed only. The rule that does not allow kuitan is called "kuitan nashi" (喰い断無し; no kuitan, or kuitan invalid).</description>
+        <description>All tiles are numbered between 2 and 8. No honors or terminals are allowed.
+
+Tan'yaochuu literally means "no 1's or 9's". If the hand is open, it is called "kuitan" (喰い断), which means tan'yao made by "eating" discards. The ruleset that does not allow kuitan is called "kuitan nashi" (喰い断無し; no kuitan, or kuitan invalid).</description>
     </yaku>
     <yaku>
         <name>YAKUHAI</name>
+        <rarity>1</rarity>
         <english>Honor Tiles</english>
         <romaji>yakuhai</romaji>
         <kanji>役牌</kanji>
         <closedValue>1 per set</closedValue>
         <openValue>1 per set</openValue>
-        <description>Any triplets (or quads) of dragons, the player’s wind, and/or the prevailing wind. If a wind is both the player’s wind and the prevailing wind, it is worth two han per set.</description>
+        <description>Any triplets (or quads) of dragons, the player’s wind, or the prevailing wind. If a wind is both the player’s wind and the prevailing wind, the player is awarded two han for the set.</description>
     </yaku>
     <yaku>
         <name>CHANTA</name>
+        <rarity>2</rarity>
         <english>Terminal or Honor in Each Set</english>
         <romaji>chanta</romaji>
         <kanji>チャンタ</kanji>
@@ -114,6 +128,7 @@ When the hand is won by drawing from the wall, as an exception, in most rules th
     </yaku>
     <yaku>
         <name>JUNCHAN</name>
+        <rarity>2</rarity>
         <english>Terminal in Each Set</english>
         <romaji>junchan</romaji>
         <kanji>純チャン</kanji>
@@ -123,6 +138,7 @@ When the hand is won by drawing from the wall, as an exception, in most rules th
     </yaku>
     <yaku>
         <name>HONROUTOU</name>
+        <rarity>2</rarity>
         <english>All Terminals and Honors</english>
         <romaji>honroutou</romaji>
         <kanji>混老頭</kanji>
@@ -134,6 +150,7 @@ When the hand is won by drawing from the wall, as an exception, in most rules th
     </yaku>
     <yaku>
         <name>SHOUSANGEN</name>
+        <rarity>2</rarity>
         <english>Little Three Dragons</english>
         <romaji>shousangen</romaji>
         <kanji>小三元</kanji>
@@ -145,15 +162,17 @@ When the hand is won by drawing from the wall, as an exception, in most rules th
     </yaku>
     <yaku>
         <name>HONITSU</name>
+        <rarity>1</rarity>
         <english>Half-Flush</english>
         <romaji>hon'itsu</romaji>
         <kanji>混一</kanji>
         <closedValue>3</closedValue>
         <openValue>2</openValue>
-        <description>The hand contains tiles from one suit and honors. The honors can be two or more sets. The hand can be seven pairs.</description>
+        <description>The hand contains tiles from only one suit and honors.</description>
     </yaku>
     <yaku>
         <name>CHINITSU</name>
+        <rarity>2</rarity>
         <english>Flush</english>
         <romaji>chin'itsu</romaji>
         <kanji>清一</kanji>
@@ -163,15 +182,17 @@ When the hand is won by drawing from the wall, as an exception, in most rules th
     </yaku>
     <yaku>
         <name>TSUMO</name>
+        <rarity>1</rarity>
         <english>Self-Draw</english>
         <romaji>tsumo</romaji>
         <kanji>自摸</kanji>
         <closedValue>1</closedValue>
         <openValue>---</openValue>
-        <description>When a player has a closed hand and draws a winning tile from the wall or the dead wall.</description>
+        <description>When a player has a closed hand and draws their winning tile from the wall or the dead wall.</description>
     </yaku>
     <yaku>
         <name>IPPATSU</name>
+        <rarity>2</rarity>
         <english>One-shot</english>
         <romaji>ippatsu</romaji>
         <kanji>一発</kanji>
@@ -181,6 +202,7 @@ When the hand is won by drawing from the wall, as an exception, in most rules th
     </yaku>
     <yaku>
         <name>HAITEI</name>
+        <rarity>2</rarity>
         <english>Last Draw</english>
         <romaji>haitei raoyue</romaji>
         <kanji>海底撈月</kanji>
@@ -190,6 +212,7 @@ When the hand is won by drawing from the wall, as an exception, in most rules th
     </yaku>
     <yaku>
         <name>HOUTEI</name>
+        <rarity>2</rarity>
         <english>Last Discard</english>
         <romaji>houtei raoyui</romaji>
         <kanji>河底撈魚</kanji>
@@ -199,6 +222,7 @@ When the hand is won by drawing from the wall, as an exception, in most rules th
     </yaku>
     <yaku>
         <name>RINSHAN</name>
+        <rarity>2</rarity>
         <english>Dead Wall Draw</english>
         <romaji>rinshan kaihou</romaji>
         <kanji>嶺上開花</kanji>
@@ -210,6 +234,7 @@ Sometimes the pao (包) rule is applied to this yaku, that is, if a player claim
     </yaku>
     <yaku>
         <name>CHANKAN</name>
+        <rarity>2</rarity>
         <english>Robbing a Kan</english>
         <romaji>chankan</romaji>
         <kanji>搶槓</kanji>
@@ -221,6 +246,7 @@ Example: Player A has three 6’s of dots in an open triplet and draws the fourt
     </yaku>
     <yaku>
         <name>DOUBLERIICHI</name>
+        <rarity>2</rarity>
         <english>Double-Ready</english>
         <romaji>daburu riichi</romaji>
         <kanji>ダブルリーチ</kanji>
@@ -230,34 +256,39 @@ Example: Player A has three 6’s of dots in an open triplet and draws the fourt
     </yaku>
     <yaku>
         <name>RIICHI</name>
+        <rarity>1</rarity>
         <english>Ready hand</english>
         <romaji>riichi</romaji>
         <kanji>立直</kanji>
         <closedValue>1</closedValue>
         <openValue>---</openValue>
-        <description>This yaku is often called reach because its Japanese name is phonetically similar to the English word. When a player's hand needs only one tile to win (tenpai) and the player has not claimed another players' discards to make open melds, then the player has the option to declare riichi. The player may choose to continue to play with a ready hand without making a declaration, or may declare at a later time (when discarding), so long as their hand is ready. To make a declaration, the player calls out “riichi”, discards their tile sideways, and places a 1,000-point stick on the table as a deposit.
+        <description>When a player's hand needs only one tile to win (tenpai) and has no open melds, then the player has the option to declare riichi when discarding. To make a declaration the player calls out “riichi” while discarding their tile sideways, and places a 1,000-point stick on the table as a deposit.
 
-Conditions after declaration
-Once a declaration has been made, the player must discard any drawn tile that does not allow them to win. Also, they may not change the content of their hand under any circumstances, with the exception of declaring certain closed quads.
+Conditions after declaration:
+Once a player has declared riichi, the player must discard any drawn tile that does not allow them to win for the remainder of the round.
 
-In some rules, a player can declare ready only when there are four or more tiles remaining in the wall, which means the player needs to be able to draw another tile. The player owes no penalty if other players make open melds or closed quads after the declaration that prevents the player from drawing another tile.
+Underneath dora (ura dora):
+When players declare ready and win, they gain access to ura dora indicator tiles. This includes tiles underneath the dora indicators revealed by kans. This is the only time ura dora may be claimed and can dramatically increase the value of the hand.
 
+riichi deposits:
+The next player to win a hand receives any 1,000-point riichi sticks in the middle of the board.
+In the case of multiple winners, the sticks may be split amongst the winners or all the sticks may be given to the Head Bump (atama hane) winner, depending on the rule set.
+Should a draw occur, any riichi deposits carry-over and are placed with the counters, with the next winner receiving those riichi deposits.
+
+Claiming a riichi discard:
+If another player claims a riichi discard to make open melds, this does not effect the player's riichi status, the riichi'd player simply discards the next tile sideways. Should another player call Ron on a riichi discard, the riichi the declaration is considered incomplete and therefore the riichi player gets to keep their 1000 points (though they still have to pay for dealing the other player's winning tile!).
+
+Declaring closed quads:
+A closed quad can be declared after a riichi declaration should the fourth tile of a triplet be drawn. However, the quad must not otherwise change the composition of the hand or its waits, if it is discovered that this changed the hand's waits, it is a chombo.
+
+Other Notes:
 If all four players successfully declare ready, the hand ends as an abortive draw. Players show their hands to confirm they are tenpai or suffer a chombo penalty.
 
-Underneath dora
-When players declare ready and win, they can have access to underneath dora indicator tiles. This may include tiles underneath the dora indicators revealed by kan calls. This is the only time Underneath Dora may be claimed.
-
-riichi deposits
-The winner of the hand receives any 1,000-point riichi sticks in the middle of the board. In the case of multiple winners, the sticks may be split amongst the winners or all the sticks may be given to the Head Bump (atama hane) winner, depending on the rule set. When draws occur after ready hand declarations, any riichi deposits carry-over and are placed near the counters, with the next winner receiving those riichi deposits.
-
-Claiming a riichi discard
-If another player claims a riichi discard to make open melds, the player who declared ready discards the next tile sideways. If a riichi discard is called to win at the time, the declaration is considered incomplete and therefore the riichi deposit is not forfeited.
-
-Declaring closed quads
-A closed quad can be declared after a declaration of ready when the fourth tile of a triplet is drawn. However, the quad must not otherwise change the composition of the hand or its waits.</description>
+This yaku is often referred to as 'reach' because its Japanese name is phonetically similar to the English word. In some rules, a player can declare riichi only when there are four or more tiles remaining in the wall, which means the player needs to be able to draw another tile. The player owes no penalty if other players make open melds or closed quads after the declaration that prevents the player from drawing another tile.</description>
     </yaku>
     <yaku>
         <name>CHIITOITSU</name>
+        <rarity>2</rarity>
         <english>Seven Pairs</english>
         <romaji>chiitoitsu</romaji>
         <kanji>七対子</kanji>
@@ -267,6 +298,7 @@ A closed quad can be declared after a declaration of ready when the fourth tile 
     </yaku>
     <yaku>
         <name>NAGASHI</name>
+        <rarity>2</rarity>
         <english>Nagashi Mangan</english>
         <romaji>nagashi mangan</romaji>
         <kanji>流し満貫</kanji>
@@ -276,6 +308,7 @@ A closed quad can be declared after a declaration of ready when the fourth tile 
     </yaku>
     <yaku>
         <name>KOKUSHIMUSOU</name>
+        <rarity>2</rarity>
         <english>Thirteen Orphans</english>
         <romaji>kokushi musou</romaji>
         <kanji>国士無双</kanji>
@@ -285,6 +318,7 @@ A closed quad can be declared after a declaration of ready when the fourth tile 
     </yaku>
     <yaku>
         <name>KOKUSHIMUSOU13SIDED</name>
+        <rarity>2</rarity>
         <english>Thirteen Orphans (13 sided wait)</english>
         <romaji>kokushi musou juusannen machi</romaji>
         <kanji>国士無双１３面待ち</kanji>
@@ -294,6 +328,7 @@ A closed quad can be declared after a declaration of ready when the fourth tile 
     </yaku>
     <yaku>
         <name>SUUANKOU</name>
+        <rarity>2</rarity>
         <english>Four Concealed Triplets</english>
         <romaji>suu ankou</romaji>
         <kanji>四暗刻</kanji>
@@ -303,6 +338,7 @@ A closed quad can be declared after a declaration of ready when the fourth tile 
     </yaku>
     <yaku>
         <name>SUUANKOUTANKI</name>
+        <rarity>2</rarity>
         <english>Four Concealed Triplets (Pair wait)</english>
         <romaji>suu ankou tanki</romaji>
         <kanji>四暗刻単騎</kanji>
@@ -312,6 +348,7 @@ A closed quad can be declared after a declaration of ready when the fourth tile 
     </yaku>
     <yaku>
         <name>DAISANGEN</name>
+        <rarity>2</rarity>
         <english>Big Three Dragons</english>
         <romaji>daisangen</romaji>
         <kanji>大三元</kanji>
@@ -321,6 +358,7 @@ A closed quad can be declared after a declaration of ready when the fourth tile 
     </yaku>
     <yaku>
         <name>SHOUSUUSHII</name>
+        <rarity>2</rarity>
         <english>Little Four Winds</english>
         <romaji>shousuushii</romaji>
         <kanji>小四喜</kanji>
@@ -330,6 +368,7 @@ A closed quad can be declared after a declaration of ready when the fourth tile 
     </yaku>
     <yaku>
         <name>DAISUUSHII</name>
+        <rarity>2</rarity>
         <english>Big Four Winds</english>
         <romaji>daisuushii</romaji>
         <kanji>大四喜</kanji>
@@ -339,6 +378,7 @@ A closed quad can be declared after a declaration of ready when the fourth tile 
     </yaku>
     <yaku>
         <name>TSUUIISOU</name>
+        <rarity>2</rarity>
         <english>All Honors</english>
         <romaji>tsuuiisou</romaji>
         <kanji>字一色</kanji>
@@ -348,6 +388,7 @@ A closed quad can be declared after a declaration of ready when the fourth tile 
     </yaku>
     <yaku>
         <name>DAICHISEI</name>
+        <rarity>2</rarity>
         <english>Big Seven Stars</english>
         <romaji>daichisei</romaji>
         <kanji>大七星</kanji>
@@ -357,6 +398,7 @@ A closed quad can be declared after a declaration of ready when the fourth tile 
     </yaku>
     <yaku>
         <name>CHINROUTOU</name>
+        <rarity>2</rarity>
         <english>All Terminals</english>
         <romaji>chinroutou</romaji>
         <kanji>清老頭</kanji>
@@ -366,6 +408,7 @@ A closed quad can be declared after a declaration of ready when the fourth tile 
     </yaku>
     <yaku>
         <name>RYUUIISOU</name>
+        <rarity>2</rarity>
         <english>All Green</english>
         <romaji>ryuuiisou</romaji>
         <kanji>緑一色</kanji>
@@ -375,6 +418,7 @@ A closed quad can be declared after a declaration of ready when the fourth tile 
     </yaku>
     <yaku>
         <name>CHUURENPOUTOU</name>
+        <rarity>2</rarity>
         <english>Nine Gates</english>
         <romaji>chuuren poutou</romaji>
         <kanji>九蓮宝燈</kanji>
@@ -384,6 +428,7 @@ A closed quad can be declared after a declaration of ready when the fourth tile 
     </yaku>
     <yaku>
         <name>CHUURENPOUTOU9SIDED</name>
+        <rarity>2</rarity>
         <english>Nine Gates (9-sided wait)</english>
         <romaji>junsei chuuren poutou</romaji>
         <kanji>純正九蓮宝燈 (9 wait)</kanji>
@@ -393,6 +438,7 @@ A closed quad can be declared after a declaration of ready when the fourth tile 
     </yaku>
     <yaku>
         <name>SUUKANTSU</name>
+        <rarity>2</rarity>
         <english>Four Kans</english>
         <romaji>suu kantsu</romaji>
         <kanji>四槓子</kanji>
@@ -402,6 +448,7 @@ A closed quad can be declared after a declaration of ready when the fourth tile 
     </yaku>
     <yaku>
         <name>TENHOU</name>
+        <rarity>2</rarity>
         <english>Heavenly Hand</english>
         <romaji>tenhou</romaji>
         <kanji>天和</kanji>
@@ -411,6 +458,7 @@ A closed quad can be declared after a declaration of ready when the fourth tile 
     </yaku>
     <yaku>
         <name>CHIIHOU</name>
+        <rarity>2</rarity>
         <english>Hand of Earth</english>
         <romaji>chiihou</romaji>
         <kanji>地和</kanji>
@@ -420,6 +468,7 @@ A closed quad can be declared after a declaration of ready when the fourth tile 
     </yaku>
     <yaku>
         <name>RENHOU</name>
+        <rarity>2</rarity>
         <english>Hand of Man</english>
         <romaji>renhou</romaji>
         <kanji>人和</kanji>
@@ -429,6 +478,7 @@ A closed quad can be declared after a declaration of ready when the fourth tile 
     </yaku>
     <yaku>
         <name>SANRENKOU</name>
+        <rarity>3</rarity>
         <english>Three Chained Triplets</english>
         <romaji>sanrenkou</romaji>
         <kanji>三連刻</kanji>
@@ -438,6 +488,7 @@ A closed quad can be declared after a declaration of ready when the fourth tile 
     </yaku>
     <yaku>
         <name>SUURENKOU</name>
+        <rarity>3</rarity>
         <english>Four Chained Triplets</english>
         <romaji>suurenkou</romaji>
         <kanji>四連刻</kanji>
@@ -447,6 +498,7 @@ A closed quad can be declared after a declaration of ready when the fourth tile 
     </yaku>
     <yaku>
         <name>DAISHARIN</name>
+        <rarity>3</rarity>
         <english>Chariot</english>
         <romaji>dai sharin</romaji>
         <kanji>大車輪</kanji>
@@ -461,6 +513,7 @@ Manzu (characters), dai suurin – 大数隣 or numerous neighbours</description
     </yaku>
     <yaku>
         <name>SHIISANPUUTA</name>
+        <rarity>3</rarity>
         <english>Thirteen Unconnected Tiles</english>
         <romaji>shiisanpuutaa</romaji>
         <kanji>十三不塔</kanji>
@@ -470,6 +523,7 @@ Manzu (characters), dai suurin – 大数隣 or numerous neighbours</description
     </yaku>
     <yaku>
         <name>SHIISUUPUUTA</name>
+        <rarity>3</rarity>
         <english>Fourteen Unconnected Tiles</english>
         <romaji>shisuupuutaa</romaji>
         <kanji>十四不塔</kanji>
@@ -479,6 +533,7 @@ Manzu (characters), dai suurin – 大数隣 or numerous neighbours</description
     </yaku>
     <yaku>
         <name>PARENCHAN</name>
+        <rarity>3</rarity>
         <english>Eight Consecutive Wins</english>
         <romaji>parenchan</romaji>
         <kanji>八連荘</kanji>
@@ -488,6 +543,7 @@ Manzu (characters), dai suurin – 大数隣 or numerous neighbours</description
     </yaku>
     <yaku>
         <name>DORA</name>
+        <rarity>0</rarity>
         <english>Bonus Tiles</english>
         <romaji>dora</romaji>
         <kanji>ドラ</kanji>
