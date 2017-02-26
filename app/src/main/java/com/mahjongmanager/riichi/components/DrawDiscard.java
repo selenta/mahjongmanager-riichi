@@ -16,6 +16,7 @@ import com.mahjongmanager.riichi.ScoreCalculator;
 import com.mahjongmanager.riichi.common.Hand;
 import com.mahjongmanager.riichi.common.Round;
 import com.mahjongmanager.riichi.common.Tile;
+import com.mahjongmanager.riichi.utils.AppSettings;
 import com.mahjongmanager.riichi.utils.ImageCache;
 import com.mahjongmanager.riichi.utils.Log;
 import com.mahjongmanager.riichi.utils.Utils;
@@ -30,6 +31,7 @@ public class DrawDiscard extends LinearLayout implements View.OnClickListener {
     private TextView remainingTiles;
     private TextView remainingTurns;
     private TextView currentHandInstructions;
+    private TextView discardTooltip;
     private LinearLayout prevailingWindTileImage;
     private LinearLayout playerWindTileImage;
     private LinearLayout confirmDiscardImage;
@@ -60,6 +62,7 @@ public class DrawDiscard extends LinearLayout implements View.OnClickListener {
     private static final int BUTTONS_SCORE = 4;
 
     private boolean pendingTsumoChoice = false;
+    private boolean tooltipsEnabled = false;
 
 
     public DrawDiscard(Context ctx){
@@ -77,6 +80,7 @@ public class DrawDiscard extends LinearLayout implements View.OnClickListener {
         checkTextSize();
 
         initHandDisplaySettings();
+        checkTooltips();
     }
 
     public void setRound(Round r, Tile.Wind pWind){
@@ -216,6 +220,9 @@ public class DrawDiscard extends LinearLayout implements View.OnClickListener {
         }
         stagedDiscard = t;
         setTileImage(confirmDiscardImage, stagedDiscard);
+        if( tooltipsEnabled ){
+            discardTooltip.setText("("+stagedDiscard.toString()+")");
+        }
     }
 
     private void confirmDiscard(){
@@ -285,6 +292,7 @@ public class DrawDiscard extends LinearLayout implements View.OnClickListener {
         confirmDiscardImage.setVisibility(INVISIBLE);
         confirmDiscardButton = (Button) myInflatedView.findViewById(R.id.confirmDiscardButton);
         confirmDiscardButton.setOnClickListener(this);
+        discardTooltip = (TextView) myInflatedView.findViewById(R.id.discardTooltip);
 
         selfDrawContainer = (LinearLayout) myInflatedView.findViewById(R.id.selfDrawContainer);
         tsumoButton = (Button) myInflatedView.findViewById(R.id.tsumoButton);
@@ -314,5 +322,12 @@ public class DrawDiscard extends LinearLayout implements View.OnClickListener {
         lastDrawImage.setPadding(hdp, hdp, hdp, hdp);
         int size = Utils.getActualTileWidth(ImageCache.HAND_DISPLAY_KEY);
         lastDrawImage.setMinimumHeight(size * 14/10 + 10);
+    }
+    private void checkTooltips(){
+        tooltipsEnabled = AppSettings.getDrawDiscardTooltips();
+        if( tooltipsEnabled ){
+            discardTooltip.setVisibility(VISIBLE);
+            ((View)confirmDiscardImage.getParent()).setPadding(80,5,0,5);
+        }
     }
 }

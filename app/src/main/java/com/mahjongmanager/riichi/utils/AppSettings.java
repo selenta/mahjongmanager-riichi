@@ -35,6 +35,7 @@ public class AppSettings {
     private static final String SQ_NUMBER_OF_SUITS = "SQNumberOfSuits";
     private static final String SQ_ALLOW_HONORS = "SQAllowHonors";
     private static final String SQ_MAX_HANDS = "SQMaxHands";
+    private static final String DD_TOOLTIPS = "DDTooltips";
     private static final String BANNER_ADS = "BannerAds";
 
     // Game Rules
@@ -102,7 +103,8 @@ public class AppSettings {
         return sharedPref.getInt(HB_FU_RECORD, 0);
     }
     public static void setHandBuilderFuRecord(int value){
-        savePreference(HB_FU_RECORD, value);
+        int roundedFu = (value==25) ? 25 : (int) Math.ceil(value/10.0)*10;
+        savePreference(HB_FU_RECORD, roundedFu);
     }
 
     // App Settings
@@ -160,6 +162,13 @@ public class AppSettings {
     }
     public static void setSpeedQuizMaxHands(int value){
         savePreference(SQ_MAX_HANDS, value);
+    }
+
+    public static boolean getDrawDiscardTooltips(){
+        return sharedPref.getBoolean(DD_TOOLTIPS, true);
+    }
+    public static void setDrawDiscardTooltips(boolean value){
+        savePreference(DD_TOOLTIPS, value);
     }
 
     public static boolean getBannerAdsEnabled(){

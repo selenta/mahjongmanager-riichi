@@ -19,6 +19,7 @@ public class OptionsFragment extends Fragment implements View.OnClickListener {
     private CheckBox separateClosedMeldsCheckbox;
     private CheckBox addSituationalYakuCheckbox;
     private CheckBox allowHonorsCheckbox;
+    private CheckBox drawDiscardTooltipsCheckbox;
     private CheckBox enableBannerAdsCheckbox;
 
     private RadioGroup terminology;
@@ -43,6 +44,7 @@ public class OptionsFragment extends Fragment implements View.OnClickListener {
         addSituationalYakuCheckbox.setChecked( AppSettings.getSpeedQuizSituationalYaku() );
         loadNumberOfSuits();
         allowHonorsCheckbox.setChecked( AppSettings.getSpeedQuizAllowHonors() );
+        drawDiscardTooltipsCheckbox.setChecked( AppSettings.getDrawDiscardTooltips() );
         enableBannerAdsCheckbox.setChecked( AppSettings.getBannerAdsEnabled() );
         loadMaxHands();
     }
@@ -95,6 +97,9 @@ public class OptionsFragment extends Fragment implements View.OnClickListener {
             case R.id.allowHonorsCheckbox:
                 AppSettings.setSpeedQuizAllowHonors(allowHonorsCheckbox.isChecked());
                 break;
+            case R.id.drawDiscardTooltips:
+                AppSettings.setDrawDiscardTooltips(drawDiscardTooltipsCheckbox.isChecked());
+                break;
             case R.id.enableBannerAdsCheckbox:
                 AppSettings.setBannerAdsEnabled(enableBannerAdsCheckbox.isChecked());
                 break;
@@ -120,6 +125,9 @@ public class OptionsFragment extends Fragment implements View.OnClickListener {
 
         allowHonorsCheckbox = (CheckBox) myInflatedView.findViewById(R.id.allowHonorsCheckbox);
         allowHonorsCheckbox.setOnClickListener(this);
+
+        drawDiscardTooltipsCheckbox = (CheckBox) myInflatedView.findViewById(R.id.drawDiscardTooltips);
+        drawDiscardTooltipsCheckbox.setOnClickListener(this);
 
         enableBannerAdsCheckbox = (CheckBox) myInflatedView.findViewById(R.id.enableBannerAdsCheckbox);
         enableBannerAdsCheckbox.setOnClickListener(this);

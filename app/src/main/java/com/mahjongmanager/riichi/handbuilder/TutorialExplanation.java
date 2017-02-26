@@ -20,6 +20,7 @@ import com.mahjongmanager.riichi.common.Tile;
 import com.mahjongmanager.riichi.components.DiscardPile;
 import com.mahjongmanager.riichi.components.HandDisplay;
 import com.mahjongmanager.riichi.components.ScoreScreen;
+import com.mahjongmanager.riichi.utils.AppSettings;
 import com.mahjongmanager.riichi.utils.TutorialLibrary;
 import com.mahjongmanager.riichi.utils.Log;
 import com.mahjongmanager.riichi.utils.Utils;
@@ -34,7 +35,9 @@ public class TutorialExplanation extends Fragment implements View.OnClickListene
     private HandDisplay handDisplay;
     private HandDisplay lastDrawTile;
     private LinearLayout recommendedDiscardImage;
+    private TextView discardTooltip;
     private LinearLayout explanationContainer;
+
     private TableLayout explanationTable;
 
     private ScoreScreen scoreScreen;
@@ -48,6 +51,8 @@ public class TutorialExplanation extends Fragment implements View.OnClickListene
 
     private int currentDiscard = 0;
 
+    private boolean tooltipsEnabled = false;
+
     private Button backButton;
     private Button nextButton;
     private Button mainMenuButton;
@@ -59,6 +64,7 @@ public class TutorialExplanation extends Fragment implements View.OnClickListene
         assignUIElements(myInflatedView);
 
         initData();
+        checkTooltips();
         updateButtons();
         updateDisplays();
 
@@ -123,6 +129,9 @@ public class TutorialExplanation extends Fragment implements View.OnClickListene
 
         Tile nextDiscard = expectedDiscards.get(currentDiscard);
         setTileImage(recommendedDiscardImage, nextDiscard);
+        if( tooltipsEnabled ){
+            discardTooltip.setText("("+nextDiscard.toString()+")");
+        }
     }
     private TextView createDescription(String s){
         TextView tv = new TextView(getActivity());
@@ -226,6 +235,7 @@ public class TutorialExplanation extends Fragment implements View.OnClickListene
         handDisplay = (HandDisplay) myInflatedView.findViewById(R.id.handDisplay);
         lastDrawTile = (HandDisplay) myInflatedView.findViewById(R.id.lastDrawTile);
         recommendedDiscardImage = (LinearLayout) myInflatedView.findViewById(R.id.recommendedDiscardImage);
+        discardTooltip = (TextView) myInflatedView.findViewById(R.id.discardTooltip);
         explanationContainer = (LinearLayout) myInflatedView.findViewById(R.id.explanationContainer);
         explanationTable = (TableLayout) myInflatedView.findViewById(R.id.explanationTable);
         scoreScreen = (ScoreScreen) myInflatedView.findViewById(R.id.scoreScreen);
@@ -246,5 +256,12 @@ public class TutorialExplanation extends Fragment implements View.OnClickListene
 
         lastDraw = allDraws.get(13+currentDiscard);
         lastDrawTile.setHand(new Hand(Arrays.asList(lastDraw)));
+    }
+    private void checkTooltips(){
+        tooltipsEnabled = AppSettings.getDrawDiscardTooltips();
+        if( tooltipsEnabled ){
+            discardTooltip.setVisibility(View.VISIBLE);
+            ((View)recommendedDiscardImage.getParent()).setPadding(80,5,0,5);
+        }
     }
 }
