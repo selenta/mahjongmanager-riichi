@@ -208,8 +208,9 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textAppearance="?android:attr/textAppearanceSmall"
-                    android:text="v0.95"
-                    android:layout_gravity="center_horizontal" />
+                    android:text="v0.99"
+                    android:layout_gravity="center_horizontal"
+                    android:id="@+id/appVersionLabel" />
 
             </LinearLayout>
         </LinearLayout>
