@@ -42,14 +42,16 @@ public class YakuListFragment extends Fragment implements AdapterView.OnItemSele
 
     static final String YAKU_LIST_COMMON        = "Common Yaku";
     static final String YAKU_LIST_STANDARD      = "Standard Yaku";
-    static final String YAKU_LIST_ALL           = "All Yaku";
+    static final String YAKU_LIST_YAKUMAN       = "Standard Yakuman";
+    static final String YAKU_LIST_RARE          = "Uncommon Yaku";
     static final String YAKU_BY_FREQUENCY_LABEL = "Han sorted by Frequency";
     static final String YAKU_BY_AVERAGE_HAN     = "Han sorted by Avg. Hand Size";
     static final String YAKU_COMBINATORICS      = "Yaku Combinatorics (math)";
 
     static final String yakuListCommonNotes   = "Descriptions of the six Yaku that beginners should learn first (with example hands).";
-    static final String yakuListStandardNotes = "Descriptions of all Yaku that are used in most rulesets (with example hands) .";
-    static final String yakuListAllNotes      = "Descriptions of all Yaku (with example hands). Those in the 'Uncommon Yaku' category are not accepted in most rulesets.";
+    static final String yakuListStandardNotes = "Descriptions of all non-Yakuman Yaku that are used in most rulesets (with example hands) .";
+    static final String yakuListYakumanNotes  = "Descriptions of the Yakuman that are accepted in most rulesets (with example hands) .";
+    static final String yakuListRareNotes     = "Descriptions of Yaku that are not accepted in most rulesets, but are common enough that they should still be listed.";
 
     boolean csvPopulated = false;
 
@@ -58,7 +60,6 @@ public class YakuListFragment extends Fragment implements AdapterView.OnItemSele
         View myInflatedView = inflater.inflate(R.layout.fragment_yakulist, container, false);
 
         registerUIElements(myInflatedView);
-        initializeDropdown();
         setMode(YAKU_LIST_COMMON);
 
         return myInflatedView;
@@ -95,15 +96,15 @@ public class YakuListFragment extends Fragment implements AdapterView.OnItemSele
         switch (mode){
             case YAKU_LIST_COMMON:
                 displayYaku(1);
-                yakuDescriptions.setVisibility(View.VISIBLE);
                 break;
             case YAKU_LIST_STANDARD:
                 displayYaku(2);
-                yakuDescriptions.setVisibility(View.VISIBLE);
                 break;
-            case YAKU_LIST_ALL:
+            case YAKU_LIST_YAKUMAN:
                 displayYaku(3);
-                yakuDescriptions.setVisibility(View.VISIBLE);
+                break;
+            case YAKU_LIST_RARE:
+                displayYaku(4);
                 break;
             case YAKU_BY_FREQUENCY_LABEL:
                 populateRealWorldDataTable();
@@ -193,12 +194,14 @@ public class YakuListFragment extends Fragment implements AdapterView.OnItemSele
                 yakuListNotes.setText(yakuListStandardNotes);
                 break;
             case 3:
-                yakuListNotes.setText(yakuListAllNotes);
+                yakuListNotes.setText(yakuListYakumanNotes);
                 break;
+            case 4:
+                yakuListNotes.setText(yakuListRareNotes);
         }
 
         for( Yaku y : ExampleHands.allYaku ){
-            if( y.name!=Yaku.Name.DORA && y.rarity<=rarity){
+            if( y.name!=Yaku.Name.DORA && displayYaku(y.rarity, rarity) ){
                 YakuDescription yd = new YakuDescription(getContext());
                 yd.setYaku(y);
 
@@ -206,6 +209,14 @@ public class YakuListFragment extends Fragment implements AdapterView.OnItemSele
                 yakuDescriptions.addView(yd);
             }
         }
+
+        yakuDescriptions.setVisibility(View.VISIBLE);
+    }
+    private boolean displayYaku(int yakuRarity, int mode){
+        if( mode==2 ){
+            return yakuRarity==1 || yakuRarity==2;
+        }
+        return yakuRarity==mode;
     }
     private void checkForCategoryLabel(Yaku y, YakuDescription yd){
         switch (y.name){
@@ -261,6 +272,7 @@ public class YakuListFragment extends Fragment implements AdapterView.OnItemSele
     /////////////////////////////////////////
     private void registerUIElements(View myInflatedView){
         spinner = (Spinner) myInflatedView.findViewById(R.id.spinner);
+        initializeDropdown();
         spinner.setOnItemSelectedListener(this);
         spinner.setOnTouchListener(this);
 
@@ -279,7 +291,8 @@ public class YakuListFragment extends Fragment implements AdapterView.OnItemSele
         List<String> viewOptions = new ArrayList<>();
         viewOptions.add(YAKU_LIST_COMMON);
         viewOptions.add(YAKU_LIST_STANDARD);
-        viewOptions.add(YAKU_LIST_ALL);
+        viewOptions.add(YAKU_LIST_YAKUMAN);
+        viewOptions.add(YAKU_LIST_RARE);
         viewOptions.add(YAKU_BY_FREQUENCY_LABEL);
         viewOptions.add(YAKU_BY_AVERAGE_HAN);
 //        viewOptions.add(YAKU_COMBINATORICS);

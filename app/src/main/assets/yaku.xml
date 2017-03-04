@@ -272,19 +272,13 @@ When players declare ready and win, they gain access to ura dora indicator tiles
 
 riichi deposits:
 The next player to win a hand receives any 1,000-point riichi sticks in the middle of the board.
-In the case of multiple winners, the sticks may be split amongst the winners or all the sticks may be given to the Head Bump (atama hane) winner, depending on the rule set.
 Should a draw occur, any riichi deposits carry-over and are placed with the counters, with the next winner receiving those riichi deposits.
 
 Claiming a riichi discard:
 If another player claims a riichi discard to make open melds, this does not effect the player's riichi status, the riichi'd player simply discards the next tile sideways. Should another player call Ron on a riichi discard, the riichi the declaration is considered incomplete and therefore the riichi player gets to keep their 1000 points (though they still have to pay for dealing the other player's winning tile!).
 
 Declaring closed quads:
-A closed quad can be declared after a riichi declaration should the fourth tile of a triplet be drawn. However, the quad must not otherwise change the composition of the hand or its waits, if it is discovered that this changed the hand's waits, it is a chombo.
-
-Other Notes:
-If all four players successfully declare ready, the hand ends as an abortive draw. Players show their hands to confirm they are tenpai or suffer a chombo penalty.
-
-This yaku is often referred to as 'reach' because its Japanese name is phonetically similar to the English word. In some rules, a player can declare riichi only when there are four or more tiles remaining in the wall, which means the player needs to be able to draw another tile. The player owes no penalty if other players make open melds or closed quads after the declaration that prevents the player from drawing another tile.</description>
+A closed quad can be declared after a riichi declaration should the fourth tile of a triplet be drawn. However, the quad must not otherwise change the composition of the hand or its waits, if it is discovered that this changed the hand's waits, it is a chombo.</description>
     </yaku>
     <yaku>
         <name>CHIITOITSU</name>
@@ -308,7 +302,7 @@ This yaku is often referred to as 'reach' because its Japanese name is phonetica
     </yaku>
     <yaku>
         <name>KOKUSHIMUSOU</name>
-        <rarity>2</rarity>
+        <rarity>3</rarity>
         <english>Thirteen Orphans</english>
         <romaji>kokushi musou</romaji>
         <kanji>国士無双</kanji>
@@ -318,7 +312,7 @@ This yaku is often referred to as 'reach' because its Japanese name is phonetica
     </yaku>
     <yaku>
         <name>KOKUSHIMUSOU13SIDED</name>
-        <rarity>2</rarity>
+        <rarity>3</rarity>
         <english>Thirteen Orphans (13 sided wait)</english>
         <romaji>kokushi musou juusannen machi</romaji>
         <kanji>国士無双１３面待ち</kanji>
@@ -328,7 +322,7 @@ This yaku is often referred to as 'reach' because its Japanese name is phonetica
     </yaku>
     <yaku>
         <name>SUUANKOU</name>
-        <rarity>2</rarity>
+        <rarity>3</rarity>
         <english>Four Concealed Triplets</english>
         <romaji>suu ankou</romaji>
         <kanji>四暗刻</kanji>
@@ -338,7 +332,7 @@ This yaku is often referred to as 'reach' because its Japanese name is phonetica
     </yaku>
     <yaku>
         <name>SUUANKOUTANKI</name>
-        <rarity>2</rarity>
+        <rarity>3</rarity>
         <english>Four Concealed Triplets (Pair wait)</english>
         <romaji>suu ankou tanki</romaji>
         <kanji>四暗刻単騎</kanji>
@@ -348,7 +342,7 @@ This yaku is often referred to as 'reach' because its Japanese name is phonetica
     </yaku>
     <yaku>
         <name>DAISANGEN</name>
-        <rarity>2</rarity>
+        <rarity>3</rarity>
         <english>Big Three Dragons</english>
         <romaji>daisangen</romaji>
         <kanji>大三元</kanji>
@@ -358,7 +352,7 @@ This yaku is often referred to as 'reach' because its Japanese name is phonetica
     </yaku>
     <yaku>
         <name>SHOUSUUSHII</name>
-        <rarity>2</rarity>
+        <rarity>3</rarity>
         <english>Little Four Winds</english>
         <romaji>shousuushii</romaji>
         <kanji>小四喜</kanji>
@@ -368,7 +362,7 @@ This yaku is often referred to as 'reach' because its Japanese name is phonetica
     </yaku>
     <yaku>
         <name>DAISUUSHII</name>
-        <rarity>2</rarity>
+        <rarity>3</rarity>
         <english>Big Four Winds</english>
         <romaji>daisuushii</romaji>
         <kanji>大四喜</kanji>
@@ -378,7 +372,7 @@ This yaku is often referred to as 'reach' because its Japanese name is phonetica
     </yaku>
     <yaku>
         <name>TSUUIISOU</name>
-        <rarity>2</rarity>
+        <rarity>3</rarity>
         <english>All Honors</english>
         <romaji>tsuuiisou</romaji>
         <kanji>字一色</kanji>
@@ -388,7 +382,7 @@ This yaku is often referred to as 'reach' because its Japanese name is phonetica
     </yaku>
     <yaku>
         <name>DAICHISEI</name>
-        <rarity>2</rarity>
+        <rarity>3</rarity>
         <english>Big Seven Stars</english>
         <romaji>daichisei</romaji>
         <kanji>大七星</kanji>
@@ -398,7 +392,7 @@ This yaku is often referred to as 'reach' because its Japanese name is phonetica
     </yaku>
     <yaku>
         <name>CHINROUTOU</name>
-        <rarity>2</rarity>
+        <rarity>3</rarity>
         <english>All Terminals</english>
         <romaji>chinroutou</romaji>
         <kanji>清老頭</kanji>
@@ -408,7 +402,7 @@ This yaku is often referred to as 'reach' because its Japanese name is phonetica
     </yaku>
     <yaku>
         <name>RYUUIISOU</name>
-        <rarity>2</rarity>
+        <rarity>3</rarity>
         <english>All Green</english>
         <romaji>ryuuiisou</romaji>
         <kanji>緑一色</kanji>
@@ -418,7 +412,7 @@ This yaku is often referred to as 'reach' because its Japanese name is phonetica
     </yaku>
     <yaku>
         <name>CHUURENPOUTOU</name>
-        <rarity>2</rarity>
+        <rarity>3</rarity>
         <english>Nine Gates</english>
         <romaji>chuuren poutou</romaji>
         <kanji>九蓮宝燈</kanji>
@@ -428,7 +422,7 @@ This yaku is often referred to as 'reach' because its Japanese name is phonetica
     </yaku>
     <yaku>
         <name>CHUURENPOUTOU9SIDED</name>
-        <rarity>2</rarity>
+        <rarity>3</rarity>
         <english>Nine Gates (9-sided wait)</english>
         <romaji>junsei chuuren poutou</romaji>
         <kanji>純正九蓮宝燈 (9 wait)</kanji>
@@ -438,7 +432,7 @@ This yaku is often referred to as 'reach' because its Japanese name is phonetica
     </yaku>
     <yaku>
         <name>SUUKANTSU</name>
-        <rarity>2</rarity>
+        <rarity>3</rarity>
         <english>Four Kans</english>
         <romaji>suu kantsu</romaji>
         <kanji>四槓子</kanji>
@@ -448,7 +442,7 @@ This yaku is often referred to as 'reach' because its Japanese name is phonetica
     </yaku>
     <yaku>
         <name>TENHOU</name>
-        <rarity>2</rarity>
+        <rarity>3</rarity>
         <english>Heavenly Hand</english>
         <romaji>tenhou</romaji>
         <kanji>天和</kanji>
@@ -458,7 +452,7 @@ This yaku is often referred to as 'reach' because its Japanese name is phonetica
     </yaku>
     <yaku>
         <name>CHIIHOU</name>
-        <rarity>2</rarity>
+        <rarity>3</rarity>
         <english>Hand of Earth</english>
         <romaji>chiihou</romaji>
         <kanji>地和</kanji>
@@ -468,7 +462,7 @@ This yaku is often referred to as 'reach' because its Japanese name is phonetica
     </yaku>
     <yaku>
         <name>RENHOU</name>
-        <rarity>2</rarity>
+        <rarity>3</rarity>
         <english>Hand of Man</english>
         <romaji>renhou</romaji>
         <kanji>人和</kanji>
@@ -478,7 +472,7 @@ This yaku is often referred to as 'reach' because its Japanese name is phonetica
     </yaku>
     <yaku>
         <name>SANRENKOU</name>
-        <rarity>3</rarity>
+        <rarity>4</rarity>
         <english>Three Chained Triplets</english>
         <romaji>sanrenkou</romaji>
         <kanji>三連刻</kanji>
@@ -488,7 +482,7 @@ This yaku is often referred to as 'reach' because its Japanese name is phonetica
     </yaku>
     <yaku>
         <name>SUURENKOU</name>
-        <rarity>3</rarity>
+        <rarity>4</rarity>
         <english>Four Chained Triplets</english>
         <romaji>suurenkou</romaji>
         <kanji>四連刻</kanji>
@@ -498,7 +492,7 @@ This yaku is often referred to as 'reach' because its Japanese name is phonetica
     </yaku>
     <yaku>
         <name>DAISHARIN</name>
-        <rarity>3</rarity>
+        <rarity>4</rarity>
         <english>Chariot</english>
         <romaji>dai sharin</romaji>
         <kanji>大車輪</kanji>
@@ -513,7 +507,7 @@ Manzu (characters), dai suurin – 大数隣 or numerous neighbours</description
     </yaku>
     <yaku>
         <name>SHIISANPUUTA</name>
-        <rarity>3</rarity>
+        <rarity>4</rarity>
         <english>Thirteen Unconnected Tiles</english>
         <romaji>shiisanpuutaa</romaji>
         <kanji>十三不塔</kanji>
@@ -523,7 +517,7 @@ Manzu (characters), dai suurin – 大数隣 or numerous neighbours</description
     </yaku>
     <yaku>
         <name>SHIISUUPUUTA</name>
-        <rarity>3</rarity>
+        <rarity>4</rarity>
         <english>Fourteen Unconnected Tiles</english>
         <romaji>shisuupuutaa</romaji>
         <kanji>十四不塔</kanji>
@@ -533,7 +527,7 @@ Manzu (characters), dai suurin – 大数隣 or numerous neighbours</description
     </yaku>
     <yaku>
         <name>PARENCHAN</name>
-        <rarity>3</rarity>
+        <rarity>4</rarity>
         <english>Eight Consecutive Wins</english>
         <romaji>parenchan</romaji>
         <kanji>八連荘</kanji>
