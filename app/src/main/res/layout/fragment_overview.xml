@@ -76,6 +76,13 @@
                     android:enabled="true"
                     android:onClick="goToScoringFlowchart" />
 
+                <Button
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Hand Building Tutorial"
+                    android:enabled="true"
+                    android:onClick="goToTutorialOverview" />
+
             </LinearLayout>
 
             <LinearLayout
@@ -98,7 +105,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Wiki: Japanese Mahjong"
+                    android:text="Japanese Mahjong (wikipedia)"
                     android:id="@+id/japaneseMahjongLink"
                     android:textColor="@color/colorPrimaryDark"
                     android:layout_gravity="center"
@@ -108,8 +115,18 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Wiki: Japanese Mahjong Scoring"
+                    android:text="Japanese Mahjong Scoring (wikipedia)"
                     android:id="@+id/japaneseMahjongScoringLink"
+                    android:textColor="@color/colorPrimaryDark"
+                    android:layout_gravity="center"
+                    android:textSize="18sp"
+                    android:layout_marginTop="10dp" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="List of Terminology (arcturus.su)"
+                    android:id="@+id/terminologyArcturusLink"
                     android:textColor="@color/colorPrimaryDark"
                     android:layout_gravity="center"
                     android:textSize="18sp"

@@ -118,13 +118,6 @@
                 <Button
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
-                    android:text="Hand Building Tutorial"
-                    android:enabled="true"
-                    android:onClick="goToTutorialOverview" />
-
-                <Button
-                    android:layout_width="fill_parent"
-                    android:layout_height="wrap_content"
                     android:text="Yaku Descriptions"
                     android:enabled="true"
                     android:onClick="goToYakuList" />

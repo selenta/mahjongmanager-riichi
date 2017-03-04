@@ -17,9 +17,11 @@ public class OverviewFragment extends Fragment implements View.OnClickListener {
 
     TextView japaneseMahjongLink;
     TextView japaneseMahjongScoringLink;
+    TextView terminologyArcturusLink;
 
     private String RIICHI_MAHJONG_WIKI = "https://en.wikipedia.org/wiki/Japanese_Mahjong";
     private String RIICHI_MAHJONG_SCORING_WIKI = "https://en.wikipedia.org/wiki/Japanese_Mahjong_scoring_rules";
+    private String TERMINOLOGY_ARCTURUS_WIKI = "http://arcturus.su/wiki/List_of_terminology_by_alphabetical_order";
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -38,6 +40,9 @@ public class OverviewFragment extends Fragment implements View.OnClickListener {
                 break;
             case R.id.japaneseMahjongScoringLink:
                 openWebPage(RIICHI_MAHJONG_SCORING_WIKI);
+                break;
+            case R.id.terminologyArcturusLink:
+                openWebPage(TERMINOLOGY_ARCTURUS_WIKI);
                 break;
         }
     }
@@ -62,5 +67,8 @@ public class OverviewFragment extends Fragment implements View.OnClickListener {
 
         japaneseMahjongScoringLink = (TextView) myInflatedView.findViewById(R.id.japaneseMahjongScoringLink);
         japaneseMahjongScoringLink.setOnClickListener(this);
+
+        terminologyArcturusLink = (TextView) myInflatedView.findViewById(R.id.terminologyArcturusLink);
+        terminologyArcturusLink.setOnClickListener(this);
     }
 }
