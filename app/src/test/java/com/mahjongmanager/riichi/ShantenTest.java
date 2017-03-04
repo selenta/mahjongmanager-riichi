@@ -163,7 +163,7 @@ public class ShantenTest {
     @Test
     public void shantenTest7() {
         // Several partial runs
-        // Shanten: 2
+        // Shanten: 1
         Tile t1  = new Tile(2, Tile.Suit.MANZU);
         Tile t2  = new Tile(2, Tile.Suit.MANZU);
         Tile t3  = new Tile(2, Tile.Suit.MANZU);
@@ -181,7 +181,7 @@ public class ShantenTest {
         Hand h = new Hand(Arrays.asList(t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11, t12, t13));
 
         ScoreCalculator sc = new ScoreCalculator(h, true);
-        Assert.assertSame(2, sc.shanten );
+        Assert.assertSame(1, sc.shanten );
     }
 
     @Test
