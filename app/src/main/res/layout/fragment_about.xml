@@ -31,15 +31,65 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textAppearance="?android:attr/textAppearanceMedium"
-                android:text="Hey! My name is Evan, I hope you've found the app to be useful. I've been a mahjong player for a number of years now and I've taught a bunch of people to play Riichi Mahjong. While the actual gameplay is fairly intuitive to anyone who's played a card game, everyone I've taught has found learning the yaku and the scoring process to be a barrier to getting comfortable with the game. Even a bunch of the veterans I know aren't particularly good at scoring."
+                android:text="Hey! My name is Evan, I've been a mahjong player for a number of years now and I've taught a lot of people the basics of how to play Riichi Mahjong. While the actual gameplay is fairly intuitive to anyone who's played a card game, I've found that learning the yaku and scoring process to be a barrier to getting comfortable with the game for most players."
                 android:textSize="14sp" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textAppearance="?android:attr/textAppearanceMedium"
-                android:text="The primary purpose of this app is to help players of all skill levels learn how to score hands, improve their speed/accuracy, and to be available as a reference in the middle of a game. The app consists of several tables and tools to examine the scoring process from different perspectives and skill levels."
+                android:text="The primary purpose of this app is to help players of all skill levels learn how to score hands, improve their speed/accuracy, and to be available as a reference in the middle of a game. The app consists of several tables and tools to examine the scoring process from different perspectives and skill levels. Even veteren players can always stand to be faster and more accurate with their scoring."
                 android:textSize="14sp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:text="This app has been a hobby project of mine for a while now, and I intend to support it for the foreseeable future."
+                android:textSize="14sp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:text="Note about Terminology"
+                android:paddingTop="10dp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:text="The terminology used throughout the app is admittedly a bit of a hodgepodge of English and Japanese. I tried to give both the English and Japanese terms when first introducing a concept, but tend to use the Japanese terms almost everywhere else."
+                android:textSize="14sp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:text="While not necessary to enjoy the game, I do encourage all players of the game to at least learn the most common Japanese terms, as most veteren players will rarely refer to English terminology."
+                android:textSize="14sp" />
+
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:text="Contact Info"
+                android:paddingTop="10dp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:text="Let me know what you think! There's always more things to add/cleanup, let me know if you think the app is missing something or you're seeing layout problems (please include which device you're running it on). I'm always open to feedback and suggestions, so feel free to send them to selentian@gmail.com"
+                android:textSize="14sp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:text="Known Issues"
+                android:paddingTop="10dp" />
 
             <GridLayout
                 android:layout_width="match_parent"
@@ -57,7 +107,7 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:textAppearance="?android:attr/textAppearanceMedium"
-                    android:text="For beginners, there are explanations on the basics of gameplay, as well as the scoring process, and how to determine the Han/Fu in a hand. In addition to the definition of the different yaku, there is some other contextual information, such as the relative frequency of each yaku in actual winning hand to illustrate that although the list is long, as not all yaku are equally important to know when first learning."
+                    android:text="Waits are not calculated correctly for hands with unusual structure (e.g. chiitoitsu)"
                     android:textSize="14sp"
                     android:paddingLeft="5dp"
                     android:layout_gravity="fill_horizontal" />
@@ -73,7 +123,7 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:textAppearance="?android:attr/textAppearanceMedium"
-                    android:text="For intermediate players, there is a hand keyboard where you can enter a hand as well as all of the circumstantial information (i.e. enter the tiles in the hand, specify the winning tile, was the winning tile self-drawn, etc) and the app will explain what Han/Fu are present in the hand and thus the resulting value of the hand. There are also tables/calculator to determine the value of a hand assuming the Han/Fu are known."
+                    android:text="Hand Calculator can get confused by ambiguous Closed Kans, crashing the application"
                     android:textSize="14sp"
                     android:paddingLeft="5dp"
                     android:layout_gravity="fill_horizontal" />
@@ -89,40 +139,11 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:textAppearance="?android:attr/textAppearanceMedium"
-                    android:text="For advanced players, the app includes a speed quiz that allows the user to test themselves, and upon completing the quiz the user can review any incorrect answers with a detailed score breakdown. There are also a few options to alter/increase the difficulty of the quiz."
+                    android:text="Minimizing the app during a Speed Quiz will break the timer, and may result in the app crashing when the timer ends"
                     android:textSize="14sp"
                     android:paddingLeft="5dp"
                     android:layout_gravity="fill_horizontal" />
             </GridLayout>
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textAppearance="?android:attr/textAppearanceLarge"
-                android:text="Note about Terminology"
-                android:paddingTop="10dp" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textAppearance="?android:attr/textAppearanceMedium"
-                android:text="The terminology used throughout the app is a mixture of English and Japanese. I tried to use the English descriptions when first introducing a concept, but tend to use the Japanese terms almost everywhere else. All players of the game should eventually learn the Japanese terminology, as veteren players you meet will rarely refer to English terminology."
-                android:textSize="14sp" />
-
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textAppearance="?android:attr/textAppearanceLarge"
-                android:text="Contact Info"
-                android:paddingTop="10dp" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textAppearance="?android:attr/textAppearanceMedium"
-                android:text="This is my first Android app, and the first item I've made from scratch that I'm putting out there. Let me know what you think! There's always more things to add, but let me know if you think the app is missing something important. I'm always open to feedback and suggestions, so feel free to send them to selentian@gmail.com"
-                android:textSize="14sp" />
 
         </LinearLayout>
     </ScrollView>
