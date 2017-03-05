@@ -14,6 +14,5 @@ Known Issues:
 Long-term Issues:
 - Ability to change font text size and/or zoom-in
 - Add a HandCalculator clarifying step, should there be an ambiguous closed kan (very rare)
-- Add glossary (that can be used throughout app)
 - Add Tutorial mode to Rules section (skipping over complicating details, such as determining seats/dealer/drawing order/etc)
 - Shanten calculations are imprecise

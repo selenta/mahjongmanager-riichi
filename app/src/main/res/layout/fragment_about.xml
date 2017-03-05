@@ -74,7 +74,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textAppearance="?android:attr/textAppearanceMedium"
-                android:text="Let me know what you think! There's always more things to add/cleanup, let me know if you think the app is missing something or you're seeing layout problems (please include which device you're running it on). I'm always open to feedback and suggestions, so feel free to send them to selentian@gmail.com"
+                android:text="Let me know what you think! There's always more things to add/cleanup, let me know if you think the app is missing something or you're seeing layout problems (please include which device you're running it on). I'm always open to feedback and suggestions, so feel free to send them to mahjong.manager@gmail.com"
                 android:textSize="14sp" />
 
             <TextView

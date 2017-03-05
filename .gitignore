@@ -4,5 +4,6 @@
 /local.properties
 .DS_Store
 /build
+/app/app-release/
 /captures
 keystore.properties
