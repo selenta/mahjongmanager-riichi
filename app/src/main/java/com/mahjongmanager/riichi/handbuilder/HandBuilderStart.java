@@ -15,13 +15,15 @@ public class HandBuilderStart extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View myInflatedView = inflater.inflate(R.layout.fragment_handbuilder_1start, container, false);
 
-        int hanRecord = AppSettings.getHandBuilderHanRecord();
-        int fuRecord = AppSettings.getHandBuilderFuRecord();
+        int handsWon = AppSettings.getHandBuilderHandsWon();
+        String handsWonLabel = "Winning Hands: "+handsWon;
+        TextView handBuilderHandsWonLabel = (TextView) myInflatedView.findViewById(R.id.handBuilderHandsWon);
+        handBuilderHandsWonLabel.setText(handsWonLabel);
 
-        String highScoreLabel = "Current Record: "+hanRecord+" han "+fuRecord+" fu";
-
-        TextView handBuilderHighScoreLabel = (TextView) myInflatedView.findViewById(R.id.handBuilderHighScore);
-        handBuilderHighScoreLabel.setText(highScoreLabel);
+        int manganHands = AppSettings.getHandBuilderManganHands();
+        String manganHandsLabel = "Mangan (or larger): "+manganHands;
+        TextView handBuilderManganHandsLabel = (TextView) myInflatedView.findViewById(R.id.handBuilderManganHands);
+        handBuilderManganHandsLabel.setText(manganHandsLabel);
 
         return myInflatedView;
     }

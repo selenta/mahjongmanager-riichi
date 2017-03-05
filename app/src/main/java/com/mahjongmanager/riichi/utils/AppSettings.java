@@ -23,8 +23,8 @@ public class AppSettings {
     ///////////////////////////////////////////////////////
     // High Scores
     private static final String SQ_HIGH_SCORE = "SpeedQuizHighScore";
-    private static final String HB_HAN_RECORD = "HandBuilderHanRecord";
-    private static final String HB_FU_RECORD = "HandBuilderFuRecord";
+    private static final String HB_HANDS_WON = "HandBuilderHandsWon";
+    private static final String HB_MANGAN_HANDS = "HandBuilderManganHands";
 
     // App Settings
     private static final String TERMINOLOGY = "Terminology";
@@ -92,19 +92,18 @@ public class AppSettings {
         savePreference(SQ_HIGH_SCORE, value);
     }
 
-    public static int getHandBuilderHanRecord(){
-        return sharedPref.getInt(HB_HAN_RECORD, 0);
+    public static int getHandBuilderHandsWon(){
+        return sharedPref.getInt(HB_HANDS_WON, 0);
     }
-    public static void setHandBuilderHanRecord(int value){
-        savePreference(HB_HAN_RECORD, value);
+    public static void setHandBuilderHandsWon(int value){
+        savePreference(HB_HANDS_WON, value);
     }
 
-    public static int getHandBuilderFuRecord(){
-        return sharedPref.getInt(HB_FU_RECORD, 0);
+    public static int getHandBuilderManganHands(){
+        return sharedPref.getInt(HB_MANGAN_HANDS, 0);
     }
-    public static void setHandBuilderFuRecord(int value){
-        int roundedFu = (value==25) ? 25 : (int) Math.ceil(value/10.0)*10;
-        savePreference(HB_FU_RECORD, roundedFu);
+    public static void setHandBuilderManganHands(int value){
+        savePreference(HB_MANGAN_HANDS, value);
     }
 
     // App Settings
