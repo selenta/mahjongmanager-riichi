@@ -26,8 +26,8 @@ android {
         applicationId "com.mahjongmanager.riichi"
         minSdkVersion 21
         targetSdkVersion 25
-        versionCode 3
-        versionName "1.0"
+        versionCode 4
+        versionName "1.01"
     }
     buildTypes {
         release {
