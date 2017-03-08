@@ -49,6 +49,9 @@ public class OtherInfo extends Fragment implements View.OnClickListener {
 
         ScoreCalculator sc = new ScoreCalculator(actHand);
         tempScoredHand = sc.scoredHand;
+        if( tempScoredHand==null ){
+            return myInflatedView;
+        }
 
         registerControls(myInflatedView);
         initializeDoraCount();
