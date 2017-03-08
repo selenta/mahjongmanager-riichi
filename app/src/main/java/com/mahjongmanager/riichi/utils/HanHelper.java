@@ -146,7 +146,7 @@ public class HanHelper {
     }
     public static void checkKokushiMusou(Hand h){
         if( isKokushiVariant(h) ){
-            if( h.countTile(h.getWinningTile())==2 ){
+            if( h.getWinningTile()!=null && h.countTile(h.getWinningTile())==2 ){
                 h.unsortedTiles.clear();
                 h.hanList.put(Yaku.Name.KOKUSHIMUSOU13SIDED, 26);
             } else {

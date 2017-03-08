@@ -215,7 +215,7 @@ public class DrawDiscard extends LinearLayout implements View.OnClickListener {
     ///////////      Model       ////////////
     /////////////////////////////////////////
     private void selectDiscard(Tile t){
-        if( pendingTsumoChoice ){
+        if( pendingTsumoChoice || t==null ){
             return;
         }
         stagedDiscard = t;

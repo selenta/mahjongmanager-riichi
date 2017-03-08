@@ -278,7 +278,7 @@ public class Hand {
     public int countTile(Tile countedTile){
         int count = 0;
         for( Tile t : tiles ){
-            if( t.toString().equals(countedTile.toString()) ){
+            if( t.isSame(countedTile) ){
                 count++;
             }
         }

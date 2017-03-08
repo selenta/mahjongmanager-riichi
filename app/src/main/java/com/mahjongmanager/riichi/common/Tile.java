@@ -97,8 +97,9 @@ public class Tile {
     }
 
     public boolean isSame( Tile t ){
-        return this.number == t.number
+        return t != null
             && this.suit   == t.suit
+            && this.number == t.number
             && this.wind   == t.wind
             && this.dragon == t.dragon;
     }

@@ -129,7 +129,7 @@ public class TutorialExplanation extends Fragment implements View.OnClickListene
 
         Tile nextDiscard = expectedDiscards.get(currentDiscard);
         setTileImage(recommendedDiscardImage, nextDiscard);
-        if( tooltipsEnabled ){
+        if( tooltipsEnabled && nextDiscard!=null ){
             discardTooltip.setText("("+nextDiscard.toString()+")");
         }
     }
