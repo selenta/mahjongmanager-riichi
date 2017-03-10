@@ -30,6 +30,7 @@ public class HandDisplay extends LinearLayout {
     private LinearLayout winningTileContainer;
 
     private Hand hand;
+    private Tile separatedTile;
     private List<TileDisplay> tileList = new ArrayList<>();
 
     public static final int FU_DISPLAY = 1;
@@ -207,7 +208,18 @@ public class HandDisplay extends LinearLayout {
         return hand;
     }
     public void setHand(Hand h){
+        setHand(h, null);
+    }
+
+    /**
+     * Allows developer to specify a tile to be separated (will be overwritten by winning tile,
+     * should both exist). Primarily to visually separate the latest tile drawn during gameplay.
+     * @param h Hand to be displayed
+     * @param tile Tile to be separated
+     */
+    public void setHand(Hand h, Tile tile){
         hand = h;
+        separatedTile = tile;
         displayHand();
     }
     private void displayHand(){
@@ -250,9 +262,9 @@ public class HandDisplay extends LinearLayout {
             usedTiles.addAll(hand.meld4.getTiles());
         }
 
-        if( includeWinningTile && separateWinningTile ){
-            usedTiles.add(hand.getWinningTile());
-            addTileWinningTile();
+        if( includeWinningTile && separateWinningTile || separatedTile!=null ){
+            usedTiles.add( getSeparatedTile() );
+            addTileSeparated();
         } else if( !includeWinningTile ){
             usedTiles.add(hand.getWinningTile());
         }
@@ -290,46 +302,46 @@ public class HandDisplay extends LinearLayout {
         addSetComplex(hand.meld3);
         addSetComplex(hand.meld4);
         addClosedSet( hand.pair);
-        if( includeWinningTile && separateWinningTile ){
-            addTileWinningTile();
+        if( includeWinningTile && separateWinningTile || separatedTile!=null ){
+            addTileSeparated();
         }
     }
 
     // Removes the specified tile from the list, so that the winning tile can be placed separately
     private List<Tile> withoutTile(List<Tile> tiles, Tile tile){
-        List<Tile> tempList = new ArrayList<>();
-        tempList.addAll(tiles);
+        List<Tile> tempList = new ArrayList<>(tiles);
         tempList.remove(tile);
         return tempList;
     }
 
     private void addSetComplex(Meld meld){
-        if( meld.size()<3 || meld.size()>4 ){
-            return;
-        }
+//        if( meld.size()<3 || meld.size()>4 ){
+//            return;
+//        }
 
         Utils.MeldState meldState = Utils.getMeldState(meld);
-        switch (meldState.toString()){
-            case "INVALID":
-                //This should never happen
-                break;
-            case "CLOSEDSET":
+        switch (meldState){
+            case CLOSEDSET:
                 addClosedSet(meld);
                 break;
-            case "OPENCHII":
+            case OPENCHII:
                 addOpenChii(meld);
                 break;
-            case "OPENPON":
+            case OPENPON:
                 addOpenPon(meld);
                 break;
-            case "OPENKAN":
+            case OPENKAN:
                 addOpenKan(meld);
                 break;
-            case "ADDEDKAN":
+            case ADDEDKAN:
                 addAddedKan(meld);
                 break;
-            case "CLOSEDKAN":
+            case CLOSEDKAN:
                 addClosedKan(meld);
+                break;
+            default:
+                Log.i("addSetComplex", "Displaying an invalid meld: "+meld);
+                addClosedSet(meld);
                 break;
         }
     }
@@ -339,8 +351,8 @@ public class HandDisplay extends LinearLayout {
         }
 
         List<Tile> remainderSet;
-        if( separateWinningTile ){
-            remainderSet = withoutTile(meld.getTiles(), hand.getWinningTile());
+        if( separateWinningTile || separatedTile!=null ){
+            remainderSet = withoutTile(meld.getTiles(), getSeparatedTile());
         } else {
             remainderSet = meld.getTiles();
         }
@@ -456,14 +468,14 @@ public class HandDisplay extends LinearLayout {
 
         openTilesContainer.addView(container);
     }
-    private void addTileWinningTile(){
-        Tile winningTile = hand.getWinningTile();
-        if( winningTile==null ){
+    private void addTileSeparated(){
+        Tile st = getSeparatedTile();
+        if( st==null ){
             return;
         }
         addSpacer(winningTileContainer, 3*spacerSize);
 
-        TileDisplay tileDisplay = new TileDisplay(winningTile, false);
+        TileDisplay tileDisplay = new TileDisplay(st, false);
         tileList.add(tileDisplay);
 
         addListeners(tileDisplay.view);
@@ -495,6 +507,10 @@ public class HandDisplay extends LinearLayout {
     }
     private void addSpacer(LinearLayout view, int width){
         addSpacer(view, width, false);
+    }
+
+    private Tile getSeparatedTile(){
+        return (hand.getWinningTile()!=null) ? hand.getWinningTile() : separatedTile;
     }
 
     class TileDisplay {

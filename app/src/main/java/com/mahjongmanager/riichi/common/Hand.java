@@ -133,6 +133,10 @@ public class Hand {
         return null;
     }
 
+    /**
+     * Slots the specified tiles into the first open (empty) meld
+     * @param tiles Tiles in a meld
+     */
     public void setMeld(List<Tile> tiles ){
         if( meld1.size()==0 ){
             meld1.setTiles(tiles);
@@ -306,6 +310,14 @@ public class Hand {
             }
         }
         return count;
+    }
+    public boolean couldClosedKan(){
+        for( Tile tile : unsortedTiles ){
+            if( Utils.findTiles(unsortedTiles, tile).size()==4 ){
+                return true;
+            }
+        }
+        return false;
     }
     public boolean hasYaku(Yaku.Name name){
         return hanList.containsKey(name);

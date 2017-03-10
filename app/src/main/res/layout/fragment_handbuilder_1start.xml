@@ -57,7 +57,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textAppearance="?android:attr/textAppearanceMedium"
-                android:text="Riichi: Disabled"
+                android:text="  Riichi: Disabled"
                 android:textSize="21sp"
                 android:textStyle="italic"
                 android:layout_gravity="center_horizontal" />
@@ -75,10 +75,11 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textAppearance="?android:attr/textAppearanceMedium"
-                android:text="Kans: Disabled"
+                android:text="   Dora: Disabled"
                 android:textSize="21sp"
                 android:textStyle="italic"
                 android:layout_gravity="center_horizontal" />
+
             <Button
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"

@@ -165,79 +165,88 @@
                 android:textAlignment="center"
                 android:id="@+id/currentHandInstructions" />
 
-            <LinearLayout
-                android:orientation="horizontal"
+            <com.mahjongmanager.riichi.components.HandDisplay
+                android:id="@+id/handDisplay"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:layout_marginTop="15dp"
-                android:layout_marginBottom="15dp">
+                android:layout_gravity="center_horizontal"
+                android:layout_marginBottom="15dp"
+                android:layout_marginTop="15dp" />
 
-                <com.mahjongmanager.riichi.components.HandDisplay
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/handDisplay" />
-
-                <LinearLayout
-                    android:id="@+id/lastDrawImage"
-                    android:orientation="horizontal"
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:layout_gravity="center"
-                    android:paddingLeft="10dp" />
-
-            </LinearLayout>
         </LinearLayout>
     </ScrollView>
 
     <LinearLayout
-        android:orientation="vertical"
+        android:id="@+id/confirmTileContainer"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/confirmDiscardContainer">
+        android:orientation="vertical">
 
         <View
             android:layout_width="match_parent"
             android:layout_height="1dp"
-            android:background="@android:color/darker_gray"/>
+            android:background="@android:color/darker_gray" />
 
-        <GridLayout
+        <LinearLayout
+            android:orientation="horizontal"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:columnCount="3"
-            android:rowCount="1"
-            android:useDefaultMargins="false"
-            android:paddingTop="5dp"
+            android:id="@+id/confirmDiscardContainer"
+            android:layout_gravity="center"
             android:paddingBottom="5dp"
-            android:layout_gravity="center">
+            android:paddingTop="5dp">
 
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:layout_gravity="center_vertical|right"
                 android:text="Confirm Discard: "
-                android:textStyle="italic"
+                android:textAppearance="?android:attr/textAppearanceMedium"
                 android:textSize="16sp"
-                android:layout_gravity="center_vertical|right" />
+                android:textStyle="italic" />
 
-            <LinearLayout
-                android:id="@+id/confirmDiscardImage"
-                android:orientation="horizontal"
+            <com.mahjongmanager.riichi.components.HandDisplay
                 android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:layout_gravity="center" />
+                android:layout_height="wrap_content"
+                android:id="@+id/confirmTileImage" />
 
             <TextView
+                android:id="@+id/confirmTileTooltip"
                 android:layout_width="80dp"
                 android:layout_height="wrap_content"
-                android:textAppearance="?android:attr/textAppearanceMedium"
-                android:id="@+id/discardTooltip"
                 android:layout_gravity="center"
                 android:paddingLeft="10dp"
+                android:textAppearance="?android:attr/textAppearanceMedium"
                 android:textSize="16sp"
-                android:visibility="gone"/>
+                android:visibility="gone" />
 
-        </GridLayout>
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/selectClosedKanContainer"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:orientation="horizontal"
+            android:paddingBottom="5dp"
+            android:paddingTop="5dp"
+            android:visibility="gone">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical|right"
+                android:text="Select Tile to Kan: "
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:textSize="16sp"
+                android:textStyle="italic" />
+
+            <com.mahjongmanager.riichi.components.HandDisplay
+                android:id="@+id/selectKanHandDisplay"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+
+        </LinearLayout>
 
     </LinearLayout>
 
@@ -256,7 +265,7 @@
         <Button
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/chiiDiscardButton"
+            android:id="@+id/callChiiButton"
             android:text="Chii"
             android:paddingEnd="30dp"
             android:paddingStart="30dp" />
@@ -269,7 +278,7 @@
         <Button
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/ponDiscardButton"
+            android:id="@+id/callPonButton"
             android:text="Pon"
             android:paddingEnd="30dp"
             android:paddingStart="30dp" />
@@ -282,7 +291,7 @@
         <Button
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/kanDiscardButton"
+            android:id="@+id/callKanButton"
             android:text="Kan"
             android:paddingEnd="30dp"
             android:paddingStart="30dp" />
@@ -317,7 +326,7 @@
         <Button
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/passButton"
+            android:id="@+id/tsumoPassButton"
             android:text="Pass"
             android:paddingEnd="30dp"
             android:paddingStart="30dp" />
@@ -339,13 +348,58 @@
         android:paddingStart="30dp"
         android:visibility="gone"/>
 
+    <LinearLayout
+        android:id="@+id/playerTurnContainer"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <Space
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1" />
+
+        <Button
+            android:id="@+id/declareKanButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:paddingEnd="30dp"
+            android:paddingStart="30dp"
+            android:text="Closed Kan"
+            android:visibility="gone" />
+
+        <Space
+            android:id="@+id/declareKanSpacer"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:visibility="gone" />
+
+        <Button
+            android:id="@+id/confirmDiscardButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:paddingEnd="30dp"
+            android:paddingStart="30dp"
+            android:text="Confirm Discard" />
+
+        <Space
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1" />
+
+    </LinearLayout>
+
     <Button
+        android:id="@+id/cancelClosedKanButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/confirmDiscardButton"
-        android:text="Confirm Discard"
         android:layout_gravity="center"
         android:paddingEnd="30dp"
-        android:paddingStart="30dp"/>
+        android:paddingStart="30dp"
+        android:text="Back"
+        android:visibility="gone" />
 
 </LinearLayout>

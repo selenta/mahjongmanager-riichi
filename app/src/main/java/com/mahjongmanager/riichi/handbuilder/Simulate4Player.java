@@ -57,6 +57,7 @@ public class Simulate4Player extends Fragment implements View.OnClickListener {
         Round round = new Round(Tile.Wind.EAST);
         Tile.Wind playerWind = Utils.getRandomWind();
 
+//        round.stackDeck(playerWind, SampleData.drawDiscardTestKans());
         drawDiscard.setRound(round, playerWind);
     }
 }

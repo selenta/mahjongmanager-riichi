@@ -172,7 +172,7 @@ public class Utils {
     ////////////////////     Common Util Methods      ////////////////////////
     //////////////////////////////////////////////////////////////////////////
     public enum MeldState {
-        CLOSEDSET, OPENCHII, OPENPON, OPENKAN, ADDEDKAN, CLOSEDKAN
+        INVALID, CLOSEDSET, OPENCHII, OPENPON, OPENKAN, ADDEDKAN, CLOSEDKAN
     }
 
     /**
@@ -185,7 +185,7 @@ public class Utils {
     public static MeldState getMeldState(Meld meld){ return getMeldState(meld.getTiles()); }
     private static MeldState getMeldState(List<Tile> tiles){
         if( tiles.size()==0 ){
-            return null;
+            return MeldState.INVALID;
         }
 
         Tile firstTile = tiles.get(0);

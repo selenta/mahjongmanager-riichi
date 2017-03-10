@@ -44,6 +44,8 @@ public class Round {
 
     private List<Tile.Wind> winningPlayers = new ArrayList<>();
 
+    private boolean justDeclaredKan = false;
+
     /////////////////////////////////////////////////////
     /////////////          Init           ///////////////
     /////////////////////////////////////////////////////
@@ -106,6 +108,39 @@ public class Round {
         currentState = State.ACTIVE;
     }
 
+
+    /**
+     * The currently active hand declares a closed kan of the specified tile
+     * @param t Tile of the type to be Kan'd
+     */
+    public void declareClosedKan(Tile t){
+        Hand hand = getActiveHand();
+        if( currentState!=State.ACTIVE ){
+            Log.w("declareKan", "Declaring kan when state is not ACTIVE: "+currentState);
+        } else if( Utils.findTiles(hand.unsortedTiles, t).size()!=4 ){
+            Log.w("declareKan", "Declaring kan when hand does not contain 4 unsorted of the tile: "+t+" - "+hand);
+        }
+
+        //Slot the tiles in the hand
+        List<Tile> kanTiles = new ArrayList<>();
+        for( int i=0; i<4; i++ ){
+            Tile tile = hand.popUnsortedTile(t.value, t.suit, null);
+            tile.revealedState = Tile.RevealedState.CLOSEDKAN;
+            kanTiles.add( tile );
+        }
+        hand.setMeld(kanTiles);
+
+        // Deal with dead wall draw     TODO implement?
+        //      Technically, this is just flavor, it doesn't really change anything
+        //      Effectively, just restart the turn
+
+        // Dora indicator               TODO implement
+        //      Depends on mode, Draw/Discard mode doesn't allow dora
+        //      (Perhaps this should be always implemented and Draw/Discard just removes the Dora from HanList right before the end)
+
+        justDeclaredKan = true;
+    }
+
     /**
      * (ACTIVE > DISCARD)   Declare tile as discard.
      * The discard will ultimately be successful and the turn will end if no other player
@@ -122,6 +157,7 @@ public class Round {
 
         discard(activePlayer, discard);
         currentState = State.DISCARD;
+        justDeclaredKan = false;
         checkForCalling();
     }
 
@@ -138,6 +174,9 @@ public class Round {
         getActiveHand().selfDrawWinningTile = true;
         if( tilesInWall()==0 ){
             getActiveHand().haitei = true;
+        }
+        if( justDeclaredKan ){
+            getActiveHand().rinshan = true;
         }
         winningPlayers.add(activePlayer);
         currentState = State.ENDTURN;
