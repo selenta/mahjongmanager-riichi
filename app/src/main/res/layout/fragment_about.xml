@@ -100,23 +100,7 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:textAppearance="?android:attr/textAppearanceMedium"
-                    android:text="Waits are not calculated correctly for hands with unusual structure (e.g. chiitoitsu)"
-                    android:textSize="14sp"
-                    android:paddingLeft="5dp"
-                    android:layout_gravity="fill_horizontal" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textAppearance="?android:attr/textAppearanceMedium"
-                    android:text="•"
-                    android:paddingLeft="15dp" />
-
-                <TextView
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:textAppearance="?android:attr/textAppearanceMedium"
-                    android:text="Hand Calculator can get confused by ambiguous Closed Kans, crashing the application"
+                    android:text="Hand Calculator can get confused by repeatedly going forwards and backwards, crashing the application"
                     android:textSize="14sp"
                     android:paddingLeft="5dp"
                     android:layout_gravity="fill_horizontal" />
