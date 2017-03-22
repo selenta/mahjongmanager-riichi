@@ -113,6 +113,7 @@ public class HanHelper {
             h.hanList.put(Yaku.Name.CHIITOITSU, 2);
 
             checkLuckBasedHan(h);
+            checkTsumo(h);
             checkTanyao(h);
             checkHonroutou(h);
             checkHonitsu(h);
