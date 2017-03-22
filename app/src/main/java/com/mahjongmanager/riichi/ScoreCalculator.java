@@ -483,7 +483,11 @@ public class ScoreCalculator {
         shanten = getShanten(incompleteHand, possibilities);
         Log.i("processIncompleteHand", "shanten: "+shanten);
         if( shanten==0 ){
-            processTenpaiHand(possibilities);
+            if( countChiitoitsuShanten(incompleteHand)==0 ){
+                findWaitsForChiitoitsuHand(incompleteHand);
+            } else {
+                findWaitsForTenpaiHand(possibilities);
+            }
             state = State.TENPAI;
         } else {
             state = State.SHANTEN;
@@ -821,12 +825,24 @@ public class ScoreCalculator {
      *  If that tile is already listed as a wait (for that isTsumo option),
      *       use whichever scores higher.
      */
-    private void processTenpaiHand(List<MeldSolver> possibilities){
+    private void findWaitsForTenpaiHand(List<MeldSolver> possibilities){
         for(MeldSolver ms : possibilities){
             for(Meld m : ms.melds){
                 findCandidates(m);
             }
             findOtherCandidate(ms);
+        }
+
+        for(Tile candidate : candidates){
+            testCandidate(candidate, false);
+            testCandidate(candidate, true);
+        }
+    }
+    private void findWaitsForChiitoitsuHand(Hand hand){
+        for( Tile t : hand.tiles ){
+            if( hand.countTile(t)!=2 ){
+                candidates.add(t);
+            }
         }
 
         for(Tile candidate : candidates){
