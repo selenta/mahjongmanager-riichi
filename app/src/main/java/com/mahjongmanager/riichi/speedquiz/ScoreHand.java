@@ -11,6 +11,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.mahjongmanager.riichi.common.Hand;
+import com.mahjongmanager.riichi.common.Yaku;
 import com.mahjongmanager.riichi.components.HandDisplay;
 import com.mahjongmanager.riichi.MainActivity;
 import com.mahjongmanager.riichi.R;
@@ -146,7 +147,9 @@ public class ScoreHand extends Fragment implements View.OnClickListener {
         if( h.houtei){
             oys = addStrClean(oys, "Houtei");
         }
-        if( h.arbitraryDora!=0){
+        if( h.hanList.containsKey(Yaku.Name.DORA) ){
+            oys = addStrClean(oys, "Dora "+ h.hanList.get(Yaku.Name.DORA) );
+        } else if( h.arbitraryDora != 0 ){
             oys = addStrClean(oys, "Dora "+ h.arbitraryDora);
         }
         return oys;
