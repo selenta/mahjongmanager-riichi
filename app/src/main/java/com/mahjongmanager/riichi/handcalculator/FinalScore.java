@@ -52,7 +52,9 @@ public class FinalScore extends Fragment {
         updateRevealedStatus(sortedHand);
 
         ScoreCalculator sc = new ScoreCalculator(sortedHand);
-        actHand = sc.validatedHand;
+        if( sc.validatedHand!=null ){
+            actHand = sc.validatedHand;
+        }
     }
     /**
      * In an attempt to minimize the number of user inputs during the HandCalculator, some
